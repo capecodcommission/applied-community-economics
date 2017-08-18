@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>CCC ~ Community Characteristics</title>
+    <link rel="stylesheet" href="https://js.arcgis.com/3.20/esri/css/esri.css">
+	<script src="https://js.arcgis.com/3.20/"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script>
+    window.dojoConfig = {
+
+      packages: [
+        {
+          name: 'vue',
+          location: location.pathname.replace('/\/[^/]+$','') + "/node_modules/vue/dist",
+          main: 'vue'
+        }
+      ]
+    }
+  </script>
+  <script>
+    // Load the Visualization API and the controls package.
+    google.charts.load('current', 
+      {
+        'packages':['corechart', 'controls']
+      }
+    );
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.charts.setOnLoadCallback(this.drawDashboard);
+
+
+  </script>
+	<script>
+var map;
+require([
+  "esri/map", 
+  "esri/layers/FeatureLayer", 
+  "esri/InfoTemplate", 
+  "esri/config", 
+  "esri/tasks/query",
+  "dojo/domReady!"
+], function(Map, FeatureLayer, InfoTemplate, Config, Query) {
+
+  map = new Map("map", {
+    basemap: "topo",
+    center: [-70.31509, 41.68935],
+    zoom: 11
+  });
+
+  var embayTemplate = new InfoTemplate({
+    title: "<b>${LOC_ID}</b>"
+  })
+
+  var embayments = new FeatureLayer("http://gis-services.capecodcommission.org/arcgis/rest/services/ActivityCenters/CommunityCharacteristics/MapServer/0", {
+    mode: FeatureLayer.MODE_ONDEMAND,
+    outFields: ['*'],
+    opacity: 1,
+    infoTemplate: embayTemplate
+  })
+
+  map.addLayer(embayments)
+
+  // var stationTemplate = new InfoTemplate({
+  //   title: "<b>${Station}</b> (<b>${Embayment}</b>)",
+  //   content: "<button id = 'station' class = 'button' onclick = getEmbayment('${Station}')>View Station Data</button>"
+  // })
+
+  // var stations = new FeatureLayer("http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/WaterQualityMonitoringStations/MapServer/0", {
+  //   mode: FeatureLayer.MODE_ONDEMAND,
+  //   outFields: ['*'],
+  //   opacity: 1,
+  //   infoTemplate: stationTemplate
+  // })
+
+  // map.addLayer(stations)
+
+
+  // If rows return from route getEmbayment, continue to next page, otherwise create/fill paragraph tag below View Station Data button
+  getEmbayment = function(id) {
+
+    $('#nodata').remove()
+
+    var url = 'http://ccc-api-05.api.capecodcommission.org/api/getEmbayment/' + id
+
+    $.ajax(
+      {
+        method: 'GET', 
+        url: url
+      }
+    ).done(function(rows) {
+
+      if (rows.recordset.length > 1) {
+
+        // window.open('http://localhost:8080/wq/embayment/' + id + '/embaymentDetails','_self')
+        router.go({name: 'embayment', params: {id: id}})
+        map.destroy()
+      } else {
+
+        $('.contentPane').append("<p id = 'nodata' class = 'text-danger'>No data available</p>")
+      }
+    })
+  }
+
+  // console.log(embayments)
+
+
+  // If EMBAY_ID from dropdown matches EMBAY_ID in feature layer, zoom to queried embayment's extent.
+  ZoomToSelection = function(x) {
+
+    embayments.clearSelection();
+
+    var query = new Query()
+
+    query.where = "Neighborhood = " + "'" + x + "'" 
+    query.outFields = ['*']
+
+    embayments.selectFeatures(query, FeatureLayer.SELECTION_NEW, function (features) {
+
+      // map.setExtent(features.geometry.getExtent(), true)
+      for (var i = features.length - 1; i >= 0; i--) {
+        console.log(features[i].geometry)
+      }
+    })
+  }
+
+
+  // On new dropdown selection, pass EMBAY_DISP to ZoomToSelection 
+  $('#embaySelect').on('change', function() {
+
+    var x = $(this).val().toString()
+
+    if (x === '0') {
+
+      map.setExtent(embayments.fullExtent.getExtent(), true)
+    } else {
+
+      ZoomToSelection(x)
+    }
+  })
+
+  $('#downloadExcel').on('click', function() {
+
+    window.location.href = 'file:///C:/Users/mario.carloni/Downloads/waterqualitymonitoring/src/assets/BlankTemplate.xlsx'
+  })
+});
+	</script>
+  </head>
+  <body>
+    <div id="app">
+      <app></app>
+    </div>
+  </body>
+</html>
