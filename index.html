@@ -61,19 +61,19 @@ require([
 
   map.addLayer(embayments)
 
-  // var stationTemplate = new InfoTemplate({
-  //   title: "<b>${Station}</b> (<b>${Embayment}</b>)",
-  //   content: "<button id = 'station' class = 'button' onclick = getEmbayment('${Station}')>View Station Data</button>"
-  // })
+  var stationTemplate = new InfoTemplate({
+    title: "<b>${Station}</b> (<b>${Embayment}</b>)",
+    content: "<button id = 'station' class = 'button' onclick = getEmbayment('${Station}')>View Station Data</button>"
+  })
 
-  // var stations = new FeatureLayer("http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/WaterQualityMonitoringStations/MapServer/0", {
-  //   mode: FeatureLayer.MODE_ONDEMAND,
-  //   outFields: ['*'],
-  //   opacity: 1,
-  //   infoTemplate: stationTemplate
-  // })
+  var stations = new FeatureLayer("http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/WaterQualityMonitoringStations/MapServer/0", {
+    mode: FeatureLayer.MODE_ONDEMAND,
+    outFields: ['*'],
+    opacity: 1,
+    infoTemplate: stationTemplate
+  })
 
-  // map.addLayer(stations)
+  map.addLayer(stations)
 
 
   // If rows return from route getEmbayment, continue to next page, otherwise create/fill paragraph tag below View Station Data button

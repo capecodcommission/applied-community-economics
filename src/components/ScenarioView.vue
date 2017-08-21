@@ -48,9 +48,9 @@ export default {
 
     'embayment': function (val) {
 
-      // var filtered = this.embayments.filter((el) => el['id'] === this.$router._currentRoute.params.id)
+      var filtered = this.embayments.filter((el) => el['id'] === this.$router._currentRoute.params.id)
 
-      // this.embayment.name = filtered[0]['embayment']
+      this.embayment.name = filtered[0]['embayment']
 
     }
   },
@@ -58,76 +58,76 @@ export default {
   // Get scenario and finance options based on scenarioId passed from parent ScenarioView
   ready () {
 
-    $('#table').addClass('btn-primary')
+    // $('#table').addClass('btn-primary')
 
-    this.loadEmbayments()
-    this.loadEmbayment(this.$router._currentRoute.params.id)
+    // this.loadEmbayments()
+    // this.loadEmbayment(this.$router._currentRoute.params.id)
 
-    for (var i = this.embayment.data.length - 1; i >= 0; i--) {
+    // for (var i = this.embayment.data.length - 1; i >= 0; i--) {
       
-      if (this.embayment.data[i].year == null) {
+    //   if (this.embayment.data[i].year == null) {
 
-        this.embayment.data[i].year = 0
-      } 
+    //     this.embayment.data[i].year = 0
+    //   } 
 
-      if (this.embayment.data[i].salinity == null) {
+    //   if (this.embayment.data[i].salinity == null) {
 
-        this.embayment.data[i].salinity = 0
-      }
+    //     this.embayment.data[i].salinity = 0
+    //   }
 
-      if (this.embayment.data[i].disolvedoxygen == null) {
+    //   if (this.embayment.data[i].disolvedoxygen == null) {
 
-        this.embayment.data[i].disolvedoxygen = 0
-      }
+    //     this.embayment.data[i].disolvedoxygen = 0
+    //   }
 
-      if (this.embayment.data[i].nitrogen == null) {
+    //   if (this.embayment.data[i].nitrogen == null) {
 
-        this.embayment.data[i].nitrogen = 0
-      }
+    //     this.embayment.data[i].nitrogen = 0
+    //   }
 
-      if (this.embayment.data[i].water_temp == null) {
+    //   if (this.embayment.data[i].water_temp == null) {
 
-        this.embayment.data[i].water_temp = 0
-      } 
+    //     this.embayment.data[i].water_temp = 0
+    //   } 
 
-      if (this.embayment.data[i].depth == null) {
+    //   if (this.embayment.data[i].depth == null) {
 
-        this.embayment.data[i].depth = 0
-      } 
+    //     this.embayment.data[i].depth = 0
+    //   } 
 
-      if (this.embayment.data[i].precipitation == null) {
+    //   if (this.embayment.data[i].precipitation == null) {
 
-        this.embayment.data[i].precipitation = 0
-      } 
+    //     this.embayment.data[i].precipitation = 0
+    //   } 
 
-      if (this.embayment.data[i].nitrate_nitrite == null) {
+    //   if (this.embayment.data[i].nitrate_nitrite == null) {
 
-        this.embayment.data[i].nitrate_nitrite = 0
-      } 
+    //     this.embayment.data[i].nitrate_nitrite = 0
+    //   } 
 
-      if (this.embayment.data[i].ammonium == null) {
+    //   if (this.embayment.data[i].ammonium == null) {
 
-        this.embayment.data[i].ammonium = 0
-      } 
+    //     this.embayment.data[i].ammonium = 0
+    //   } 
 
-      if (this.embayment.data[i].orthophosphate == null) {
+    //   if (this.embayment.data[i].orthophosphate == null) {
 
-        this.embayment.data[i].orthophosphate = 0
-      } 
+    //     this.embayment.data[i].orthophosphate = 0
+    //   } 
 
-      if (this.embayment.data[i].chlorophyll == null) {
+    //   if (this.embayment.data[i].chlorophyll == null) {
 
-        this.embayment.data[i].chlorophyll = 0
-      } 
+    //     this.embayment.data[i].chlorophyll = 0
+    //   } 
 
-      if (this.embayment.data[i].phaeophytin == null) {
+    //   if (this.embayment.data[i].phaeophytin == null) {
 
-        this.embayment.data[i].phaeophytin = 0
-      } 
+    //     this.embayment.data[i].phaeophytin = 0
+    //   } 
 
-      this.embayment.data[i].date = Date(this.embayment.data[i].date)
+    //   this.embayment.data[i].date = Date(this.embayment.data[i].date)
 
-    }
+    // }
   },
 
   methods: {
