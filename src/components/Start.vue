@@ -4,13 +4,10 @@
     <div class = 'selectEmbayment text-center'>
       <img src="http://www.capecodcommission.org/gfx/home-logo.jpg" class = 'img-rounded'><br><br>
       <h5>
-        <p>The Section 208 Areawide Plan Update (208 Plan) provides nitrogen-removal target goals for the Cape’s impaired waters. These targets are based on extensive monitoring and analysis that was completed as part of the Massachusetts Estuaries Project (MEP).</p>
-        <p>Since the publication of these estuary-specific MEP Reports, most Cape towns have continued to collect water quality data and conduct additional studies for many of their estuaries. This has resulted in a substantial number of embayment-specific water quality data sets that span over fifteen years.</p>
-        <p>Going forward, the 208 Plan recommends extensive monitoring of watershed solutions to ensure water quality goals are being met. The Water Quality Monitoring application aims to provide an analysis of Cape Cod estuaries' vital nutrients.</p>
-        <p>
-          <button @click = 'downloadExcel'  class = 'btn btn-success'>Download Blank Template</button>
-        </p>
-        <p>Zoom to an embayment from the dropdown below</p>
+        <p>The Community Characteristics provides blah blah blah blah.</p>
+        <p>blah blah blah blah blah blah blah blahblah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah</p>
+        <p>blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah</p>
+        <p>Zoom to a Neighborhood from the dropdown below</p>
       </h5>
       <select id = 'embaySelect'>
         <option value = '0'>Select a Neighborhood</option>
@@ -45,8 +42,7 @@ export default {
   vuex: {
 
     actions: {
-
-
+      
       loadNeighborhoods
     },
 
