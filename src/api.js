@@ -11,8 +11,11 @@ Vue.http.headers.common['Authorization'] = '123123'
 // Export (out of this script) functions to access API 
 export default {
 
-  // Obtain finance options JSON from API
   getNeighborhoods () {
     return Vue.http.get(API_ROOT + 'getNeighborhoods')
+  },
+
+  getActivityCenters () {
+    return Vue.http.get(API_ROOT + 'getActivityCenters')
   }
 }

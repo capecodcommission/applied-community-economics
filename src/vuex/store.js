@@ -5,7 +5,8 @@ Vue.use(Vuex)
 
 // Create state object that all Vues share, JSON from API is loaded here
 const state = {
-  neighborhoods: []
+  neighborhoods: [],
+  centers: []
 }
 
 // Create mutations; functions to change data in the state
@@ -14,6 +15,11 @@ const mutations = {
   LOAD_NEIGHBORHOODS (state, neighborhoods) {
 
     state.neighborhoods = neighborhoods
+  },
+
+  LOAD_ACTIVITYCENTERS (state, centers) {
+
+  	state.centers = centers
   }
 }
 

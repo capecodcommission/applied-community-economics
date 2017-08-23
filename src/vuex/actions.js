@@ -14,6 +14,18 @@ export const loadNeighborhoods = function({dispatch, state}) {
   })
 }
 
+export const loadActivityCenters = function({dispatch, state}) {
+
+  api.getActivityCenters().then(function (response) {
+
+    dispatch('LOAD_ACTIVITYCENTERS', response.data)
+
+  }, function (response) {
+
+    console.log(response)
+  })
+}
+
 
 
 

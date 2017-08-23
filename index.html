@@ -45,7 +45,7 @@ require([
 ], function(Map, FeatureLayer, InfoTemplate, Config, Query, graphicsUtils, StatisticDefinition) {
 
   map = new Map("map", {
-    basemap: "topo",
+    basemap: "streets-night-vector",
     center: [-70.31509, 41.68935],
     zoom: 11
   });
@@ -55,7 +55,7 @@ require([
   })
 
   var embayments = new FeatureLayer("http://gis-services.capecodcommission.org/arcgis/rest/services/ActivityCenters/CommunityCharacteristics/MapServer/0", {
-    mode: FeatureLayer.MODE_ONDEMAND,
+    mode: FeatureLayer.MODE_SELECTION,
     outFields: ['*'],
     opacity: 1,
     infoTemplate: embayTemplate
@@ -63,7 +63,7 @@ require([
 
   map.addLayer(embayments)
 
-  var selectionSymbol = new esri.symbol.SimpleFillSymbol().setColor(new esri.Color([255,255,0,0.5]));
+  var selectionSymbol = new esri.symbol.SimpleFillSymbol().setColor(new esri.Color([218,112,214,0.5]));
   embayments.setSelectionSymbol(selectionSymbol)
 
   // If EMBAY_ID from dropdown matches EMBAY_ID in feature layer, zoom to queried embayment's extent.
@@ -80,7 +80,7 @@ require([
 
       var extent = graphicsUtils.graphicsExtent(features)
 
-      map.setExtent(extent.expand(1.25), true)
+      map.setExtent(extent.expand(1.1), true)
 
       var sumBA = 0
       var sumCA = 0
@@ -107,12 +107,67 @@ require([
                                 "pctImp_Above40: " + sumabv40 + "<br>" +
                                 "FormWeight: " + sumForm + "<br>" +
                                 "% Good Form: " + pctGF)
+
+      $('#BAsites').text(sumBA)
+      $('#CAsites').text(sumCA)
+      $('#abv_40').text(sumabv40)
+      $('#frmWt').text(sumForm)
+      $('#pct_GF').text(pctGF)
+    })
+  }
+
+  ZoomToSelection1 = function(x) {
+
+    embayments.clearSelection();
+
+    var query = new Query()
+    query.where = "AC_FINAL = " + "'" + x + "'" 
+    query.outFields = ['*']
+
+
+    embayments.selectFeatures(query, FeatureLayer.SELECTION_NEW, function (features) {
+
+      var extent = graphicsUtils.graphicsExtent(features)
+
+      map.setExtent(extent.expand(1.1), true)
+
+      var sumBA = 0
+      var sumCA = 0
+      var sumabv40 = 0 
+      var sumForm = 0
+      var pctGF = 0
+
+      for (var i = features.length - 1; i >= 0; i--) {
+
+        sumBA += features[i].attributes.SUM_BAsites
+        sumCA += features[i].attributes.SUM_CAsites
+        sumabv40 += features[i].attributes.PctImp_Above40
+
+        if (features[i].attributes.FormWeight >= 6 && features[i].attributes.PctImp_Above40 === 1) {
+
+          sumForm += 1
+        }
+      }
+
+      pctGF = Math.round((sumForm / sumabv40) * 100).toString() + "%"
+
+      embayTemplate.setContent("BAsites: " + sumBA + "<br>" +
+                                "CAsites: " + sumCA + "<br>" +
+                                "pctImp_Above40: " + sumabv40 + "<br>" +
+                                "FormWeight: " + sumForm + "<br>" +
+                                "% Good Form: " + pctGF)
+
+      $('#BAsites').text(sumBA)
+      $('#CAsites').text(sumCA)
+      $('#abv_40').text(sumabv40)
+      $('#frmWt').text(sumForm)
+      $('#pct_GF').text(pctGF)
     })
   }
 
 
   // On new dropdown selection, pass EMBAY_DISP to ZoomToSelection 
-  $('#embaySelect').on('change', function() {
+  $('#neighborhoodSelect').on('change', function() {
 
     var x = $(this).val().toString()
 
@@ -123,6 +178,20 @@ require([
     } else {
 
       ZoomToSelection(x)
+    }
+  })
+
+  $('#acSelect').on('change', function() {
+
+    var x = $(this).val().toString()
+
+    if (x === '0') {
+
+      embayments.clearSelection();
+      map.setExtent(embayments.fullExtent.getExtent(), true)
+    } else {
+
+      ZoomToSelection1(x)
     }
   })
 });

@@ -31,7 +31,7 @@ Vue.filter('currency', { read: function (val) {
 const router = new VueRouter({
   history: true,
   saveScrollPosition: true,
-  root:  '/wq',
+  root:  '/cc',
   suppressTransitionError: true
 })
 

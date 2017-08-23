@@ -2,28 +2,52 @@
   <div class = 'fill-height' id="map">
     <!-- <img src="http://www.capecodcommission.org/gfx/home-logo.jpg"> -->
     <div class = 'selectEmbayment text-center'>
-      <img src="http://www.capecodcommission.org/gfx/home-logo.jpg" class = 'img-rounded'><br><br>
-      <h5>
-        <p>The Community Characteristics provides blah blah blah blah.</p>
-        <p>blah blah blah blah blah blah blah blahblah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah</p>
-        <p>blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah</p>
-        <p>Zoom to a Neighborhood from the dropdown below</p>
-      </h5>
-      <select id = 'embaySelect'>
-        <option value = '0'>Select a Neighborhood</option>
-        <option v-for = 'neighborhood in neighborhoods.recordsets[0]' value = '{{neighborhood.Neighborhood}}'>{{neighborhood.Neighborhood}}</option>
-      </select>
+      <img src="http://www.capecodcommission.org/gfx/home-logo.jpg" class = 'img-rounded'><br><br><br><br>
+      <table width = '100%'>
+        <tr>
+          <th>BA Sites</th>
+          <th>CA Sites</th>
+          <th>> 40% Impervious</th>
+          <th>Form Weight</th>
+          <th>% Good Form</th>
+        </tr>
+        <tr style = 'font-size: 40px'>
+          <td id = 'BAsites'></td>
+          <td id = 'CAsites'></td>
+          <td id = 'abv_40'></td>
+          <td id = 'frmWt'></td>
+          <td id = 'pct_GF'></td>
+        </tr>
+      </table>
+      <br><br><br>
+      <p>Zoom to either Neighborhoods or Activity Centers from the dropdowns below</p>
+      <table width = '100%'>
+        <tr>
+          <td>
+            <select id = 'neighborhoodSelect'>
+              <option value = '0'>Select a Neighborhood</option>
+              <option v-for = 'neighborhood in neighborhoods.recordsets[0]' value = '{{neighborhood.Neighborhood}}'>{{neighborhood.Neighborhood}}</option>
+            </select>
+          </td>
+          <td>
+            <select id = 'acSelect'>
+              <option value = '0'>Select an Activity Center</option>
+              <option v-for = 'center in centers.recordsets[0]' value = '{{center.center}}'>{{center.center}}</option>
+            </select>
+          </td>
+        </tr>
+      </table>
     </div>
   </div>
   <div id = 'mapReload'></div>
-  <pre>{{ neighborhoods | json }}</pre>
+  <pre>{{centers | json}}</pre>
 </template>
 
 <script>
 
 import {introJs} from '../../node_modules/intro.js/intro.js'
-import { loadNeighborhoods } from '../vuex/actions'
-import { getNeighborhoods } from '../vuex/getters'
+import { loadNeighborhoods, loadActivityCenters } from '../vuex/actions'
+import { getNeighborhoods, getActivityCenters } from '../vuex/getters'
 
 export default {
 
@@ -35,7 +59,6 @@ export default {
 
     return {
 
-
     }
   },
 
@@ -43,58 +66,32 @@ export default {
 
     actions: {
       
-      loadNeighborhoods
+      loadNeighborhoods,
+      loadActivityCenters
     },
 
     getters: {
 
-      neighborhoods: getNeighborhoods
+      neighborhoods: getNeighborhoods,
+      centers: getActivityCenters
     }
   },
 
   ready() {
 
     this.loadNeighborhoods()
-      
-    var intro = introJs()
-
-    intro.setOptions({
-
-      showStepNumbers: false,
-
-      tooltipClass: 'introjs-tooltip-mario text-center',
-
-      steps: [
-        {
-          intro: "<img class = 'img-rounded text-center' src='http://www.capecodcommission.org/gfx/home-logo.jpg'> <br><br>" +
-                  "<h4><p>The Section 208 Areawide Plan Update (208 Plan) provides nitrogen-removal target goals for the " +
-                  "Cape’s impaired waters. These targets are based on extensive monitoring and analysis that was " +
-                  "completed as part of the Massachusetts Estuaries Project (MEP).</p> <p>Since the publication of these " +
-                  "estuary-specific MEP Reports, most Cape towns have continued to collect water quality data and " +
-                  "conduct additional studies for many of their estuaries. This has resulted in a substantial number of " +
-                  "embayment-specific water quality data sets that span over fifteen years.</p> <p>Going forward, the 208 Plan " +
-                  "recommends extensive monitoring of watershed solutions to ensure water quality goals are being met. " +
-                  "The Water Quality Monitoring application aims to provide an analysis of Cape Cod estuaries' vital nutrients. </p>" +
-                  "<p><button  class = 'btn btn-success'>Download Blank Template</button></p> </h4>"
-        },
-        {
-          intro: "<img class = 'text-center' src='http://www.capecodcommission.org/gfx/home-logo.jpg'> <br><br>" +
-                 "<h4>Click on a station icon to view relative nutrient data and visualizations</h4>"
-        }
-      ]
-    })
   },
 
   methods: {
 
-    downloadExcel() {
-
-      window.location.href = 'http://www.watershedmvp.org/waterqualitymonitoring/Content/Files/BlankTemplate.xlsx'
-    }
   },
 
   watch: {
 
+    'neighborhoods': function() {
+
+      this.loadActivityCenters()
+    }
   }
 }
 
