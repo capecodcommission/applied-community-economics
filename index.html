@@ -47,7 +47,8 @@ require([
   map = new Map("map", {
     basemap: "streets-night-vector",
     center: [-70.31509, 41.68935],
-    zoom: 11
+    zoom: 11,
+    logo: false
   });
 
   var embayTemplate = new InfoTemplate({
@@ -98,13 +99,17 @@ require([
 
       var extent = graphicsUtils.graphicsExtent(features)
 
-      map.setExtent(extent.expand(1.1), true)
+      map.setExtent(extent.expand(1.2), true)
 
       var sumBA = 0
       var sumCA = 0
       var sumabv40 = 0 
       var sumForm = 0
       var pctGF = 0
+
+      var comScore = 0
+      var buScore = 0
+      var formScore = 0
 
       for (var i = features.length - 1; i >= 0; i--) {
 
@@ -118,6 +123,59 @@ require([
         }
       }
 
+      if (sumCA > 9) {
+
+        comScore = 4
+      } else if (sumCA > 6) {
+
+        comScore = 3
+      } else if (sumCA > 2) {
+
+        comScore = 2
+      } else if (sumCA >= 1) {
+
+        comScore = 1
+      } else {
+
+        comScore = 0
+      }
+
+      if (sumBA > 98) {
+
+        buScore = 4
+      } else if (sumBA > 34) {
+
+        buScore = 3
+      } else if (sumBA > 10) {
+
+        buScore = 2
+      } else if (sumBA > 10) {
+
+        buScore = 1
+      } else {
+
+        buScore = 0
+      }
+
+      pctG = Math.round((sumForm / sumabv40) * 100)
+
+      if (pctG > .6) {
+
+        formScore = 4
+      } else if (pctG > .4) {
+
+        formScore = 3
+      } else if (pctG > .2) {
+
+        formScore = 2
+      } else if (pctG > .01) {
+
+        formScore = 1
+      } else {
+
+        formScore = 0
+      }
+
       pctGF = Math.round((sumForm / sumabv40) * 100).toString() + "%"
 
       $('#BAsites').text(sumBA)
@@ -125,6 +183,25 @@ require([
       $('#abv_40').text(sumabv40)
       $('#frmWt').text(sumForm)
       $('#pct_GF').text(pctGF)
+
+      var ctx = $("#myChart");
+
+      var myChart = new Chart(ctx, {
+        type: 'polarArea',
+        data: {
+          datasets: [{
+            data: [comScore, buScore, formScore],
+            backgroundColor: ['#4286f4', '#f4a941', '#6c6772']
+          }],
+
+      // These labels appear in the legend and in the tooltips when hovering different arcs
+          labels: [
+            'Community Score',
+            'Business Score',
+            'Form Score'
+          ]
+        }
+      })
     })
 
     embayments1.selectFeatures(query1, FeatureLayer.SELECTION_ADD, function (features) {})
@@ -148,7 +225,7 @@ require([
 
       var extent = graphicsUtils.graphicsExtent(features)
 
-      map.setExtent(extent.expand(1.1), true)
+      map.setExtent(extent.expand(1.2), true)
 
       var sumBA = 0
       var sumCA = 0
@@ -176,8 +253,29 @@ require([
       $('#frmWt').text(sumForm)
       $('#pct_GF').text(pctGF)
 
-      embayments1.selectFeatures(query1, FeatureLayer.SELECTION_ADD, function (features) {})
+      var ctx = $("#myChart");
+
+      var myChart = new Chart(ctx, {
+        type: 'polarArea',
+        data: {
+          datasets: [{
+            data: [sumCA, sumBA, sumForm],
+            backgroundColor: ['#4286f4', '#f4a941', '#6c6772']
+          }],
+
+      // These labels appear in the legend and in the tooltips when hovering different arcs
+          labels: [
+            'Community Score',
+            'Business Score',
+            'Form Score'
+          ]
+        }
+      })
+
+      // embayments1.selectFeatures(query1, FeatureLayer.SELECTION_ADD, function (features) {})
     })
+
+    embayments1.selectFeatures(query1, FeatureLayer.SELECTION_ADD, function (features) {})
   }
 
   ZoomToSelection2 = function(x) {
@@ -198,7 +296,7 @@ require([
 
       var extent = graphicsUtils.graphicsExtent(features)
 
-      map.setExtent(extent.expand(1.1), true)
+      map.setExtent(extent.expand(1.2), true)
 
       var sumBA = 0
       var sumCA = 0
@@ -226,8 +324,29 @@ require([
       $('#frmWt').text(sumForm)
       $('#pct_GF').text(pctGF)
 
-      embayments1.selectFeatures(query1, FeatureLayer.SELECTION_ADD, function (features) {})
+      var ctx = $("#myChart");
+
+      var myChart = new Chart(ctx, {
+        type: 'polarArea',
+        data: {
+          datasets: [{
+            data: [sumCA, sumBA, sumForm],
+            backgroundColor: ['#4286f4', '#f4a941', '#6c6772']
+          }],
+
+      // These labels appear in the legend and in the tooltips when hovering different arcs
+          labels: [
+            'Community Score',
+            'Business Score',
+            'Form Score'
+          ]
+        }
+      })
+
+      // embayments1.selectFeatures(query1, FeatureLayer.SELECTION_ADD, function (features) {})
     })
+
+    embayments1.selectFeatures(query1, FeatureLayer.SELECTION_ADD, function (features) {})
   }
 
 

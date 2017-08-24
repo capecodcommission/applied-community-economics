@@ -1,8 +1,6 @@
 <template>
   <div class = 'fill-height' id="map">
-    <div id="legendDiv"></div>
-    <!-- <img src="http://www.capecodcommission.org/gfx/home-logo.jpg"> -->
-    <div class = 'selectEmbayment text-center'>
+    <div style = 'width: 30%' class = 'selectEmbayment text-center'>
       <img src="http://www.capecodcommission.org/gfx/home-logo.jpg" class = 'img-rounded'><br><br><br><br>
       <table width = '100%'>
         <tr>
@@ -20,6 +18,7 @@
           <td id = 'pct_GF'></td>
         </tr>
       </table>
+      <canvas id="myChart" width="400" height="400"></canvas>
       <br><br><br>
       <p>Zoom to either Neighborhoods or Activity Centers from the dropdowns below</p>
       <table width = '100%'>

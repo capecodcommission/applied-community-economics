@@ -7,10 +7,9 @@ import App from './App'
 import configRouter from './routes'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
-// import VueCharts from 'vue-charts'
 import VueTables from 'vue-tables'
 import moment from 'moment'
-// import GoogleCharts from 'google-charts'
+import Chart from 'chart.js'
 
 
 // Load technology icon path
