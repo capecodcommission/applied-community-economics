@@ -17,5 +17,9 @@ export default {
 
   getActivityCenters () {
     return Vue.http.get(API_ROOT + 'getActivityCenters')
+  },
+
+  getTowns () {
+    return Vue.http.get(API_ROOT + 'getTowns')
   }
 }

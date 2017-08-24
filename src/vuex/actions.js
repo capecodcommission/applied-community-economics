@@ -26,6 +26,18 @@ export const loadActivityCenters = function({dispatch, state}) {
   })
 }
 
+export const loadTowns = function({dispatch, state}) {
+
+  api.getTowns().then(function (response) {
+
+    dispatch('LOAD_TOWNS', response.data)
+
+  }, function (response) {
+
+    console.log(response)
+  })
+}
+
 
 
 

@@ -8,3 +8,8 @@ export function getActivityCenters (state) {
 	
   return state.centers
 }
+
+export function getTowns (state) {
+	
+  return state.towns
+}

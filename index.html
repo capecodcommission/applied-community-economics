@@ -180,6 +180,56 @@ require([
     })
   }
 
+  ZoomToSelection2 = function(x) {
+
+    embayments.clearSelection();
+    embayments1.clearSelection();
+
+    var query = new Query()
+    query.where = "Town = " + "'" + x + "'" 
+    query.outFields = ['*']
+
+    var query1 = new Query()
+    query1.where = "Town = " + "'" + x + "'" + " and PctImp_Above40 = 1 and FormWeight >= 6"
+    query1.outFields = ['*']
+
+
+    embayments.selectFeatures(query, FeatureLayer.SELECTION_NEW, function (features) {
+
+      var extent = graphicsUtils.graphicsExtent(features)
+
+      map.setExtent(extent.expand(1.1), true)
+
+      var sumBA = 0
+      var sumCA = 0
+      var sumabv40 = 0 
+      var sumForm = 0
+      var pctGF = 0
+
+      for (var i = features.length - 1; i >= 0; i--) {
+
+        sumBA += features[i].attributes.SUM_BAsites
+        sumCA += features[i].attributes.SUM_CAsites
+        sumabv40 += features[i].attributes.PctImp_Above40
+
+        if (features[i].attributes.FormWeight >= 6 && features[i].attributes.PctImp_Above40 === 1) {
+
+          sumForm += 1
+        }
+      }
+
+      pctGF = Math.round((sumForm / sumabv40) * 100).toString() + "%"
+
+      $('#BAsites').text(sumBA)
+      $('#CAsites').text(sumCA)
+      $('#abv_40').text(sumabv40)
+      $('#frmWt').text(sumForm)
+      $('#pct_GF').text(pctGF)
+
+      embayments1.selectFeatures(query1, FeatureLayer.SELECTION_ADD, function (features) {})
+    })
+  }
+
 
   // On new dropdown selection, pass EMBAY_DISP to ZoomToSelection 
   $('#neighborhoodSelect').on('change', function() {
@@ -194,6 +244,7 @@ require([
 
       ZoomToSelection(x)
       $('#acSelect').val('0')
+      $('#townSelect').val('0')
     }
   })
 
@@ -209,6 +260,23 @@ require([
 
       ZoomToSelection1(x)
       $('#neighborhoodSelect').val('0')
+      $('#townSelect').val('0')
+    }
+  })
+
+  $('#townSelect').on('change', function() {
+
+    var x = $(this).val().toString()
+
+    if (x === '0') {
+
+      embayments.clearSelection();
+      map.setExtent(embayments.fullExtent.getExtent(), true)
+    } else {
+
+      ZoomToSelection2(x)
+      $('#neighborhoodSelect').val('0')
+      $('#acSelect').val('0')
     }
   })
 });

@@ -36,6 +36,12 @@
               <option v-for = 'center in centers.recordsets[0]' value = '{{center.center}}'>{{center.center}}</option>
             </select>
           </td>
+          <td>
+            <select id = 'townSelect'>
+              <option value = '0'>Select a Town</option>
+              <option v-for = 'town in towns.recordsets[0]' value = '{{town.town}}'>{{town.town}}</option>
+            </select>
+          </td>
         </tr>
       </table>
     </div>
@@ -46,8 +52,8 @@
 <script>
 
 import {introJs} from '../../node_modules/intro.js/intro.js'
-import { loadNeighborhoods, loadActivityCenters } from '../vuex/actions'
-import { getNeighborhoods, getActivityCenters } from '../vuex/getters'
+import { loadNeighborhoods, loadActivityCenters, loadTowns } from '../vuex/actions'
+import { getNeighborhoods, getActivityCenters, getTowns } from '../vuex/getters'
 
 export default {
 
@@ -67,13 +73,15 @@ export default {
     actions: {
       
       loadNeighborhoods,
-      loadActivityCenters
+      loadActivityCenters,
+      loadTowns
     },
 
     getters: {
 
       neighborhoods: getNeighborhoods,
-      centers: getActivityCenters
+      centers: getActivityCenters,
+      towns: getTowns
     }
   },
 
@@ -91,6 +99,11 @@ export default {
     'neighborhoods': function() {
 
       this.loadActivityCenters()
+    },
+
+    'centers': function() {
+
+      this.loadTowns()
     }
   }
 }
