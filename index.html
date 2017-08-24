@@ -61,19 +61,37 @@ require([
     infoTemplate: embayTemplate
   })
 
+  var embayments1 = new FeatureLayer("http://gis-services.capecodcommission.org/arcgis/rest/services/ActivityCenters/CommunityCharacteristics/MapServer/0", {
+    mode: FeatureLayer.MODE_SELECTION,
+    outFields: ['*'],
+    opacity: 1,
+    infoTemplate: embayTemplate
+  })
+
   map.addLayer(embayments)
+  map.addLayer(embayments1)
 
   var selectionSymbol = new esri.symbol.SimpleFillSymbol().setColor(new esri.Color([218,112,214,0.5]));
   embayments.setSelectionSymbol(selectionSymbol)
+
+  var selectionSymbol1 = new esri.symbol.SimpleFillSymbol().setColor(new esri.Color([244, 128, 66]));
+  embayments1.setSelectionSymbol(selectionSymbol1)
+
+  embayTemplate.setContent('${*}')
 
   // If EMBAY_ID from dropdown matches EMBAY_ID in feature layer, zoom to queried embayment's extent.
   ZoomToSelection = function(x) {
 
     embayments.clearSelection();
+    embayments1.clearSelection()
 
     var query = new Query()
     query.where = "Neighborhood = " + "'" + x + "'" 
     query.outFields = ['*']
+
+    var query1 = new Query()
+    query1.where = "Neighborhood = " + "'" + x + "'" + " and PctImp_Above40 = 1 and FormWeight >= 6"
+    query1.outFields = ['*']
 
 
     embayments.selectFeatures(query, FeatureLayer.SELECTION_NEW, function (features) {
@@ -101,12 +119,6 @@ require([
       }
 
       pctGF = Math.round((sumForm / sumabv40) * 100).toString() + "%"
-
-      embayTemplate.setContent("BAsites: " + sumBA + "<br>" +
-                                "CAsites: " + sumCA + "<br>" +
-                                "pctImp_Above40: " + sumabv40 + "<br>" +
-                                "FormWeight: " + sumForm + "<br>" +
-                                "% Good Form: " + pctGF)
 
       $('#BAsites').text(sumBA)
       $('#CAsites').text(sumCA)
@@ -114,15 +126,22 @@ require([
       $('#frmWt').text(sumForm)
       $('#pct_GF').text(pctGF)
     })
+
+    embayments1.selectFeatures(query1, FeatureLayer.SELECTION_ADD, function (features) {})
   }
 
   ZoomToSelection1 = function(x) {
 
     embayments.clearSelection();
+    embayments1.clearSelection();
 
     var query = new Query()
     query.where = "AC_FINAL = " + "'" + x + "'" 
     query.outFields = ['*']
+
+    var query1 = new Query()
+    query1.where = "AC_FINAL = " + "'" + x + "'" + " and PctImp_Above40 = 1 and FormWeight >= 6"
+    query1.outFields = ['*']
 
 
     embayments.selectFeatures(query, FeatureLayer.SELECTION_NEW, function (features) {
@@ -151,17 +170,13 @@ require([
 
       pctGF = Math.round((sumForm / sumabv40) * 100).toString() + "%"
 
-      embayTemplate.setContent("BAsites: " + sumBA + "<br>" +
-                                "CAsites: " + sumCA + "<br>" +
-                                "pctImp_Above40: " + sumabv40 + "<br>" +
-                                "FormWeight: " + sumForm + "<br>" +
-                                "% Good Form: " + pctGF)
-
       $('#BAsites').text(sumBA)
       $('#CAsites').text(sumCA)
       $('#abv_40').text(sumabv40)
       $('#frmWt').text(sumForm)
       $('#pct_GF').text(pctGF)
+
+      embayments1.selectFeatures(query1, FeatureLayer.SELECTION_ADD, function (features) {})
     })
   }
 
@@ -178,6 +193,7 @@ require([
     } else {
 
       ZoomToSelection(x)
+      $('#acSelect').val('0')
     }
   })
 
@@ -192,6 +208,7 @@ require([
     } else {
 
       ZoomToSelection1(x)
+      $('#neighborhoodSelect').val('0')
     }
   })
 });

@@ -1,5 +1,6 @@
 <template>
   <div class = 'fill-height' id="map">
+    <div id="legendDiv"></div>
     <!-- <img src="http://www.capecodcommission.org/gfx/home-logo.jpg"> -->
     <div class = 'selectEmbayment text-center'>
       <img src="http://www.capecodcommission.org/gfx/home-logo.jpg" class = 'img-rounded'><br><br><br><br>
@@ -8,7 +9,7 @@
           <th>BA Sites</th>
           <th>CA Sites</th>
           <th>> 40% Impervious</th>
-          <th>Form Weight</th>
+          <th>Form Weight >= 6</th>
           <th>% Good Form</th>
         </tr>
         <tr style = 'font-size: 40px'>
@@ -40,7 +41,6 @@
     </div>
   </div>
   <div id = 'mapReload'></div>
-  <pre>{{centers | json}}</pre>
 </template>
 
 <script>
