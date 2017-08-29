@@ -80,6 +80,39 @@ require([
 
   embayTemplate.setContent('${*}')
 
+
+  var comScore = 1
+  var buScore = 1
+  var formScore = 1
+
+  var ctx = $("#myChart");
+
+  var myChart = new Chart(ctx, {
+    type: 'polarArea',
+    data: {
+      datasets: [{
+        data: [comScore, buScore, formScore],
+        backgroundColor: ['#4286f4', '#f4a941', '#6c6772']
+      }],
+
+  // These labels appear in the legend and in the tooltips when hovering different arcs
+      labels: [
+        'Community Score',
+        'Business Score',
+        'Form Score'
+      ]
+    },
+    options: {
+      scale: {
+        ticks: {
+          min: 0,
+          max: 4,
+          stepSize: 1
+        }
+      }
+    }
+  })
+
   // If EMBAY_ID from dropdown matches EMBAY_ID in feature layer, zoom to queried embayment's extent.
   ZoomToSelection = function(x) {
 
@@ -106,10 +139,6 @@ require([
       var sumabv40 = 0 
       var sumForm = 0
       var pctGF = 0
-
-      var comScore = 0
-      var buScore = 0
-      var formScore = 0
 
       for (var i = features.length - 1; i >= 0; i--) {
 
@@ -157,7 +186,7 @@ require([
         buScore = 0
       }
 
-      pctG = Math.round((sumForm / sumabv40) * 100)
+      pctG = sumForm / sumabv40
 
       if (pctG > .6) {
 
@@ -176,6 +205,9 @@ require([
         formScore = 0
       }
 
+      myChart.data.datasets[0].data = [comScore, buScore, formScore]
+      myChart.update()
+
       pctGF = Math.round((sumForm / sumabv40) * 100).toString() + "%"
 
       $('#BAsites').text(sumBA)
@@ -184,27 +216,8 @@ require([
       $('#frmWt').text(sumForm)
       $('#pct_GF').text(pctGF)
 
-      var ctx = $("#myChart");
-
-      var myChart = new Chart(ctx, {
-        type: 'polarArea',
-        data: {
-          datasets: [{
-            data: [comScore, buScore, formScore],
-            backgroundColor: ['#4286f4', '#f4a941', '#6c6772']
-          }],
-
-      // These labels appear in the legend and in the tooltips when hovering different arcs
-          labels: [
-            'Community Score',
-            'Business Score',
-            'Form Score'
-          ]
-        }
-      })
-    })
-
     embayments1.selectFeatures(query1, FeatureLayer.SELECTION_ADD, function (features) {})
+    })
   }
 
   ZoomToSelection1 = function(x) {
@@ -245,6 +258,62 @@ require([
         }
       }
 
+      if (sumCA > 9) {
+
+        comScore = 4
+      } else if (sumCA > 6) {
+
+        comScore = 3
+      } else if (sumCA > 2) {
+
+        comScore = 2
+      } else if (sumCA >= 1) {
+
+        comScore = 1
+      } else {
+
+        comScore = 0
+      }
+
+      if (sumBA > 98) {
+
+        buScore = 4
+      } else if (sumBA > 34) {
+
+        buScore = 3
+      } else if (sumBA > 10) {
+
+        buScore = 2
+      } else if (sumBA > 10) {
+
+        buScore = 1
+      } else {
+
+        buScore = 0
+      }
+
+      pctG = sumForm / sumabv40
+
+      if (pctG > .6) {
+
+        formScore = 4
+      } else if (pctG > .4) {
+
+        formScore = 3
+      } else if (pctG > .2) {
+
+        formScore = 2
+      } else if (pctG > .01) {
+
+        formScore = 1
+      } else {
+
+        formScore = 0
+      }
+
+      myChart.data.datasets[0].data = [comScore, buScore, formScore]
+      myChart.update()
+
       pctGF = Math.round((sumForm / sumabv40) * 100).toString() + "%"
 
       $('#BAsites').text(sumBA)
@@ -253,29 +322,8 @@ require([
       $('#frmWt').text(sumForm)
       $('#pct_GF').text(pctGF)
 
-      var ctx = $("#myChart");
-
-      var myChart = new Chart(ctx, {
-        type: 'polarArea',
-        data: {
-          datasets: [{
-            data: [sumCA, sumBA, sumForm],
-            backgroundColor: ['#4286f4', '#f4a941', '#6c6772']
-          }],
-
-      // These labels appear in the legend and in the tooltips when hovering different arcs
-          labels: [
-            'Community Score',
-            'Business Score',
-            'Form Score'
-          ]
-        }
-      })
-
-      // embayments1.selectFeatures(query1, FeatureLayer.SELECTION_ADD, function (features) {})
-    })
-
     embayments1.selectFeatures(query1, FeatureLayer.SELECTION_ADD, function (features) {})
+    })
   }
 
   ZoomToSelection2 = function(x) {
@@ -316,6 +364,62 @@ require([
         }
       }
 
+      if (sumCA > 9) {
+
+        comScore = 4
+      } else if (sumCA > 6) {
+
+        comScore = 3
+      } else if (sumCA > 2) {
+
+        comScore = 2
+      } else if (sumCA >= 1) {
+
+        comScore = 1
+      } else {
+
+        comScore = 0
+      }
+
+      if (sumBA > 98) {
+
+        buScore = 4
+      } else if (sumBA > 34) {
+
+        buScore = 3
+      } else if (sumBA > 10) {
+
+        buScore = 2
+      } else if (sumBA > 10) {
+
+        buScore = 1
+      } else {
+
+        buScore = 0
+      }
+
+      pctG = sumForm / sumabv40
+
+      if (pctG > .6) {
+
+        formScore = 4
+      } else if (pctG > .4) {
+
+        formScore = 3
+      } else if (pctG > .2) {
+
+        formScore = 2
+      } else if (pctG > .01) {
+
+        formScore = 1
+      } else {
+
+        formScore = 0
+      }
+
+      myChart.data.datasets[0].data = [comScore, buScore, formScore]
+      myChart.update()
+
       pctGF = Math.round((sumForm / sumabv40) * 100).toString() + "%"
 
       $('#BAsites').text(sumBA)
@@ -324,29 +428,8 @@ require([
       $('#frmWt').text(sumForm)
       $('#pct_GF').text(pctGF)
 
-      var ctx = $("#myChart");
-
-      var myChart = new Chart(ctx, {
-        type: 'polarArea',
-        data: {
-          datasets: [{
-            data: [sumCA, sumBA, sumForm],
-            backgroundColor: ['#4286f4', '#f4a941', '#6c6772']
-          }],
-
-      // These labels appear in the legend and in the tooltips when hovering different arcs
-          labels: [
-            'Community Score',
-            'Business Score',
-            'Form Score'
-          ]
-        }
-      })
-
-      // embayments1.selectFeatures(query1, FeatureLayer.SELECTION_ADD, function (features) {})
-    })
-
     embayments1.selectFeatures(query1, FeatureLayer.SELECTION_ADD, function (features) {})
+    })
   }
 
 

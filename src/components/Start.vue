@@ -1,8 +1,8 @@
 <template>
   <div class = 'fill-height' id="map">
-    <div style = 'width: 30%' class = 'selectEmbayment text-center'>
+    <div  class = 'selectEmbayment text-center'>
       <img src="http://www.capecodcommission.org/gfx/home-logo.jpg" class = 'img-rounded'><br><br><br><br>
-      <table width = '100%'>
+      <table>
         <tr>
           <th>BA Sites</th>
           <th>CA Sites</th>
@@ -18,31 +18,21 @@
           <td id = 'pct_GF'></td>
         </tr>
       </table>
-      <canvas id="myChart" width="400" height="400"></canvas>
+      <canvas style = 'display: inline' id="myChart" width="400" height="400"></canvas>
       <br><br><br>
       <p>Zoom to either Neighborhoods or Activity Centers from the dropdowns below</p>
-      <table width = '100%'>
-        <tr>
-          <td>
-            <select id = 'neighborhoodSelect'>
-              <option value = '0'>Select a Neighborhood</option>
-              <option v-for = 'neighborhood in neighborhoods.recordsets[0]' value = '{{neighborhood.Neighborhood}}'>{{neighborhood.Neighborhood}}</option>
-            </select>
-          </td>
-          <td>
-            <select id = 'acSelect'>
-              <option value = '0'>Select an Activity Center</option>
-              <option v-for = 'center in centers.recordsets[0]' value = '{{center.center}}'>{{center.center}}</option>
-            </select>
-          </td>
-          <td>
-            <select id = 'townSelect'>
-              <option value = '0'>Select a Town</option>
-              <option v-for = 'town in towns.recordsets[0]' value = '{{town.town}}'>{{town.town}}</option>
-            </select>
-          </td>
-        </tr>
-      </table>
+      <select id = 'neighborhoodSelect'>
+        <option value = '0'>Select a Neighborhood</option>
+        <option v-for = 'neighborhood in neighborhoods.recordsets[0]' value = '{{neighborhood.Neighborhood}}'>{{neighborhood.Neighborhood}}</option>
+      </select>
+      <select id = 'acSelect'>
+        <option value = '0'>Select an Activity Center</option>
+        <option v-for = 'center in centers.recordsets[0]' value = '{{center.center}}'>{{center.center}}</option>
+      </select>
+      <select id = 'townSelect'>
+        <option value = '0'>Select a Town</option>
+        <option v-for = 'town in towns.recordsets[0]' value = '{{town.town}}'>{{town.town}}</option>
+      </select>
     </div>
   </div>
   <div id = 'mapReload'></div>
@@ -122,7 +112,7 @@ export default {
   top: 100px;
   position: absolute;
   z-index: 3;
-  width: 25%;
+  width: 30%;
   float: left;
   background: #8cb8ff;
   border-radius: 25px;
