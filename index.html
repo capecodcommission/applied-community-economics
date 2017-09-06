@@ -93,8 +93,8 @@ require([
 
   renderer.addValue({
     value: "2",
-    symbol: createSymbol([222, 226, 106, 0.5]),
-    label: "Impervious, Bad Form"
+    symbol: createSymbol([237, 239, 242, 0.2]),
+    label: "Neutral"
   });
 
   renderer.addValue({
@@ -118,7 +118,7 @@ require([
   map.addLayer(embayments1)
   map.addLayer(embayments2)
 
-  var selectionSymbol = new esri.symbol.SimpleFillSymbol().setColor(new esri.Color([222, 226, 106, 0.5]));
+  var selectionSymbol = new esri.symbol.SimpleFillSymbol().setColor(new esri.Color([237, 239, 242, 0.2]));
   selectionSymbol.setOutline(new SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new Color([255,0,0]), 2)); 
   embayments.setSelectionSymbol(selectionSymbol)
 
@@ -173,7 +173,7 @@ require([
     embayments2.clearSelection()
 
     var query = new Query()
-    query.where = "Neighborhood = " + "'" + x + "'" + " and PctImp_Above40 = 1 and FormWeight < 6"
+    query.where = "Neighborhood = " + "'" + x + "'" 
     query.outFields = ['*']
 
     var query1 = new Query()
@@ -203,7 +203,7 @@ require([
         sumCA += features[i].attributes.SUM_CAsites
         sumabv40 += features[i].attributes.PctImp_Above40
 
-        if (features[i].attributes.FormWeight >= 6 && features[i].attributes.PctImp_Above40 === 1) {
+        if (features[i].attributes.FormWeight >= 6) {
 
           sumForm += 1
         }
@@ -243,18 +243,18 @@ require([
         buScore = 0
       }
 
-      pctG = sumForm / sumabv40
+      pctGF = sumForm / sumabv40
 
-      if (pctG > .6) {
+      if (pctGF > .6) {
 
         formScore = 4
-      } else if (pctG > .4) {
+      } else if (pctGF > .4) {
 
         formScore = 3
-      } else if (pctG > .2) {
+      } else if (pctGF > .2) {
 
         formScore = 2
-      } else if (pctG > .01) {
+      } else if (pctGF > .01) {
 
         formScore = 1
       } else {
@@ -285,7 +285,7 @@ require([
     embayments2.clearSelection();
 
     var query = new Query()
-    query.where = "AC_FINAL = " + "'" + x + "'" + " and PctImp_Above40 = 1 and FormWeight < 6"
+    query.where = "AC_FINAL = " + "'" + x + "'" 
     query.outFields = ['*']
 
     var query1 = new Query()
@@ -397,7 +397,7 @@ require([
     embayments2.clearSelection();
 
     var query = new Query()
-    query.where = "Town = " + "'" + x + "'" + " and PctImp_Above40 = 1 and FormWeight < 6"
+    query.where = "Town = " + "'" + x + "'"
     query.outFields = ['*']
 
     var query1 = new Query()
