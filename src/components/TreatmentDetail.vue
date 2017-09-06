@@ -89,18 +89,8 @@ export default {
 
     restartMap() {
       
-      window.open('http://2016.watershedmvp.org/wq','_self')
+      window.open('http://2016.watershedmvp.org/cc','_self')
     },
-
-    // When slider is updated, activeate action to reload treatment JSON using relative start year, duration, and current treatment selected
-    // onDurationChange( sliderValue ) {
-
-    //   if (sliderValue[0] > 30) {
-    //     sliderValue[0] = 30
-    //   }
-
-    //   this.updateTreatment( sliderValue[0], this.treatment.duration, this.treatment.treatmentId )
-    // },
 
     sortBy (sortKey) {
 

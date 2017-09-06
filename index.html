@@ -41,11 +41,14 @@ require([
   "esri/tasks/query",
   "esri/graphicsUtils",
   "esri/tasks/StatisticDefinition",
+  "esri/symbols/SimpleLineSymbol",
+  "esri/dijit/Legend",
+  "esri/renderers/UniqueValueRenderer",
   "dojo/domReady!"
-], function(Map, FeatureLayer, InfoTemplate, Config, Query, graphicsUtils, StatisticDefinition) {
+], function(Map, FeatureLayer, InfoTemplate, Config, Query, graphicsUtils, StatisticDefinition, SimpleLineSymbol, Legend, UniqueValueRenderer) {
 
   map = new Map("map", {
-    basemap: "streets-night-vector",
+    basemap: "dark-gray",
     center: [-70.31509, 41.68935],
     zoom: 11,
     logo: false
@@ -69,16 +72,65 @@ require([
     infoTemplate: embayTemplate
   })
 
+  var embayments2 = new FeatureLayer("http://gis-services.capecodcommission.org/arcgis/rest/services/ActivityCenters/CommunityCharacteristics/MapServer/0", {
+    mode: FeatureLayer.MODE_SELECTION,
+    outFields: ['*'],
+    opacity: 1,
+    infoTemplate: embayTemplate
+  })
+
+  var renderer = new UniqueValueRenderer(null, "PctImp_Above40");
+
+  function createSymbol (color) {
+    return new esri.symbol.SimpleFillSymbol().setColor(new esri.Color(color));
+  }
+
+  renderer.addValue({
+    value: "1",
+    symbol: createSymbol([226, 99, 99, 0.5]),
+    label: "Not Impervious, Bad Form"
+  });
+
+  renderer.addValue({
+    value: "2",
+    symbol: createSymbol([222, 226, 106, 0.5]),
+    label: "Impervious, Bad Form"
+  });
+
+  renderer.addValue({
+    value: "3",
+    symbol: createSymbol([131, 226, 105, 0.5]),
+    label: "Impervious, Good Form"
+  });
+
+  embayments.setRenderer(renderer)
+
+  var legend = new Legend({
+    map: map,
+    layerInfos: [{
+      layer: embayments,
+      title: "Scores"
+    }]
+  }, "legendDiv");
+  legend.startup();
+
   map.addLayer(embayments)
   map.addLayer(embayments1)
+  map.addLayer(embayments2)
 
-  var selectionSymbol = new esri.symbol.SimpleFillSymbol().setColor(new esri.Color([218,112,214,0.5]));
+  var selectionSymbol = new esri.symbol.SimpleFillSymbol().setColor(new esri.Color([222, 226, 106, 0.5]));
+  selectionSymbol.setOutline(new SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new Color([255,0,0]), 2)); 
   embayments.setSelectionSymbol(selectionSymbol)
 
-  var selectionSymbol1 = new esri.symbol.SimpleFillSymbol().setColor(new esri.Color([244, 128, 66]));
+  var selectionSymbol1 = new esri.symbol.SimpleFillSymbol().setColor(new esri.Color([131, 226, 105, 0.5]));
+  selectionSymbol1.setOutline(new SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new Color([255,0,0]), 2)); 
   embayments1.setSelectionSymbol(selectionSymbol1)
 
-  embayTemplate.setContent('${*}')
+  var selectionSymbol2 = new esri.symbol.SimpleFillSymbol().setColor(new esri.Color([226, 99, 99, 0.5]));
+  selectionSymbol2.setOutline(new SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new Color([255,0,0]), 2)); 
+  embayments2.setSelectionSymbol(selectionSymbol2)
+
+  embayTemplate.setContent("${*}")
 
 
   var comScore = 1
@@ -92,7 +144,7 @@ require([
     data: {
       datasets: [{
         data: [comScore, buScore, formScore],
-        backgroundColor: ['#4286f4', '#f4a941', '#6c6772']
+        backgroundColor: ['rgba(66, 134, 244,1)', 'rgba(244, 169, 65, 1)', 'rgba(108, 103, 114, 1)']
       }],
 
   // These labels appear in the legend and in the tooltips when hovering different arcs
@@ -118,14 +170,19 @@ require([
 
     embayments.clearSelection();
     embayments1.clearSelection()
+    embayments2.clearSelection()
 
     var query = new Query()
-    query.where = "Neighborhood = " + "'" + x + "'" 
+    query.where = "Neighborhood = " + "'" + x + "'" + " and PctImp_Above40 = 1 and FormWeight < 6"
     query.outFields = ['*']
 
     var query1 = new Query()
     query1.where = "Neighborhood = " + "'" + x + "'" + " and PctImp_Above40 = 1 and FormWeight >= 6"
     query1.outFields = ['*']
+
+    var query2 = new Query()
+    query2.where = "Neighborhood = " + "'" + x + "'" + " and PctImp_Above40 = 0 and FormWeight < 6"
+    query2.outFields = ['*']
 
 
     embayments.selectFeatures(query, FeatureLayer.SELECTION_NEW, function (features) {
@@ -216,7 +273,8 @@ require([
       $('#frmWt').text(sumForm)
       $('#pct_GF').text(pctGF)
 
-    embayments1.selectFeatures(query1, FeatureLayer.SELECTION_ADD, function (features) {})
+      embayments1.selectFeatures(query1, FeatureLayer.SELECTION_ADD, function (features) {})
+      embayments2.selectFeatures(query2, FeatureLayer.SELECTION_ADD, function (features) {})
     })
   }
 
@@ -224,14 +282,19 @@ require([
 
     embayments.clearSelection();
     embayments1.clearSelection();
+    embayments2.clearSelection();
 
     var query = new Query()
-    query.where = "AC_FINAL = " + "'" + x + "'" 
+    query.where = "AC_FINAL = " + "'" + x + "'" + " and PctImp_Above40 = 1 and FormWeight < 6"
     query.outFields = ['*']
 
     var query1 = new Query()
     query1.where = "AC_FINAL = " + "'" + x + "'" + " and PctImp_Above40 = 1 and FormWeight >= 6"
     query1.outFields = ['*']
+
+    var query2 = new Query()
+    query2.where = "AC_FINAL = " + "'" + x + "'" + " and PctImp_Above40 = 0 and FormWeight < 6"
+    query2.outFields = ['*']
 
 
     embayments.selectFeatures(query, FeatureLayer.SELECTION_NEW, function (features) {
@@ -323,6 +386,7 @@ require([
       $('#pct_GF').text(pctGF)
 
     embayments1.selectFeatures(query1, FeatureLayer.SELECTION_ADD, function (features) {})
+    embayments2.selectFeatures(query2, FeatureLayer.SELECTION_ADD, function (features) {})
     })
   }
 
@@ -330,14 +394,19 @@ require([
 
     embayments.clearSelection();
     embayments1.clearSelection();
+    embayments2.clearSelection();
 
     var query = new Query()
-    query.where = "Town = " + "'" + x + "'" 
+    query.where = "Town = " + "'" + x + "'" + " and PctImp_Above40 = 1 and FormWeight < 6"
     query.outFields = ['*']
 
     var query1 = new Query()
     query1.where = "Town = " + "'" + x + "'" + " and PctImp_Above40 = 1 and FormWeight >= 6"
     query1.outFields = ['*']
+
+    var query2 = new Query()
+    query2.where = "Town = " + "'" + x + "'" + " and PctImp_Above40 = 0 and FormWeight < 6"
+    query2.outFields = ['*']
 
 
     embayments.selectFeatures(query, FeatureLayer.SELECTION_NEW, function (features) {
@@ -429,6 +498,7 @@ require([
       $('#pct_GF').text(pctGF)
 
     embayments1.selectFeatures(query1, FeatureLayer.SELECTION_ADD, function (features) {})
+    embayments2.selectFeatures(query2, FeatureLayer.SELECTION_ADD, function (features) {})
     })
   }
 
@@ -481,6 +551,29 @@ require([
       $('#acSelect').val('0')
     }
   })
+
+  getEmbayment = function(id) {
+
+    $('#nodata').remove()
+
+    var url = 'http://ccc-api-05.api.capecodcommission.org/api/getEmbayment/' + id
+
+    $.ajax(
+      {
+        method: 'GET', 
+        url: url
+      }
+    ).done(function(rows) {
+
+      if (rows.recordset.length > 1) {
+
+        
+      } else {
+
+        $('.contentPane').append("<p id = 'nodata' class = 'text-danger'>No data available</p>")
+      }
+    })
+  }
 });
 	</script>
   </head>

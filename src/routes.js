@@ -5,8 +5,8 @@ export default function (router) {
       name: 'Start',
       component: require('./components/Start.vue')
     }, // TODO: Track current routes per treatment
-    '/embayment/:id': { // :id is a route parameter that can be passed into a function
-      name: 'embayment',
+    '/reportcard/:id': { // :id is a route parameter that can be passed into a function
+      name: 'reportCard',
       component: require('./components/ScenarioView.vue'),
       subRoutes: {
         '/' : { // Routes hereafter are nested within /scenario/:id

@@ -10,7 +10,7 @@
           <th>Form Weight >= 6</th>
           <th>% Good Form</th>
         </tr>
-        <tr style = 'font-size: 40px'>
+        <tr style = 'font-size: 30px'>
           <td id = 'BAsites'></td>
           <td id = 'CAsites'></td>
           <td id = 'abv_40'></td>
@@ -18,21 +18,29 @@
           <td id = 'pct_GF'></td>
         </tr>
       </table>
-      <canvas style = 'display: inline' id="myChart" width="400" height="400"></canvas>
+      <canvas style = 'display: inline' id="myChart" width="200" height="200"></canvas>
       <br><br><br>
-      <p>Zoom to either Neighborhoods or Activity Centers from the dropdowns below</p>
-      <select id = 'neighborhoodSelect'>
+      <p>Select one of the groups below, then select a subgroup from the dropdown menu</p>
+      <form>
+        <input @click = 'changenbh' type="radio" name="checkgroup" value="Neighborhood"> Neighborhood
+        <input @click = 'changeac' type="radio" name="checkgroup" value="Activity Center"> Activity Center
+        <input @click = 'changetown' type="radio" name="checkgroup" value="Town"> Town
+      </form>
+      <select v-show = "nbhselected" id = 'neighborhoodSelect'>
         <option value = '0'>Select a Neighborhood</option>
         <option v-for = 'neighborhood in neighborhoods.recordsets[0]' value = '{{neighborhood.Neighborhood}}'>{{neighborhood.Neighborhood}}</option>
       </select>
-      <select id = 'acSelect'>
+      <select v-show = "acselected" id = 'acSelect'>
         <option value = '0'>Select an Activity Center</option>
         <option v-for = 'center in centers.recordsets[0]' value = '{{center.center}}'>{{center.center}}</option>
       </select>
-      <select id = 'townSelect'>
+      <select v-show = "townselected" id = 'townSelect'>
         <option value = '0'>Select a Town</option>
         <option v-for = 'town in towns.recordsets[0]' value = '{{town.town}}'>{{town.town}}</option>
       </select>
+    </div>
+    <div class = 'selectEmbayment1'>
+      <div id = 'legendDiv'></div>
     </div>
   </div>
   <div id = 'mapReload'></div>
@@ -53,7 +61,9 @@ export default {
   data () {
 
     return {
-
+      nbhselected: false,
+      acselected: false,
+      townselected: false
     }
   },
 
@@ -81,6 +91,35 @@ export default {
 
   methods: {
 
+    changenbh: function() {
+
+      $('#ACenter').prop('checked', false)
+      $('#Town').prop('checked', false)
+
+      this.nbhselected = true
+      this.acselected = false
+      this.townselected = false
+    },
+
+    changeac: function() {
+
+      $('#Neighborhood').prop('checked', false)
+      $('#Town').prop('checked', false)
+
+      this.nbhselected = false
+      this.acselected = true
+      this.townselected = false
+    },
+
+    changetown: function() {
+
+      $('#ACenter').prop('checked', false)
+      $('#Neighborhood').prop('checked', false)
+
+      this.nbhselected = false
+      this.acselected = false
+      this.townselected = true
+    }
   },
 
   watch: {
@@ -112,7 +151,7 @@ export default {
   top: 100px;
   position: absolute;
   z-index: 3;
-  width: 30%;
+  width: 24%;
   float: left;
   background: #8cb8ff;
   border-radius: 25px;
@@ -121,6 +160,26 @@ export default {
   opacity: 0.9;
   color: black;
 
+}
+
+.selectEmbayment1 {
+  top: 100px;
+  right: 1px;
+  position: absolute;
+  z-index: 4;
+  width: 10%;
+  float: right;
+  background: #8cb8ff;
+  border-radius: 25px;
+  padding: 1.5em;
+  border: 2px solid black;
+  opacity: 0.9;
+  color: black;
+
+}
+
+#legendDiv {
+  float: right;
 }
 
  html, body, #app {
