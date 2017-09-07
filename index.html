@@ -119,15 +119,15 @@ require([
   map.addLayer(embayments2)
 
   var selectionSymbol = new esri.symbol.SimpleFillSymbol().setColor(new esri.Color([237, 239, 242, 0.2]));
-  selectionSymbol.setOutline(new SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new Color([255,0,0]), 2)); 
+  selectionSymbol.setOutline(new SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new Color([255, 255, 255]), 4)); 
   embayments.setSelectionSymbol(selectionSymbol)
 
   var selectionSymbol1 = new esri.symbol.SimpleFillSymbol().setColor(new esri.Color([131, 226, 105, 0.5]));
-  selectionSymbol1.setOutline(new SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new Color([255,0,0]), 2)); 
+  selectionSymbol1.setOutline(new SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new Color([255, 255, 255]), 4)); 
   embayments1.setSelectionSymbol(selectionSymbol1)
 
   var selectionSymbol2 = new esri.symbol.SimpleFillSymbol().setColor(new esri.Color([226, 99, 99, 0.5]));
-  selectionSymbol2.setOutline(new SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new Color([255,0,0]), 2)); 
+  selectionSymbol2.setOutline(new SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new Color([255, 255, 255]), 4)); 
   embayments2.setSelectionSymbol(selectionSymbol2)
 
   embayTemplate.setContent("${*}")
