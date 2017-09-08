@@ -38,6 +38,9 @@ export const loadTowns = function({dispatch, state}) {
   })
 }
 
+export const loadTownName = function({dispatch, state}, name) {
 
+  dispatch('LOAD_TOWNNAME', name)
+}
 
 

@@ -10,7 +10,7 @@
 
 <script>
 
-import {  } from '../vuex/actions'
+import { loadTownName } from '../vuex/actions'
 import {  } from '../vuex/getters'
 import {  } from 'vue-strap'
 import json2csv from 'nice-json2csv'
@@ -34,6 +34,7 @@ export default {
   vuex: {
     actions: {
 
+      loadTownName
     },
     getters: {
 
@@ -42,9 +43,6 @@ export default {
 
   watch: {
 
-    'embayment': function (val) {
-
-    }
   },
 
   // Get scenario and finance options based on scenarioId passed from parent ScenarioView

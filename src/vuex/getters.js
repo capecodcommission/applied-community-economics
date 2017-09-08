@@ -13,3 +13,8 @@ export function getTowns (state) {
 	
   return state.towns
 }
+
+export function getTownName (state) {
+	
+  return state.townName
+}

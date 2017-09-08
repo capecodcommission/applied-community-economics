@@ -7,7 +7,8 @@ Vue.use(Vuex)
 const state = {
   neighborhoods: [],
   centers: [],
-  towns: []
+  towns: [],
+  townName: ''
 }
 
 // Create mutations; functions to change data in the state
@@ -26,6 +27,11 @@ const mutations = {
   LOAD_TOWNS (state, towns) {
 
     state.towns = towns
+  },
+
+  LOAD_TOWNNAME (state, name) {
+
+    state.townName = name
   }
 }
 

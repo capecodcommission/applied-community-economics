@@ -8,13 +8,12 @@
     <div class="row">
       <div class = 'col-md-12 text-center'>
         <button class = 'btn btn-success pull-right' @click = 'excelExport'>Export Data</button><br><br>
-        <button class = 'btn btn-primary text-center'>Raw Table</button>
       </div>
     </div>
 
     <div class = 'row'>
       <div class="col-md-12">  
-        <v-client-table :data = 'embayment.data' :columns = 'columns' :options = 'options'></v-client-table>
+
       </div>
     </div>
 
@@ -27,63 +26,35 @@
 
 <script>
 
-import { loadEmbayment } from '../vuex/actions'
-import { getEmbayment, getEmbayments } from '../vuex/getters'
-import { tooltip, alert } from 'vue-strap'
+import {  } from '../vuex/actions'
+import {  } from '../vuex/getters'
+import {  } from 'vue-strap'
 import json2csv from 'nice-json2csv'
-import {introJs} from '../../node_modules/intro.js/intro.js'
 import wqheader from './Header'
 
 export default {
   components: {
 
-    'wqheader': wqheader,
-    tooltip,
-    alert
+    'wqheader': wqheader
   },
 
   data () {
 
     return {
 
-      active: false,
-      activeArr: [],
-      reverse: false,
-      sortKey: 'Year',
-      columns: ['date','salinity','disolvedoxygen','nitrogen','water_temp','precipitation','depth','nitrate_nitrite','ammonium','orthophosphate','chlorophyll','phaeophytin'],
-      options: {
-        dateColumns: ['date'],
-        headings: {
-          date: 'Date',
-          salinity: 'Salinity',
-          disolvedoxygen: 'Disolved Oxygen',
-          nitrogen: 'Nitrogen',
-          water_temp: 'Water Temp',
-          precipitation: 'Precipitation',
-          depth: 'Depth',
-          nitrate_nitrite: 'Nitrate Nitrite',
-          ammonium: 'Ammonium',
-          orthophosphate: 'Orthophosphate',
-          chlorophyll: 'Chlorophyll',
-          phaeophytin: 'Phaeophytin'
-        }
-      }
     }
   },
 
   vuex: {
     actions: {
 
-      loadEmbayment
     },
     getters: {
-      
-      embayment: getEmbayment,
-      embayments: getEmbayments
+
     }
   },
 
-  props: ['disabled','href', 'embayment.data'],
+  props: ['disabled','href'],
 
   methods: {
 
@@ -97,20 +68,6 @@ export default {
       this.reverse = (this.sortKey == sortKey) ? ! this.reverse : false
 
       this.sortKey = sortKey
-    },
-
-    gotm_Id() {
-
-      var win = window.open('http://www.cch2o.org/Matrix/detail.php?treatment=' + this.treatment.tm_Id, '_blank');
-
-      if (win) {
-          //Browser has allowed it to be opened
-          win.focus();
-      } else {
-          //Browser has blocked it
-          alert('Please allow popups for this website');
-      }
-
     },
 
     JSONflatten (data) {
@@ -182,73 +139,6 @@ export default {
 
   watch: {
 
-    'embayment.data': function (val) {
-
-      for (var i = this.embayment.data.length - 1; i >= 0; i--) {
-
-        this.embayment.data[i].date = this.embayment.data[i].date.substring(0,10)
-      
-        if (this.embayment.data[i].year == null) {
-
-          this.embayment.data[i].year = null
-        }
-
-        if (this.embayment.data[i].salinity == null) {
-
-          this.embayment.data[i].salinity = null
-        }
-
-        if (this.embayment.data[i].disolvedoxygen == null) {
-
-          this.embayment.data[i].disolvedoxygen = null
-        }
-
-        if (this.embayment.data[i].nitrogen == null) {
-
-          this.embayment.data[i].nitrogen = null
-        }
-
-        if (this.embayment.data[i].water_temp == null) {
-
-        this.embayment.data[i].water_temp = null
-        } 
-
-        if (this.embayment.data[i].depth == null) {
-
-          this.embayment.data[i].depth = null
-        } 
-
-        if (this.embayment.data[i].precipitation == null) {
-
-          this.embayment.data[i].precipitation = null
-        } 
-
-        if (this.embayment.data[i].nitrate_nitrite == null || isNaN(this.embayment.data[i].nitrate_nitrite)) {
-
-          this.embayment.data[i].nitrate_nitrite = null
-        } 
-
-        if (this.embayment.data[i].ammonium == null) {
-
-          this.embayment.data[i].ammonium = null
-        } 
-
-        if (this.embayment.data[i].orthophosphate == null) {
-
-          this.embayment.data[i].orthophosphate = null
-        } 
-
-        if (this.embayment.data[i].chlorophyll == null) {
-
-          this.embayment.data[i].chlorophyll = null
-        } 
-
-        if (this.embayment.data[i].phaeophytin == null) {
-
-          this.embayment.data[i].phaeophytin = null
-        } 
-      }
-    }
   }
 }
 

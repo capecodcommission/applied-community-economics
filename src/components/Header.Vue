@@ -3,9 +3,7 @@
   <div class = "panel-body">
     <div class = 'row'>
       <div class = 'col-md-12 text-center'>
-        <tooltip effect = 'scale' placement = 'bottom' content = 'This is your selected station'>
-          <button class = 'btn btn-primary text-center'>{{ embayment.id }}</button><br>
-        </tooltip>
+        <button class = 'btn btn-primary text-center'>{{townName}}</button><br>
         <button id ='restartMap' class = 'btn btn-success pull-right'>Restart</button>
       </div>
     </div>
@@ -14,16 +12,7 @@
 
     <div class = 'row'>
       <div class = 'col-md-12'>
-        <div class = "btn-group btn-group-justified">
-  		    <div class="btn-group">
-            <tooltip effect = 'scale' placement = 'bottom' content = 'This is your current page'>
-              <button id = 'table' v-link="{ name: 'TreatmentDetail' }" class="btn">Nutrient Table</button>
-            </tooltip>
-          </div>
-  		    <div class="btn-group">
-            <button id = 'charts' v-link="{ name: 'propertyOwnerCosts' }" class="btn">Nutrient Charts</button>
-          </div>
-        </div>
+        
       </div>
     </div>
   </div>
@@ -32,17 +21,15 @@
 
 <script>
 
-import { loadEmbayment } from '../vuex/actions'
-import { getEmbayment, getEmbayments } from '../vuex/getters'
-import { tooltip, alert } from 'vue-strap'
+import {  } from '../vuex/actions'
+import { getTownName } from '../vuex/getters'
+import {  } from 'vue-strap'
 import {introJs} from '../../node_modules/intro.js/intro.js'
 
 export default {
 
   components: {
 
-    tooltip,
-    alert
   },
 
   data () {
@@ -55,16 +42,14 @@ export default {
   vuex: {
     actions: {
 
-      loadEmbayment
+      
     },
     getters: {
-      
-      embayment: getEmbayment,
-      embayments: getEmbayments
+      townName: getTownName
     }
   },
 
-  props: ['disabled','href', 'embayment.data'],
+  props: ['disabled','href'],
 
   methods: {
 

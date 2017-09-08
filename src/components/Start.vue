@@ -34,10 +34,11 @@
         <option value = '0'>Select an Activity Center</option>
         <option v-for = 'center in centers.recordsets[0]' value = '{{center.center}}'>{{center.center}}</option>
       </select>
-      <select v-show = "townselected" id = 'townSelect'>
+      <select v-model = 'townName' v-show = "townselected" id = 'townSelect'>
         <option value = '0'>Select a Town</option>
         <option v-for = 'town in towns.recordsets[0]' value = '{{town.town}}'>{{town.town}}</option>
       </select>
+      <button @click= 'goTown(townName)' id = 'reportCard' v-show = "townselected" class 'btn btn-primary'>View ReportCard {{townName}}</button>
     </div>
     <div class = 'selectEmbayment1'>
       <div id = 'legendDiv'></div>
@@ -49,7 +50,7 @@
 <script>
 
 import {introJs} from '../../node_modules/intro.js/intro.js'
-import { loadNeighborhoods, loadActivityCenters, loadTowns } from '../vuex/actions'
+import { loadNeighborhoods, loadActivityCenters, loadTowns, loadTownName } from '../vuex/actions'
 import { getNeighborhoods, getActivityCenters, getTowns } from '../vuex/getters'
 
 export default {
@@ -63,7 +64,8 @@ export default {
     return {
       nbhselected: false,
       acselected: false,
-      townselected: false
+      townselected: false,
+      townName: ''
     }
   },
 
@@ -73,7 +75,8 @@ export default {
       
       loadNeighborhoods,
       loadActivityCenters,
-      loadTowns
+      loadTowns,
+      loadTownName
     },
 
     getters: {
@@ -90,6 +93,11 @@ export default {
   },
 
   methods: {
+
+    goTown: function(x) {
+
+      router.go({name: 'reportCard', params: {id: x}})
+    },
 
     changenbh: function() {
 
@@ -132,6 +140,11 @@ export default {
     'centers': function() {
 
       this.loadTowns()
+    },
+
+    'townName': function(x) {
+
+      this.loadTownName(x)
     }
   }
 }
