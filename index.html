@@ -144,7 +144,7 @@ require([
     data: {
       datasets: [{
         data: [comScore, buScore, formScore],
-        backgroundColor: ['rgba(66, 134, 244,1)', 'rgba(244, 169, 65, 1)', 'rgba(108, 103, 114, 1)']
+        backgroundColor: ['rgba(66, 134, 244,.5)', 'rgba(244, 169, 65, .5)', 'rgba(108, 103, 114, .5)']
       }],
 
   // These labels appear in the legend and in the tooltips when hovering different arcs
@@ -161,7 +161,8 @@ require([
           max: 4,
           stepSize: 1
         }
-      }
+      },
+      startAngle: -0.4 * Math.PI
     }
   })
 

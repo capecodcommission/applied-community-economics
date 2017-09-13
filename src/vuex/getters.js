@@ -18,3 +18,8 @@ export function getTownName (state) {
 	
   return state.townName
 }
+
+export function getACScores (state) {
+	
+  return state.acscores
+}

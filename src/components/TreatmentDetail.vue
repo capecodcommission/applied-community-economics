@@ -12,8 +12,23 @@
     </div>
 
     <div class = 'row'>
-      <div class="col-md-12">  
-
+      <div class="col-md-2">
+          <canvas style = 'display: inline' id="myChart" width="200" height="200"></canvas>
+      </div>
+      <div class="col-md-2">
+          <canvas style = 'display: inline' id="myChart1" width="200" height="200"></canvas>
+      </div>
+      <div class="col-md-2">
+          <canvas style = 'display: inline' id="myChart2" width="200" height="200"></canvas>
+      </div>
+      <div class="col-md-2">
+          <canvas style = 'display: inline' id="myChart3" width="200" height="200"></canvas>
+      </div>
+      <div class="col-md-2">
+          <canvas style = 'display: inline' id="myChart4" width="200" height="200"></canvas>
+      </div>
+      <div class="col-md-2">
+          <canvas style = 'display: inline' id="myChart5" width="200" height="200"></canvas>
       </div>
     </div>
 
@@ -26,8 +41,8 @@
 
 <script>
 
-import {  } from '../vuex/actions'
-import {  } from '../vuex/getters'
+import { loadACScores } from '../vuex/actions'
+import { getACScores } from '../vuex/getters'
 import {  } from 'vue-strap'
 import json2csv from 'nice-json2csv'
 import wqheader from './Header'
@@ -48,9 +63,11 @@ export default {
   vuex: {
     actions: {
 
+      loadACScores
     },
     getters: {
 
+      scores: getACScores
     }
   },
 
@@ -61,13 +78,6 @@ export default {
     restartMap() {
       
       window.open('http://2016.watershedmvp.org/cc','_self')
-    },
-
-    sortBy (sortKey) {
-
-      this.reverse = (this.sortKey == sortKey) ? ! this.reverse : false
-
-      this.sortKey = sortKey
     },
 
     JSONflatten (data) {
@@ -134,11 +144,199 @@ export default {
 
   ready() {
 
-
+    this.loadACScores()
   },
 
   watch: {
 
+    'scores': function() {
+
+      var myChart = new Chart($("#myChart"), {
+        type: 'polarArea',
+        data: {
+          datasets: [{
+            data: [this.scores[0].comScore, this.scores[0].buScore, this.scores[0].formScore],
+            backgroundColor: ['rgba(66, 134, 244,.5)', 'rgba(244, 169, 65, .5)', 'rgba(108, 103, 114, .5)']
+          }],
+
+      // These labels appear in the legend and in the tooltips when hovering different arcs
+          labels: [
+            'Community Score',
+            'Business Score',
+            'Form Score'
+          ]
+        },
+        options: {
+          scale: {
+            ticks: {
+              min: 0,
+              max: 4,
+              stepSize: 1
+            }
+          },
+          startAngle: -0.4 * Math.PI,
+          title: {
+            display: true,
+            text: this.scores[0].Activity_Center
+          }
+        }
+      })
+
+      var myChart1 = new Chart($("#myChart1"), {
+        type: 'polarArea',
+        data: {
+          datasets: [{
+            data: [this.scores[1].comScore, this.scores[1].buScore, this.scores[1].formScore],
+            backgroundColor: ['rgba(66, 134, 244,.5)', 'rgba(244, 169, 65, .5)', 'rgba(108, 103, 114, .5)']
+          }],
+
+      // These labels appear in the legend and in the tooltips when hovering different arcs
+          labels: [
+            'Community Score',
+            'Business Score',
+            'Form Score'
+          ]
+        },
+        options: {
+          scale: {
+            ticks: {
+              min: 0,
+              max: 4,
+              stepSize: 1
+            }
+          },
+          startAngle: -0.4 * Math.PI,
+          title: {
+            display: true,
+            text: this.scores[1].Activity_Center
+          }
+        }
+      })
+
+      var myChart2 = new Chart($("#myChart2"), {
+        type: 'polarArea',
+        data: {
+          datasets: [{
+            data: [this.scores[2].comScore, this.scores[2].buScore, this.scores[2].formScore],
+            backgroundColor: ['rgba(66, 134, 244,.5)', 'rgba(244, 169, 65, .5)', 'rgba(108, 103, 114, .5)']
+          }],
+
+      // These labels appear in the legend and in the tooltips when hovering different arcs
+          labels: [
+            'Community Score',
+            'Business Score',
+            'Form Score'
+          ]
+        },
+        options: {
+          scale: {
+            ticks: {
+              min: 0,
+              max: 4,
+              stepSize: 1
+            }
+          },
+          startAngle: -0.4 * Math.PI,
+          title: {
+            display: true,
+            text: this.scores[2].Activity_Center
+          }
+        }
+      })
+
+      var myChart3 = new Chart($("#myChart3"), {
+        type: 'polarArea',
+        data: {
+          datasets: [{
+            data: [this.scores[3].comScore, this.scores[3].buScore, this.scores[3].formScore],
+            backgroundColor: ['rgba(66, 134, 244,.5)', 'rgba(244, 169, 65, .5)', 'rgba(108, 103, 114, .5)']
+          }],
+
+      // These labels appear in the legend and in the tooltips when hovering different arcs
+          labels: [
+            'Community Score',
+            'Business Score',
+            'Form Score'
+          ]
+        },
+        options: {
+          scale: {
+            ticks: {
+              min: 0,
+              max: 4,
+              stepSize: 1
+            }
+          },
+          startAngle: -0.4 * Math.PI,
+          title: {
+            display: true,
+            text: this.scores[3].Activity_Center
+          }
+        }
+      })
+
+      var myChart4 = new Chart($("#myChart4"), {
+        type: 'polarArea',
+        data: {
+          datasets: [{
+            data: [this.scores[4].comScore, this.scores[4].buScore, this.scores[4].formScore],
+            backgroundColor: ['rgba(66, 134, 244,.5)', 'rgba(244, 169, 65, .5)', 'rgba(108, 103, 114, .5)']
+          }],
+
+      // These labels appear in the legend and in the tooltips when hovering different arcs
+          labels: [
+            'Community Score',
+            'Business Score',
+            'Form Score'
+          ]
+        },
+        options: {
+          scale: {
+            ticks: {
+              min: 0,
+              max: 4,
+              stepSize: 1
+            }
+          },
+          startAngle: -0.4 * Math.PI,
+          title: {
+            display: true,
+            text: this.scores[4].Activity_Center
+          }
+        }
+      })
+
+      var myChart5 = new Chart($("#myChart5"), {
+        type: 'polarArea',
+        data: {
+          datasets: [{
+            data: [this.scores[5].comScore, this.scores[5].buScore, this.scores[5].formScore],
+            backgroundColor: ['rgba(66, 134, 244,.5)', 'rgba(244, 169, 65, .5)', 'rgba(108, 103, 114, .5)']
+          }],
+
+      // These labels appear in the legend and in the tooltips when hovering different arcs
+          labels: [
+            'Community Score',
+            'Business Score',
+            'Form Score'
+          ]
+        },
+        options: {
+          scale: {
+            ticks: {
+              min: 0,
+              max: 4,
+              stepSize: 1
+            }
+          },
+          startAngle: -0.4 * Math.PI,
+          title: {
+            display: true,
+            text: this.scores[5].Activity_Center
+          }
+        }
+      })
+    }
   }
 }
 

@@ -43,4 +43,14 @@ export const loadTownName = function({dispatch, state}, name) {
   dispatch('LOAD_TOWNNAME', name)
 }
 
+export const loadACScores = function({dispatch, state}) {
+
+  api.getACScores().then(function (response) {
+
+    dispatch('LOAD_ACSCORES', response.data)
+  }, function (response) {
+
+    console.log(response)
+  })
+}
 

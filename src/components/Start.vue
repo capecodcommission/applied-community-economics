@@ -30,15 +30,15 @@
         <option value = '0'>Select a Neighborhood</option>
         <option v-for = 'neighborhood in neighborhoods.recordsets[0]' value = '{{neighborhood.Neighborhood}}'>{{neighborhood.Neighborhood}}</option>
       </select>
-      <select v-show = "acselected" id = 'acSelect'>
+      <select v-model = 'townName' v-show = "acselected" id = 'acSelect'>
         <option value = '0'>Select an Activity Center</option>
         <option v-for = 'center in centers.recordsets[0]' value = '{{center.center}}'>{{center.center}}</option>
       </select>
-      <select v-model = 'townName' v-show = "townselected" id = 'townSelect'>
+      <button @click= 'goTown(townName)' id = 'reportCard' v-show = "acselected" class 'btn btn-primary'>View ReportCard {{townName}}</button>
+      <select v-show = "townselected" id = 'townSelect'>
         <option value = '0'>Select a Town</option>
         <option v-for = 'town in towns.recordsets[0]' value = '{{town.town}}'>{{town.town}}</option>
       </select>
-      <button @click= 'goTown(townName)' id = 'reportCard' v-show = "townselected" class 'btn btn-primary'>View ReportCard {{townName}}</button>
     </div>
     <div class = 'selectEmbayment1'>
       <div id = 'legendDiv'></div>
