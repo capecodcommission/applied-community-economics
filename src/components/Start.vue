@@ -1,24 +1,20 @@
 <template>
   <div class = 'fill-height' id="map">
     <div  class = 'selectEmbayment text-center'>
-      <img src="http://www.capecodcommission.org/gfx/home-logo.jpg" class = 'img-rounded'><br><br><br><br>
-      <table>
-        <tr>
-          <th>BA Sites</th>
-          <th>CA Sites</th>
-          <th>> 40% Impervious</th>
-          <th>Form Weight >= 6</th>
-          <th>% Good Form</th>
+      <h1>Selected Activity Center: {{townName}}</h1><br>
+      <table style = 'margin: auto; text-align: center !important' class = 'text-center'>
+        <tr style = 'font-size: 40px'>
+          <th style = 'text-align: center' id = 'BAsites'></th>
+          <th style = 'text-align: center' id = 'CAsites'></th>
+          <th style = 'text-align: center' id = 'pct_GF'></th>
         </tr>
-        <tr style = 'font-size: 30px'>
-          <td id = 'BAsites'></td>
-          <td id = 'CAsites'></td>
-          <td id = 'abv_40'></td>
-          <td id = 'frmWt'></td>
-          <td id = 'pct_GF'></td>
+        <tr style = 'font-size: 15px'>
+          <td>Businesses</td>
+          <td>Community Sites</td>
+          <td>% Good Form</td>
         </tr>
       </table>
-      <canvas style = 'display: inline' id="myChart" width="200" height="200"></canvas>
+      <canvas style = 'display: inline' id="myChart" width="200" height="230"></canvas>
       <br><br><br>
       <p>Select one of the groups below, then select a subgroup from the dropdown menu</p>
       <form>
