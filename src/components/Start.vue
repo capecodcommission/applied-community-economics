@@ -25,7 +25,7 @@
         <input @click = 'changenbh' type="radio" name="checkgroup" value="Neighborhood"> Neighborhood
         <input @click = 'changeac' type="radio" name="checkgroup" value="Activity Center"> Activity Center
         <input @click = 'changetown' type="radio" name="checkgroup" value="Town"> Town
-      </form>
+      </form><br>
       <select v-show = "nbhselected" id = 'neighborhoodSelect'>
         <option value = '0'>Select a Neighborhood</option>
         <option v-for = 'neighborhood in neighborhoods.recordsets[0]' value = '{{neighborhood.Neighborhood}}'>{{neighborhood.Neighborhood}}</option>
@@ -34,8 +34,8 @@
         <select v-model = 'townName' id = 'acSelect'>
           <option value = '0'>Select an Activity Center</option>
           <option v-for = 'center in centers.recordsets[0]' value = '{{center.center}}'>{{center.center}}</option>
-        </select>
-        <button @click = "goTown(townName)" class "btn btn-success">View ReportCard {{townName}}</button>
+        </select><br><br>
+        <button @click = "goTown(townName)" class = "btn btn-success">View ReportCard {{townName}}</button>
       </div>
       <select v-show = "townselected" id = 'townSelect'>
         <option value = '0'>Select a Town</option>
@@ -46,7 +46,6 @@
       <div id = 'legendDiv'></div>
     </div>
   </div>
-  <div id = 'mapReload'></div>
 </template>
 
 <script>
@@ -98,7 +97,10 @@ export default {
 
     goTown: function(x) {
 
-      router.go({name: 'reportCard', params: {id: x}})
+      if (x != '(Please select an Activity Center)') {
+
+        router.go({name: 'reportCard', params: {id: x}})
+      }
     },
 
     changenbh: function() {
@@ -163,7 +165,7 @@ export default {
 }
 
 .selectEmbayment {
-  top: 100px;
+  top: 5px;
   position: absolute;
   z-index: 3;
   width: 24%;
@@ -178,7 +180,7 @@ export default {
 }
 
 .selectEmbayment1 {
-  top: 100px;
+  top: 5px;
   right: 1px;
   position: absolute;
   z-index: 4;

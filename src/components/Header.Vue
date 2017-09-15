@@ -81,7 +81,7 @@ export default {
 
     $('#restartMap').on('click', function() {
 
-      window.open('http://2016.watershedmvp.org/cc/','_self')
+      window.open('http://10.10.1.148/cc/','_self')
     })
 
   },

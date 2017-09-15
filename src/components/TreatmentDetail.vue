@@ -694,7 +694,13 @@ export default {
 
         if (chartArray[i].config.options.title.text === this.townname) {
 
-          $('#myChart' + i.toString()).css('background','#efef81').css('border-radius', '25px')
+          if (i === 0) {
+
+            $('#myChart').css('background','#efef81').css('border-radius', '25px')
+          } else {
+
+            $('#myChart' + i.toString()).css('background','#efef81').css('border-radius', '25px')
+          }
         }
       }
     }
