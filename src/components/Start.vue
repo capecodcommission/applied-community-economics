@@ -1,7 +1,7 @@
 <template>
   <div class = 'fill-height' id="map">
     <div  class = 'selectEmbayment text-center'>
-      <h1>Selected Activity Center: {{townName}}</h1><br>
+      <h1>Selected: {{townName}}</h1><br>
       <table style = 'margin: auto; text-align: center !important' class = 'text-center'>
         <tr style = 'font-size: 40px'>
           <th style = 'text-align: center' id = 'BAsites'></th>
@@ -22,23 +22,22 @@
         <input @click = 'changeac' type="radio" name="checkgroup" value="Activity Center"> Activity Center
         <input @click = 'changetown' type="radio" name="checkgroup" value="Town"> Town
       </form><br>
-      <select v-show = "nbhselected" id = 'neighborhoodSelect'>
+      <select v-model = 'townName' v-show = "nbhselected" id = 'neighborhoodSelect'>
         <option value = '0'>Select a Neighborhood</option>
         <option v-for = 'neighborhood in neighborhoods.recordsets[0]' value = '{{neighborhood.Neighborhood}}'>{{neighborhood.Neighborhood}}</option>
       </select>
-      <div v-show = "acselected">
-        <select v-model = 'townName' id = 'acSelect'>
+        <select v-show = "acselected" v-model = 'townName' id = 'acSelect'>
           <option value = '0'>Select an Activity Center</option>
           <option v-for = 'center in centers.recordsets[0]' value = '{{center.center}}'>{{center.center}}</option>
-        </select><br><br>
-        <button @click = "goTown(townName)" class = "btn btn-success">View ReportCard {{townName}}</button>
-      </div>
-      <select v-show = "townselected" id = 'townSelect'>
+        </select>
+        <!-- <button @click = "goTown(townName)" class = "btn btn-success">View ReportCard {{townName}}</button> -->
+      <select v-model = 'townName' v-show = "townselected" id = 'townSelect'>
         <option value = '0'>Select a Town</option>
         <option v-for = 'town in towns.recordsets[0]' value = '{{town.town}}'>{{town.town}}</option>
-      </select>
+      </select><br><br>
+      <button v-show = "townName != '(Please select a Neighborhood, Activity Center, or Town)'" @click = "goTown(townName)" class = "btn btn-success">View ReportCard {{townName}}</button>
     </div>
-    <div class = 'selectEmbayment1'>
+    <div v-show = 'nbhselected || acselected || townselected' class = 'selectEmbayment1'>
       <div id = 'legendDiv'></div>
     </div>
   </div>
@@ -62,7 +61,7 @@ export default {
       nbhselected: false,
       acselected: false,
       townselected: false,
-      townName: '(Please select an Activity Center)'
+      townName: '(Please select a Neighborhood, Activity Center, or Town)'
     }
   },
 
@@ -93,10 +92,20 @@ export default {
 
     goTown: function(x) {
 
-      if (x != '(Please select an Activity Center)') {
+      var y = ''
 
-        router.go({name: 'reportCard', params: {id: x}})
+      if (this.nbhselected) {
+
+        y = 'nbh'
+      } else if (this.acselected) {
+
+        y = 'ac'
+      } else if (this.townselected) {
+
+        y = 'twn'
       }
+
+      router.go({name: 'reportCard', params: {id: x, type: y}})
     },
 
     changenbh: function() {

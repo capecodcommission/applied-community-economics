@@ -6,7 +6,7 @@
 
     <div class="row">
       <div style="background:transparent !important" class = 'jumbotron text-center'>
-        <h1>Activity Center Comparison</h1>
+        <h1>{{ type }} Comparison</h1>
       </div>
       <div class = 'col-md-12'>
         <button class = 'btn btn-success pull-right' @click = 'excelExport'>Export Data</button>
@@ -94,6 +94,7 @@ export default {
 
     return {
 
+      type: ''
     }
   },
 
@@ -182,7 +183,18 @@ export default {
 
   ready() {
 
-    this.loadACScores()
+    if (this.$route.params.type === 'ac') {
+
+      this.type = 'Activity Center'
+    } else if (this.$route.params.type === 'twn') {
+
+      this.type = 'Town'
+    } else if (this.$route.params.type === 'nbh') {
+
+      this.type = 'Neighborhood'
+    }
+
+    this.loadACScores(this.$route.params.type)
   },
 
   watch: {
@@ -692,7 +704,9 @@ export default {
 
       for (var i = chartArray.length - 1; i >= 0; i--) {
 
-        if (chartArray[i].config.options.title.text === this.townname) {
+        if (chartArray[i].config.options.title.text === this.townname && chartArray[i] != null) {
+
+          console.log(chartArray[i].config.options.title.text, this.townname)
 
           if (i === 0) {
 

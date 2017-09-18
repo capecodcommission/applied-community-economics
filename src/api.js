@@ -23,7 +23,7 @@ export default {
     return Vue.http.get(API_ROOT + 'getTowns')
   },
 
-  getACScores () {
-    return Vue.http.get(API_ROOT + 'getACScores')
+  getACScores (type) {
+    return Vue.http.get(API_ROOT + 'getACScores/' + type)
   }
 }
