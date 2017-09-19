@@ -1,15 +1,14 @@
 <template>
 
-  <wqheader style = "background:#dbd7ce !important"></wqheader>
+  <wqheader style = "background:#dbd7ce !important; padding-bottom: 1px"></wqheader>
 
   <div style = "background:#dbd7ce !important" class="panel-body">
 
-    <div class="row">
-      <div style="background:transparent !important" class = 'jumbotron text-center'>
-        <h1>{{ type }} Comparison</h1>
-      </div>
+    <div class="row text-center">
+        <h1 style = 'font-size: 50px; margin-top: 1px !important' class = 'text=center'>{{ type }} Comparison</h1>
       <div class = 'col-md-12'>
         <button class = 'btn btn-success pull-right' @click = 'excelExport'>Export Data</button>
+        <div></div>
       </div>
     </div>
 
@@ -157,9 +156,9 @@ export default {
 
       var arr = []
 
-      for (var j = 0; j < this.embayment.data.length; j++) {
+      for (var j = 0; j < this.scores.length; j++) {
 
-        arr.push(this.JSONflatten(this.embayment.data[j]))
+        arr.push(this.JSONflatten(this.scores[j]))
       }
       
 
@@ -168,7 +167,7 @@ export default {
       var a = document.createElement('a');
 
       a.textContent='download';
-      a.download= "Embayment.csv";
+      a.download= "Scores.csv";
       a.href='data:text/csv;charset=utf-8,'+escape(csvContent);
       document.body.appendChild(a);
       a.click()
@@ -230,6 +229,9 @@ export default {
             title: {
               display: true,
               text: this.scores[i].Activity_Center
+            },
+            legend: {
+              display: false
             }
           }
         })
