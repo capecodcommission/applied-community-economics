@@ -2,13 +2,14 @@
 
   <wqheader style = "background:#dbd7ce !important; padding-bottom: 1px"></wqheader>
 
-  <div style = "background:#dbd7ce !important" class="panel-body">
+  <div style = "background:#dbd7ce !important; padding-top: 0px" class="panel-body">
 
     <div class="row text-center">
-        <h1 style = 'font-size: 50px; margin-top: 1px !important' class = 'text=center'>{{ type }} Comparison</h1>
       <div class = 'col-md-12'>
-        <button class = 'btn btn-success pull-right' @click = 'excelExport'>Export Data</button>
-        <div></div>
+        <span>
+          <h1 style = 'font-size: 50px; margin-top: 1px !important; display: inline-block' class = 'text-center'>{{ type }} Comparison</h1>
+          <button class = 'btn btn-success pull-right' @click = 'excelExport'>Export Data</button>
+        </span>
       </div>
     </div>
 

@@ -1,20 +1,20 @@
 <template>
   <div class = 'fill-height' id="map">
-    <div  class = 'selectEmbayment text-center'>
-      <h1>Selected: {{townName}}</h1><br>
+    <div class = 'selectEmbayment text-center'>
+      <h1>Selected: <div v-bind:class = "[nbhselected ? smallFont : '']">{{townName}}</div></h1><br>
       <table style = 'margin: auto; text-align: center !important' class = 'text-center'>
         <tr style = 'font-size: 40px'>
           <th style = 'text-align: center' id = 'BAsites'></th>
           <th style = 'text-align: center' id = 'CAsites'></th>
           <th style = 'text-align: center' id = 'pct_GF'></th>
         </tr>
-        <tr style = 'font-size: 15px'>
+        <tr v-show = 'nbhselected || acselected || townselected' style = 'font-size: 15px'>
           <td>Businesses</td>
           <td>Community Sites</td>
           <td>% Good Form</td>
         </tr>
       </table>
-      <canvas style = 'display: inline' id="myChart" width="200" height="230"></canvas>
+      <canvas v-show = 'nbhselected || acselected || townselected' style = 'display: inline' id="myChart" width="200" height="230"></canvas>
       <br><br><br>
       <p>Select one of the groups below, then select a subgroup from the dropdown menu</p>
       <form>
@@ -30,7 +30,6 @@
           <option value = '0'>Select an Activity Center</option>
           <option v-for = 'center in centers.recordsets[0]' value = '{{center.center}}'>{{center.center}}</option>
         </select>
-        <!-- <button @click = "goTown(townName)" class = "btn btn-success">View ReportCard {{townName}}</button> -->
       <select v-model = 'townName' v-show = "townselected" id = 'townSelect'>
         <option value = '0'>Select a Town</option>
         <option v-for = 'town in towns.recordsets[0]' value = '{{town.town}}'>{{town.town}}</option>
@@ -189,7 +188,6 @@ export default {
   right: 1px;
   position: absolute;
   z-index: 4;
-  width: 10%;
   float: right;
   background: #8cb8ff;
   border-radius: 25px;
@@ -198,6 +196,10 @@ export default {
   opacity: 0.9;
   color: black;
 
+}
+
+.smallFont {
+  font-size: 10px;
 }
 
 #legendDiv {

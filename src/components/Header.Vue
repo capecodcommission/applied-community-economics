@@ -3,7 +3,7 @@
   <div class = "panel-body">
     <div class = 'row'>
       <div class = 'col-md-12 text-center'>
-        <button class = 'btn btn-primary text-center'>{{$route.params.id}}</button><br>
+        <button class = 'btn btn-primary text-center'>{{$route.params.id}}</button>
         <button id ='restartMap' class = 'btn btn-success pull-right'>Restart</button>
       </div>
     </div>
@@ -19,7 +19,7 @@
 import {  } from '../vuex/actions'
 import {  } from '../vuex/getters'
 import {  } from 'vue-strap'
-import {introJs} from '../../node_modules/intro.js/intro.js'
+import { introJs } from '../../node_modules/intro.js/intro.js'
 
 export default {
 
