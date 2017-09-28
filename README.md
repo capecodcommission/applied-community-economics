@@ -4,7 +4,7 @@
 
 ## Modules
 
-> [ChartJS](http://www.chartjs.org/), [VueJS](https://vuejs.org/), [Vuex](https://github.com/vuejs/vuex), [Vue-Router](https://github.com/vuejs/vue-router)
+> [ChartJS](http://www.chartjs.org/), [VueJS](https://vuejs.org/), [Vuex](https://github.com/vuejs/vuex), [Vue-Router](https://github.com/vuejs/vue-router), [ArcGIS API](https://developers.arcgis.com/javascript/3/)
 
 ## Build Setup
 
