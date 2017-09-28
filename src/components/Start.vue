@@ -1,8 +1,10 @@
 <template>
   <div class = 'fill-height' id="map">
     <div class = 'selectEmbayment text-center'>
-      <h1>Selected: <div v-bind:class = "[nbhselected ? smallFont : '']">{{townName}}</div></h1><br>
-      <table style = 'margin: auto; text-align: center !important' class = 'text-center'>
+      <h2>ACE Report</h2><br>
+      <p>This tool will score the form of an area based on Building Form, Business Activity and Community Activity. It allows for the comparison of scores to other similar geographies in the Report Card.  In development is the ability to dig down into key metrics that will improve the score of an area.</p>
+      <h1>{{townName}}</h1><br>
+      <table style = 'margin: auto; text-align: center; table-layout: fixed; width: 100%; !important' class = 'text-center'>
         <tr style = 'font-size: 40px'>
           <th style = 'text-align: center' id = 'BAsites'></th>
           <th style = 'text-align: center' id = 'CAsites'></th>
@@ -15,13 +17,13 @@
         </tr>
       </table>
       <canvas v-show = 'nbhselected || acselected || townselected' style = 'display: inline' id="myChart" width="200" height="230"></canvas>
-      <br><br><br>
+      <br>
       <p>Select one of the groups below, then select a subgroup from the dropdown menu</p>
-      <form>
-        <input @click = 'changenbh' type="radio" name="checkgroup" value="Neighborhood"> Neighborhood
-        <input @click = 'changeac' type="radio" name="checkgroup" value="Activity Center"> Activity Center
+      <div id = 'radio-group'>
+        <input @click = 'changenbh' type="radio" name="checkgroup" value="Neighborhood"> Neighborhood<br>
+        <input @click = 'changeac' type="radio" name="checkgroup" value="Activity Center"> Activity Center<br>
         <input @click = 'changetown' type="radio" name="checkgroup" value="Town"> Town
-      </form><br>
+      </div><br><br>
       <select v-model = 'townName' v-show = "nbhselected" id = 'neighborhoodSelect'>
         <option value = '0'>Select a Neighborhood</option>
         <option v-for = 'neighborhood in neighborhoods.recordsets[0]' value = '{{neighborhood.Neighborhood}}'>{{neighborhood.Neighborhood}}</option>
@@ -160,6 +162,24 @@ export default {
 </script>
 
 <style>
+
+#radio-group {
+  display: inline-block
+}
+
+h1 {
+  font-family: "Open Sans";
+  font-size: 28px;
+}
+
+h2 {
+  font-family: "Open Sans"
+}
+
+p {
+  font-family: "Open Sans";
+  font-size: 15px;
+}
 
 .cccLogo {
   position: absolute;

@@ -1,13 +1,13 @@
 <template>
 
-  <wqheader style = "background:#dbd7ce !important; padding-bottom: 1px"></wqheader>
+  <wqheader style = "background:#404144 !important; padding-bottom: 1px"></wqheader>
 
-  <div style = "background:#dbd7ce !important; padding-top: 0px" class="panel-body">
+  <div style = "background:#404144 !important; padding-top: 0px" class="panel-body">
 
     <div class="row text-center">
       <div class = 'col-md-12'>
         <span>
-          <h1 style = 'font-size: 50px; margin-top: 1px !important; display: inline-block' class = 'text-center'>{{ type }} Comparison</h1>
+          <h1 style = 'font-size: 50px; margin-top: 1px !important; display: inline-block; color: white' class = 'text-center'>{{ type }} Comparison</h1>
           <button class = 'btn btn-success pull-right' @click = 'excelExport'>Export Data</button>
         </span>
       </div>
@@ -208,7 +208,7 @@ export default {
           data: {
             datasets: [{
               data: [this.scores[i].comScore, this.scores[i].buScore, this.scores[i].formScore],
-              backgroundColor: ['rgba(66, 134, 244,.5)', 'rgba(244, 169, 65, .5)', 'rgba(108, 103, 114, .5)']
+              backgroundColor: ['rgba(86,42,114,.5)', 'rgba(170,169,57, .5)', 'rgba(170,119,57, .5)']
             }],
 
         // These labels appear in the legend and in the tooltips when hovering different arcs
@@ -229,7 +229,9 @@ export default {
             startAngle: -0.4 * Math.PI,
             title: {
               display: true,
-              text: this.scores[i].Activity_Center
+              text: this.scores[i].Activity_Center,
+              fontFamily: "Open Sans",
+              fontColor: "White"
             },
             legend: {
               display: false
@@ -239,7 +241,7 @@ export default {
 
         if (this.scores[i].Activity_Center === this.$route.params.id) {
 
-          $('#myChart' + i.toString()).css('background','#efef81').css('border-radius', '25px')
+          $('#myChart' + i.toString()).css('background','#832ad6').css('border-radius', '25px')
         }
       }
     }
@@ -248,14 +250,6 @@ export default {
 
 </script>
 
-<style lang="scss" scoped>
-@import '../../node_modules/intro.js/introjs.css';
-thead {
-  tr {
-    th {
-     text-align: center;
-   }
- }
-}
+<style>
 
 </style>
