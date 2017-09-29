@@ -194,7 +194,7 @@ p {
   z-index: 3;
   width: 24%;
   float: left;
-  background: #8cb8ff;
+  background: #4265bc;
   border-radius: 25px;
   padding: 1.5em;
   border: 2px solid black;

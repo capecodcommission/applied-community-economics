@@ -13,8 +13,8 @@ export default function (router) {
           name: 'TreatmentDetail',
           component: require('./components/TreatmentDetail.vue'),
         },
-        '/embaymentCharts': {
-          name: 'propertyOwnerCosts',
+        '/comingSoon': {
+          name: 'comingSoon',
           component: require('./components/propertyOwnerCosts.vue')
         }
       }

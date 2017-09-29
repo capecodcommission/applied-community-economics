@@ -89,19 +89,19 @@ require([
   renderer.addValue({
     value: "1",
     symbol: createSymbol([226, 99, 99, 0.5]),
-    label: "Not Impervious, Bad Form"
+    label: "Undeveloped or sparse development"
   });
 
   renderer.addValue({
     value: "2",
     symbol: createSymbol([237, 239, 242, 0.2]),
-    label: "Neutral"
+    label: "Highly developed - Bad form"
   });
 
   renderer.addValue({
     value: "3",
     symbol: createSymbol([131, 226, 105, 0.5]),
-    label: "Impervious, Good Form"
+    label: "Highly developed - Good form"
   });
 
   embayments.setRenderer(renderer)
@@ -113,6 +113,7 @@ require([
       title: "Scores"
     }]
   }, "legendDiv");
+
   legend.startup();
 
   map.addLayer(embayments)
@@ -165,7 +166,11 @@ require([
       },
       startAngle: -0.4 * Math.PI,
       legend: {
-        position: 'bottom'
+        position: 'bottom',
+        labels: {
+          fontStyle: "Open Sans",
+          fontColor: "white"
+        }
       }
     }
   })
