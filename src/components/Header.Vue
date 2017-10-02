@@ -80,7 +80,7 @@ export default {
 
     $('#restartMap').on('click', function() {
 
-      window.open('http://10.10.1.148/cc/','_self')
+      window.open('http://10.10.1.148/ace/','_self')
     })
 
   },

@@ -208,7 +208,7 @@ export default {
           data: {
             datasets: [{
               data: [this.scores[i].comScore, this.scores[i].buScore, this.scores[i].formScore],
-              backgroundColor: ['rgba(86,42,114,.5)', 'rgba(170,169,57, .5)', 'rgba(170,119,57, .5)']
+              backgroundColor: ['rgba(147, 42, 214, .8)', 'rgba(216, 215, 41, .8)', 'rgba(204, 129, 38, .8)']
             }],
 
         // These labels appear in the legend and in the tooltips when hovering different arcs
@@ -241,7 +241,7 @@ export default {
 
         if (this.scores[i].Activity_Center === this.$route.params.id) {
 
-          $('#myChart' + i.toString()).css('background','#832ad6').css('border-radius', '25px')
+          $('#myChart' + i.toString()).css('border-color','#832ad6').css('border-radius', '25px').css('border-style','solid')
         }
       }
     }

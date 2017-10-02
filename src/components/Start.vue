@@ -24,15 +24,15 @@
         <input @click = 'changeac' type="radio" name="checkgroup" value="Activity Center"> Activity Center<br>
         <input @click = 'changetown' type="radio" name="checkgroup" value="Town"> Town
       </div><br><br>
-      <select v-model = 'townName' v-show = "nbhselected" id = 'neighborhoodSelect'>
+      <select style = 'color: black;' v-model = 'townName' v-show = "nbhselected" id = 'neighborhoodSelect'>
         <option value = '0'>Select a Neighborhood</option>
         <option v-for = 'neighborhood in neighborhoods.recordsets[0]' value = '{{neighborhood.Neighborhood}}'>{{neighborhood.Neighborhood}}</option>
       </select>
-        <select v-show = "acselected" v-model = 'townName' id = 'acSelect'>
+        <select style = 'color: black;' v-show = "acselected" v-model = 'townName' id = 'acSelect'>
           <option value = '0'>Select an Activity Center</option>
           <option v-for = 'center in centers.recordsets[0]' value = '{{center.center}}'>{{center.center}}</option>
         </select>
-      <select v-model = 'townName' v-show = "townselected" id = 'townSelect'>
+      <select style = 'color: black;' v-model = 'townName' v-show = "townselected" id = 'townSelect'>
         <option value = '0'>Select a Town</option>
         <option v-for = 'town in towns.recordsets[0]' value = '{{town.town}}'>{{town.town}}</option>
       </select><br><br>
@@ -199,8 +199,7 @@ p {
   padding: 1.5em;
   border: 2px solid black;
   opacity: 0.9;
-  color: black;
-
+  color: #f0ead6;
 }
 
 .selectEmbayment1 {

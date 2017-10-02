@@ -53,7 +53,7 @@ const mutations = {
         } else if (state.acscores[i].Community > 6) {
 
           state.acscores[i].comScore = 3
-        } else if (state.acscores[i].Community > 4) {
+        } else if (state.acscores[i].Community > 2) {
 
           state.acscores[i].comScore = 2
         } else if (state.acscores[i].Community >= 1) {
@@ -64,16 +64,16 @@ const mutations = {
           state.acscores[i].comScore = 0
         }
 
-        if (state.acscores[i].Business > 120) {
+        if (state.acscores[i].Business > 98) {
 
           state.acscores[i].buScore = 4
-        } else if (state.acscores[i].Business > 100) {
+        } else if (state.acscores[i].Business > 34) {
 
           state.acscores[i].buScore = 3
-        } else if (state.acscores[i].Business > 50) {
+        } else if (state.acscores[i].Business > 10) {
 
           state.acscores[i].buScore = 2
-        } else if (state.acscores[i].Business >= 10) {
+        } else if (state.acscores[i].Business >= 1) {
 
           state.acscores[i].buScore = 1
         } else {
@@ -83,16 +83,16 @@ const mutations = {
 
         var pctG = state.acscores[i].GoodForm / state.acscores[i].Impervious
 
-        if (pctG > .55) {
+        if (pctG > .6) {
 
           state.acscores[i].formScore = 4
-        } else if (pctG > .42) {
+        } else if (pctG > .4) {
 
           state.acscores[i].formScore = 3
-        } else if (pctG > .3) {
+        } else if (pctG > .2) {
 
           state.acscores[i].formScore = 2
-        } else if (pctG >= .15) {
+        } else if (pctG >= .01) {
 
           state.acscores[i].formScore = 1
         } else {
@@ -101,16 +101,16 @@ const mutations = {
         }
       } else if (type === 'twn') {
 
-        if (state.acscores[i].Community > 25) {
+        if (state.acscores[i].Community > 9) {
 
           state.acscores[i].comScore = 4
-        } else if (state.acscores[i].Community > 20) {
+        } else if (state.acscores[i].Community > 6) {
 
           state.acscores[i].comScore = 3
-        } else if (state.acscores[i].Community > 12) {
+        } else if (state.acscores[i].Community > 2) {
 
           state.acscores[i].comScore = 2
-        } else if (state.acscores[i].Community >= 6) {
+        } else if (state.acscores[i].Community >= 1) {
 
           state.acscores[i].comScore = 1
         } else {
@@ -118,16 +118,16 @@ const mutations = {
           state.acscores[i].comScore = 0
         }
 
-        if (state.acscores[i].Business > 300) {
+        if (state.acscores[i].Business > 98) {
 
           state.acscores[i].buScore = 4
-        } else if (state.acscores[i].Business > 220) {
+        } else if (state.acscores[i].Business > 34) {
 
           state.acscores[i].buScore = 3
-        } else if (state.acscores[i].Business > 125) {
+        } else if (state.acscores[i].Business > 10) {
 
           state.acscores[i].buScore = 2
-        } else if (state.acscores[i].Business >= 23) {
+        } else if (state.acscores[i].Business >= 1) {
 
           state.acscores[i].buScore = 1
         } else {
@@ -137,16 +137,16 @@ const mutations = {
 
         var pctG = state.acscores[i].GoodForm / state.acscores[i].Impervious
 
-        if (pctG > .25) {
+        if (pctG > .6) {
 
           state.acscores[i].formScore = 4
-        } else if (pctG > .2) {
+        } else if (pctG > .4) {
 
           state.acscores[i].formScore = 3
-        } else if (pctG > .1) {
+        } else if (pctG > .2) {
 
           state.acscores[i].formScore = 2
-        } else if (pctG >= .04) {
+        } else if (pctG >= .01) {
 
           state.acscores[i].formScore = 1
         } else {
@@ -155,16 +155,16 @@ const mutations = {
         }
       } else if (type === 'nbh') {
 
-        if (state.acscores[i].Community > 3) {
+        if (state.acscores[i].Community > 9) {
 
           state.acscores[i].comScore = 4
-        } else if (state.acscores[i].Community > 1.7) {
+        } else if (state.acscores[i].Community > 6) {
 
           state.acscores[i].comScore = 3
-        } else if (state.acscores[i].Community > 1) {
+        } else if (state.acscores[i].Community > 2) {
 
           state.acscores[i].comScore = 2
-        } else if (state.acscores[i].Community >= 0) {
+        } else if (state.acscores[i].Community >= 1) {
 
           state.acscores[i].comScore = 1
         } else {
@@ -172,16 +172,16 @@ const mutations = {
           state.acscores[i].comScore = 0
         }
 
-        if (state.acscores[i].Business > 35) {
+        if (state.acscores[i].Business > 98) {
 
           state.acscores[i].buScore = 4
-        } else if (state.acscores[i].Business > 20) {
+        } else if (state.acscores[i].Business > 34) {
 
           state.acscores[i].buScore = 3
-        } else if (state.acscores[i].Business > 9.5) {
+        } else if (state.acscores[i].Business > 10) {
 
           state.acscores[i].buScore = 2
-        } else if (state.acscores[i].Business >= 6) {
+        } else if (state.acscores[i].Business >= 1) {
 
           state.acscores[i].buScore = 1
         } else {
@@ -191,16 +191,16 @@ const mutations = {
 
         var pctG = state.acscores[i].GoodForm / state.acscores[i].Impervious
 
-        if (pctG > .28) {
+        if (pctG > .6) {
 
           state.acscores[i].formScore = 4
-        } else if (pctG > .23) {
+        } else if (pctG > .4) {
 
           state.acscores[i].formScore = 3
-        } else if (pctG > .17) {
+        } else if (pctG > .2) {
 
           state.acscores[i].formScore = 2
-        } else if (pctG >= .02) {
+        } else if (pctG >= .01) {
 
           state.acscores[i].formScore = 1
         } else {
