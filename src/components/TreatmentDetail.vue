@@ -1,6 +1,6 @@
 <template>
 
-  <wqheader style = "background:#404144 !important; padding-bottom: 1px"></wqheader>
+  <!-- <wqheader style = "background:#404144 !important; padding-bottom: 1px"></wqheader> -->
 
   <div style = "background:#404144 !important; padding-top: 0px" class="panel-body">
 
@@ -8,10 +8,13 @@
       <div class = 'col-md-12'>
         <span>
           <h1 style = 'font-size: 50px; margin-top: 1px !important; display: inline-block; color: white' class = 'text-center'>{{ type }} Comparison</h1>
-          <button class = 'btn btn-success pull-right' @click = 'excelExport'>Export Data</button>
-        </span>
+          <button id ='restartMap' class = 'btn btn-success pull-right'>Restart</button>
+        </span><br>
+        <button @click = 'goComingSoon($route.params.id)' class = 'btn btn-success pull-right'>More Metrics</button><br><br>
+        <button class = 'btn btn-success pull-right' @click = 'excelExport'>Export Data</button>
       </div>
     </div>
+    <!-- <wqheader style = "background:#404144 !important; padding-bottom: 1px"></wqheader> -->
 
     <div class = 'row'>
       <div class="col-md-2">
@@ -114,9 +117,14 @@ export default {
 
   methods: {
 
+    goComingSoon: function(x) {
+
+      router.go({name: 'comingSoon', params: {id: x}})
+    },
+
     restartMap() {
       
-      window.open('http://2016.watershedmvp.org/cc','_self')
+      window.open('http://10.10.1.148/ace','_self')
     },
 
     JSONflatten (data) {
@@ -195,6 +203,11 @@ export default {
     }
 
     this.loadACScores(this.$route.params.type)
+
+    $('#restartMap').on('click', function() {
+
+      window.open('http://10.10.1.148/ace/','_self')
+    })
   },
 
   watch: {

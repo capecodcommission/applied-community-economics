@@ -2,21 +2,21 @@
   <div class = 'fill-height' id="map">
     <div class = 'selectEmbayment text-center'>
       <h2>ACE Report</h2><br>
+      <h1 v-show = 'townName'>{{townName}}</h1><br>
       <p>This tool will score the form of an area based on Building Form, Business Activity and Community Activity. It allows for the comparison of scores to other similar geographies in the Report Card.  In development is the ability to dig down into key metrics that will improve the score of an area.</p>
-      <h1>{{townName}}</h1><br>
       <table style = 'margin: auto; text-align: center; table-layout: fixed; width: 100%; !important' class = 'text-center'>
         <tr style = 'font-size: 40px'>
           <th style = 'text-align: center' id = 'BAsites'></th>
           <th style = 'text-align: center' id = 'CAsites'></th>
           <th style = 'text-align: center' id = 'pct_GF'></th>
         </tr>
-        <tr v-show = 'nbhselected || acselected || townselected' style = 'font-size: 15px'>
+        <tr v-show = 'townName' style = 'font-size: 15px'>
           <td>Businesses</td>
           <td>Community Sites</td>
           <td>% Good Form</td>
         </tr>
       </table>
-      <canvas v-show = 'nbhselected || acselected || townselected' style = 'display: inline' id="myChart" width="200" height="230"></canvas>
+      <canvas v-show = 'townName' style = 'display: inline' id="myChart" width="200" height="230"></canvas>
       <br>
       <p>Select one of the groups below, then select a subgroup from the dropdown menu</p>
       <div id = 'radio-group'>
@@ -36,9 +36,9 @@
         <option value = '0'>Select a Town</option>
         <option v-for = 'town in towns.recordsets[0]' value = '{{town.town}}'>{{town.town}}</option>
       </select><br><br>
-      <button v-show = "townName != '(Please select a Neighborhood, Activity Center, or Town)'" @click = "goTown(townName)" class = "btn btn-success">View ReportCard {{townName}}</button>
+      <button v-show = "townName != ''" @click = "goTown(townName)" class = "btn btn-success">View ReportCard {{townName}}</button>
     </div>
-    <div v-show = 'nbhselected || acselected || townselected' class = 'selectEmbayment1'>
+    <div v-show = 'townName' class = 'selectEmbayment1'>
       <div id = 'legendDiv'></div>
     </div>
   </div>
@@ -62,7 +62,7 @@ export default {
       nbhselected: false,
       acselected: false,
       townselected: false,
-      townName: '(Please select a Neighborhood, Activity Center, or Town)'
+      townName: false
     }
   },
 
@@ -192,9 +192,9 @@ p {
   top: 5px;
   position: absolute;
   z-index: 3;
-  width: 24%;
+  width: 25%;
   float: left;
-  background: #4265bc;
+  background: #28536c;
   border-radius: 25px;
   padding: 1.5em;
   border: 2px solid black;
@@ -208,7 +208,7 @@ p {
   position: absolute;
   z-index: 4;
   float: right;
-  background: #8cb8ff;
+  background: #28536c;
   border-radius: 25px;
   padding: 1.5em;
   border: 2px solid black;
@@ -223,6 +223,8 @@ p {
 
 #legendDiv {
   float: right;
+  background: #28536c;
+  color: #f0ead6;
 }
 
  html, body, #app {

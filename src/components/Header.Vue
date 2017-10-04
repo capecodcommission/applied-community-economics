@@ -3,7 +3,7 @@
   <div class = "panel-body">
     <div class = 'row'>
       <div class = 'col-md-12 text-center'>
-        <button @click = 'goComingSoon($route.params.id)' class = 'btn btn-primary text-center'>{{$route.params.id}}</button>
+        <button @click = 'goComingSoon($route.params.id)' class = 'btn btn-success pull-right'>More Metrics</button><br><br>
         <button id ='restartMap' class = 'btn btn-success pull-right'>Restart</button>
       </div>
     </div>
