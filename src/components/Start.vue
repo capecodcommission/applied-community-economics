@@ -4,7 +4,7 @@
       <h2>ACE Report</h2><br>
       <h1 v-show = 'townName'>{{townName}}</h1><br>
       <p>This tool will score the form of an area based on Building Form, Business Activity and Community Activity. It allows for the comparison of scores to other similar geographies in the Report Card.  In development is the ability to dig down into key metrics that will improve the score of an area.</p>
-      <table style = 'margin: auto; text-align: center; table-layout: fixed; width: 100%; !important' class = 'text-center'>
+      <!-- <table style = 'margin: auto; text-align: center; table-layout: fixed; width: 100%; !important' class = 'text-center'>
         <tr style = 'font-size: 40px'>
           <th style = 'text-align: center' id = 'BAsites'></th>
           <th style = 'text-align: center' id = 'CAsites'></th>
@@ -15,7 +15,8 @@
           <td>Community Sites</td>
           <td>% Good Form</td>
         </tr>
-      </table>
+      </table> -->
+      <p>There are <div style = 'font-size: 20px; display: inline-block;' id = 'BAsites'></div> businesses, <div style = 'font-size: 20px; display: inline-block;' id = 'CAsites'></div> community sites, and <div style = 'font-size: 20px; display: inline-block;' id = 'pct_GF'></div> are in Good Form</p>
       <canvas v-show = 'townName' style = 'display: inline' id="myChart" width="200" height="230"></canvas>
       <br>
       <p>Select one of the groups below, then select a subgroup from the dropdown menu</p>
@@ -62,7 +63,8 @@ export default {
       nbhselected: false,
       acselected: false,
       townselected: false,
-      townName: false
+      townName: false,
+      BAsites: false
     }
   },
 
