@@ -44,16 +44,20 @@ require([
   "esri/symbols/SimpleLineSymbol",
   "esri/dijit/Legend",
   "esri/renderers/UniqueValueRenderer",
+  "esri/layers/ArcGISTiledMapServiceLayer",
   "dojo/domReady!"
-], function(Map, FeatureLayer, InfoTemplate, Config, Query, graphicsUtils, StatisticDefinition, SimpleLineSymbol, Legend, UniqueValueRenderer) {
+], function(Map, FeatureLayer, InfoTemplate, Config, Query, graphicsUtils, StatisticDefinition, SimpleLineSymbol, Legend, UniqueValueRenderer,
+  ArcGISTiledMapServiceLayer) {
 
   map = new Map("map", {
-    basemap: "dark-gray",
     center: [-70.31509, 41.68935],
     zoom: 10,
     logo: false,
     slider: false
   });
+
+  var custom = new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer")
+  map.addLayer(custom)
 
   var embayTemplate = new InfoTemplate({
     title: "<b>${LOC_ID}</b>"

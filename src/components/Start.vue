@@ -2,7 +2,7 @@
   <div class = 'fill-height' id="map">
     <div class = 'selectEmbayment text-center'>
       <h2>ACE Report</h2><br>
-      <h1 v-show = 'townName'>{{townName}}</h1><br>
+      <h1 v-show = 'townName != false'>{{townName}}</h1><br>
       <p>This tool will score the form of an area based on Building Form, Business Activity and Community Activity. It allows for the comparison of scores to other similar geographies in the Report Card.  In development is the ability to dig down into key metrics that will improve the score of an area.</p>
       <!-- <table style = 'margin: auto; text-align: center; table-layout: fixed; width: 100%; !important' class = 'text-center'>
         <tr style = 'font-size: 40px'>
@@ -16,8 +16,8 @@
           <td>% Good Form</td>
         </tr>
       </table> -->
-      <p style = 'display: inline-block;'>There are <br><div style = 'font-size: 30px; display: inline-block;' id = 'BAsites'></div> businesses, <div style = 'font-size: 30px; display: inline-block;' id = 'CAsites'></div> community sites, and <div style = 'font-size: 30px; display: inline-block;' id = 'pct_GF'></div> are in Good Form</p>
-      <canvas v-show = 'townName' style = 'display: inline' id="myChart" width="200" height="230"></canvas>
+      <div v-show = 'townName != false'><p style = 'display: inline-block;'>There are <br><div style = 'font-size: 30px; display: inline-block;' id = 'BAsites'></div> businesses, <div style = 'font-size: 30px; display: inline-block;' id = 'CAsites'></div> community sites, and <div style = 'font-size: 30px; display: inline-block;' id = 'pct_GF'></div> are in Good Form</p></div>
+      <canvas v-show = 'townName != false' style = 'display: inline' id="myChart" width="200" height="230"></canvas>
       <br>
       <p>Select one of the groups below, then select a subgroup from the dropdown menu</p>
       <div id = 'radio-group'>
@@ -37,7 +37,7 @@
         <option value = '0'>Select a Town</option>
         <option v-for = 'town in towns.recordsets[0]' value = '{{town.town}}'>{{town.town}}</option>
       </select><br><br>
-      <button v-show = "townName != ''" @click = "goTown(townName)" class = "btn btn-success">View ReportCard {{townName}}</button>
+      <button v-show = "townName != false" @click = "goTown(townName)" class = "btn btn-success">View ReportCard {{townName}}</button>
     </div>
     <div v-show = 'townName' class = 'selectEmbayment1'>
       <div id = 'legendDiv'></div>
@@ -89,6 +89,39 @@ export default {
   ready() {
 
     this.loadNeighborhoods()
+
+    $('#neighborhoodSelect').on('change', function() {
+
+      var x = $(this).val().toString()
+
+      if (x === '0') {
+
+        this.townName = false
+      } else {
+
+        $('#acSelect').val("0")
+      }
+    })
+
+    $('#acSelect').on('change', function() {
+
+      var x = $(this).val().toString()
+
+      if (x === '0') {
+
+        this.townName = false
+      }
+    })
+
+    $('#townSelect').on('change', function() {
+
+      var x = $(this).val().toString()
+
+      if (x === '0') {
+
+        this.townName = false
+      }
+    })
   },
 
   methods: {
@@ -116,6 +149,8 @@ export default {
       $('#ACenter').prop('checked', false)
       $('#Town').prop('checked', false)
 
+      $('#neighborhoodSelect').val('0')
+
       this.nbhselected = true
       this.acselected = false
       this.townselected = false
@@ -126,6 +161,8 @@ export default {
       $('#Neighborhood').prop('checked', false)
       $('#Town').prop('checked', false)
 
+      $('#acSelect').val('0')
+
       this.nbhselected = false
       this.acselected = true
       this.townselected = false
@@ -135,6 +172,8 @@ export default {
 
       $('#ACenter').prop('checked', false)
       $('#Neighborhood').prop('checked', false)
+
+      $('#townSelect').val('0')
 
       this.nbhselected = false
       this.acselected = false
