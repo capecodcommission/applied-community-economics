@@ -16,7 +16,7 @@
           <td>% Good Form</td>
         </tr>
       </table> -->
-      <p>There are <div style = 'font-size: 20px; display: inline-block;' id = 'BAsites'></div> businesses, <div style = 'font-size: 20px; display: inline-block;' id = 'CAsites'></div> community sites, and <div style = 'font-size: 20px; display: inline-block;' id = 'pct_GF'></div> are in Good Form</p>
+      <p style = 'display: inline-block;'>There are <br><div style = 'font-size: 30px; display: inline-block;' id = 'BAsites'></div> businesses, <div style = 'font-size: 30px; display: inline-block;' id = 'CAsites'></div> community sites, and <div style = 'font-size: 30px; display: inline-block;' id = 'pct_GF'></div> are in Good Form</p>
       <canvas v-show = 'townName' style = 'display: inline' id="myChart" width="200" height="230"></canvas>
       <br>
       <p>Select one of the groups below, then select a subgroup from the dropdown menu</p>
@@ -164,6 +164,19 @@ export default {
 </script>
 
 <style>
+
+#BAsites {
+
+  color: #e9ed9e
+}
+
+#CAsites {
+  color: #e9ed9e
+}
+
+#pct_GF {
+  color: #e9ed9e
+}
 
 #radio-group {
   display: inline-block

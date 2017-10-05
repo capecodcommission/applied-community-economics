@@ -221,7 +221,7 @@ export default {
           data: {
             datasets: [{
               data: [this.scores[i].comScore, this.scores[i].buScore, this.scores[i].formScore],
-              backgroundColor: ['rgba(147, 42, 214, .8)', 'rgba(216, 215, 41, .8)', 'rgba(204, 129, 38, .8)']
+              backgroundColor: ['rgba(213,69,111, 1)', 'rgba(235,176,139, 1)', 'rgba(92,81,111, 1)']
             }],
 
         // These labels appear in the legend and in the tooltips when hovering different arcs
