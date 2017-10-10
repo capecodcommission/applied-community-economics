@@ -146,13 +146,11 @@ export default {
         .size([2 * Math.PI, radius]);
 
     // Get the data from our JSON file
-    d3.json("d3data.json", function(nodeData) {
-
-      console.log(nodeData)
+    d3.json("https://api.myjson.com/bins/eim0h", function(nodeData) {
 
         // Find the root node of our data, and begin sizing process.
         var root = d3.layout.hierarchy(nodeData)
-            .sum(function (d) { return d.size});
+            d3.sum(function (d) { return d.size});
 
         // Calculate the sizes of each arc that we'll draw later.
         partition(root);
