@@ -16,8 +16,9 @@
           <td>% Good Form</td>
         </tr>
       </table> -->
-      <div v-show = 'townName != false'><p style = 'display: inline-block;'>There are <br><div style = 'font-size: 30px; display: inline-block;' id = 'BAsites'></div> businesses, <div style = 'font-size: 30px; display: inline-block;' id = 'CAsites'></div> community sites, and <div style = 'font-size: 30px; display: inline-block;' id = 'pct_GF'></div> are in Good Form</p></div>
-      <canvas v-show = 'townName != false' style = 'display: inline' id="myChart" width="200" height="230"></canvas>
+      <div v-show = 'townName != false'><p style = 'display: inline-block;'>{{townName}} has <br><div style = 'font-size: 30px; display: inline-block;' id = 'CAsites'></div> community sites, <div style = 'font-size: 30px; display: inline-block;' id = 'BAsites'></div> businesses and <div style = 'font-size: 30px; display: inline-block;' id = 'pct_GF'></div> are in Good Form</p></div>
+      <!-- <canvas v-show = 'townName != false' style = 'display: inline' id="myChart" width="200" height="230"></canvas> -->
+      <svg></svg>
       <br>
       <p>Select one of the groups below, then select a subgroup from the dropdown menu</p>
       <div id = 'radio-group'>
@@ -50,6 +51,7 @@
 import {introJs} from '../../node_modules/intro.js/intro.js'
 import { loadNeighborhoods, loadActivityCenters, loadTowns, loadTownName } from '../vuex/actions'
 import { getNeighborhoods, getActivityCenters, getTowns } from '../vuex/getters'
+import * as d3 from "d3";
 
 export default {
 
@@ -88,6 +90,8 @@ export default {
 
   ready() {
 
+    // var d3 = require("d3")
+
     this.loadNeighborhoods()
 
     $('#neighborhoodSelect').on('change', function() {
@@ -122,6 +126,79 @@ export default {
         this.townName = false
       }
     })
+
+    // Variables
+    var width = 200;
+    var height = 230;
+    var radius = Math.min(width, height) / 2;
+    var color = d3.scale.ordinal(["#4472c4","#ed7d31","#a5a5a5"]);
+    
+
+    // Size our <svg> element, add a <g> element, and move translate 0,0 to the center of the element.
+    var g = d3.select('svg')
+        .attr('width', width)
+        .attr('height', height)
+        .append('g')
+        .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
+
+    // Create our sunburst data structure and size it.
+    var partition = d3.layout.partition()
+        .size([2 * Math.PI, radius]);
+
+    // Get the data from our JSON file
+    d3.json("d3data.json", function(nodeData) {
+
+      console.log(nodeData)
+
+        // Find the root node of our data, and begin sizing process.
+        var root = d3.layout.hierarchy(nodeData)
+            .sum(function (d) { return d.size});
+
+        // Calculate the sizes of each arc that we'll draw later.
+        partition(root);
+        var arc = d3.arc()
+            .startAngle(function (d) { return d.x0 })
+            .endAngle(function (d) { return d.x1 })
+            .innerRadius(function (d) { return d.y0 })
+            .outerRadius(function (d) { return d.y1 });
+
+
+        // Add a <g> element for each node in thd data, then append <path> elements and draw lines based on the arc
+        // variable calculations. Last, color the lines and the slices.
+        g.selectAll('g')
+            .data(root.descendants())
+            .enter().append('g').attr("class", "node").append('path')
+            .attr("display", function (d) { return d.depth ? null : "none"; })
+            .attr("d", arc)
+//             .style('stroke', '#000000')
+            .style("fill", function (d) { return color((d.children ? d : d.parent).data.name); });
+
+
+        // Populate the <text> elements with our data-driven titles.
+//         g.selectAll(".node")
+//             .append("text")
+//             .attr("transform", function(d) {
+//                 return "translate(" + arc.centroid(d) + ")rotate(" + computeTextRotation(d) + ")"; })
+//             .attr("dx", "-20") // radius margin
+//             .attr("dy", ".5em") // rotation align
+//             .text(function(d) { return d.parent ? d.data.name : "" });
+
+    });
+
+
+    /**
+     * Calculate the correct distance to rotate each label based on its location in the sunburst.
+     * @param {Node} d
+     * @return {Number}
+     */
+    function computeTextRotation(d) {
+        var angle = (d.x0 + d.x1) / Math.PI * 90;
+
+        // Avoid upside-down labels
+        return (angle < 120 || angle > 270) ? angle : angle + 180;  // labels as rims
+        //return (angle < 180) ? angle - 90 : angle + 90;  // labels as spokes
+    }
+
   },
 
   methods: {
@@ -206,15 +283,15 @@ export default {
 
 #BAsites {
 
-  color: #e9ed9e
+  color: #ed7d31
 }
 
 #CAsites {
-  color: #e9ed9e
+  color: #4472c4
 }
 
 #pct_GF {
-  color: #e9ed9e
+  color: #a5a5a5
 }
 
 #radio-group {

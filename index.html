@@ -143,41 +143,42 @@ require([
   var buScore = 1
   var formScore = 1
 
-  var ctx = $("#myChart");
+  // var ctx = $("#myChart");
 
-  var myChart = new Chart(ctx, {
-    type: 'polarArea',
-    data: {
-      datasets: [{
-        data: [comScore, buScore, formScore],
-        backgroundColor: ['rgba(213,69,111, 1)', 'rgba(235,176,139, 1)', 'rgba(92,81,111, 1)']
-      }],
+  // var myChart = new Chart(ctx, {
+  //   type: 'doughnut',
+  //   data: {
+  //     datasets: [
+  //       {
+  //         data: [comScore, 0, 0],
+  //         backgroundColor: ['#4472c4', '#ed7d31', '#a5a5a5']
+  //       },
+  //       {
+  //         data: [0, 0, formScore],
+  //         backgroundColor: ['#4472c4', '#ed7d31', '#a5a5a5']
+  //       },
+  //       {
+  //         data: [0, buScore, 0],
+  //         backgroundColor: ['#4472c4', '#ed7d31', '#a5a5a5']
+  //       }
+  //     ],
 
-  // These labels appear in the legend and in the tooltips when hovering different arcs
-      labels: [
-        'Community Score',
-        'Business Score',
-        'Form Score'
-      ]
-    },
-    options: {
-      scale: {
-        ticks: {
-          min: 0,
-          max: 4,
-          stepSize: 1
-        }
-      },
-      startAngle: -0.4 * Math.PI,
-      legend: {
-        position: 'bottom',
-        labels: {
-          fontStyle: "Open Sans",
-          fontColor: "white"
-        }
-      }
-    }
-  })
+  // // These labels appear in the legend and in the tooltips when hovering different arcs
+  //     labels: [
+  //       'Community Score',
+  //       'Business Score',
+  //       'Form Score'
+  //     ]
+  //   },
+  //   options: {
+  //     cutoutPercentage: 25,
+  //     legend: {
+  //       display: false
+  //     }
+  //   }
+  // })
+
+  
 
   // If EMBAY_ID from dropdown matches EMBAY_ID in feature layer, zoom to queried embayment's extent.
   ZoomToSelection = function(x) {
@@ -525,6 +526,8 @@ require([
     if (x === '0') {
 
       embayments.clearSelection();
+      embayments1.clearSelection();
+      embayments2.clearSelection();
       map.setExtent(embayments.fullExtent.getExtent(), true)
     } else {
 
@@ -541,6 +544,8 @@ require([
     if (x === '0') {
 
       embayments.clearSelection();
+      embayments1.clearSelection();
+      embayments2.clearSelection();
       map.setExtent(embayments.fullExtent.getExtent(), true)
     } else {
 
@@ -557,6 +562,8 @@ require([
     if (x === '0') {
 
       embayments.clearSelection();
+      embayments1.clearSelection();
+      embayments2.clearSelection();
       map.setExtent(embayments.fullExtent.getExtent(), true)
     } else {
 
