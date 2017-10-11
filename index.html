@@ -6,31 +6,6 @@
     <link rel="stylesheet" href="https://js.arcgis.com/3.20/esri/css/esri.css">
 	<script src="https://js.arcgis.com/3.20/"></script>
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-  <script>
-    window.dojoConfig = {
-
-      packages: [
-        {
-          name: 'vue',
-          location: location.pathname.replace('/\/[^/]+$','') + "/node_modules/vue/dist",
-          main: 'vue'
-        }
-      ]
-    }
-  </script>
-  <script>
-    // Load the Visualization API and the controls package.
-    google.charts.load('current', 
-      {
-        'packages':['corechart', 'controls']
-      }
-    );
-
-    // Set a callback to run when the Google Visualization API is loaded.
-    google.charts.setOnLoadCallback(this.drawDashboard);
-
-
-  </script>
 	<script>
 var map;
 require([

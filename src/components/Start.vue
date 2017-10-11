@@ -126,12 +126,13 @@ export default {
         this.townName = false
       }
     })
+    // https://api.myjson.com/bins/eim0h
 
     // Variables
-    var width = 200;
-    var height = 230;
+    var width = 230;
+    var height = 200;
     var radius = Math.min(width, height) / 2;
-    var color = d3.scale.ordinal(["#4472c4","#ed7d31","#a5a5a5"]);
+    var color = d3.scaleOrdinal(["#4472c4", "#a5a5a5","#ed7d31"]);
     
 
     // Size our <svg> element, add a <g> element, and move translate 0,0 to the center of the element.
@@ -142,15 +143,16 @@ export default {
         .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
 
     // Create our sunburst data structure and size it.
-    var partition = d3.layout.partition()
+    var partition = d3.partition()
         .size([2 * Math.PI, radius]);
 
     // Get the data from our JSON file
-    d3.json("https://api.myjson.com/bins/eim0h", function(nodeData) {
+    d3.json("https://api.myjson.com/bins/ozv15", function(error, nodeData) {
+        if (error) throw error;
 
         // Find the root node of our data, and begin sizing process.
-        var root = d3.layout.hierarchy(nodeData)
-            d3.sum(function (d) { return d.size});
+        var root = d3.hierarchy(nodeData)
+            .sum(function (d) { return d.size});
 
         // Calculate the sizes of each arc that we'll draw later.
         partition(root);
@@ -158,7 +160,8 @@ export default {
             .startAngle(function (d) { return d.x0 })
             .endAngle(function (d) { return d.x1 })
             .innerRadius(function (d) { return d.y0 })
-            .outerRadius(function (d) { return d.y1 });
+            .outerRadius(function (d) { return d.y1 })
+            .padAngle(.02)
 
 
         // Add a <g> element for each node in thd data, then append <path> elements and draw lines based on the arc
@@ -168,18 +171,18 @@ export default {
             .enter().append('g').attr("class", "node").append('path')
             .attr("display", function (d) { return d.depth ? null : "none"; })
             .attr("d", arc)
-//             .style('stroke', '#000000')
+            .style('stroke', '#000000')
             .style("fill", function (d) { return color((d.children ? d : d.parent).data.name); });
 
 
         // Populate the <text> elements with our data-driven titles.
-//         g.selectAll(".node")
-//             .append("text")
-//             .attr("transform", function(d) {
-//                 return "translate(" + arc.centroid(d) + ")rotate(" + computeTextRotation(d) + ")"; })
-//             .attr("dx", "-20") // radius margin
-//             .attr("dy", ".5em") // rotation align
-//             .text(function(d) { return d.parent ? d.data.name : "" });
+        // g.selectAll(".node")
+        //     .append("text")
+        //     .attr("transform", function(d) {
+        //         return "translate(" + arc.centroid(d) + ")rotate(" + computeTextRotation(d) + ")"; })
+        //     .attr("dx", "-20") // radius margin
+        //     .attr("dy", ".5em") // rotation align
+        //     .text(function(d) { return d.parent ? d.data.name : "" });
 
     });
 
@@ -193,8 +196,8 @@ export default {
         var angle = (d.x0 + d.x1) / Math.PI * 90;
 
         // Avoid upside-down labels
-        return (angle < 120 || angle > 270) ? angle : angle + 180;  // labels as rims
-        //return (angle < 180) ? angle - 90 : angle + 90;  // labels as spokes
+        // return (angle < 120 || angle > 270) ? angle : angle + 180;  // labels as rims
+        return (angle < 180) ? angle - 90 : angle + 90;  // labels as spokes
     }
 
   },
