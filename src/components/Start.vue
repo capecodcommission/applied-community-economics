@@ -148,42 +148,31 @@ export default {
         
     // Get the data from our JSON file
     d3.json("https://api.myjson.com/bins/ozv15", function(error, nodeData) {
-        if (error) throw error;
+      if (error) throw error;
 
-        // Find the root node of our data, and begin sizing process.
-        var root = d3.hierarchy(nodeData)
-            .sum(function (d) { return d.size});
+      // Find the root node of our data, and begin sizing process.
+      var root = d3.hierarchy(nodeData)
+        .sum(function (d) { return d.size});
 
-        // Calculate the sizes of each arc that we'll draw later.
-        partition(root);
-        var arc = d3.arc()
-            .startAngle(function (d) { return d.x0 })
-            .endAngle(function (d) { return d.x1 })
-            .innerRadius(function (d) { return d.y0 })
-            .outerRadius(function (d) { return d.y1 })
-            .padAngle(.02)
-
-
-        // Add a <g> element for each node in thd data, then append <path> elements and draw lines based on the arc
-        // variable calculations. Last, color the lines and the slices.
-        g.selectAll('g')
-            .data(root.descendants())
-            .enter().append('g').attr("class", "node").append('path')
-            .attr("display", function (d) { return d.depth ? null : "none"; })
-            .attr("d", arc)
-            .style('stroke', '#000000')
-            .style("fill", function (d) { return color((d.children ? d : d.parent).data.name); });
+      // Calculate the sizes of each arc that we'll draw later.
+      partition(root);
+      var arc = d3.arc()
+        .startAngle(function (d) { return d.x0  })
+        .endAngle(function (d) { return d.x1 })
+        .innerRadius(function (d) { return d.y0  })
+        .outerRadius(function (d) { return d.y1 - 3 })
+        .padAngle(.04)
 
 
-        // Populate the <text> elements with our data-driven titles.
-        // g.selectAll(".node")
-        //     .append("text")
-        //     .attr("transform", function(d) {
-        //         return "translate(" + arc.centroid(d) + ")rotate(" + computeTextRotation(d) + ")"; })
-        //     .attr("dx", "-20") // radius margin
-        //     .attr("dy", ".5em") // rotation align
-        //     .text(function(d) { return d.parent ? d.data.name : "" });
-
+      // Add a <g> element for each node in thd data, then append <path> elements and draw lines based on the arc
+      // variable calculations. Last, color the lines and the slices.
+      g.selectAll('g')
+        .data(root.descendants())
+        .enter().append('g').attr("class", "node").append('path')
+        .attr("display", function (d) { return d.depth ? null : "none"; })
+        .attr("d", arc)
+        .style('stroke', '#000000')
+        .style("fill", function (d) { return color((d.children ? d : d.parent).data.name); });        
     });
 
 
