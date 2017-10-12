@@ -145,7 +145,7 @@ export default {
     // Create our sunburst data structure and size it.
     var partition = d3.partition()
         .size([2 * Math.PI, radius]);
-
+        
     // Get the data from our JSON file
     d3.json("https://api.myjson.com/bins/ozv15", function(error, nodeData) {
         if (error) throw error;
