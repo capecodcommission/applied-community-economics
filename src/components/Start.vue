@@ -172,7 +172,14 @@ export default {
         .attr("display", function (d) { return d.depth ? null : "none"; })
         .attr("d", arc)
         .style('stroke', '#000000')
-        .style("fill", function (d) { return color((d.children ? d : d.parent).data.name); });        
+        .style("fill", function (d) { return color((d.children ? d : d.parent).data.name); })
+
+      g.selectAll(".node")  // <-- 1
+        .append("text")  // <-- 2
+        .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")rotate(" + computeTextRotation(d) + ")" }) // <-- 3
+        .attr("dx", "-20")  // <-- 4
+        .attr("dy", ".5em")  // <-- 5
+        .text(function(d) { return d.parent ? d.data.name : "" });  // <-- 6   
     });
 
 
