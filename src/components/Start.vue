@@ -175,11 +175,18 @@ export default {
         .style("fill", function (d) { return color((d.children ? d : d.parent).data.name); })
 
       g.selectAll(".node")  // <-- 1
-        .append("text")  // <-- 2
-        .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")rotate(" + computeTextRotation(d) + ")" }) // <-- 3
-        .attr("dx", "-20")  // <-- 4
-        .attr("dy", ".5em")  // <-- 5
-        .text(function(d) { return d.parent ? d.data.name : "" });  // <-- 6   
+        .append("text")
+          .attr("transform", function(d) { 
+             return "rotate(" + computeTextRotation(d) + ")"; 
+          })
+          .attr("x", function(d) { 
+             return y(d.y0); 
+          })
+          .attr("dx", "6") // margin
+          .attr("dy", ".35em") // vertical-align
+          .text(function(d) { 
+              return d.data.name === "root" ? "" : d.data.name
+          });
     });
 
 
