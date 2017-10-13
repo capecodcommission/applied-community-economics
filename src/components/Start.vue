@@ -174,19 +174,15 @@ export default {
         .style('stroke', '#000000')
         .style("fill", function (d) { return color((d.children ? d : d.parent).data.name); })
 
-      g.selectAll(".node")  // <-- 1
+      // Populate the <text> elements with our data-driven titles.
+      g.selectAll(".node")
         .append("text")
-          .attr("transform", function(d) { 
-             return "rotate(" + computeTextRotation(d) + ")"; 
-          })
-          .attr("x", function(d) { 
-             return y(d.y0); 
-          })
-          .attr("dx", "6") // margin
-          .attr("dy", ".35em") // vertical-align
-          .text(function(d) { 
-              return d.data.name === "root" ? "" : d.data.name
-          });
+        .attr("transform", function(d) {
+          return "translate(" + arc.centroid(d) + ")rotate(" + computeTextRotation(d) + ")"; 
+        })
+        .attr("dx", "-20") // radius margin
+        .attr("dy", ".5em") // rotation align
+        .text(function(d) { return d.parent ? d.data.name : "" });
     });
 
 
