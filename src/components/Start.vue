@@ -175,14 +175,27 @@ export default {
         .style("fill", function (d) { return color((d.children ? d : d.parent).data.name); })
 
       // Populate the <text> elements with our data-driven titles.
-      g.selectAll(".node")
-        .append("text")
-        .attr("transform", function(d) {
-          return "translate(" + arc.centroid(d) + ")rotate(" + computeTextRotation(d) + ")"; 
+      // g.selectAll(".node")
+      //   .append("text")
+        // .attr("transform", function(d) {
+        //   return "translate(" + arc.centroid(d) + ")rotate(" + computeTextRotation(d) + ")"; 
+        // })
+        // .attr("dx", "-20") // radius margin
+        // .attr("dy", ".5em") // rotation align
+        // .text(function(d) { return d.data.children[0].name ? d.data.children[0].name : null });
+
+      d3.select('g')
+        .selectAll('text')
+        .data(root.children)
+        .enter()
+        .append('text')
+        .each(function(d) {
+          var centroid = arc.centroid(d)
+          d3.select(this)
+            .attr('x',centroid[0])
+            .attr('y', centroid[1])
+            .text(d.data.children[0].name)
         })
-        .attr("dx", "-20") // radius margin
-        .attr("dy", ".5em") // rotation align
-        .text(function(d) { return d.parent ? d.data.name : "" });
     });
 
 
