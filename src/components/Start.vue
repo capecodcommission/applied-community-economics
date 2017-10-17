@@ -90,8 +90,6 @@ export default {
 
   ready() {
 
-    // var d3 = require("d3")
-
     this.loadNeighborhoods()
 
     $('#neighborhoodSelect').on('change', function() {
@@ -163,7 +161,6 @@ export default {
         .outerRadius(function (d) { return d.y1 - 3 })
         .padAngle(.04)
 
-
       // Add a <g> element for each node in thd data, then append <path> elements and draw lines based on the arc
       // variable calculations. Last, color the lines and the slices.
       g.selectAll('g')
@@ -174,16 +171,6 @@ export default {
         .style('stroke', '#000000')
         .style("fill", function (d) { return color((d.children ? d : d.parent).data.name); })
 
-      // Populate the <text> elements with our data-driven titles.
-      // g.selectAll(".node")
-      //   .append("text")
-        // .attr("transform", function(d) {
-        //   return "translate(" + arc.centroid(d) + ")rotate(" + computeTextRotation(d) + ")"; 
-        // })
-        // .attr("dx", "-20") // radius margin
-        // .attr("dy", ".5em") // rotation align
-        // .text(function(d) { return d.data.children[0].name ? d.data.children[0].name : null });
-
       d3.select('g')
         .selectAll('text')
         .data(root.children)
@@ -192,9 +179,10 @@ export default {
         .each(function(d) {
           var centroid = arc.centroid(d)
           d3.select(this)
-            .attr('x',centroid[0])
-            .attr('y', centroid[1])
+            .attr('x',(centroid[0] * 3.5) - 55)
+            .attr('y', (centroid[1] * 3.5) - 10)
             .text(d.data.children[0].name)
+            .attr("transform", "rotate(" + computeTextRotation(d) + ")" )
         })
     });
 
@@ -208,10 +196,9 @@ export default {
         var angle = (d.x0 + d.x1) / Math.PI * 90;
 
         // Avoid upside-down labels
-        // return (angle < 120 || angle > 270) ? angle : angle + 180;  // labels as rims
-        return (angle < 180) ? angle - 90 : angle + 90;  // labels as spokes
+        return (angle < 120 || angle > 270) ? angle : angle + 180  // labels as rims
+        // return (angle < 180) ? angle - 90 : angle + 90;  // labels as spokes
     }
-
   },
 
   methods: {
