@@ -71,6 +71,21 @@ const mutations = {
 
     var d3data = data.recordsets[0][0]
 
+    state.d3data = [{
+      name: "TOPICS",
+      children: [
+        {
+          name: "Community Activity"
+        },
+        {
+          name: "Business Activity"
+        },
+        {
+          name: "Building Form"
+        }
+      ]
+    }]
+
     var community = state.d3data[0].children[0]
     var business = state.d3data[0].children[1]
     var form = state.d3data[0].children[2]
