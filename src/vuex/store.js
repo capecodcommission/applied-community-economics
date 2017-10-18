@@ -9,11 +9,179 @@ const state = {
   centers: [],
   towns: [],
   townName: '',
-  acscores: []
+  acscores: [],
+  d3data: [
+    {
+      "name": "TOPICS",
+      "children": [
+        {
+          "name": "Community Activity",
+          "children": [
+            {
+              "name": "Community Activity",
+              "size": 1
+            }
+          ]
+        },
+        {
+          "name": "Business Activity",
+          "children": [
+            {
+              "name": "Business Activity",
+              "size": 0,
+              "children": [
+                {
+                  "name": "Business Activity",
+                  "size": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Building Form",
+          "children": [
+            {
+              "name": "Building Form",
+              "size": 0,
+              "children": [
+                {
+                  "name": "Building Form",
+                  "size": 0,
+                  "children": [
+                    {
+                      "name": "Building Form",
+                      "size": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
 
 // Create mutations; functions to change data in the state
 const mutations = {
+
+  UPDATE_D3DATA (state, data) {
+
+    var d3data = data.recordsets[0][0]
+
+    var community = state.d3data[0].children[0]
+    var business = state.d3data[0].children[1]
+    var form = state.d3data[0].children[2]
+
+    if (d3data.Community > 9) {
+
+      community.children = [{
+        name: "Community Activity",
+        children: [{
+          name: "Community Activity",
+          children: [{
+            name: "Community Activity",
+            size: 1
+          }]
+        }]
+      }]
+    } else if (d3data.Community > 6) {
+
+      community.children = [{
+        name: "Community Activity",
+        children: [{
+          name: "Community Activity",
+          size: 1
+        }]
+      }]
+    } else if (d3data.Community > 2) {
+
+      community.children = [{
+        name: "Community Activity",
+        size: 1
+      }]
+    } else if (d3data.Community >= 1) {
+
+      community.children = [{}]
+    } else {
+
+      community.children = [{}]
+    }
+
+    if (d3data.Business > 98) {
+
+      business.children = [{
+        name: "Business Activity",
+        children: [{
+          name: "Business Activity",
+          children: [{
+            name: "Business Activity",
+            size: 1
+          }]
+        }]
+      }]
+    } else if (state.d3data.Business > 34) {
+
+      business.children = [{
+        name: "Business Activity",
+        children: [{
+          name: "Business Activity",
+          size: 1
+        }]
+      }]
+    } else if (state.d3data.Business > 10) {
+
+      business.children = [{
+        name: "Business Activity",
+        size: 1
+      }]
+    } else if (state.d3data.Business >= 1) {
+
+      business.children = [{}]
+    } else {
+
+      business.children = [{}]
+    }
+
+    var pctG = d3data.GoodForm / d3data.Impervious
+
+    if (pctG > .6) {
+
+      form.children = [{
+        name: "Building Form",
+        children: [{
+          name: "Building Form",
+          children: [{
+            name: "Building Form",
+            size: 1
+          }]
+        }]
+      }]
+    } else if (pctG > .4) {
+
+      form.children = [{
+        name: "Building Form",
+        children: [{
+          name: "Building Form",
+          size: 1
+        }]
+      }]
+    } else if (pctG > .2) {
+
+      form.children = [{
+        name: "Building Form",
+        size: 1
+      }]
+    } else if (pctG >= .01) {
+
+      form.children = [{}]
+    } else {
+
+      form.children = [{}]
+    }   
+  },
 
   LOAD_NEIGHBORHOODS (state, neighborhoods) {
 

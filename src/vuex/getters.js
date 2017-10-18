@@ -23,3 +23,8 @@ export function getACScores (state) {
 	
   return state.acscores
 }
+
+export function getd3Data (state) {
+	
+  return state.d3data[0]
+}

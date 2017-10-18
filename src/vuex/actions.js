@@ -54,3 +54,14 @@ export const loadACScores = function({dispatch, state}, type) {
   })
 }
 
+export const updated3Data = function({dispatch, state}, type, name) {
+
+  api.getd3Data(type, name).then(function (response) {
+
+    dispatch('UPDATE_D3DATA', response.data)
+  }, function (response) {
+
+    console.log(response)
+  })
+}
+

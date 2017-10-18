@@ -18,7 +18,7 @@
       </table> -->
       <div v-show = 'townName != false'><p style = 'display: inline-block;'>{{townName}} has <br><div style = 'font-size: 30px; display: inline-block;' id = 'CAsites'></div> community sites, <div style = 'font-size: 30px; display: inline-block;' id = 'BAsites'></div> businesses and <div style = 'font-size: 30px; display: inline-block;' id = 'pct_GF'></div> are in Good Form</p></div>
       <!-- <canvas v-show = 'townName != false' style = 'display: inline' id="myChart" width="200" height="230"></canvas> -->
-      <svg></svg>
+      <svg id = 'svgboi'></svg>
       <br>
       <p>Select one of the groups below, then select a subgroup from the dropdown menu</p>
       <div id = 'radio-group'>
@@ -43,14 +43,17 @@
     <div v-show = 'townName' class = 'selectEmbayment1'>
       <div id = 'legendDiv'></div>
     </div>
+    <div id = 'comScore' style = 'display: none'></div>
+    <div id = 'buScore' style = 'display: none'></div>
+    <div id = 'formScore' style = 'display: none'></div>
   </div>
 </template>
 
 <script>
 
 import {introJs} from '../../node_modules/intro.js/intro.js'
-import { loadNeighborhoods, loadActivityCenters, loadTowns, loadTownName } from '../vuex/actions'
-import { getNeighborhoods, getActivityCenters, getTowns } from '../vuex/getters'
+import { loadNeighborhoods, loadActivityCenters, loadTowns, loadTownName, updated3Data } from '../vuex/actions'
+import { getNeighborhoods, getActivityCenters, getTowns, getd3Data } from '../vuex/getters'
 import * as d3 from "d3";
 
 export default {
@@ -62,6 +65,7 @@ export default {
   data () {
 
     return {
+
       nbhselected: false,
       acselected: false,
       townselected: false,
@@ -77,14 +81,16 @@ export default {
       loadNeighborhoods,
       loadActivityCenters,
       loadTowns,
-      loadTownName
+      loadTownName,
+      updated3Data
     },
 
     getters: {
 
       neighborhoods: getNeighborhoods,
       centers: getActivityCenters,
-      towns: getTowns
+      towns: getTowns,
+      d3data: getd3Data
     }
   },
 
@@ -124,67 +130,64 @@ export default {
         this.townName = false
       }
     })
+
     // https://api.myjson.com/bins/eim0h
 
-    // Variables
-    var width = 230;
-    var height = 200;
-    var radius = Math.min(width, height) / 2;
-    var color = d3.scaleOrdinal(["#4472c4", "#a5a5a5","#ed7d31"]);
+    // // Variables
+    // var width = 230;
+    // var height = 200;
+    // var radius = Math.min(width, height) / 2;
+    // var color = d3.scaleOrdinal(["#4472c4", "#a5a5a5","#ed7d31"]);
     
 
-    // Size our <svg> element, add a <g> element, and move translate 0,0 to the center of the element.
-    var g = d3.select('svg')
-        .attr('width', width)
-        .attr('height', height)
-        .append('g')
-        .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
+    // // Size our <svg> element, add a <g> element, and move translate 0,0 to the center of the element.
+    // var g = d3.select('svg')
+    //     .attr('width', width)
+    //     .attr('height', height)
+    //     .append('g')
+    //     .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
 
-    // Create our sunburst data structure and size it.
-    var partition = d3.partition()
-        .size([2 * Math.PI, radius]);
-        
-    // Get the data from our JSON file
-    d3.json("https://api.myjson.com/bins/ozv15", function(error, nodeData) {
-      if (error) throw error;
+    // // Create our sunburst data structure and size it.
+    // var partition = d3.partition()
+    //     .size([2 * Math.PI, radius]);
 
-      // Find the root node of our data, and begin sizing process.
-      var root = d3.hierarchy(nodeData)
-        .sum(function (d) { return d.size});
+    // // Find the root node of our data, and begin sizing process.
+    // var root = d3.hierarchy(this.d3data)
+    //   .sum(function (d) { return d.size});
 
-      // Calculate the sizes of each arc that we'll draw later.
-      partition(root);
-      var arc = d3.arc()
-        .startAngle(function (d) { return d.x0  })
-        .endAngle(function (d) { return d.x1 })
-        .innerRadius(function (d) { return d.y0  })
-        .outerRadius(function (d) { return d.y1 - 3 })
-        .padAngle(.04)
+    // // Calculate the sizes of each arc that we'll draw later.
+    // partition(root);
+    // var arc = d3.arc()
+    //   .startAngle(function (d) { return d.x0  })
+    //   .endAngle(function (d) { return d.x1 })
+    //   .innerRadius(function (d) { return d.y0  })
+    //   .outerRadius(function (d) { return d.y1 - 3 })
+    //   .padAngle(.04)
 
-      // Add a <g> element for each node in thd data, then append <path> elements and draw lines based on the arc
-      // variable calculations. Last, color the lines and the slices.
-      g.selectAll('g')
-        .data(root.descendants())
-        .enter().append('g').attr("class", "node").append('path')
-        .attr("display", function (d) { return d.depth ? null : "none"; })
-        .attr("d", arc)
-        .style('stroke', '#000000')
-        .style("fill", function (d) { return color((d.children ? d : d.parent).data.name); })
+    //   // Add a <g> element for each node in thd data, then append <path> elements and draw lines based on the arc
+    //   // variable calculations. Last, color the lines and the slices.
+    // g.selectAll('g')
+    //   .data(root.descendants())
+    //   .enter().append('g').attr("class", "node").append('path')
+    //   .attr("display", function (d) { return d.depth ? null : "none"; })
+    //   .attr("d", arc)
+    //   .style('stroke', '#000000')
+    //   .style("fill", function (d) { return color((d.children ? d : d.parent).data.name); })
 
-      d3.select('g')
-        .selectAll('text')
-        .data(root.children)
-        .enter()
-        .append('text')
-        .each(function(d) {
-          var centroid = arc.centroid(d)
-          d3.select(this)
-            .attr('x',(centroid[0] * 3.5) - 55)
-            .attr('y', (centroid[1] * 3.5) - 10)
-            .text(d.data.children[0].name)
-            .attr("transform", "rotate(" + computeTextRotation(d) + ")" )
-        })
-    });
+    // d3.select('g')
+    //   .selectAll('text')
+    //   .data(root.children)
+    //   .enter()
+    //   .append('text')
+    //   .each(function(d) {
+    //     var centroid = arc.centroid(d)
+    //     d3.select(this)
+    //       .attr('x',(centroid[0] * 3.5) - 55)
+    //       .attr('y', (centroid[1] * 3.5) - 10)
+    //       .text(d.data.children[0].name)
+    //       .attr("transform", "rotate(" + computeTextRotation(d) + ")" )
+    //   })
+    // });
 
 
     /**
@@ -192,13 +195,13 @@ export default {
      * @param {Node} d
      * @return {Number}
      */
-    function computeTextRotation(d) {
-        var angle = (d.x0 + d.x1) / Math.PI * 90;
+    // function computeTextRotation(d) {
+    //     var angle = (d.x0 + d.x1) / Math.PI * 90;
 
-        // Avoid upside-down labels
-        return (angle < 120 || angle > 270) ? angle : angle + 180  // labels as rims
-        // return (angle < 180) ? angle - 90 : angle + 90;  // labels as spokes
-    }
+    //     // Avoid upside-down labels
+    //     return (angle < 120 || angle > 270) ? angle : angle + 180  // labels as rims
+    //     // return (angle < 180) ? angle - 90 : angle + 90;  // labels as spokes
+    // }
   },
 
   methods: {
@@ -272,7 +275,153 @@ export default {
 
     'townName': function(x) {
 
+      var y = ''
+
+      if (this.nbhselected) {
+
+        y = 'nbh'
+      } else if (this.acselected) {
+
+        y = 'ac'
+      } else if (this.townselected) {
+
+        y = 'twn'
+      }
+
+      this.updated3Data(y, x)
+      
+      d3.select('#svgboi').selectAll("g > *").remove()
+      // Variables
+      var width = 230;
+      var height = 200;
+      var radius = Math.min(width, height) / 2;
+      var color = d3.scaleOrdinal(["#4472c4", "#a5a5a5","#ed7d31"]);
+      
+
+      // Size our <svg> element, add a <g> element, and move translate 0,0 to the center of the element.
+      var g = d3.select('svg')
+          .attr('width', width)
+          .attr('height', height)
+          .append('g')
+          .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
+
+      // Create our sunburst data structure and size it.
+      var partition = d3.partition()
+          .size([2 * Math.PI, radius]);
+
+      // Find the root node of our data, and begin sizing process.
+      var root = d3.hierarchy(this.d3data)
+        .sum(function (d) { return d.size});
+
+      // Calculate the sizes of each arc that we'll draw later.
+      partition(root);
+      var arc = d3.arc()
+        .startAngle(function (d) { return d.x0  })
+        .endAngle(function (d) { return d.x1 })
+        .innerRadius(function (d) { return d.y0  })
+        .outerRadius(function (d) { return d.y1 - 3 })
+        .padAngle(.04)
+
+        // Add a <g> element for each node in thd data, then append <path> elements and draw lines based on the arc
+        // variable calculations. Last, color the lines and the slices.
+      g.selectAll('g')
+        .data(root.descendants())
+        .enter().append('g').attr("class", "node").append('path')
+        .attr("display", function (d) { return d.depth ? null : "none"; })
+        .attr("d", arc)
+        .style('stroke', '#000000')
+        .style("fill", function (d) { return color((d.children ? d : d.parent).data.name); })
+
+      d3.select('g')
+        .selectAll('text')
+        .data(root.children)
+        .enter()
+        .append('text')
+        .each(function(d) {
+          var centroid = arc.centroid(d)
+          d3.select(this)
+            .attr('x',(centroid[0] * 3.5) - 55)
+            .attr('y', (centroid[1] * 3.5) - 10)
+            .text(d.data.children[0].name)
+            // .attr("transform", "rotate(" + computeTextRotation(d) + ")" )
+        })
+
+      function computeTextRotation(d) {
+        var angle = (d.x0 + d.x1) / Math.PI * 90;
+
+        // Avoid upside-down labels
+        return (angle < 120 || angle > 270) ? angle : angle + 180  // labels as rims
+        // return (angle < 180) ? angle - 90 : angle + 90;  // labels as spokes
+      }
+
       this.loadTownName(x)
+    },
+
+    'd3data': function(x) {
+
+      console.log(x)
+      // // Variables
+      // var width = 230;
+      // var height = 200;
+      // var radius = Math.min(width, height) / 2;
+      // var color = d3.scaleOrdinal(["#4472c4", "#a5a5a5","#ed7d31"]);
+      
+
+      // // Size our <svg> element, add a <g> element, and move translate 0,0 to the center of the element.
+      // var g = d3.select('svg')
+      //     .attr('width', width)
+      //     .attr('height', height)
+      //     .append('g')
+      //     .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
+
+      // // Create our sunburst data structure and size it.
+      // var partition = d3.partition()
+      //     .size([2 * Math.PI, radius]);
+
+      // // Find the root node of our data, and begin sizing process.
+      // var root = d3.hierarchy(x)
+      //   .sum(function (d) { return d.size});
+
+      // // Calculate the sizes of each arc that we'll draw later.
+      // partition(root);
+      // var arc = d3.arc()
+      //   .startAngle(function (d) { return d.x0  })
+      //   .endAngle(function (d) { return d.x1 })
+      //   .innerRadius(function (d) { return d.y0  })
+      //   .outerRadius(function (d) { return d.y1 - 3 })
+      //   .padAngle(.04)
+
+      //   // Add a <g> element for each node in thd data, then append <path> elements and draw lines based on the arc
+      //   // variable calculations. Last, color the lines and the slices.
+      // g.selectAll('g')
+      //   .data(root.descendants())
+      //   .enter().append('g').attr("class", "node").append('path')
+      //   .attr("display", function (d) { return d.depth ? null : "none"; })
+      //   .attr("d", arc)
+      //   .style('stroke', '#000000')
+      //   .style("fill", function (d) { return color((d.children ? d : d.parent).data.name); })
+
+      // d3.select('g')
+      //   .selectAll('text')
+      //   .data(root.children)
+      //   .enter()
+      //   .append('text')
+      //   .each(function(d) {
+      //     var centroid = arc.centroid(d)
+      //     d3.select(this)
+      //       .attr('x',(centroid[0] * 3.5) - 55)
+      //       .attr('y', (centroid[1] * 3.5) - 10)
+      //       .text(d.data.children[0].name)
+      //       // .attr("transform", "rotate(" + computeTextRotation(d) + ")" )
+      //   })
+
+      // function computeTextRotation(d) {
+      //   var angle = (d.x0 + d.x1) / Math.PI * 90;
+
+      //   // Avoid upside-down labels
+      //   return (angle < 120 || angle > 270) ? angle : angle + 180  // labels as rims
+      //   // return (angle < 180) ? angle - 90 : angle + 90;  // labels as spokes
+      // }
     }
   }
 }

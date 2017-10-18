@@ -25,5 +25,9 @@ export default {
 
   getACScores (type) {
     return Vue.http.get(API_ROOT + 'getACScores/' + type)
+  },
+
+  getd3Data (type, name) {
+    return Vue.http.get(API_ROOT + 'getd3Data/' + type + '/' + name)
   }
 }
