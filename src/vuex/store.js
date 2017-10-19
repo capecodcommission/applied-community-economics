@@ -9,7 +9,58 @@ const state = {
   centers: [],
   towns: [],
   townName: '',
-  acscores: [],
+  acscores: [
+    {
+      "name": "TOPICS",
+      "children": [
+        {
+          "name": "Community Activity",
+          "children": [
+            {
+              "name": "Community Activity",
+              "size": 1
+            }
+          ]
+        },
+        {
+          "name": "Business Activity",
+          "children": [
+            {
+              "name": "Business Activity",
+              "size": 0,
+              "children": [
+                {
+                  "name": "Business Activity",
+                  "size": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Building Form",
+          "children": [
+            {
+              "name": "Building Form",
+              "size": 0,
+              "children": [
+                {
+                  "name": "Building Form",
+                  "size": 0,
+                  "children": [
+                    {
+                      "name": "Building Form",
+                      "size": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
   d3data: [
     {
       "name": "TOPICS",
@@ -120,9 +171,11 @@ const mutations = {
     } else if (d3data.Community >= 1) {
 
       community.children = [{}]
+      community.size = 1
     } else {
 
       community.children = [{}]
+      community.size = 1
     }
 
     if (d3data.Business > 98) {
@@ -155,9 +208,10 @@ const mutations = {
     } else if (state.d3data.Business >= 1) {
 
       business.children = [{}]
+      business.size = 1
     } else {
 
-      business.children = [{}]
+      business.size = 1
     }
 
     var pctG = d3data.GoodForm / d3data.Impervious
@@ -192,9 +246,10 @@ const mutations = {
     } else if (pctG >= .01) {
 
       form.children = [{}]
+      form.size = 1
     } else {
 
-      form.children = [{}]
+      form.size = 1
     }   
   },
 
@@ -392,6 +447,58 @@ const mutations = {
         }
       }
     }
+    state.acscores = [
+    {
+      "name": "TOPICS",
+      "children": [
+        {
+          "name": "Community Activity",
+          "children": [
+            {
+              "name": "Community Activity",
+              "size": 1
+            }
+          ]
+        },
+        {
+          "name": "Business Activity",
+          "children": [
+            {
+              "name": "Business Activity",
+              "size": 0,
+              "children": [
+                {
+                  "name": "Business Activity",
+                  "size": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Building Form",
+          "children": [
+            {
+              "name": "Building Form",
+              "size": 0,
+              "children": [
+                {
+                  "name": "Building Form",
+                  "size": 0,
+                  "children": [
+                    {
+                      "name": "Building Form",
+                      "size": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
   }
 }
 

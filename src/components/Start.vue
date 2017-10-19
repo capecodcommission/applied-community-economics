@@ -220,75 +220,13 @@ export default {
       }
 
       this.updated3Data(y, x)
-      
-      // d3.select('#svgboi').selectAll("g > *").remove()
-      // // Variables
-      // var width = 230;
-      // var height = 200;
-      // var radius = Math.min(width, height) / 2;
-      // var color = d3.scaleOrdinal(["#4472c4", "#a5a5a5","#ed7d31"]);
-      
-
-      // // Size our <svg> element, add a <g> element, and move translate 0,0 to the center of the element.
-      // var g = d3.select('svg')
-      //     .attr('width', width)
-      //     .attr('height', height)
-      //     .append('g')
-      //     .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
-
-      // // Create our sunburst data structure and size it.
-      // var partition = d3.partition()
-      //     .size([2 * Math.PI, radius]);
-
-      // // Find the root node of our data, and begin sizing process.
-      // var root = d3.hierarchy(this.d3data)
-      //   .sum(function (d) { return d.size});
-
-      // // Calculate the sizes of each arc that we'll draw later.
-      // partition(root);
-      // var arc = d3.arc()
-      //   .startAngle(function (d) { return d.x0  })
-      //   .endAngle(function (d) { return d.x1 })
-      //   .innerRadius(function (d) { return d.y0  })
-      //   .outerRadius(function (d) { return d.y1 - 3 })
-      //   .padAngle(.04)
-
-      //   // Add a <g> element for each node in thd data, then append <path> elements and draw lines based on the arc
-      //   // variable calculations. Last, color the lines and the slices.
-      // g.selectAll('g')
-      //   .data(root.descendants())
-      //   .enter().append('g').attr("class", "node").append('path')
-      //   .attr("display", function (d) { return d.depth ? null : "none"; })
-      //   .attr("d", arc)
-      //   .style('stroke', '#000000')
-      //   .style("fill", function (d) { return color((d.children ? d : d.parent).data.name); })
-
-      // d3.select('g')
-      //   .selectAll('text')
-      //   .data(root.children)
-      //   .enter()
-      //   .append('text')
-      //   .each(function(d) {
-      //     var centroid = arc.centroid(d)
-      //     d3.select(this)
-      //       .attr('x',(centroid[0] * 3.5) - 55)
-      //       .attr('y', (centroid[1] * 3.5) - 10)
-      //       .text(d.data.children[0].name)
-      //       // .attr("transform", "rotate(" + computeTextRotation(d) + ")" )
-      //   })
-
-      // function computeTextRotation(d) {
-      //   var angle = (d.x0 + d.x1) / Math.PI * 90;
-
-      //   // Avoid upside-down labels
-      //   return (angle < 120 || angle > 270) ? angle : angle + 180  // labels as rims
-      //   // return (angle < 180) ? angle - 90 : angle + 90;  // labels as spokes
-      // }
 
       this.loadTownName(x)
     },
 
     'd3data': function() {
+
+      console.log(this.d3data)
 
       d3.select('#svgboi').selectAll("g > *").remove()
       // Variables
@@ -332,19 +270,18 @@ export default {
         .style('stroke', '#000000')
         .style("fill", function (d) { return color((d.children ? d : d.parent).data.name); })
 
-      d3.select('g')
-        .selectAll('text')
-        .data(root.children)
-        .enter()
-        .append('text')
-        .each(function(d) {
-          var centroid = arc.centroid(d)
-          d3.select(this)
-            .attr('x',(centroid[0] * 3.5) - 55)
-            .attr('y', (centroid[1] * 3.5) - 10)
-            .text(d.data.children[0].name)
-            // .attr("transform", "rotate(" + computeTextRotation(d) + ")" )
-        })
+      // d3.select('g')
+      //   .selectAll('path')
+      //   .data(root.children)
+      //   .enter()
+      //   .append('text')
+      //   .each(function(d) {
+      //     var centroid = arc.centroid(d)
+      //     d3.select(this)
+      //       .attr('x',(centroid[0] * 3.5) - 55)
+      //       .attr('y', (centroid[1] * 3.5) - 10)
+      //       .text(d.data.children[0].name)
+      //   })
 
       function computeTextRotation(d) {
         var angle = (d.x0 + d.x1) / Math.PI * 90;

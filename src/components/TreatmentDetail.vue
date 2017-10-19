@@ -18,7 +18,7 @@
 
     <div class = 'row'>
       <div class="col-md-2">
-          <canvas style = 'display: inline' id="myChart0" width="200" height="200"></canvas>
+          <svg style = 'display: inline' id="myChart0"></svg>
       </div>
       <div class="col-md-2">
           <canvas style = 'display: inline' id="myChart1" width="200" height="200"></canvas>
@@ -86,6 +86,7 @@ import { getACScores, getTownName } from '../vuex/getters'
 import {  } from 'vue-strap'
 import json2csv from 'nice-json2csv'
 import wqheader from './Header'
+import * as d3 from "d3";
 
 export default {
   components: {
@@ -214,49 +215,93 @@ export default {
 
     'scores': function() {
 
-      for (var i = this.scores.length - 1; i >= 0; i--) {
+      console.log(this.scores)
 
-        new Chart($("#myChart" + i.toString()), {
-          type: 'polarArea',
-          data: {
-            datasets: [{
-              data: [this.scores[i].comScore, this.scores[i].buScore, this.scores[i].formScore],
-              backgroundColor: ['rgb(68, 114, 196)', 'rgb(165, 165, 165)', 'rgb(237, 125, 49)']
-            }],
+      d3.select('#myChart0').selectAll("g > *").remove()
+      // Variables
+      var width = 230;
+      var height = 200;
+      var radius = Math.min(width, height) / 2;
+      var color = d3.scaleOrdinal(["#4472c4", "#a5a5a5","#ed7d31"]);
+      
 
-        // These labels appear in the legend and in the tooltips when hovering different arcs
-            labels: [
-              'Community Score',
-              'Business Score',
-              'Form Score'
-            ]
-          },
-          options: {
-            scale: {
-              ticks: {
-                min: 0,
-                max: 4,
-                stepSize: 1
-              }
-            },
-            startAngle: -0.4 * Math.PI,
-            title: {
-              display: true,
-              text: this.scores[i].Activity_Center,
-              fontFamily: "Open Sans",
-              fontColor: "White"
-            },
-            legend: {
-              display: false
-            }
-          }
-        })
+      // Size our <svg> element, add a <g> element, and move translate 0,0 to the center of the element.
+      var g = d3.select('svg')
+          .attr('width', width)
+          .attr('height', height)
+          .append('g')
+          .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
 
-        if (this.scores[i].Activity_Center === this.$route.params.id) {
+      // Create our sunburst data structure and size it.
+      var partition = d3.partition()
+          .size([2 * Math.PI, radius]);
 
-          $('#myChart' + i.toString()).css('border-color','#646e7a').css('border-radius', '25px').css('border-style','solid')
-        }
-      }
+      // Find the root node of our data, and begin sizing process.
+      var root = d3.hierarchy(this.scores[0])
+        .sum(function (d) { return d.size});
+
+      // Calculate the sizes of each arc that we'll draw later.
+      partition(root);
+      var arc = d3.arc()
+        .startAngle(function (d) { return d.x0  })
+        .endAngle(function (d) { return d.x1 })
+        .innerRadius(function (d) { return d.y0  })
+        .outerRadius(function (d) { return d.y1 - 3 })
+        .padAngle(.04)
+
+        // Add a <g> element for each node in thd data, then append <path> elements and draw lines based on the arc
+        // variable calculations. Last, color the lines and the slices.
+      g.selectAll('g')
+        .data(root.descendants())
+        .enter().append('g').attr("class", "node").append('path')
+        .attr("display", function (d) { return d.depth ? null : "none"; })
+        .attr("d", arc)
+        .style('stroke', '#000000')
+        .style("fill", function (d) { return color((d.children ? d : d.parent).data.name); })
+
+      // for (var i = this.scores.length - 1; i >= 0; i--) {
+
+      //   new Chart($("#myChart" + i.toString()), {
+      //     type: 'polarArea',
+      //     data: {
+      //       datasets: [{
+      //         data: [this.scores[i].comScore, this.scores[i].buScore, this.scores[i].formScore],
+      //         backgroundColor: ['rgb(68, 114, 196)', 'rgb(165, 165, 165)', 'rgb(237, 125, 49)']
+      //       }],
+
+      //   // These labels appear in the legend and in the tooltips when hovering different arcs
+      //       labels: [
+      //         'Community Score',
+      //         'Business Score',
+      //         'Form Score'
+      //       ]
+      //     },
+      //     options: {
+      //       scale: {
+      //         ticks: {
+      //           min: 0,
+      //           max: 4,
+      //           stepSize: 1
+      //         }
+      //       },
+      //       startAngle: -0.4 * Math.PI,
+      //       title: {
+      //         display: true,
+      //         text: this.scores[i].Activity_Center,
+      //         fontFamily: "Open Sans",
+      //         fontColor: "White"
+      //       },
+      //       legend: {
+      //         display: false
+      //       }
+      //     }
+      //   })
+
+      //   if (this.scores[i].Activity_Center === this.$route.params.id) {
+
+      //     $('#myChart' + i.toString()).css('border-color','#646e7a').css('border-radius', '25px').css('border-style','solid')
+      //   }
+      // }
     }
   }
 }
