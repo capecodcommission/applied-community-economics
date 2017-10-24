@@ -4,18 +4,6 @@
       <h2>ACE Report</h2><br>
       <h1 v-show = 'townName != false'>{{townName}}</h1><br>
       <p>This tool will score the form of an area based on Building Form, Business Activity and Community Activity. It allows for the comparison of scores to other similar geographies in the Report Card.  In development is the ability to dig down into key metrics that will improve the score of an area.</p>
-      <!-- <table style = 'margin: auto; text-align: center; table-layout: fixed; width: 100%; !important' class = 'text-center'>
-        <tr style = 'font-size: 40px'>
-          <th style = 'text-align: center' id = 'BAsites'></th>
-          <th style = 'text-align: center' id = 'CAsites'></th>
-          <th style = 'text-align: center' id = 'pct_GF'></th>
-        </tr>
-        <tr v-show = 'townName' style = 'font-size: 15px'>
-          <td>Businesses</td>
-          <td>Community Sites</td>
-          <td>% Good Form</td>
-        </tr>
-      </table> -->
       <div v-show = 'townName != false'><p style = 'display: inline-block;'>{{townName}} has <br><div style = 'font-size: 30px; display: inline-block;' id = 'CAsites'></div> community sites, <div style = 'font-size: 30px; display: inline-block;' id = 'BAsites'></div> businesses and <div style = 'font-size: 30px; display: inline-block;' id = 'pct_GF'></div> are in Good Form</p></div>
       <!-- <canvas v-show = 'townName != false' style = 'display: inline' id="myChart" width="200" height="230"></canvas> -->
       <svg id = 'svgboi'></svg>
@@ -219,14 +207,15 @@ export default {
         y = 'twn'
       }
 
-      this.updated3Data(y, x)
+      if (x != '0') {
+        
+        this.updated3Data(y, x)
+      }
 
       this.loadTownName(x)
     },
 
     'd3data': function() {
-
-      console.log(this.d3data)
 
       d3.select('#svgboi').selectAll("g > *").remove()
       // Variables
