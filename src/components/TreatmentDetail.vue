@@ -16,7 +16,7 @@
     </div>
     <!-- <wqheader style = "background:#404144 !important; padding-bottom: 1px"></wqheader> -->
 
-    <div class = 'row'>
+    <div class = 'row text-center'>
       <div class="col-md-2">
         <div id = 'title'>{{scores[0].Activity_Center}}</div>
         <svg style = 'display: inline' id="myChart0"></svg>
@@ -43,7 +43,7 @@
       </div>
     </div>
 
-    <div class = 'row'>
+    <div class = 'row text-center'>
       <div class="col-md-2">
         <div id = 'title'>{{scores[6].Activity_Center}}</div>
         <svg style = 'display: inline' id="myChart6" width="200" height="200"></svg>
@@ -70,7 +70,7 @@
       </div>
     </div>
 
-    <div class = 'row'>
+    <div class = 'row text-center'>
       <div class="col-md-2">
         <div id = 'title'>{{scores[12].Activity_Center}}</div>
         <svg style = 'display: inline' id="myChart12" width="200" height="200"></svg>
