@@ -293,6 +293,11 @@ export default {
   #title {
     color: white;
     text-align: center;
-    font-family: "Open Sans"
+    font-family: "Open Sans";
+    padding-bottom: 10px;
+  }
+
+  .row {
+    padding-bottom: 10px;
   }
 </style>

@@ -119,8 +119,6 @@ export default {
       }
     })
 
-    // https://api.myjson.com/bins/eim0h
-
   },
 
   methods: {
@@ -209,10 +207,9 @@ export default {
 
       if (x != '0') {
         
+        this.loadTownName(x)
         this.updated3Data(y, x)
       }
-
-      this.loadTownName(x)
     },
 
     'd3data': function() {
@@ -258,19 +255,6 @@ export default {
         .attr("d", arc)
         .style('stroke', '#000000')
         .style("fill", function (d) { return color((d.children ? d : d.parent).data.name); })
-
-      // d3.select('g')
-      //   .selectAll('path')
-      //   .data(root.children)
-      //   .enter()
-      //   .append('text')
-      //   .each(function(d) {
-      //     var centroid = arc.centroid(d)
-      //     d3.select(this)
-      //       .attr('x',(centroid[0] * 3.5) - 55)
-      //       .attr('y', (centroid[1] * 3.5) - 10)
-      //       .text(d.data.children[0].name)
-      //   })
 
       function computeTextRotation(d) {
         var angle = (d.x0 + d.x1) / Math.PI * 90;
