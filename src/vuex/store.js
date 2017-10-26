@@ -174,7 +174,7 @@ const mutations = {
       community.size = 1
     } else {
 
-      community.children = [{}]
+      // community.children = [{}]
       community.size = 1
     }
 
@@ -190,7 +190,7 @@ const mutations = {
           }]
         }]
       }]
-    } else if (state.d3data.Business > 34) {
+    } else if (d3data.Business > 34) {
 
       business.children = [{
         name: "Business Activity",
@@ -199,13 +199,13 @@ const mutations = {
           size: 1
         }]
       }]
-    } else if (state.d3data.Business > 10) {
+    } else if (d3data.Business > 10) {
 
       business.children = [{
         name: "Business Activity",
         size: 1
       }]
-    } else if (state.d3data.Business >= 1) {
+    } else if (d3data.Business >= 1) {
 
       business.children = [{}]
       business.size = 1
