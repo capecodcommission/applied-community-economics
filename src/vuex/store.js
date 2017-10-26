@@ -174,7 +174,7 @@ const mutations = {
       community.size = 1
     } else {
 
-      // community.children = [{}]
+      community.children = [{}]
       community.size = 1
     }
 
@@ -211,6 +211,7 @@ const mutations = {
       business.size = 1
     } else {
 
+      business.children = [{}]
       business.size = 1
     }
 
@@ -249,8 +250,9 @@ const mutations = {
       form.size = 1
     } else {
 
+      form.children = [{}]
       form.size = 1
-    }   
+    }  
   },
 
   LOAD_NEIGHBORHOODS (state, neighborhoods) {
