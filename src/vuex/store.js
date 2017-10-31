@@ -137,11 +137,15 @@ const mutations = {
       ]
     }]
 
+    state.d3data[0].rank = ''
+
     var community = state.d3data[0].children[0]
     var business = state.d3data[0].children[1]
     var form = state.d3data[0].children[2]
 
     if (d3data.Community > 9) {
+
+      state.d3data[0].rank = 'very strong'
 
       community.children = [{
         name: "Community Activity",
@@ -155,6 +159,8 @@ const mutations = {
       }]
     } else if (d3data.Community > 6) {
 
+      state.d3data[0].rank = 'strong'
+
       community.children = [{
         name: "Community Activity",
         children: [{
@@ -164,15 +170,21 @@ const mutations = {
       }]
     } else if (d3data.Community > 2) {
 
+      state.d3data[0].rank = 'moderate'
+
       community.children = [{
         name: "Community Activity",
         size: 1
       }]
     } else if (d3data.Community >= 1) {
 
+      state.d3data[0].rank = 'weak'
+
       community.children = [{}]
       community.size = 1
     } else {
+
+      state.d3data[0].rank = 'very weak'
 
       community.children = [{}]
       community.size = 1
