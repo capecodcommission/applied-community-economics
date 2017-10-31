@@ -1,5 +1,8 @@
 <template>
   <div class = 'fill-height' id="map">
+    <div transition = 'fade' v-show = 'showComparison' class = 'col-md-7 comparison'>
+      <comparison></comparison>
+    </div>
     <div class = 'selectEmbayment text-center'>
       <h2>ACE Report</h2><br>
       <h1 v-show = 'townName != false'>{{townName}}</h1><br>
@@ -26,7 +29,7 @@
         <option value = '0'>Select a Town</option>
         <option v-for = 'town in towns.recordsets[0]' value = '{{town.town}}'>{{town.town}}</option>
       </select><br><br>
-      <button v-show = "townName != false" @click = "goTown(townName)" class = "btn btn-success">View ReportCard {{townName}}</button>
+      <!-- <button v-show = "townName != false" @click = "goTown(townName)" class = "btn btn-success">View ReportCard {{townName}}</button> -->
     </div>
     <div v-show = 'townName' class = 'selectEmbayment1'>
       <div id = 'legendDiv'></div>
@@ -40,14 +43,15 @@
 <script>
 
 import {introJs} from '../../node_modules/intro.js/intro.js'
-import { loadNeighborhoods, loadActivityCenters, loadTowns, loadTownName, updated3Data } from '../vuex/actions'
-import { getNeighborhoods, getActivityCenters, getTowns, getd3Data } from '../vuex/getters'
-import * as d3 from "d3";
+import { loadNeighborhoods, loadActivityCenters, loadTowns, loadTownName, updated3Data, loadACScores } from '../vuex/actions'
+import { getNeighborhoods, getActivityCenters, getTowns, getd3Data, getACScores } from '../vuex/getters'
+import * as d3 from "d3"
+import treatmentDetail from './TreatmentDetail'
 
 export default {
 
   components: {
-
+    'comparison': treatmentDetail
   },
 
   data () {
@@ -59,7 +63,8 @@ export default {
       townselected: false,
       townName: false,
       BAsites: false,
-      rank: ''
+      rank: '',
+      showComparison: false
     }
   },
 
@@ -71,7 +76,8 @@ export default {
       loadActivityCenters,
       loadTowns,
       loadTownName,
-      updated3Data
+      updated3Data,
+      loadACScores
     },
 
     getters: {
@@ -79,7 +85,8 @@ export default {
       neighborhoods: getNeighborhoods,
       centers: getActivityCenters,
       towns: getTowns,
-      d3data: getd3Data
+      d3data: getd3Data,
+      scores: getACScores
     }
   },
 
@@ -139,7 +146,7 @@ export default {
         y = 'twn'
       }
 
-      router.go({name: 'reportCard', params: {id: x, type: y}})
+      // router.go({name: 'reportCard', params: {id: x, type: y}})
     },
 
     changenbh: function() {
@@ -215,6 +222,8 @@ export default {
 
     'd3data': function() {
 
+      this.showComparison = true
+
       this.rank = this.d3data.rank
 
       d3.select('#svgboi').selectAll("g > *").remove()
@@ -226,7 +235,7 @@ export default {
       
 
       // Size our <svg> element, add a <g> element, and move translate 0,0 to the center of the element.
-      var g = d3.select('svg')
+      var g = d3.select('svgboi')
           .attr('width', width)
           .attr('height', height)
           .append('g')
@@ -266,6 +275,21 @@ export default {
         return (angle < 120 || angle > 270) ? angle : angle + 180  // labels as rims
         // return (angle < 180) ? angle - 90 : angle + 90;  // labels as spokes
       }
+
+      var y = ''
+
+      if (this.nbhselected) {
+
+        y = 'nbh'
+      } else if (this.acselected) {
+
+        y = 'ac'
+      } else if (this.townselected) {
+
+        y = 'twn'
+      }
+
+      this.loadACScores(y)
     }
   }
 }
@@ -338,6 +362,21 @@ p {
   border: 2px solid black;
   opacity: 0.9;
   color: black;
+
+}
+
+.comparison {
+  bottom: 5px;
+  right: 1px;
+  position: absolute;
+  z-index: 5;
+  float: right;
+  background: #28536c;
+  border-radius: 25px;
+  padding: 1.5em;
+  border: 2px solid black;
+  opacity: 0.9;
+  /*color: black;*/
 
 }
 

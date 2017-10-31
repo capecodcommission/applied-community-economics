@@ -8,9 +8,9 @@
       <div class = 'col-md-12'>
         <span>
           <h1 style = 'font-size: 50px; margin-top: 1px !important; display: inline-block; color: white' class = 'text-center'>{{ type }} Comparison</h1>
-          <button id ='restartMap' class = 'btn btn-success pull-right'>Restart</button>
+          <!-- <button id ='restartMap' class = 'btn btn-success pull-right'>Restart</button> -->
         </span><br>
-        <button @click = 'goComingSoon($route.params.id)' class = 'btn btn-success pull-right'>More Metrics</button><br><br>
+        <!-- <button @click = 'goComingSoon($route.params.id)' class = 'btn btn-success pull-right'>More Metrics</button><br><br> -->
         <button class = 'btn btn-success pull-right' @click = 'excelExport'>Export Data</button>
       </div>
     </div>
@@ -23,69 +23,69 @@
       </div>
       <div class="col-md-2">
         <div id = 'title'>{{scores[1].Activity_Center}}</div>
-        <svg style = 'display: inline' id="myChart1" width="200" height="200"></svg>
+        <svg style = 'display: inline' id="myChart1" width="150" height="150"></svg>
       </div>
       <div class="col-md-2">
         <div id = 'title'>{{scores[2].Activity_Center}}</div>
-        <svg style = 'display: inline' id="myChart2" width="200" height="200"></svg>
+        <svg style = 'display: inline' id="myChart2" width="150" height="150"></svg>
       </div>
       <div class="col-md-2">
         <div id = 'title'>{{scores[3].Activity_Center}}</div>
-        <svg style = 'display: inline' id="myChart3" width="200" height="200"></svg>
+        <svg style = 'display: inline' id="myChart3" width="150" height="150"></svg>
       </div>
       <div class="col-md-2">
         <div id = 'title'>{{scores[4].Activity_Center}}</div>
-        <svg style = 'display: inline' id="myChart4" width="200" height="200"></svg>
+        <svg style = 'display: inline' id="myChart4" width="150" height="150"></svg>
       </div>
       <div class="col-md-2">
         <div id = 'title'>{{scores[5].Activity_Center}}</div>
-        <svg style = 'display: inline' id="myChart5" width="200" height="200"></svg>
+        <svg style = 'display: inline' id="myChart5" width="150" height="150"></svg>
       </div>
     </div>
 
     <div class = 'row text-center'>
       <div class="col-md-2">
         <div id = 'title'>{{scores[6].Activity_Center}}</div>
-        <svg style = 'display: inline' id="myChart6" width="200" height="200"></svg>
+        <svg style = 'display: inline' id="myChart6" width="150" height="150"></svg>
       </div>
       <div class="col-md-2">
         <div id = 'title'>{{scores[7].Activity_Center}}</div>
-        <svg style = 'display: inline' id="myChart7" width="200" height="200"></svg>
+        <svg style = 'display: inline' id="myChart7" width="150" height="150"></svg>
       </div>
       <div class="col-md-2">
         <div id = 'title'>{{scores[8].Activity_Center}}</div>
-        <svg style = 'display: inline' id="myChart8" width="200" height="200"></svg>
+        <svg style = 'display: inline' id="myChart8" width="150" height="150"></svg>
       </div>
       <div class="col-md-2">
         <div id = 'title'>{{scores[9].Activity_Center}}</div>
-        <svg style = 'display: inline' id="myChart9" width="200" height="200"></svg>
+        <svg style = 'display: inline' id="myChart9" width="150" height="150"></svg>
       </div>
       <div class="col-md-2">
         <div id = 'title'>{{scores[10].Activity_Center}}</div>
-        <svg style = 'display: inline' id="myChart10" width="200" height="200"></svg>
+        <svg style = 'display: inline' id="myChart10" width="150" height="150"></svg>
       </div>
       <div class="col-md-2">
         <div id = 'title'>{{scores[11].Activity_Center}}</div>
-        <svg style = 'display: inline' id="myChart11" width="200" height="200"></svg>
+        <svg style = 'display: inline' id="myChart11" width="150" height="150"></svg>
       </div>
     </div>
 
     <div class = 'row text-center'>
       <div class="col-md-2">
         <div id = 'title'>{{scores[12].Activity_Center}}</div>
-        <svg style = 'display: inline' id="myChart12" width="200" height="200"></svg>
+        <svg style = 'display: inline' id="myChart12" width="150" height="150"></svg>
       </div>
       <div class="col-md-2">
         <div id = 'title'>{{scores[13].Activity_Center}}</div>
-        <svg style = 'display: inline' id="myChart13" width="200" height="200"></svg>
+        <svg style = 'display: inline' id="myChart13" width="150" height="150"></svg>
       </div>
       <div class="col-md-2">
         <div id = 'title'>{{scores[14].Activity_Center}}</div>
-        <svg style = 'display: inline' id="myChart14" width="200" height="200"></svg>
+        <svg style = 'display: inline' id="myChart14" width="150" height="150"></svg>
       </div>
       <div class="col-md-2">
         <div id = 'title'>{{scores[15].Activity_Center}}</div>
-        <svg style = 'display: inline' id="myChart15" width="200" height="200"></svg>
+        <svg style = 'display: inline' id="myChart15" width="150" height="150"></svg>
       </div>
     </div>
   </div>
@@ -114,7 +114,8 @@ export default {
 
     return {
 
-      type: ''
+      type: '',
+      selectedChart: ''
     }
   },
 
@@ -208,18 +209,18 @@ export default {
 
   ready() {
 
-    if (this.$route.params.type === 'ac') {
+    // if (this.$route.params.type === 'ac') {
 
-      this.type = 'Activity Center'
-    } else if (this.$route.params.type === 'twn') {
+    //   this.type = 'Activity Center'
+    // } else if (this.$route.params.type === 'twn') {
 
-      this.type = 'Town'
-    } else if (this.$route.params.type === 'nbh') {
+    //   this.type = 'Town'
+    // } else if (this.$route.params.type === 'nbh') {
 
-      this.type = 'Neighborhood'
-    }
+    //   this.type = 'Neighborhood'
+    // }
 
-    this.loadACScores(this.$route.params.type)
+    // this.loadACScores(this.$route.params.type)
 
     $('#restartMap').on('click', function() {
 
@@ -237,8 +238,8 @@ export default {
 
         d3.select(thischart).selectAll("g > *").remove()
         // Variables
-        var width = 200;
-        var height = 200;
+        var width = 150;
+        var height = 150;
         var radius = Math.min(width, height) / 2;
         var color = d3.scaleOrdinal(["#4472c4", "#a5a5a5","#ed7d31"]);
         
@@ -277,7 +278,7 @@ export default {
           .style('stroke', '#000000')
           .style("fill", function (d) { return color((d.children ? d : d.parent).data.name); })
 
-        if (this.scores[i].Activity_Center === this.$route.params.id) {
+        if (this.scores[i].Activity_Center === this.townname) {
 
           $(thischart).css('border-color','#646e7a').css('border-radius', '25px').css('border-style','solid')
         }
