@@ -235,7 +235,7 @@ export default {
       
 
       // Size our <svg> element, add a <g> element, and move translate 0,0 to the center of the element.
-      var g = d3.select('svgboi')
+      var g = d3.select('#svgboi')
           .attr('width', width)
           .attr('height', height)
           .append('g')

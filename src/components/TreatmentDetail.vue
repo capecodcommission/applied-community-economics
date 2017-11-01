@@ -236,6 +236,8 @@ export default {
 
         var thischart = '#myChart' + i.toString()
 
+        $(thischart).removeClass('highlight')
+
         d3.select(thischart).selectAll("g > *").remove()
         // Variables
         var width = 150;
@@ -280,7 +282,7 @@ export default {
 
         if (this.scores[i].Activity_Center === this.townname) {
 
-          $(thischart).css('border-color','#646e7a').css('border-radius', '25px').css('border-style','solid')
+          $(thischart).addClass('highlight')
         }
       }
     }
@@ -300,5 +302,11 @@ export default {
 
   .row {
     padding-bottom: 10px;
+  }
+
+  .highlight {
+    border-color: #646e7a;
+    border-radius: 25px;
+    border-style: solid;
   }
 </style>
