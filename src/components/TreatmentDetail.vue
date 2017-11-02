@@ -185,6 +185,8 @@ export default {
 
       for (var j = 0; j < this.scores.length; j++) {
 
+        this.scores[j].d3data = ''
+
         arr.push(this.JSONflatten(this.scores[j]))
       }
       

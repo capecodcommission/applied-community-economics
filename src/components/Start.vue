@@ -7,7 +7,7 @@
       <h2>ACE Report</h2><br>
       <h1 v-show = 'townName != false'>{{townName}}</h1><br>
       <p>This tool will score the form of an area based on Building Form, Business Activity and Community Activity. It allows for the comparison of scores to other similar geographies in the Report Card.  In development is the ability to dig down into key metrics that will improve the score of an area.</p>
-      <div v-show = 'townName != false'><p style = 'display: inline-block;'><div style = 'display: inline-block; font-size: 20px'>{{townName}}</div> has a {{rank}} score, due to <br><div style = 'font-size: 30px; display: inline-block;' id = 'CAsites'></div> community sites, <div style = 'font-size: 30px; display: inline-block;' id = 'BAsites'></div> businesses and <div style = 'font-size: 30px; display: inline-block;' id = 'pct_GF'></div> are in Good Form</p></div>
+      <div v-show = 'townName != false'><p style = 'display: inline-block;'><div style = "display: inline-block; font-size: 20px; font-family: 'Open Sans'">{{townName}}</div> has a {{rank}} score, due to <br><div style = 'font-size: 30px; display: inline-block;' id = 'CAsites'></div> community sites, <div style = 'font-size: 30px; display: inline-block;' id = 'BAsites'></div> businesses and <div style = 'font-size: 30px; display: inline-block;' id = 'pct_GF'></div> are in Good Form</p></div>
       <!-- <canvas v-show = 'townName != false' style = 'display: inline' id="myChart" width="200" height="230"></canvas> -->
       <svg id = 'svgboi'></svg>
       <br>
