@@ -287,6 +287,14 @@ export default {
           $(thischart).addClass('highlight')
         }
       }
+
+      if (this.scores.length < 16 ) {
+
+        for (var i = 16 - 1; i >= this.scores.length; i--) {
+          
+          $('#myChart' + i.toString()).empty()
+        }
+      }
     }
   }
 }
