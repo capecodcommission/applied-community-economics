@@ -279,7 +279,7 @@ export default {
           .enter().append('g').attr("class", "node").append('path')
           .attr("display", function (d) { return d.depth ? null : "none"; })
           .attr("d", arc)
-          .style('stroke', '#000000')
+          // .style('stroke', '#000000')
           .style("fill", function (d) { return color((d.children ? d : d.parent).data.name); })
 
         if (this.scores[i].Activity_Center === this.townname) {
