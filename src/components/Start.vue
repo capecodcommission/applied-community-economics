@@ -7,7 +7,7 @@
       <h2>ACE Report</h2><br>
       <h1 v-show = 'townName != false'>{{townName}}</h1><br>
       <p>This tool will score the form of an area based on Building Form, Business Activity and Community Activity. It allows for the comparison of scores to other similar geographies in the Report Card.  In development is the ability to dig down into key metrics that will improve the score of an area.</p>
-      <div v-show = 'townName != false'><p style = 'display: inline-block;'><div style = "display: inline-block; font-size: 20px; font-family: 'Open Sans'">{{townName}}</div> has a {{rank}} score, due to <br><div style = 'font-size: 30px; display: inline-block;' id = 'CAsites'></div> community sites, <div style = 'font-size: 30px; display: inline-block;' id = 'BAsites'></div> businesses and <div style = 'font-size: 30px; display: inline-block;' id = 'pct_GF'></div> are in Good Form</p></div>
+      <div v-show = 'townName != false'><p style = 'display: inline-block;'><div style = "display: inline-block; font-size: 20px; font-family: 'Open Sans'">{{townName}}</div> has a <div style = "display: inline-block; font-size: 20px; font-family: 'Open Sans'">{{rank}}</div> score, due to <br><div style = 'font-size: 30px; display: inline-block;' id = 'CAsites'></div> community sites, <div style = 'font-size: 30px; display: inline-block;' id = 'BAsites'></div> businesses and <div style = 'font-size: 30px; display: inline-block;' id = 'pct_GF'></div> are in Good Form</p></div>
       <!-- <canvas v-show = 'townName != false' style = 'display: inline' id="myChart" width="200" height="230"></canvas> -->
       <svg id = 'svgboi'></svg>
       <br>
@@ -43,7 +43,7 @@
 <script>
 
 import {introJs} from '../../node_modules/intro.js/intro.js'
-import { loadNeighborhoods, loadActivityCenters, loadTowns, loadTownName, updated3Data, loadACScores } from '../vuex/actions'
+import { loadNeighborhoods, loadActivityCenters, loadTowns, loadTownName, updated3Data, loadACScores, updateSelect } from '../vuex/actions'
 import { getNeighborhoods, getActivityCenters, getTowns, getd3Data, getACScores } from '../vuex/getters'
 import * as d3 from "d3"
 import treatmentDetail from './TreatmentDetail'
@@ -77,7 +77,8 @@ export default {
       loadTowns,
       loadTownName,
       updated3Data,
-      loadACScores
+      loadACScores,
+      updateSelect
     },
 
     getters: {
@@ -205,12 +206,15 @@ export default {
       if (this.nbhselected) {
 
         y = 'nbh'
+        this.updateSelect('Neighborhood')
       } else if (this.acselected) {
 
         y = 'ac'
+        this.updateSelect('Activity Center')
       } else if (this.townselected) {
 
         y = 'twn'
+        this.updateSelect('Town')
       }
 
       if (x != '0') {
@@ -221,6 +225,8 @@ export default {
     },
 
     'd3data': function() {
+
+      console.log(this.d3data)
 
       this.showComparison = true
 
@@ -268,7 +274,13 @@ export default {
         // .style('stroke', '#000000')
         .style("fill", function (d) { return color((d.children ? d : d.parent).data.name); })
         
-      
+      g.append("text")
+       .attr("text-anchor", "middle")
+       .attr('font-size', '2em')
+       .style('fill', '#f0ead6')
+       .attr('font-family', 'Open Sans')
+       .attr('y', 10)
+       .text(Math.round(this.d3data.finalScore));
 
 
       function computeTextRotation(d) {

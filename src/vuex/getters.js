@@ -28,3 +28,8 @@ export function getd3Data (state) {
 	
   return state.d3data[0]
 }
+
+export function getType (state) {
+  
+  return state.selectType
+}

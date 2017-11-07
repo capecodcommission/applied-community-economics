@@ -65,3 +65,7 @@ export const updated3Data = function({dispatch, state}, type, name) {
   })
 }
 
+export const updateSelect = function({dispatch, state}, type) {
+
+  dispatch('UPDATE_SELECT', type) 
+}

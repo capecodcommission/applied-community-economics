@@ -7,7 +7,7 @@
     <div class="row text-center">
       <div class = 'col-md-12'>
         <span>
-          <h1 style = 'font-size: 50px; margin-top: 1px !important; display: inline-block; color: white' class = 'text-center'>{{ type }} Comparison</h1>
+          <h1 style = 'font-size: 50px; margin-top: 1px !important; display: inline-block; color: white' class = 'text-center'>{{ selectType }} Comparison</h1>
           <!-- <button id ='restartMap' class = 'btn btn-success pull-right'>Restart</button> -->
         </span><br>
         <!-- <button @click = 'goComingSoon($route.params.id)' class = 'btn btn-success pull-right'>More Metrics</button><br><br> -->
@@ -98,7 +98,7 @@
 <script>
 
 import { loadACScores } from '../vuex/actions'
-import { getACScores, getTownName } from '../vuex/getters'
+import { getACScores, getTownName, getType } from '../vuex/getters'
 import {  } from 'vue-strap'
 import json2csv from 'nice-json2csv'
 import wqheader from './Header'
@@ -114,7 +114,6 @@ export default {
 
     return {
 
-      type: '',
       selectedChart: ''
     }
   },
@@ -127,7 +126,8 @@ export default {
     getters: {
 
       scores: getACScores,
-      townname: getTownName
+      townname: getTownName,
+      selectType: getType
     }
   },
 
