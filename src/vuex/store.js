@@ -351,6 +351,7 @@ const mutations = {
       state.acscores[i].comScore = 0
       state.acscores[i].buScore = 0
       state.acscores[i].formScore = 0
+      state.acscores[i].finalScore = 0
 
       state.acscores[i].d3data = [{
         name: "TOPICS",
@@ -375,6 +376,8 @@ const mutations = {
 
         if (state.acscores[i].Community > 9) {
 
+          state.acscores[i].comScore = 4
+
           community.children = [{
             name: "Community Activity",
             children: [{
@@ -387,6 +390,8 @@ const mutations = {
           }]
         } else if (state.acscores[i].Community > 6) {
 
+          state.acscores[i].comScore = 3
+
           community.children = [{
             name: "Community Activity",
             children: [{
@@ -396,21 +401,29 @@ const mutations = {
           }]
         } else if (state.acscores[i].Community > 2) {
 
+          state.acscores[i].comScore = 2
+
           community.children = [{
             name: "Community Activity",
             size: 1
           }]
         } else if (state.acscores[i].Community >= 1) {
 
+          state.acscores[i].comScore = 1
+
           community.children = [{}]
           community.size = 1
         } else {
+
+          state.acscores[i].comScore = 0
 
           community.children = [{}]
           community.size = 1
         }
 
         if (state.acscores[i].Business > 98) {
+
+          state.acscores[i].buScore = 4
 
           business.children = [{
             name: "Business Activity",
@@ -424,6 +437,8 @@ const mutations = {
           }]
         } else if (state.acscores[i].Business > 34) {
 
+          state.acscores[i].buScore = 3
+
            business.children = [{
             name: "Business Activity",
             children: [{
@@ -433,15 +448,21 @@ const mutations = {
           }]
         } else if (state.acscores[i].Business > 10) {
 
+          state.acscores[i].buScore = 2
+
           business.children = [{
             name: "Business Activity",
             size: 1
           }]
         } else if (state.acscores[i].Business >= 1) {
 
+          state.acscores[i].buScore = 1
+
           business.children = [{}]
           business.size = 1
         } else {
+
+          state.acscores[i].buScore = 0
 
           business.children = [{}]
           business.size = 1
@@ -450,6 +471,8 @@ const mutations = {
         var pctG = state.acscores[i].GoodForm / state.acscores[i].Impervious
 
         if (pctG > .6) {
+
+          state.acscores[i].formScore = 4
 
           form.children = [{
             name: "Building Form",
@@ -463,6 +486,8 @@ const mutations = {
           }]
         } else if (pctG > .4) {
 
+          state.acscores[i].formScore = 3
+
           form.children = [{
             name: "Building Form",
             children: [{
@@ -472,15 +497,21 @@ const mutations = {
           }]
         } else if (pctG > .2) {
 
+          state.acscores[i].formScore = 2
+
           form.children = [{
             name: "Building Form",
             size: 1
           }]
         } else if (pctG >= .01) {
 
+          state.acscores[i].formScore = 1
+
           form.children = [{}]
           form.size = 1
         } else {
+
+          state.acscores[i].formScore = 0
 
           form.children = [{}]
           form.size = 1
@@ -489,6 +520,8 @@ const mutations = {
 
        if (state.acscores[i].Community > 9) {
 
+        state.acscores[i].comScore = 4
+
           community.children = [{
             name: "Community Activity",
             children: [{
@@ -501,6 +534,8 @@ const mutations = {
           }]
         } else if (state.acscores[i].Community > 6) {
 
+          state.acscores[i].comScore = 3
+
           community.children = [{
             name: "Community Activity",
             children: [{
@@ -510,21 +545,29 @@ const mutations = {
           }]
         } else if (state.acscores[i].Community > 2) {
 
+          state.acscores[i].comScore = 2
+
           community.children = [{
             name: "Community Activity",
             size: 1
           }]
         } else if (state.acscores[i].Community >= 1) {
 
+          state.acscores[i].comScore = 1
+
           community.children = [{}]
           community.size = 1
         } else {
+
+          state.acscores[i].comScore = 0
 
           community.children = [{}]
           community.size = 1
         }
 
         if (state.acscores[i].Business > 98) {
+
+          state.acscores[i].buScore = 4
 
           business.children = [{
             name: "Business Activity",
@@ -538,6 +581,8 @@ const mutations = {
           }]
         } else if (state.acscores[i].Business > 34) {
 
+          state.acscores[i].buScore = 3
+
            business.children = [{
             name: "Business Activity",
             children: [{
@@ -547,15 +592,21 @@ const mutations = {
           }]
         } else if (state.acscores[i].Business > 10) {
 
+          state.acscores[i].buScore = 2
+
           business.children = [{
             name: "Business Activity",
             size: 1
           }]
         } else if (state.acscores[i].Business >= 1) {
 
+          state.acscores[i].buScore = 1
+
           business.children = [{}]
           business.size = 1
         } else {
+
+          state.acscores[i].buScore = 0
 
           business.children = [{}]
           business.size = 1
@@ -564,6 +615,8 @@ const mutations = {
         var pctG = state.acscores[i].GoodForm / state.acscores[i].Impervious
 
         if (pctG > .6) {
+
+          state.acscores[i].formScore = 4
 
           form.children = [{
             name: "Building Form",
@@ -577,6 +630,8 @@ const mutations = {
           }]
         } else if (pctG > .4) {
 
+          state.acscores[i].formScore = 3
+
           form.children = [{
             name: "Building Form",
             children: [{
@@ -586,15 +641,21 @@ const mutations = {
           }]
         } else if (pctG > .2) {
 
+          state.acscores[i].formScore = 2
+
           form.children = [{
             name: "Building Form",
             size: 1
           }]
         } else if (pctG >= .01) {
 
+          state.acscores[i].formScore = 1
+
           form.children = [{}]
           form.size = 1
         } else {
+
+          state.acscores[i].formScore = 0
 
           form.children = [{}]
           form.size = 1
@@ -603,6 +664,8 @@ const mutations = {
 
         if (state.acscores[i].Community > 9) {
 
+          state.acscores[i].comScore = 4
+
           community.children = [{
             name: "Community Activity",
             children: [{
@@ -615,6 +678,8 @@ const mutations = {
           }]
         } else if (state.acscores[i].Community > 6) {
 
+          state.acscores[i].comScore = 3
+
           community.children = [{
             name: "Community Activity",
             children: [{
@@ -624,21 +689,29 @@ const mutations = {
           }]
         } else if (state.acscores[i].Community > 2) {
 
+          state.acscores[i].comScore = 2
+
           community.children = [{
             name: "Community Activity",
             size: 1
           }]
         } else if (state.acscores[i].Community >= 1) {
 
+          state.acscores[i].comScore = 1
+
           community.children = [{}]
           community.size = 1
         } else {
+
+          state.acscores[i].comScore = 0
 
           community.children = [{}]
           community.size = 1
         }
 
         if (state.acscores[i].Business > 98) {
+
+          state.acscores[i].buScore = 4
 
           business.children = [{
             name: "Business Activity",
@@ -652,6 +725,8 @@ const mutations = {
           }]
         } else if (state.acscores[i].Business > 34) {
 
+          state.acscores[i].buScore = 3
+
            business.children = [{
             name: "Business Activity",
             children: [{
@@ -661,15 +736,21 @@ const mutations = {
           }]
         } else if (state.acscores[i].Business > 10) {
 
+          state.acscores[i].buScore = 2
+
           business.children = [{
             name: "Business Activity",
             size: 1
           }]
         } else if (state.acscores[i].Business >= 1) {
 
+          state.acscores[i].buScore = 1
+
           business.children = [{}]
           business.size = 1
         } else {
+
+          state.acscores[i].buScore = 0
 
           business.children = [{}]
           business.size = 1
@@ -678,6 +759,8 @@ const mutations = {
         var pctG = state.acscores[i].GoodForm / state.acscores[i].Impervious
 
         if (pctG > .6) {
+
+          state.acscores[i].formScore = 4
 
           form.children = [{
             name: "Building Form",
@@ -691,6 +774,8 @@ const mutations = {
           }]
         } else if (pctG > .4) {
 
+          state.acscores[i].formScore = 3
+
           form.children = [{
             name: "Building Form",
             children: [{
@@ -700,20 +785,28 @@ const mutations = {
           }]
         } else if (pctG > .2) {
 
+          state.acscores[i].formScore = 2
+
           form.children = [{
             name: "Building Form",
             size: 1
           }]
         } else if (pctG >= .01) {
 
+          state.acscores[i].formScore = 1
+
           form.children = [{}]
           form.size = 1
         } else {
+
+          state.acscores[i].formScore = 0
 
           form.children = [{}]
           form.size = 1
         }
       }
+
+      state.acscores[i].finalScore = (state.acscores[i].comScore + state.acscores[i].buScore + state.acscores[i].formScore) / 3
     }
   }
 }

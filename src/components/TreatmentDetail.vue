@@ -211,19 +211,6 @@ export default {
 
   ready() {
 
-    // if (this.$route.params.type === 'ac') {
-
-    //   this.type = 'Activity Center'
-    // } else if (this.$route.params.type === 'twn') {
-
-    //   this.type = 'Town'
-    // } else if (this.$route.params.type === 'nbh') {
-
-    //   this.type = 'Neighborhood'
-    // }
-
-    // this.loadACScores(this.$route.params.type)
-
     $('#restartMap').on('click', function() {
 
       window.open('http://10.10.1.148/ace/','_self')
@@ -281,6 +268,14 @@ export default {
           .attr("d", arc)
           // .style('stroke', '#000000')
           .style("fill", function (d) { return color((d.children ? d : d.parent).data.name); })
+
+        g.append("text")
+         .attr("text-anchor", "middle")
+         .attr('font-size', '1.5em')
+         .style('fill', '#f0ead6')
+         .attr('font-family', 'Open Sans')
+         .attr('y', 10)
+         .text(this.scores[i].finalScore.toFixed(1));
 
         if (this.scores[i].Activity_Center === this.townname) {
 

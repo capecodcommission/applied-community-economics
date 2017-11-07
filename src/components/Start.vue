@@ -226,8 +226,6 @@ export default {
 
     'd3data': function() {
 
-      console.log(this.d3data)
-
       this.showComparison = true
 
       this.rank = this.d3data.rank
@@ -280,7 +278,7 @@ export default {
        .style('fill', '#f0ead6')
        .attr('font-family', 'Open Sans')
        .attr('y', 10)
-       .text(Math.round(this.d3data.finalScore));
+       .text(this.d3data.finalScore.toFixed(1));
 
 
       function computeTextRotation(d) {
