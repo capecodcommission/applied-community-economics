@@ -262,6 +262,10 @@ export default {
         .outerRadius(function (d) { return d.y1 - 3 })
         .padAngle(.04)
 
+        var buScore = root.descendants()[0].data.buScore
+        var comScore = root.descendants()[0].data.comScore
+        var formScore = root.descendants()[0].data.formScore
+
         // Add a <g> element for each node in thd data, then append <path> elements and draw lines based on the arc
         // variable calculations. Last, color the lines and the slices.
       g.selectAll('g')
@@ -271,6 +275,23 @@ export default {
         .attr("d", arc)
         // .style('stroke', '#000000')
         .style("fill", function (d) { return color((d.children ? d : d.parent).data.name); })
+        .each(function(i) {
+
+          if (i.data.name === "Business Activity" && i.depth > buScore) {
+
+            d3.select(this).style('opacity', 0)
+          }
+
+          if (i.data.name === "Community Activity" && i.depth > comScore) {
+
+            d3.select(this).style('opacity', 0)
+          }
+
+          if (i.data.name === "Building Form" && i.depth > formScore) {
+
+            d3.select(this).style('opacity', 0)
+          }
+        })
         
       g.append("text")
        .attr("text-anchor", "middle")
