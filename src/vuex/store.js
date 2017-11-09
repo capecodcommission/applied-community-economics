@@ -175,11 +175,22 @@ const mutations = {
 
       state.d3data[0].comScore = 3
 
+      // community.children = [{
+      //   name: "Community Activity",
+      //   children: [{
+      //     name: "Community Activity",
+      //     size: 1
+      //   }]
+      // }]
+
       community.children = [{
         name: "Community Activity",
         children: [{
           name: "Community Activity",
-          size: 1
+          children: [{
+            name: "Community Activity",
+            size: 1
+          }]
         }]
       }]
     } else if (d3data.Community > 2) {
@@ -188,9 +199,20 @@ const mutations = {
 
       state.d3data[0].comScore = 2
 
+      // community.children = [{
+      //   name: "Community Activity",
+      //   size: 1
+      // }]
+
       community.children = [{
         name: "Community Activity",
-        size: 1
+        children: [{
+          name: "Community Activity",
+          children: [{
+            name: "Community Activity",
+            size: 1
+          }]
+        }]
       }]
     } else if (d3data.Community >= 1) {
 
@@ -198,16 +220,38 @@ const mutations = {
 
       state.d3data[0].comScore = 1
 
-      community.children = [{}]
-      community.size = 1
+      // community.children = [{}]
+      // community.size = 1
+
+      community.children = [{
+        name: "Community Activity",
+        children: [{
+          name: "Community Activity",
+          children: [{
+            name: "Community Activity",
+            size: 1
+          }]
+        }]
+      }]
     } else {
 
       
 
       state.d3data[0].comScore = 0
 
-      community.children = [{}]
-      community.size = 1
+      // community.children = [{}]
+      // community.size = 1
+
+      community.children = [{
+        name: "Community Activity",
+        children: [{
+          name: "Community Activity",
+          children: [{
+            name: "Community Activity",
+            size: 1
+          }]
+        }]
+      }]
     }
 
     if (d3data.Business > 98) {
@@ -228,33 +272,77 @@ const mutations = {
 
       state.d3data[0].buScore = 3
 
+      // business.children = [{
+      //   name: "Business Activity",
+      //   children: [{
+      //     name: "Business Activity",
+      //     size: 1
+      //   }]
+      // }]
+
       business.children = [{
         name: "Business Activity",
         children: [{
           name: "Business Activity",
-          size: 1
+          children: [{
+            name: "Business Activity",
+            size: 1
+          }]
         }]
       }]
     } else if (d3data.Business > 10) {
 
       state.d3data[0].buScore = 2
 
+      // business.children = [{
+      //   name: "Business Activity",
+      //   size: 1
+      // }]
+
       business.children = [{
         name: "Business Activity",
-        size: 1
+        children: [{
+          name: "Business Activity",
+          children: [{
+            name: "Business Activity",
+            size: 1
+          }]
+        }]
       }]
     } else if (d3data.Business >= 1) {
 
       state.d3data[0].buScore = 1
 
-      business.children = [{}]
-      business.size = 1
+      // business.children = [{}]
+      // business.size = 1
+
+      business.children = [{
+        name: "Business Activity",
+        children: [{
+          name: "Business Activity",
+          children: [{
+            name: "Business Activity",
+            size: 1
+          }]
+        }]
+      }]
     } else {
 
       state.d3data[0].buScore = 0
 
-      business.children = [{}]
-      business.size = 1
+      // business.children = [{}]
+      // business.size = 1
+
+      business.children = [{
+        name: "Business Activity",
+        children: [{
+          name: "Business Activity",
+          children: [{
+            name: "Business Activity",
+            size: 1
+          }]
+        }]
+      }]
     }
 
     var pctG = d3data.GoodForm / d3data.Impervious
@@ -277,32 +365,76 @@ const mutations = {
 
       state.d3data[0].formScore = 3
 
+      // form.children = [{
+      //   name: "Building Form",
+      //   children: [{
+      //     name: "Building Form",
+      //     size: 1
+      //   }]
+      // }]
+
       form.children = [{
         name: "Building Form",
         children: [{
           name: "Building Form",
-          size: 1
+          children: [{
+            name: "Building Form",
+            size: 1
+          }]
         }]
       }]
     } else if (pctG > .2) {
       state.d3data[0].formScore = 2
 
+      // form.children = [{
+      //   name: "Building Form",
+      //   size: 1
+      // }]
+
       form.children = [{
         name: "Building Form",
-        size: 1
+        children: [{
+          name: "Building Form",
+          children: [{
+            name: "Building Form",
+            size: 1
+          }]
+        }]
       }]
     } else if (pctG >= .01) {
 
       state.d3data[0].formScore = 1
 
-      form.children = [{}]
-      form.size = 1
+      // form.children = [{}]
+      // form.size = 1
+
+      form.children = [{
+        name: "Building Form",
+        children: [{
+          name: "Building Form",
+          children: [{
+            name: "Building Form",
+            size: 1
+          }]
+        }]
+      }]
     } else {
 
       state.d3data[0].formScore = 0
 
-      form.children = [{}]
-      form.size = 1
+      // form.children = [{}]
+      // form.size = 1
+
+      form.children = [{
+        name: "Building Form",
+        children: [{
+          name: "Building Form",
+          children: [{
+            name: "Building Form",
+            size: 1
+          }]
+        }]
+      }]
     }  
 
     state.d3data[0].finalScore = (state.d3data[0].comScore + state.d3data[0].buScore + state.d3data[0].formScore) / 3
