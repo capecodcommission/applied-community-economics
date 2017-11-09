@@ -153,196 +153,80 @@ const mutations = {
     var business = state.d3data[0].children[1]
     var form = state.d3data[0].children[2]
 
-    if (d3data.Community > 9) {
+    community.children = [{
+        name: "Community Activity",
+        children: [{
+          name: "Community Activity",
+          children: [{
+            name: "Community Activity",
+            size: 1
+          }]
+        }]
+      }]
 
-      
+    business.children = [{
+        name: "Business Activity",
+        children: [{
+          name: "Business Activity",
+          children: [{
+            name: "Business Activity",
+            size: 1
+          }]
+        }]
+      }]
+
+    form.children = [{
+        name: "Building Form",
+        children: [{
+          name: "Building Form",
+          children: [{
+            name: "Building Form",
+            size: 1
+          }]
+        }]
+      }]
+
+    if (d3data.Community > 9) {
 
       state.d3data[0].comScore = 4
 
-      community.children = [{
-        name: "Community Activity",
-        children: [{
-          name: "Community Activity",
-          children: [{
-            name: "Community Activity",
-            size: 1
-          }]
-        }]
-      }]
     } else if (d3data.Community > 6) {
-
-      
 
       state.d3data[0].comScore = 3
 
-      // community.children = [{
-      //   name: "Community Activity",
-      //   children: [{
-      //     name: "Community Activity",
-      //     size: 1
-      //   }]
-      // }]
-
-      community.children = [{
-        name: "Community Activity",
-        children: [{
-          name: "Community Activity",
-          children: [{
-            name: "Community Activity",
-            size: 1
-          }]
-        }]
-      }]
     } else if (d3data.Community > 2) {
-
-      
 
       state.d3data[0].comScore = 2
 
-      // community.children = [{
-      //   name: "Community Activity",
-      //   size: 1
-      // }]
-
-      community.children = [{
-        name: "Community Activity",
-        children: [{
-          name: "Community Activity",
-          children: [{
-            name: "Community Activity",
-            size: 1
-          }]
-        }]
-      }]
     } else if (d3data.Community >= 1) {
-
-      
 
       state.d3data[0].comScore = 1
 
-      // community.children = [{}]
-      // community.size = 1
-
-      community.children = [{
-        name: "Community Activity",
-        children: [{
-          name: "Community Activity",
-          children: [{
-            name: "Community Activity",
-            size: 1
-          }]
-        }]
-      }]
     } else {
 
-      
-
       state.d3data[0].comScore = 0
-
-      // community.children = [{}]
-      // community.size = 1
-
-      community.children = [{
-        name: "Community Activity",
-        children: [{
-          name: "Community Activity",
-          children: [{
-            name: "Community Activity",
-            size: 1
-          }]
-        }]
-      }]
     }
+
 
     if (d3data.Business > 98) {
 
       state.d3data[0].buScore = 4
 
-      business.children = [{
-        name: "Business Activity",
-        children: [{
-          name: "Business Activity",
-          children: [{
-            name: "Business Activity",
-            size: 1
-          }]
-        }]
-      }]
     } else if (d3data.Business > 34) {
 
       state.d3data[0].buScore = 3
 
-      // business.children = [{
-      //   name: "Business Activity",
-      //   children: [{
-      //     name: "Business Activity",
-      //     size: 1
-      //   }]
-      // }]
-
-      business.children = [{
-        name: "Business Activity",
-        children: [{
-          name: "Business Activity",
-          children: [{
-            name: "Business Activity",
-            size: 1
-          }]
-        }]
-      }]
     } else if (d3data.Business > 10) {
 
       state.d3data[0].buScore = 2
 
-      // business.children = [{
-      //   name: "Business Activity",
-      //   size: 1
-      // }]
-
-      business.children = [{
-        name: "Business Activity",
-        children: [{
-          name: "Business Activity",
-          children: [{
-            name: "Business Activity",
-            size: 1
-          }]
-        }]
-      }]
     } else if (d3data.Business >= 1) {
 
       state.d3data[0].buScore = 1
 
-      // business.children = [{}]
-      // business.size = 1
-
-      business.children = [{
-        name: "Business Activity",
-        children: [{
-          name: "Business Activity",
-          children: [{
-            name: "Business Activity",
-            size: 1
-          }]
-        }]
-      }]
     } else {
 
       state.d3data[0].buScore = 0
-
-      // business.children = [{}]
-      // business.size = 1
-
-      business.children = [{
-        name: "Business Activity",
-        children: [{
-          name: "Business Activity",
-          children: [{
-            name: "Business Activity",
-            size: 1
-          }]
-        }]
-      }]
     }
 
     var pctG = d3data.GoodForm / d3data.Impervious
@@ -351,90 +235,21 @@ const mutations = {
 
       state.d3data[0].formScore = 4
 
-      form.children = [{
-        name: "Building Form",
-        children: [{
-          name: "Building Form",
-          children: [{
-            name: "Building Form",
-            size: 1
-          }]
-        }]
-      }]
     } else if (pctG > .4) {
 
       state.d3data[0].formScore = 3
 
-      // form.children = [{
-      //   name: "Building Form",
-      //   children: [{
-      //     name: "Building Form",
-      //     size: 1
-      //   }]
-      // }]
-
-      form.children = [{
-        name: "Building Form",
-        children: [{
-          name: "Building Form",
-          children: [{
-            name: "Building Form",
-            size: 1
-          }]
-        }]
-      }]
     } else if (pctG > .2) {
+
       state.d3data[0].formScore = 2
 
-      // form.children = [{
-      //   name: "Building Form",
-      //   size: 1
-      // }]
-
-      form.children = [{
-        name: "Building Form",
-        children: [{
-          name: "Building Form",
-          children: [{
-            name: "Building Form",
-            size: 1
-          }]
-        }]
-      }]
     } else if (pctG >= .01) {
 
       state.d3data[0].formScore = 1
 
-      // form.children = [{}]
-      // form.size = 1
-
-      form.children = [{
-        name: "Building Form",
-        children: [{
-          name: "Building Form",
-          children: [{
-            name: "Building Form",
-            size: 1
-          }]
-        }]
-      }]
     } else {
 
       state.d3data[0].formScore = 0
-
-      // form.children = [{}]
-      // form.size = 1
-
-      form.children = [{
-        name: "Building Form",
-        children: [{
-          name: "Building Form",
-          children: [{
-            name: "Building Form",
-            size: 1
-          }]
-        }]
-      }]
     }  
 
     state.d3data[0].finalScore = (state.d3data[0].comScore + state.d3data[0].buScore + state.d3data[0].formScore) / 3
@@ -442,12 +257,15 @@ const mutations = {
     if (state.d3data[0].finalScore > 3.5) {
 
       state.d3data[0].rank = 'very strong'
+
     } else if (state.d3data[0].finalScore > 2.5) {
 
       state.d3data[0].rank = 'strong'
+
     } else if (state.d3data[0].finalScore > 1.5) {
 
       state.d3data[0].rank = 'moderate'
+
     } else if (state.d3data[0].finalScore > 0.5) {
 
       state.d3data[0].rank = 'weak'
@@ -504,6 +322,39 @@ const mutations = {
       var business = state.acscores[i].d3data[0].children[1]
       var form = state.acscores[i].d3data[0].children[2]
 
+      community.children = [{
+        name: "Community Activity",
+        children: [{
+          name: "Community Activity",
+          children: [{
+            name: "Community Activity",
+            size: 1
+          }]
+        }]
+      }]
+
+      business.children = [{
+        name: "Business Activity",
+        children: [{
+          name: "Business Activity",
+          children: [{
+            name: "Business Activity",
+            size: 1
+          }]
+        }]
+      }]
+
+      form.children = [{
+        name: "Building Form",
+        children: [{
+          name: "Building Form",
+          children: [{
+            name: "Building Form",
+            size: 1
+          }]
+        }]
+      }]
+
       if (type === 'ac') {
 
         if (state.acscores[i].Community > 9) {
@@ -511,95 +362,25 @@ const mutations = {
           state.acscores[i].d3data[0].comScore = 4
           state.acscores[i].comScore = 4
 
-          community.children = [{
-            name: "Community Activity",
-            children: [{
-              name: "Community Activity",
-              children: [{
-                name: "Community Activity",
-                size: 1
-              }]
-            }]
-          }]
         } else if (state.acscores[i].Community > 6) {
 
           state.acscores[i].d3data[0].comScore = 3
           state.acscores[i].comScore = 3
 
-          // community.children = [{
-          //   name: "Community Activity",
-          //   children: [{
-          //     name: "Community Activity",
-          //     size: 1
-          //   }]
-          // }]
-
-          community.children = [{
-            name: "Community Activity",
-            children: [{
-              name: "Community Activity",
-              children: [{
-                name: "Community Activity",
-                size: 1
-              }]
-            }]
-          }]
         } else if (state.acscores[i].Community > 2) {
 
           state.acscores[i].d3data[0].comScore = 2
           state.acscores[i].comScore = 2
 
-          // community.children = [{
-          //   name: "Community Activity",
-          //   size: 1
-          // }]
-
-          community.children = [{
-            name: "Community Activity",
-            children: [{
-              name: "Community Activity",
-              children: [{
-                name: "Community Activity",
-                size: 1
-              }]
-            }]
-          }]
         } else if (state.acscores[i].Community >= 1) {
 
           state.acscores[i].d3data[0].comScore = 1
           state.acscores[i].comScore = 1
 
-          // community.children = [{}]
-          // community.size = 1
-
-          community.children = [{
-            name: "Community Activity",
-            children: [{
-              name: "Community Activity",
-              children: [{
-                name: "Community Activity",
-                size: 1
-              }]
-            }]
-          }]
         } else {
 
           state.acscores[i].d3data[0].comScore = 0
           state.acscores[i].comScore = 0
-
-          // community.children = [{}]
-          // community.size = 1
-
-          community.children = [{
-            name: "Community Activity",
-            children: [{
-              name: "Community Activity",
-              children: [{
-                name: "Community Activity",
-                size: 1
-              }]
-            }]
-          }]
         }
 
         if (state.acscores[i].Business > 98) {
@@ -607,95 +388,25 @@ const mutations = {
           state.acscores[i].d3data[0].buScore = 4
           state.acscores[i].buScore = 4
 
-          business.children = [{
-            name: "Business Activity",
-            children: [{
-              name: "Business Activity",
-              children: [{
-                name: "Business Activity",
-                size: 1
-              }]
-            }]
-          }]
         } else if (state.acscores[i].Business > 34) {
 
           state.acscores[i].d3data[0].buScore = 3
           state.acscores[i].buScore = 3
 
-          //  business.children = [{
-          //   name: "Business Activity",
-          //   children: [{
-          //     name: "Business Activity",
-          //     size: 1
-          //   }]
-          // }]
-
-          business.children = [{
-            name: "Business Activity",
-            children: [{
-              name: "Business Activity",
-              children: [{
-                name: "Business Activity",
-                size: 1
-              }]
-            }]
-          }]
         } else if (state.acscores[i].Business > 10) {
 
           state.acscores[i].d3data[0].buScore = 2
           state.acscores[i].buScore = 2
 
-          // business.children = [{
-          //   name: "Business Activity",
-          //   size: 1
-          // }]
-
-          business.children = [{
-            name: "Business Activity",
-            children: [{
-              name: "Business Activity",
-              children: [{
-                name: "Business Activity",
-                size: 1
-              }]
-            }]
-          }]
         } else if (state.acscores[i].Business >= 1) {
 
           state.acscores[i].d3data[0].buScore = 1
           state.acscores[i].buScore = 1
 
-          // business.children = [{}]
-          // business.size = 1
-
-          business.children = [{
-            name: "Business Activity",
-            children: [{
-              name: "Business Activity",
-              children: [{
-                name: "Business Activity",
-                size: 1
-              }]
-            }]
-          }]
         } else {
 
           state.acscores[i].d3data[0].buScore = 0
           state.acscores[i].buScore = 0
-
-          // business.children = [{}]
-          // business.size = 1
-
-          business.children = [{
-            name: "Business Activity",
-            children: [{
-              name: "Business Activity",
-              children: [{
-                name: "Business Activity",
-                size: 1
-              }]
-            }]
-          }]
         }
 
         var pctG = state.acscores[i].GoodForm / state.acscores[i].Impervious
@@ -705,95 +416,26 @@ const mutations = {
           state.acscores[i].d3data[0].formScore = 4
           state.acscores[i].formScore = 4
 
-          form.children = [{
-            name: "Building Form",
-            children: [{
-              name: "Building Form",
-              children: [{
-                name: "Building Form",
-                size: 1
-              }]
-            }]
-          }]
         } else if (pctG > .4) {
 
           state.acscores[i].d3data[0].formScore = 3
           state.acscores[i].formScore = 3
 
-          // form.children = [{
-          //   name: "Building Form",
-          //   children: [{
-          //     name: "Building Form",
-          //     size: 1
-          //   }]
-          // }]
-
-          form.children = [{
-            name: "Building Form",
-            children: [{
-              name: "Building Form",
-              children: [{
-                name: "Building Form",
-                size: 1
-              }]
-            }]
-          }]
         } else if (pctG > .2) {
 
           state.acscores[i].d3data[0].formScore = 2
           state.acscores[i].formScore = 2
 
-          // form.children = [{
-          //   name: "Building Form",
-          //   size: 1
-          // }]
-
-          form.children = [{
-            name: "Building Form",
-            children: [{
-              name: "Building Form",
-              children: [{
-                name: "Building Form",
-                size: 1
-              }]
-            }]
-          }]
         } else if (pctG >= .01) {
 
           state.acscores[i].d3data[0].formScore = 1
           state.acscores[i].formScore = 1
 
-          // form.children = [{}]
-          // form.size = 1
-
-          form.children = [{
-            name: "Building Form",
-            children: [{
-              name: "Building Form",
-              children: [{
-                name: "Building Form",
-                size: 1
-              }]
-            }]
-          }]
         } else {
 
           state.acscores[i].d3data[0].formScore = 0
           state.acscores[i].formScore = 0
 
-          // form.children = [{}]
-          // form.size = 1
-
-          form.children = [{
-            name: "Building Form",
-            children: [{
-              name: "Building Form",
-              children: [{
-                name: "Building Form",
-                size: 1
-              }]
-            }]
-          }]
         }
       } else if (type === 'twn') {
 
@@ -802,95 +444,25 @@ const mutations = {
         state.acscores[i].d3data[0].comScore = 4
         state.acscores[i].comScore = 4
 
-          community.children = [{
-            name: "Community Activity",
-            children: [{
-              name: "Community Activity",
-              children: [{
-                name: "Community Activity",
-                size: 1
-              }]
-            }]
-          }]
         } else if (state.acscores[i].Community > 6) {
 
           state.acscores[i].d3data[0].comScore = 3
           state.acscores[i].comScore = 3
 
-          // community.children = [{
-          //   name: "Community Activity",
-          //   children: [{
-          //     name: "Community Activity",
-          //     size: 1
-          //   }]
-          // }]
-
-          community.children = [{
-            name: "Community Activity",
-            children: [{
-              name: "Community Activity",
-              children: [{
-                name: "Community Activity",
-                size: 1
-              }]
-            }]
-          }]
         } else if (state.acscores[i].Community > 2) {
 
           state.acscores[i].d3data[0].comScore = 2
           state.acscores[i].comScore = 2
 
-          // community.children = [{
-          //   name: "Community Activity",
-          //   size: 1
-          // }]
-
-          community.children = [{
-            name: "Community Activity",
-            children: [{
-              name: "Community Activity",
-              children: [{
-                name: "Community Activity",
-                size: 1
-              }]
-            }]
-          }]
         } else if (state.acscores[i].Community >= 1) {
 
           state.acscores[i].d3data[0].comScore = 1
           state.acscores[i].comScore = 1
 
-          // community.children = [{}]
-          // community.size = 1
-
-          community.children = [{
-            name: "Community Activity",
-            children: [{
-              name: "Community Activity",
-              children: [{
-                name: "Community Activity",
-                size: 1
-              }]
-            }]
-          }]
         } else {
 
           state.acscores[i].d3data[0].comScore = 0
           state.acscores[i].comScore = 0
-
-          // community.children = [{}]
-          // community.size = 1
-
-          community.children = [{
-            name: "Community Activity",
-            children: [{
-              name: "Community Activity",
-              children: [{
-                name: "Community Activity",
-                size: 1
-              }]
-            }]
-          }]
         }
 
         if (state.acscores[i].Business > 98) {
@@ -898,95 +470,25 @@ const mutations = {
           state.acscores[i].d3data[0].buScore = 4
           state.acscores[i].buScore = 4
 
-          business.children = [{
-            name: "Business Activity",
-            children: [{
-              name: "Business Activity",
-              children: [{
-                name: "Business Activity",
-                size: 1
-              }]
-            }]
-          }]
         } else if (state.acscores[i].Business > 34) {
 
           state.acscores[i].d3data[0].buScore = 3
           state.acscores[i].buScore = 3
 
-          //  business.children = [{
-          //   name: "Business Activity",
-          //   children: [{
-          //     name: "Business Activity",
-          //     size: 1
-          //   }]
-          // }]
-
-          business.children = [{
-            name: "Business Activity",
-            children: [{
-              name: "Business Activity",
-              children: [{
-                name: "Business Activity",
-                size: 1
-              }]
-            }]
-          }]
         } else if (state.acscores[i].Business > 10) {
 
           state.acscores[i].d3data[0].buScore = 2
           state.acscores[i].buScore = 2
 
-          // business.children = [{
-          //   name: "Business Activity",
-          //   size: 1
-          // }]
-
-          business.children = [{
-            name: "Business Activity",
-            children: [{
-              name: "Business Activity",
-              children: [{
-                name: "Business Activity",
-                size: 1
-              }]
-            }]
-          }]
         } else if (state.acscores[i].Business >= 1) {
 
           state.acscores[i].d3data[0].buScore = 1
           state.acscores[i].buScore = 1
 
-          // business.children = [{}]
-          // business.size = 1
-
-          business.children = [{
-            name: "Business Activity",
-            children: [{
-              name: "Business Activity",
-              children: [{
-                name: "Business Activity",
-                size: 1
-              }]
-            }]
-          }]
         } else {
 
           state.acscores[i].d3data[0].buScore = 0
           state.acscores[i].buScore = 0
-
-          // business.children = [{}]
-          // business.size = 1
-
-          business.children = [{
-            name: "Business Activity",
-            children: [{
-              name: "Business Activity",
-              children: [{
-                name: "Business Activity",
-                size: 1
-              }]
-            }]
-          }]
         }
 
         var pctG = state.acscores[i].GoodForm / state.acscores[i].Impervious
@@ -996,95 +498,26 @@ const mutations = {
           state.acscores[i].d3data[0].formScore = 4
           state.acscores[i].formScore = 4
 
-          form.children = [{
-            name: "Building Form",
-            children: [{
-              name: "Building Form",
-              children: [{
-                name: "Building Form",
-                size: 1
-              }]
-            }]
-          }]
         } else if (pctG > .4) {
 
           state.acscores[i].d3data[0].formScore = 3
           state.acscores[i].formScore = 3
 
-          // form.children = [{
-          //   name: "Building Form",
-          //   children: [{
-          //     name: "Building Form",
-          //     size: 1
-          //   }]
-          // }]
-
-          form.children = [{
-            name: "Building Form",
-            children: [{
-              name: "Building Form",
-              children: [{
-                name: "Building Form",
-                size: 1
-              }]
-            }]
-          }]
         } else if (pctG > .2) {
 
           state.acscores[i].d3data[0].formScore = 2
           state.acscores[i].formScore = 2
 
-          // form.children = [{
-          //   name: "Building Form",
-          //   size: 1
-          // }]
-
-          form.children = [{
-            name: "Building Form",
-            children: [{
-              name: "Building Form",
-              children: [{
-                name: "Building Form",
-                size: 1
-              }]
-            }]
-          }]
         } else if (pctG >= .01) {
 
           state.acscores[i].d3data[0].formScore = 1
           state.acscores[i].formScore = 1
 
-          // form.children = [{}]
-          // form.size = 1
-
-          form.children = [{
-            name: "Building Form",
-            children: [{
-              name: "Building Form",
-              children: [{
-                name: "Building Form",
-                size: 1
-              }]
-            }]
-          }]
         } else {
 
           state.acscores[i].d3data[0].formScore = 0
           state.acscores[i].formScore = 0
 
-          // form.children = [{}]
-          // form.size = 1
-
-          form.children = [{
-            name: "Building Form",
-            children: [{
-              name: "Building Form",
-              children: [{
-                name: "Building Form",
-                size: 1
-              }]
-            }]
-          }]
         }
       } else if (type === 'nbh') {
 
@@ -1093,95 +526,26 @@ const mutations = {
           state.acscores[i].d3data[0].comScore = 4
           state.acscores[i].comScore = 4
 
-          community.children = [{
-            name: "Community Activity",
-            children: [{
-              name: "Community Activity",
-              children: [{
-                name: "Community Activity",
-                size: 1
-              }]
-            }]
-          }]
         } else if (state.acscores[i].Community > 6) {
 
           state.acscores[i].d3data[0].comScore = 3
           state.acscores[i].comScore = 3
 
-          // community.children = [{
-          //   name: "Community Activity",
-          //   children: [{
-          //     name: "Community Activity",
-          //     size: 1
-          //   }]
-          // }]
-
-          community.children = [{
-            name: "Community Activity",
-            children: [{
-              name: "Community Activity",
-              children: [{
-                name: "Community Activity",
-                size: 1
-              }]
-            }]
-          }]
         } else if (state.acscores[i].Community > 2) {
 
           state.acscores[i].d3data[0].comScore = 2
           state.acscores[i].comScore = 2
 
-          // community.children = [{
-          //   name: "Community Activity",
-          //   size: 1
-          // }]
-
-          community.children = [{
-            name: "Community Activity",
-            children: [{
-              name: "Community Activity",
-              children: [{
-                name: "Community Activity",
-                size: 1
-              }]
-            }]
-          }]
         } else if (state.acscores[i].Community >= 1) {
 
           state.acscores[i].d3data[0].comScore = 1
           state.acscores[i].comScore = 1
 
-          // community.children = [{}]
-          // community.size = 1
-
-          community.children = [{
-            name: "Community Activity",
-            children: [{
-              name: "Community Activity",
-              children: [{
-                name: "Community Activity",
-                size: 1
-              }]
-            }]
-          }]
         } else {
 
           state.acscores[i].d3data[0].comScore = 0
           state.acscores[i].comScore = 0
 
-          // community.children = [{}]
-          // community.size = 1
-
-          community.children = [{
-            name: "Community Activity",
-            children: [{
-              name: "Community Activity",
-              children: [{
-                name: "Community Activity",
-                size: 1
-              }]
-            }]
-          }]
         }
 
         if (state.acscores[i].Business > 98) {
@@ -1189,95 +553,25 @@ const mutations = {
           state.acscores[i].d3data[0].buScore = 4
           state.acscores[i].buScore = 4
 
-          business.children = [{
-            name: "Business Activity",
-            children: [{
-              name: "Business Activity",
-              children: [{
-                name: "Business Activity",
-                size: 1
-              }]
-            }]
-          }]
         } else if (state.acscores[i].Business > 34) {
 
           state.acscores[i].d3data[0].buScore = 3
           state.acscores[i].buScore = 3
 
-          //  business.children = [{
-          //   name: "Business Activity",
-          //   children: [{
-          //     name: "Business Activity",
-          //     size: 1
-          //   }]
-          // }]
-
-          business.children = [{
-            name: "Business Activity",
-            children: [{
-              name: "Business Activity",
-              children: [{
-                name: "Business Activity",
-                size: 1
-              }]
-            }]
-          }]
         } else if (state.acscores[i].Business > 10) {
 
           state.acscores[i].d3data[0].buScore = 2
           state.acscores[i].buScore = 2
 
-          // business.children = [{
-          //   name: "Business Activity",
-          //   size: 1
-          // }]
-
-          business.children = [{
-            name: "Business Activity",
-            children: [{
-              name: "Business Activity",
-              children: [{
-                name: "Business Activity",
-                size: 1
-              }]
-            }]
-          }]
         } else if (state.acscores[i].Business >= 1) {
 
           state.acscores[i].d3data[0].buScore = 1
           state.acscores[i].buScore = 1
 
-          // business.children = [{}]
-          // business.size = 1
-
-          business.children = [{
-            name: "Business Activity",
-            children: [{
-              name: "Business Activity",
-              children: [{
-                name: "Business Activity",
-                size: 1
-              }]
-            }]
-          }]
         } else {
 
           state.acscores[i].d3data[0].buScore = 0
           state.acscores[i].buScore = 0
-
-          // business.children = [{}]
-          // business.size = 1
-
-          business.children = [{
-            name: "Business Activity",
-            children: [{
-              name: "Business Activity",
-              children: [{
-                name: "Business Activity",
-                size: 1
-              }]
-            }]
-          }]
         }
 
         var pctG = state.acscores[i].GoodForm / state.acscores[i].Impervious
@@ -1287,95 +581,25 @@ const mutations = {
           state.acscores[i].d3data[0].formScore = 4
           state.acscores[i].formScore = 4
 
-          form.children = [{
-            name: "Building Form",
-            children: [{
-              name: "Building Form",
-              children: [{
-                name: "Building Form",
-                size: 1
-              }]
-            }]
-          }]
         } else if (pctG > .4) {
 
           state.acscores[i].d3data[0].formScore = 3
           state.acscores[i].formScore = 3
 
-          // form.children = [{
-          //   name: "Building Form",
-          //   children: [{
-          //     name: "Building Form",
-          //     size: 1
-          //   }]
-          // }]
-
-          form.children = [{
-            name: "Building Form",
-            children: [{
-              name: "Building Form",
-              children: [{
-                name: "Building Form",
-                size: 1
-              }]
-            }]
-          }]
         } else if (pctG > .2) {
 
           state.acscores[i].d3data[0].formScore = 2
           state.acscores[i].formScore = 2
 
-          // form.children = [{
-          //   name: "Building Form",
-          //   size: 1
-          // }]
-
-          form.children = [{
-            name: "Building Form",
-            children: [{
-              name: "Building Form",
-              children: [{
-                name: "Building Form",
-                size: 1
-              }]
-            }]
-          }]
         } else if (pctG >= .01) {
 
           state.acscores[i].d3data[0].formScore = 1
           state.acscores[i].formScore = 1
 
-          // form.children = [{}]
-          // form.size = 1
-
-          form.children = [{
-            name: "Building Form",
-            children: [{
-              name: "Building Form",
-              children: [{
-                name: "Building Form",
-                size: 1
-              }]
-            }]
-          }]
         } else {
 
           state.acscores[i].d3data[0].formScore = 0
           state.acscores[i].formScore = 0
-
-          // form.children = [{}]
-          // form.size = 1
-
-          form.children = [{
-            name: "Building Form",
-            children: [{
-              name: "Building Form",
-              children: [{
-                name: "Building Form",
-                size: 1
-              }]
-            }]
-          }]
         }
       }
 
