@@ -1,15 +1,15 @@
 <template>
 
-  <div class = "panel-body">
-    <div class = 'row'>
-      <div class = 'col-md-12 text-center'>
-        <button @click = 'goComingSoon($route.params.id)' class = 'btn btn-success pull-right'>More Metrics</button><br><br>
-        <button id ='restartMap' class = 'btn btn-success pull-right'>Restart</button>
+  <div style = 'padding: 0 !important; background: #28536c;' class = "panel-body">
+
+    <div style = 'padding: 0 !important' class = 'row text-center'>
+      <div style = 'padding: 0 !important' class = 'col-md-2'>
+        <img style = 'width: 100%' class="img-fluid" src="https://i.imgur.com/2rnoGzZ.png">
+      </div>
+      <div style = "padding: 0 !important; color: #f0ead6; font-size: 30px; font-family: 'Open Sans'" class = 'col-md-10'>
+        {{townName}}
       </div>
     </div>
-
-    <br>
-    
   </div>
 
 </template>
@@ -17,7 +17,7 @@
 <script>
 
 import {  } from '../vuex/actions'
-import {  } from '../vuex/getters'
+import { getTownName } from '../vuex/getters'
 import {  } from 'vue-strap'
 import { introJs } from '../../node_modules/intro.js/intro.js'
 
@@ -40,7 +40,7 @@ export default {
       
     },
     getters: {
-      
+      townName: getTownName
     }
   },
 

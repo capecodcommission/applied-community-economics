@@ -148,6 +148,9 @@ const mutations = {
     state.d3data[0].buScore = ''
     state.d3data[0].formScore = ''
     state.d3data[0].finalScore = ''
+    state.d3data[0].Community = d3data.Community
+    state.d3data[0].Business = d3data.Business
+    state.d3data[0].pctgf = d3data.GoodForm / d3data.Impervious
 
     var community = state.d3data[0].children[0]
     var business = state.d3data[0].children[1]

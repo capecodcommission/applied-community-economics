@@ -1,14 +1,18 @@
 <template>
-  <div class = 'fill-height' id="map">
+  <!-- <div class = 'fill-height' id="map"> -->
+    <iframe height="100%" width="100%" src="http://cccommission.maps.arcgis.com/apps/webappviewer3d/index.html?id=05b27aa7e69140be8ae47045b7efc120"></iframe>
     <div transition = 'fade' v-show = 'showComparison' class = 'col-md-7 comparison'>
       <comparison></comparison>
     </div>
-    <div class = 'selectEmbayment text-center'>
-      <h2>ACE Report</h2><br>
-      <h1 v-show = 'townName != false'>{{townName}}</h1><br>
-      <p>This tool will score the form of an area based on Building Form, Business Activity and Community Activity. It allows for the comparison of scores to other similar geographies in the Report Card.  In development is the ability to dig down into key metrics that will improve the score of an area.</p>
-      <div v-show = 'townName != false'><p style = 'display: inline-block;'><div style = "display: inline-block; font-size: 20px; font-family: 'Open Sans'">{{townName}}</div> has a <div style = "display: inline-block; font-size: 20px; font-family: 'Open Sans'">{{rank}}</div> score, due to <br><div style = 'font-size: 30px; display: inline-block;' id = 'CAsites'></div> community sites, <div style = 'font-size: 30px; display: inline-block;' id = 'BAsites'></div> businesses and <div style = 'font-size: 30px; display: inline-block;' id = 'pct_GF'></div> are in Good Form</p></div>
-      <!-- <canvas v-show = 'townName != false' style = 'display: inline' id="myChart" width="200" height="230"></canvas> -->
+    <div class = 'col-md-12 headthing'>
+      <headthing></headthing>
+    </div>
+    <div class = 'col-md-2 selectEmbayment text-center'>
+      <img style = 'width: 100%' class="img-fluid" src="https://i.imgur.com/2rnoGzZ.png">
+      <!-- <h2>ACE Report</h2><br> -->
+      <!-- <h1 v-show = 'townName != false'>{{townName}}</h1><br>
+      <p>This tool will score the form of an area based on Building Form, Business Activity and Community Activity. It allows for the comparison of scores to other similar geographies in the Report Card.  In development is the ability to dig down into key metrics that will improve the score of an area.</p> -->
+      <div v-show = 'townName != false'><p style = 'display: inline-block;'><div style = "display: inline-block; font-size: 25px; font-family: 'Open Sans'">{{townName}}</div> has a <div style = "display: inline-block; font-size: 20px; font-family: 'Open Sans'">{{rank}}</div> score, due to <div style = 'font-size: 30px; display: inline-block;' id = 'CAsites'>{{d3data.Community}}</div> community sites, <div style = 'font-size: 30px; display: inline-block;' id = 'BAsites'>{{d3data.Business}}</div> businesses and <div style = 'font-size: 30px; display: inline-block;' id = 'pct_GF'>{{(d3data.pctgf * 100).toFixed()}}%</div> are in Good Form</p></div>
       <svg id = 'svgboi'></svg>
       <br>
       <p>Select one of the groups below, then select a subgroup from the dropdown menu</p>
@@ -30,28 +34,31 @@
         <option v-for = 'town in towns.recordsets[0]' value = '{{town.town}}'>{{town.town}}</option>
       </select><br><br>
       <!-- <button v-show = "townName != false" @click = "goTown(townName)" class = "btn btn-success">View ReportCard {{townName}}</button> -->
+      <button v-show = "townName != false" @click = "goTown()" class = "btn btn-primary">Compare to other {{selectType}}s</button>
     </div>
-    <div v-show = 'townName' class = 'selectEmbayment1'>
+    <!-- <div v-show = 'townName' class = 'selectEmbayment1'>
       <div id = 'legendDiv'></div>
-    </div>
+    </div> -->
     <div id = 'comScore' style = 'display: none'></div>
     <div id = 'buScore' style = 'display: none'></div>
     <div id = 'formScore' style = 'display: none'></div>
-  </div>
+  <!-- </div> -->
 </template>
 
 <script>
 
 import {introJs} from '../../node_modules/intro.js/intro.js'
 import { loadNeighborhoods, loadActivityCenters, loadTowns, loadTownName, updated3Data, loadACScores, updateSelect } from '../vuex/actions'
-import { getNeighborhoods, getActivityCenters, getTowns, getd3Data, getACScores } from '../vuex/getters'
+import { getNeighborhoods, getActivityCenters, getTowns, getd3Data, getACScores, getType } from '../vuex/getters'
 import * as d3 from "d3"
 import treatmentDetail from './TreatmentDetail'
+import Header from './Header'
 
 export default {
 
   components: {
-    'comparison': treatmentDetail
+    'comparison': treatmentDetail,
+    'headthing': Header
   },
 
   data () {
@@ -87,7 +94,8 @@ export default {
       centers: getActivityCenters,
       towns: getTowns,
       d3data: getd3Data,
-      scores: getACScores
+      scores: getACScores,
+      selectType: getType
     }
   },
 
@@ -134,20 +142,22 @@ export default {
 
     goTown: function(x) {
 
-      var y = ''
+      // var y = ''
 
-      if (this.nbhselected) {
+      // if (this.nbhselected) {
 
-        y = 'nbh'
-      } else if (this.acselected) {
+      //   y = 'nbh'
+      // } else if (this.acselected) {
 
-        y = 'ac'
-      } else if (this.townselected) {
+      //   y = 'ac'
+      // } else if (this.townselected) {
 
-        y = 'twn'
-      }
+      //   y = 'twn'
+      // }
 
       // router.go({name: 'reportCard', params: {id: x, type: y}})
+
+      this.showComparison = true
     },
 
     changenbh: function() {
@@ -226,7 +236,6 @@ export default {
 
     'd3data': function() {
 
-      this.showComparison = true
 
       this.rank = this.d3data.rank
 
@@ -371,17 +380,19 @@ p {
 }
 
 .selectEmbayment {
-  top: 5px;
+  top: 0;
   position: absolute;
-  z-index: 3;
-  width: 25%;
+  z-index: 6;
+  /*width: 16%;*/
   float: left;
   background: #28536c;
-  border-radius: 25px;
-  padding: 1.5em;
-  border: 2px solid black;
-  opacity: 0.9;
+  /*border-radius: 25px;*/
+  /*padding: 1.5em;*/
+  /*border: 2px solid black;*/
+  /*opacity: 0.9;*/
   color: #f0ead6;
+  padding: 0 !important;
+  /*padding-bottom: 1%;*/
 }
 
 .selectEmbayment1 {
@@ -400,18 +411,26 @@ p {
 }
 
 .comparison {
-  bottom: 5px;
-  right: 1px;
+  bottom: 1px;
+  left: 1px;
   position: absolute;
   z-index: 5;
   float: right;
   background: #28536c;
   border-radius: 25px;
-  padding: 1.5em;
-  border: 2px solid black;
-  opacity: 0.9;
+  /*padding: 1.5em;*/
+  border: 5px solid grey;
+  /*opacity: 0.9;*/
+  /*height: 40%*/
   /*color: black;*/
 
+}
+
+.headthing {
+  z-index: 6;
+  top: 1px;
+  position: absolute;
+  padding: 0 !important;
 }
 
 .smallFont {
