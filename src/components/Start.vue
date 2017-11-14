@@ -391,8 +391,8 @@ p {
   /*border: 2px solid black;*/
   /*opacity: 0.9;*/
   color: #f0ead6;
-  padding: 0 !important;
-  /*padding-bottom: 1%;*/
+  padding: 0;
+  padding-bottom: 1%;
 }
 
 .selectEmbayment1 {
