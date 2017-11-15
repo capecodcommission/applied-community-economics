@@ -1,84 +1,73 @@
 <template>
-
-  <div style = "padding-top: 0px" class="panel-body">
-
-    <div class = 'row text-center'>
-      <div class="col-md-2">
-        <div id = 'title'>{{scores[0].Activity_Center}}</div>
-        <svg style = 'display: inline' id="myChart0"></svg>
-      </div>
-      <div class="col-md-2">
-        <div id = 'title'>{{scores[1].Activity_Center}}</div>
-        <svg style = 'display: inline' id="myChart1" width="150" height="150"></svg>
-      </div>
-      <div class="col-md-2">
-        <div id = 'title'>{{scores[2].Activity_Center}}</div>
-        <svg style = 'display: inline' id="myChart2" width="150" height="150"></svg>
-      </div>
-      <div class="col-md-2">
-        <div id = 'title'>{{scores[3].Activity_Center}}</div>
-        <svg style = 'display: inline' id="myChart3" width="150" height="150"></svg>
-      </div>
-      <div class="col-md-2">
-        <div id = 'title'>{{scores[4].Activity_Center}}</div>
-        <svg style = 'display: inline' id="myChart4" width="150" height="150"></svg>
-      </div>
-      <div class="col-md-2">
-        <div id = 'title'>{{scores[5].Activity_Center}}</div>
-        <svg style = 'display: inline' id="myChart5" width="150" height="150"></svg>
-      </div>
+  <div class = 'row text-center'>
+    <div class="col-xs-2">
+      <div id = 'title'>{{scores[0].Activity_Center}}</div>
+      <svg width="100" height="100" style = 'display: inline' id="myChart0"></svg>
     </div>
-
-    <div class = 'row text-center'>
-      <div class="col-md-2">
-        <div id = 'title'>{{scores[6].Activity_Center}}</div>
-        <svg style = 'display: inline' id="myChart6" width="150" height="150"></svg>
-      </div>
-      <div class="col-md-2">
-        <div id = 'title'>{{scores[7].Activity_Center}}</div>
-        <svg style = 'display: inline' id="myChart7" width="150" height="150"></svg>
-      </div>
-      <div class="col-md-2">
-        <div id = 'title'>{{scores[8].Activity_Center}}</div>
-        <svg style = 'display: inline' id="myChart8" width="150" height="150"></svg>
-      </div>
-      <div class="col-md-2">
-        <div id = 'title'>{{scores[9].Activity_Center}}</div>
-        <svg style = 'display: inline' id="myChart9" width="150" height="150"></svg>
-      </div>
-      <div class="col-md-2">
-        <div id = 'title'>{{scores[10].Activity_Center}}</div>
-        <svg style = 'display: inline' id="myChart10" width="150" height="150"></svg>
-      </div>
-      <div class="col-md-2">
-        <div id = 'title'>{{scores[11].Activity_Center}}</div>
-        <svg style = 'display: inline' id="myChart11" width="150" height="150"></svg>
-      </div>
+    <div class="col-xs-2">
+      <div id = 'title'>{{scores[1].Activity_Center}}</div>
+      <svg style = 'display: inline' id="myChart1" width="100" height="100"></svg>
     </div>
-
-    <div class = 'row text-center'>
-      <div class="col-md-2">
-        <div id = 'title'>{{scores[12].Activity_Center}}</div>
-        <svg style = 'display: inline' id="myChart12" width="150" height="150"></svg>
-      </div>
-      <div class="col-md-2">
-        <div id = 'title'>{{scores[13].Activity_Center}}</div>
-        <svg style = 'display: inline' id="myChart13" width="150" height="150"></svg>
-      </div>
-      <div class="col-md-2">
-        <div id = 'title'>{{scores[14].Activity_Center}}</div>
-        <svg style = 'display: inline' id="myChart14" width="150" height="150"></svg>
-      </div>
-      <div class="col-md-2">
-        <div id = 'title'>{{scores[15].Activity_Center}}</div>
-        <svg style = 'display: inline' id="myChart15" width="150" height="150"></svg>
-      </div>
+    <div class="col-xs-2">
+      <div id = 'title'>{{scores[2].Activity_Center}}</div>
+      <svg style = 'display: inline' id="myChart2" width="100" height="100"></svg>
+    </div>
+    <div class="col-xs-2">
+      <div id = 'title'>{{scores[3].Activity_Center}}</div>
+      <svg style = 'display: inline' id="myChart3" width="100" height="100"></svg>
+    </div>
+    <div class="col-xs-2">
+      <div id = 'title'>{{scores[4].Activity_Center}}</div>
+      <svg style = 'display: inline' id="myChart4" width="100" height="100"></svg>
+    </div>
+    <div class="col-xs-2">
+      <div id = 'title'>{{scores[5].Activity_Center}}</div>
+      <svg style = 'display: inline' id="myChart5" width="100" height="100"></svg>
+    </div>
+    <div class="col-xs-2">
+      <div id = 'title'>{{scores[6].Activity_Center}}</div>
+      <svg style = 'display: inline' id="myChart6" width="100" height="100"></svg>
+    </div>
+    <div class="col-xs-2">
+      <div id = 'title'>{{scores[7].Activity_Center}}</div>
+      <svg style = 'display: inline' id="myChart7" width="100" height="100"></svg>
     </div>
   </div>
 
-<script src="jquery.js"></script>
-<script src="filesaver.js"></script>
-<script src="tableexport.js"></script>
+  <div class = 'row text-center'>
+    <div class="col-xs-2">
+      <div id = 'title'>{{scores[8].Activity_Center}}</div>
+      <svg style = 'display: inline' id="myChart8" width="100" height="100"></svg>
+    </div>
+    <div class="col-xs-2">
+      <div id = 'title'>{{scores[9].Activity_Center}}</div>
+      <svg style = 'display: inline' id="myChart9" width="100" height="100"></svg>
+    </div>
+    <div class="col-xs-2">
+      <div id = 'title'>{{scores[10].Activity_Center}}</div>
+      <svg style = 'display: inline' id="myChart10" width="100" height="100"></svg>
+    </div>
+    <div class="col-xs-2">
+      <div id = 'title'>{{scores[11].Activity_Center}}</div>
+      <svg style = 'display: inline' id="myChart11" width="100" height="100"></svg>
+    </div>
+    <div class="col-xs-2">
+      <div id = 'title'>{{scores[12].Activity_Center}}</div>
+      <svg style = 'display: inline' id="myChart12" width="100" height="100"></svg>
+    </div>
+    <div class="col-xs-2">
+      <div id = 'title'>{{scores[13].Activity_Center}}</div>
+      <svg style = 'display: inline' id="myChart13" width="100" height="100"></svg>
+    </div>
+    <div class="col-xs-2">
+      <div id = 'title'>{{scores[14].Activity_Center}}</div>
+      <svg style = 'display: inline' id="myChart14" width="100" height="100"></svg>
+    </div>
+    <div class="col-xs-2">
+      <div id = 'title'>{{scores[15].Activity_Center}}</div>
+      <svg style = 'display: inline' id="myChart15" width="100" height="100"></svg>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -215,8 +204,8 @@ export default {
 
         d3.select(thischart).selectAll("g > *").remove()
         // Variables
-        var width = 150;
-        var height = 150;
+        var width = 100;
+        var height = 100;
         var radius = Math.min(width, height) / 2;
         var color = d3.scaleOrdinal(["#4472c4", "#a5a5a5","#ed7d31"]);
         
@@ -304,6 +293,12 @@ export default {
 </script>
 
 <style>
+
+.col-xs-2 {
+  padding: 1;
+  width: auto;
+  /*padding-left: 5;*/
+}
 
   #title {
     color: white;
