@@ -1,17 +1,6 @@
 <template>
 
-  <!-- <wqheader style = "background:#404144 !important; padding-bottom: 1px"></wqheader> -->
-
   <div style = "padding-top: 0px" class="panel-body">
-
-    <!-- <div class="row text-center">
-      <div class = 'col-md-12'>
-        <span>
-          <h1 style = 'font-size: 50px; margin-top: 1px !important; display: inline-block; color: white' class = 'text-center'>{{ selectType }} Comparison</h1>
-        </span><br>
-        <button class = 'btn btn-success pull-right' @click = 'excelExport'>Export Data</button>
-      </div>
-    </div> -->
 
     <div class = 'row text-center'>
       <div class="col-md-2">

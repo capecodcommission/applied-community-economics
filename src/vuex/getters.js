@@ -33,3 +33,8 @@ export function getType (state) {
   
   return state.selectType
 }
+
+export function getComparison (state) {
+  
+  return state.showComparison
+}

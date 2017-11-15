@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 // Create state object that all Vues share, JSON from API is loaded here
 const state = {
+  showComparison: false,
   selectType: '',
   neighborhoods: [],
   centers: [],
@@ -118,6 +119,11 @@ const state = {
 
 // Create mutations; functions to change data in the state
 const mutations = {
+
+  TOGGLE_COMPARISON (state) {
+
+    state.showComparison = !state.showComparison
+  },
 
   UPDATE_SELECT (state, type) {
 

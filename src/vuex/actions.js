@@ -69,3 +69,8 @@ export const updateSelect = function({dispatch, state}, type) {
 
   dispatch('UPDATE_SELECT', type) 
 }
+
+export const toggleComparison = function({dispatch, state}) {
+
+  dispatch('TOGGLE_COMPARISON') 
+}
