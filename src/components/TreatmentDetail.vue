@@ -1,4 +1,5 @@
 <template>
+
   <div class = 'row text-center'>
     <div class="col-xs-2">
       <div id = 'title'>{{scores[0].Activity_Center}}</div>
@@ -68,6 +69,7 @@
       <svg style = 'display: inline' id="myChart15" width="100" height="100"></svg>
     </div>
   </div>
+  
 </template>
 
 <script>

@@ -2,13 +2,32 @@
 
   <div style = 'padding: 0 !important; background: #28536c;' class = "panel-body">
 
-    <div style = 'padding: 0 !important' class = 'row text-center'>
+    <div style = 'padding: 0 !important;' class = 'row text-center'>
+
       <div style = 'padding: 0 !important' class = 'col-md-2'>
         <img style = 'width: 100%' class="img-fluid" src="https://i.imgur.com/2rnoGzZ.png">
       </div>
-      <div style = "padding: 0 !important; color: #f0ead6; font-size: 30px; font-family: 'Open Sans'" class = 'col-md-10'>
+
+      <div style = "color: #f0ead6; font-size: 30px; font-family: 'Open Sans'" class = 'col-md-10'>
         {{townName}}
+      </div><br><br><br>
+
+      <div class = 'col-md-2'>
+        <button class = 'btn btn-block btn-lg'>Mobility & Transportation</button>
       </div>
+      <div class = 'col-md-2'>
+        <button class = 'btn btn-block btn-lg'>Water Resources</button>
+      </div>
+      <div class = 'col-md-2'>
+        <button class = 'btn btn-block btn-lg'>Community Services</button>
+      </div>
+      <div class = 'col-md-2'>
+        <button class = 'btn btn-block btn-lg'>Housing</button>
+      </div>
+      <div class = 'col-md-2'>
+        <button class = 'btn btn-block btn-lg'>Utilities</button>
+      </div>
+
     </div>
   </div>
 
@@ -92,6 +111,16 @@ export default {
 
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
+  .highlight {
+    border-color: #646e7a;
+    border-radius: 25px;
+    border-style: solid;
+  }
+
+  .headerBtn {
+    bottom: 0;
+    position: absolute;
+  }
 </style>

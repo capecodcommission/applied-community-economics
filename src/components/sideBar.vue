@@ -89,6 +89,8 @@ export default {
       } else {
 
         $('#acSelect').val("0")
+
+        $('.slide-div').click()
       }
     })
 
