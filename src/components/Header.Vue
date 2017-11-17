@@ -1,7 +1,6 @@
 <template>
 
   <div style = 'padding: 0 !important; background: #28536c;' class = "panel-body">
-
     <div style = 'padding: 0 !important;' class = 'row text-center'>
 
       <div style = 'padding: 0 !important' class = 'col-md-2'>
@@ -10,27 +9,28 @@
 
       <div style = "color: #f0ead6; font-size: 30px; font-family: 'Open Sans'" class = 'col-md-10'>
         {{townName}}
-      </div><br><br><br>
+      </div>
+
+      <br><br><br>
 
       <div class = 'col-md-2'>
-        <button class = 'btn btn-block btn-lg'>Mobility & Transportation</button>
+        <button class = 'btn btn-block btn-lg headerBtn'>Mobility & Transportation <i class="fa fa-angle-down" ></i></button>
       </div>
       <div class = 'col-md-2'>
-        <button class = 'btn btn-block btn-lg'>Water Resources</button>
+        <button class = 'btn btn-block btn-lg headerBtn'>Water Resources <i class="fa fa-angle-down" ></i></button>
       </div>
       <div class = 'col-md-2'>
-        <button class = 'btn btn-block btn-lg'>Community Services</button>
+        <button class = 'btn btn-block btn-lg headerBtn'>Community Services <i class="fa fa-angle-down" ></i></button>
       </div>
       <div class = 'col-md-2'>
-        <button class = 'btn btn-block btn-lg'>Housing</button>
+        <button class = 'btn btn-block btn-lg headerBtn'>Housing <i class="fa fa-angle-down" ></i></button>
       </div>
       <div class = 'col-md-2'>
-        <button class = 'btn btn-block btn-lg'>Utilities</button>
+        <button class = 'btn btn-block btn-lg headerBtn'>Utilities <i class="fa fa-angle-down" ></i></button>
       </div>
 
     </div>
   </div>
-
 </template>
 
 <script>
@@ -120,7 +120,10 @@ export default {
   }
 
   .headerBtn {
-    bottom: 0;
-    position: absolute;
+    color: #f0ead6; 
+    background: transparent; 
+    border-radius: 5px; 
+    border-color: black;
+    font-family: "Open Sans";
   }
 </style>
