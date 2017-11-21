@@ -90,7 +90,10 @@ export default {
 
         $('#acSelect').val("0")
 
-        $('.slide-div').click()
+        var map = $('#map')
+        
+        
+        $('#map').contents().find('div.slide-div:eq(0)').click();
       }
     })
 
