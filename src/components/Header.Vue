@@ -14,7 +14,7 @@
       <br><br><br>
 
       <div class = 'col-md-2'>
-        <button class = 'btn btn-block btn-lg headerBtn'>Mobility & Transportation <i class="fa fa-angle-down" ></i></button>
+        <button @click = 'goComingSoon' class = 'btn btn-block btn-lg headerBtn'>Mobility & Transportation <i class="fa fa-angle-down" ></i></button>
       </div>
       <div class = 'col-md-2'>
         <button class = 'btn btn-block btn-lg headerBtn'>Water Resources <i class="fa fa-angle-down" ></i></button>
@@ -67,9 +67,9 @@ export default {
 
   methods: {
 
-    goComingSoon: function(x) {
+    goComingSoon: function() {
 
-      router.go({name: 'comingSoon', params: {id: x}})
+      router.go({name: 'comingSoon'})
     }
   },
 

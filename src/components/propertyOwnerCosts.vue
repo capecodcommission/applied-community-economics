@@ -4,8 +4,11 @@
 		<div class = 'row text-center'>
 			<div class = 'col-md-12'>
 				<div class = 'jumbotron'>
-					<h1 style= "font-family: 'Open Sans'">{{$route.params.id}}</h1>
+					<h1 style= "font-family: 'Open Sans'">Coming Soon</h1>
 				</div>
+			</div>
+			<div class = 'col-md-2 text-center'>
+				<button @click = 'goHome' class = 'btn btn-block btn-lg headerBtn'>Go Back <i class="fa fa-angle-down" ></i></button>
 			</div>
 		</div>
 	</div>
@@ -42,7 +45,9 @@ export default {
 	},
 
 	methods: {
-
+		goHome: function() {
+			router.go({name: 'Start'})
+		}
 	},
 
 	watch: {

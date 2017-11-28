@@ -44,8 +44,8 @@ export default {
       nbhselected: false,
       acselected: false,
       townselected: false,
-      townName: false,
-      BAsites: false,
+      townName: false
+,      BAsites: false,
       rank: ''
     }
   },
