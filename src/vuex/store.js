@@ -10,7 +10,7 @@ const state = {
   neighborhoods: [],
   centers: [],
   towns: [],
-  townName: '',
+  townName: 'APPLIED COMMUNITY ECONOMICS',
   acscores: [
     {
       "name": "TOPICS",

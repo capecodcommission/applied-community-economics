@@ -1,27 +1,43 @@
 <template>
-  <img style = 'width: 100%' class="img-fluid" src="https://i.imgur.com/2rnoGzZ.png">
-  <div v-show = 'townName != false'><p style = 'display: inline-block;'><div style = "display: inline-block; font-size: 25px; font-family: 'Open Sans'">{{townName}}</div> has a <div style = "display: inline-block; font-size: 20px; font-family: 'Open Sans'">{{rank}}</div> score, due to <div style = 'font-size: 30px; display: inline-block;' id = 'CAsites'>{{d3data.Community}}</div> community sites, <div style = 'font-size: 30px; display: inline-block;' id = 'BAsites'>{{d3data.Business}}</div> businesses and <div style = 'font-size: 30px; display: inline-block;' id = 'pct_GF'>{{(d3data.pctgf * 100).toFixed()}}%</div> are in Good Form</p></div>
-  <svg id = 'svgboi'></svg>
+
+  <img style = 'width: 100%' class="img-fluid" src="https://i.imgur.com/2rnoGzZ.png"><br><br>
+
+  <p v-show = 'townName == false' style = 'margin-left: 3%' align = 'left'>This tool will score the form of an area based on Building Form, Business Activity, and Community Activity. It allows for the comparison of scores to other simlar geographics in the Report Card. In development is the ability to dig down into key metrics that will improve the score of an area.</p>
+
+  <div v-show = 'townName != false'>
+    <p style = 'display: inline-block; margin-left: 3%' align = 'left'>
+      <div style = "display: inline-block; font-size: 25px; font-family: 'Open Sans'">{{townName}}</div> currently has a 
+      <div style = "display: inline-block; font-size: 20px; font-family: 'Open Sans'">{{rank}}</div> score, thanks to 
+      <div style = 'font-size: 30px; display: inline-block;' id = 'CAsites'>{{d3data.Community}}</div> community activity sites, 
+      <div style = 'font-size: 30px; display: inline-block;' id = 'BAsites'>{{d3data.Business}}</div> businesses and 
+      <div style = 'font-size: 30px; display: inline-block;' id = 'pct_GF'>{{(d3data.pctgf * 100).toFixed()}}%</div> of buildings with great form.
+    </p>
+    <svg id = 'svgboi'></svg>
+  </div>
   <br>
-  <p>Select one of the groups below, then select a subgroup from the dropdown menu</p>
-  <div id = 'radio-group'>
+
+  <p v-show = 'townName == false' style = 'margin-left: 3%' align = 'left'>Please select a neighborhood, activity center, or town to see the geography's ACE score.</p><br>
+
+  <div v-show = 'townName == false' style = 'margin-left: 3%' align = 'left'>
     <input @click = 'changenbh' type="radio" name="checkgroup" value="Neighborhood"> Neighborhood<br>
+    <select style = 'color: black;' v-model = 'townName' v-show = "nbhselected" id = 'neighborhoodSelect'>
+      <option value = '0'>Select a Neighborhood</option>
+      <option v-for = 'neighborhood in neighborhoods.recordsets[0]' value = '{{neighborhood.Neighborhood}}'>{{neighborhood.Neighborhood}}</option>
+    </select><br>
     <input @click = 'changeac' type="radio" name="checkgroup" value="Activity Center"> Activity Center<br>
-    <input @click = 'changetown' type="radio" name="checkgroup" value="Town"> Town
-  </div><br><br>
-  <select style = 'color: black;' v-model = 'townName' v-show = "nbhselected" id = 'neighborhoodSelect'>
-    <option value = '0'>Select a Neighborhood</option>
-    <option v-for = 'neighborhood in neighborhoods.recordsets[0]' value = '{{neighborhood.Neighborhood}}'>{{neighborhood.Neighborhood}}</option>
-  </select>
     <select style = 'color: black;' v-show = "acselected" v-model = 'townName' id = 'acSelect'>
       <option value = '0'>Select an Activity Center</option>
       <option v-for = 'center in centers.recordsets[0]' value = '{{center.center}}'>{{center.center}}</option>
+    </select><br>
+    <input @click = 'changetown' type="radio" name="checkgroup" value="Town"> Town<br>
+    <select style = 'color: black;' v-model = 'townName' v-show = "townselected" id = 'townSelect'>
+      <option value = '0'>Select a Town</option>
+      <option v-for = 'town in towns.recordsets[0]' value = '{{town.town}}'>{{town.town}}</option>
     </select>
-  <select style = 'color: black;' v-model = 'townName' v-show = "townselected" id = 'townSelect'>
-    <option value = '0'>Select a Town</option>
-    <option v-for = 'town in towns.recordsets[0]' value = '{{town.town}}'>{{town.town}}</option>
-  </select><br><br>
-  <button v-show = "townName != false" @click = "toggleComparison()" class = "btn btn-primary">Compare to other {{selectType}}s</button>
+  </div><br><br>
+
+  <button style = 'float: left; margin-left: 3%' v-show = "townName != false" @click = "toggleComparison()" class = "btn btn-primary">Compare to Other {{selectType}}s</button>
+
 </template>
 
 <script>
@@ -44,8 +60,8 @@ export default {
       nbhselected: false,
       acselected: false,
       townselected: false,
-      townName: false
-,      BAsites: false,
+      townName: false,      
+      BAsites: false,
       rank: ''
     }
   },

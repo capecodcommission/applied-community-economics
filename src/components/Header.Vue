@@ -1,33 +1,72 @@
 <template>
 
   <div style = 'padding: 0 !important; background: #28536c;' class = "panel-body">
-    <div style = 'padding: 0 !important;' class = 'row text-center'>
+    <div style = 'padding: 0 !important;' class = 'row text-center'><br><br>
 
       <div style = 'padding: 0 !important' class = 'col-md-2'>
         <img style = 'width: 100%' class="img-fluid" src="https://i.imgur.com/2rnoGzZ.png">
       </div>
 
-      <div style = "color: #f0ead6; font-size: 30px; font-family: 'Open Sans'" class = 'col-md-10'>
+      <div style = "color: #f0ead6; font-size: 30px; font-family: 'Open Sans'; margin-bottom: 1.5%" class = 'col-md-10'>
         {{townName}}
       </div>
 
       <br><br><br>
 
-      <div class = 'col-md-2'>
-        <button @click = 'goComingSoon' class = 'btn btn-block btn-lg headerBtn'>Mobility & Transportation <i class="fa fa-angle-down" ></i></button>
-      </div>
-      <div class = 'col-md-2'>
-        <button class = 'btn btn-block btn-lg headerBtn'>Water Resources <i class="fa fa-angle-down" ></i></button>
-      </div>
-      <div class = 'col-md-2'>
-        <button class = 'btn btn-block btn-lg headerBtn'>Community Services <i class="fa fa-angle-down" ></i></button>
-      </div>
-      <div class = 'col-md-2'>
-        <button class = 'btn btn-block btn-lg headerBtn'>Housing <i class="fa fa-angle-down" ></i></button>
-      </div>
-      <div class = 'col-md-2'>
-        <button class = 'btn btn-block btn-lg headerBtn'>Utilities <i class="fa fa-angle-down" ></i></button>
-      </div>
+      <div style = 'display: inline-block' class = 'col-md-10'>
+        <div class = ' dropdown'>
+          <button class = 'btn btn-block btn-lg headerBtn'>Transportation & Mobility <i class="fa fa-angle-down" ></i></button>
+          <div class="dropdown-content">
+            <a style = 'border-bottom: 1px solid black' href="#">Pedestrian Accommodations <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' href="#">Bicyclist Accommodations <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' href="#">Traffic Circulation <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' href="#">Parking <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a href="#">Transit <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+          </div>
+        </div>
+        <div class = 'dropdown'>
+          <button class = 'btn btn-block btn-lg headerBtn'>Water Resources <i class="fa fa-angle-down" ></i></button>
+          <div class="dropdown-content">
+            <a style = 'border-bottom: 1px solid black' href="#">Drinking Water <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' href="#">Stormwater <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' href="#">Wastewater <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+          </div>
+        </div>
+        <div class = 'dropdown'>
+          <button class = 'btn btn-block btn-lg headerBtn'>Community Services <i class="fa fa-angle-down" ></i></button>
+          <div class="dropdown-content">
+            <a style = 'border-bottom: 1px solid black' href="#">Open Space & Recreation <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' href="#">Community Programming <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' href="#">Cultural & Marine Resources <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' href="#">Historic Resources <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+          </div>
+        </div>
+        <div class = 'dropdown'>
+          <button class = 'btn btn-block btn-lg headerBtn'>Neighborhoods <i class="fa fa-angle-down" ></i></button>
+          <div class="dropdown-content">
+            <a style = 'border-bottom: 1px solid black' href="#">Neighborhoods <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' href="#">Housing <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' href="#">Walkability <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+          </div>
+        </div>
+        <div class = 'dropdown'>
+          <button class = 'btn btn-block btn-lg headerBtn'>Utilities <i class="fa fa-angle-down" ></i></button>
+          <div class="dropdown-content">
+            <a style = 'border-bottom: 1px solid black' href="#">Electric <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' href="#">Natural Gas <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' href="#">Broadband/Telecom <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' href="#">Other <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+          </div>
+        </div>
+        <div class = 'dropdown'>
+          <button class = 'btn btn-block btn-lg headerBtn'>Coastal Resiliency <i class="fa fa-angle-down" ></i></button>
+          <div class="dropdown-content">
+            <a style = 'border-bottom: 1px solid black' href="#">Hard Solutions <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' href="#">Soft Solutions <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' href="#">Design/Character <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+          </div>
+        </div>
+      </div><br><br><br>
 
     </div>
   </div>
@@ -113,6 +152,7 @@ export default {
 
 <style scoped>
 
+
   .highlight {
     border-color: #646e7a;
     border-radius: 25px;
@@ -125,5 +165,43 @@ export default {
     border-radius: 5px; 
     border-color: black;
     font-family: "Open Sans";
+    white-space: normal;
   }
+
+  .headerBtn:hover {background-color: #30c9c9}
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+    width: 16%;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #28536c;
+    min-width: 100%;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: #f0ead6;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-family: "Open Sans";
+    /*font-size: 20;*/
+    text-align: left;
+}
+
+.dropdown-content a:hover {background-color: #30c9c9}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
 </style>

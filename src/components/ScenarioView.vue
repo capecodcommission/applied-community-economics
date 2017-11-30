@@ -1,11 +1,5 @@
 <template>
-
-  <div id="scenario-view" class="row">
-    <div class="col">
-      <router-view></router-view>
-    </div>
-  </div>
-  
+  <router-view></router-view> 
 </template>
 
 <script>

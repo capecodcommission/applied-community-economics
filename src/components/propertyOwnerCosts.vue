@@ -1,79 +1,184 @@
 <template>
-	<wqheader></wqheader>
-	<div class="panel-body">
-		<div class = 'row text-center'>
-			<div class = 'col-md-12'>
-				<div class = 'jumbotron'>
-					<h1 style= "font-family: 'Open Sans'">Coming Soon</h1>
-				</div>
-			</div>
-			<div class = 'col-md-2 text-center'>
-				<button @click = 'goHome' class = 'btn btn-block btn-lg headerBtn'>Go Back <i class="fa fa-angle-down" ></i></button>
-			</div>
-		</div>
-	</div>
+  
+  <map></map>
+
+  <div transition = 'fade' v-show = 'showComparison' class = 'col-md-7 comparison'>
+    <comparison></comparison>
+  </div>
+
+  <div class = 'col-md-12 headthing'>
+    <headthing></headthing>
+  </div>
+
+  <div class = 'col-md-2 selectEmbayment text-center'>
+    <sidething></sidething>
+  </div>
+
 </template>
 
 <script>
-
-import wqheader from './Header'
-import {  } from '../vuex/getters'
-import {  } from '../vuex/actions'
-import {introJs} from '../../node_modules/intro.js/intro.js'
+import { getComparison } from '../vuex/getters'
+import treatmentDetail from './TreatmentDetail'
+import Header from './Header'
+import sidething from './sideBar'
+import map from './map'
 
 export default {
 
-	vuex: {
-		getters: {
+  components: {
+    'comparison': treatmentDetail,
+    'headthing': Header,
+    'sidething': sidething,
+    'map': map
+  },
 
-		},
-		actions: {
+  data () {
 
-		}
-	},
+    return {
 
-	data () {
-		return {
-			
-		}
-	},
-		
-	
+    }
+  },
 
-	ready() {
+  vuex: {
 
-	},
+    actions: {
 
-	methods: {
-		goHome: function() {
-			router.go({name: 'Start'})
-		}
-	},
+    },
 
-	watch: {
+    getters: {
 
-	},
+      showComparison: getComparison
+    }
+  },
 
-	components: {
+  ready() {
 
-		'wqheader': wqheader
-	}
+  },
+
+  methods: {
+
+  },
+
+  watch: {
+
+  }
 }
 
 </script>
 
 <style>
-td {
-  padding: 3px 0;
+
+#BAsites {
+
+  color: #ed7d31
 }
-table {
-	border-collapse: separate;
-	border-spacing: 10px 0;
+
+#CAsites {
+  color: #4472c4
 }
-ul {
-  list-style-type: none;
-}	
-li {
-	margin: 10px 0;
+
+#pct_GF {
+  color: #a5a5a5
 }
+
+#radio-group {
+  display: inline-block
+}
+
+h1 {
+  font-family: "Open Sans";
+  font-size: 28px;
+}
+
+h2 {
+  font-family: "Open Sans"
+}
+
+p {
+  font-family: "Open Sans";
+  font-size: 15px;
+}
+
+.cccLogo {
+  position: absolute;
+  z-index: 2;
+  right: 0px;
+
+}
+
+.selectEmbayment {
+  top: 0;
+  position: absolute;
+  z-index: 6;
+  /*width: 16%;*/
+  float: left;
+  background: #28536c;
+  /*border-radius: 25px;*/
+  /*padding: 1.5em;*/
+  /*border: 2px solid black;*/
+  /*opacity: 0.9;*/
+  color: #f0ead6;
+  padding: 0;
+  padding-bottom: 1%;
+}
+
+.selectEmbayment1 {
+  top: 5px;
+  right: 1px;
+  position: absolute;
+  z-index: 4;
+  float: right;
+  background: #28536c;
+  border-radius: 25px;
+  padding: 1.5em;
+  border: 2px solid black;
+  opacity: 0.9;
+  color: black;
+
+}
+
+.comparison {
+  bottom: 1px;
+  left: 1px;
+  position: absolute;
+  z-index: 5;
+  float: right;
+  background: #28536c;
+  border-radius: 25px;
+  /*padding: 1.5em;*/
+  border: 5px solid grey;
+  /*opacity: 0.9;*/
+  /*height: 40%*/
+  /*color: black;*/
+
+}
+
+.headthing {
+  z-index: 6;
+  top: 1px;
+  position: absolute;
+  padding: 0 !important;
+}
+
+.smallFont {
+  font-size: 10px;
+}
+
+#legendDiv {
+  float: right;
+  background: #28536c;
+  color: #f0ead6;
+}
+
+ html, body, #app {
+
+    height: 100%;
+ }
+
+ .fill-height {
+
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+ }
 </style>

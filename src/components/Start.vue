@@ -1,6 +1,6 @@
 <template>
   
-  <map></map>
+  <map v-show = "townName != 'APPLIED COMMUNITY ECONOMICS'"></map>
 
   <div transition = 'fade' v-show = 'showComparison' class = 'col-md-7 comparison'>
     <comparison></comparison>
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { getComparison } from '../vuex/getters'
+import { getComparison, getTownName } from '../vuex/getters'
 import treatmentDetail from './TreatmentDetail'
 import Header from './Header'
 import sidething from './sideBar'
@@ -47,7 +47,8 @@ export default {
 
     getters: {
 
-      showComparison: getComparison
+      showComparison: getComparison,
+      townName: getTownName
     }
   },
 
