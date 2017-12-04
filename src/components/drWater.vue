@@ -2,7 +2,7 @@
 
   <div class="container container-table">
     <div class="row vertical-center-row">
-      <div class="col-md-8 col-md-offset-4">
+      <div class="col-md-8 col-md-offset-2">
         <h3>Supply</h3>
         <ul align = 'left' style = 'font-size: 20px;'>
           <li>Volume Clean Water Supply available to meet demand</li>

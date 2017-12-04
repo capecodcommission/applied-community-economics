@@ -14,6 +14,14 @@
     <sidething></sidething>
   </div>
 
+  <div class="container container-table">
+    <div class="row vertical-center-row">
+      <div class="col-md-1 col-md-offset-1">
+        <img src = 'https://i.imgur.com/K0h8OBD.jpg'>
+      </div>
+    </div>
+  </div>
+
 </template>
 
 <script>

@@ -28,14 +28,14 @@
           <button class = 'btn btn-block btn-lg headerBtn'>Water Resources <i class="fa fa-angle-down" ></i></button>
           <div class="dropdown-content">
             <a style = 'border-bottom: 1px solid black' @click = "goTo('drWater')">Drinking Water <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
-            <a style = 'border-bottom: 1px solid black' href="#">Stormwater <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
-            <a style = 'border-bottom: 1px solid black' href="#">Wastewater <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' @click = "goTo('stormwater')">Stormwater <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' @click = "goTo('wastewater')">Wastewater <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
           </div>
         </div>
         <div class = 'dropdown'>
           <button class = 'btn btn-block btn-lg headerBtn'>Community Services <i class="fa fa-angle-down" ></i></button>
           <div class="dropdown-content">
-            <a style = 'border-bottom: 1px solid black'>Open Space & Recreation <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' @click = "goTo('opnsprcr')">Open Space & Recreation <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
             <a style = 'border-bottom: 1px solid black' href="#">Community Programming <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
             <a style = 'border-bottom: 1px solid black' href="#">Cultural & Marine Resources <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
             <a style = 'border-bottom: 1px solid black' href="#">Historic Resources <i style = 'float: right;' class="fa fa-angle-right" ></i></a>

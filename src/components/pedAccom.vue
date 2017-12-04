@@ -2,7 +2,7 @@
 
   <div class="container container-table">
     <div class="row vertical-center-row">
-      <div class="col-md-4 col-md-offset-4">
+      <div class="col-md-4 col-md-offset-2">
         <ul align = 'left' style = 'font-size: 20px;'>
           <li>Average Daily Traffic Utilization</li>
           <li>Traffic Jams</li>

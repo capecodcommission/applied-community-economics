@@ -40,6 +40,18 @@ export default function (router) {
         '/drWater': {
           name: 'drWater',
           component: require('./components/drWater.vue')
+        },
+        '/stormwater': {
+          name: 'stormwater',
+          component: require('./components/stormwater.vue')
+        },
+        '/wastewater': {
+          name: 'wastewater',
+          component: require('./components/wastewater.vue')
+        },
+        '/opnsprcr': {
+          name: 'opnsprcr',
+          component: require('./components/opnsprcr.vue')
         }
       }
     }
