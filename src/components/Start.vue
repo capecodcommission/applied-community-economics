@@ -1,6 +1,6 @@
 <template>
   
-  <map v-show = "townName != 'APPLIED COMMUNITY ECONOMICS'"></map>
+  <!-- <map v-show = "townName != 'APPLIED COMMUNITY ECONOMICS'"></map> -->
 
   <div transition = 'fade' v-show = 'showComparison' class = 'col-md-7 comparison'>
     <comparison></comparison>

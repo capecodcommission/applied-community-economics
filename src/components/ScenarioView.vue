@@ -1,117 +1,193 @@
 <template>
-  <router-view></router-view> 
+
+  <div transition = 'fade' v-show = 'showComparison' class = 'col-md-7 comparison'>
+    <comparison></comparison>
+  </div>
+
+  <div class = 'col-md-12 headthing'>
+    <headthing></headthing>
+  </div>
+
+  <div class = 'col-md-2 selectEmbayment text-center'>
+    <sidething></sidething>
+  </div>
+
+  <router-view></router-view>
+
 </template>
 
 <script>
-
-import { loadTownName } from '../vuex/actions'
-import {  } from '../vuex/getters'
-import {  } from 'vue-strap'
-import json2csv from 'nice-json2csv'
-import {introJs} from '../../node_modules/intro.js/intro.js'
-import moment from 'moment'
+import { getComparison } from '../vuex/getters'
+import treatmentDetail from './TreatmentDetail'
+import Header from './Header'
+import sidething from './sideBar'
+import map from './map'
 
 export default {
 
   components: {
-
+    'comparison': treatmentDetail,
+    'headthing': Header,
+    'sidething': sidething,
+    'map': map
   },
 
   data () {
 
     return {
 
-      showRight: false
     }
   },
 
   vuex: {
+
     actions: {
 
-      loadTownName
     },
+
     getters: {
 
+      showComparison: getComparison
     }
   },
 
-  watch: {
-
-  },
-
-  // Get scenario and finance options based on scenarioId passed from parent ScenarioView
-  ready () {
+  ready() {
 
   },
 
   methods: {
 
-    startIntro() {
+  },
 
-      introJs().start()
-    },
+  watch: {
 
-    JSONflatten (data) {
-
-      var result = {};
-
-      function recurse(cur, prop) {
-
-        if (Object(cur) !== cur) {
-
-          result[prop] = cur;
-        } else if (Array.isArray(cur)) {
-
-          for (var i = 0, l = cur.length; i < l; i++)
-
-            recurse(cur[i], prop + "[" + i + "]");
-
-          if (l == 0) result[prop] = [];
-
-        } else {
-          var isEmpty = true;
-
-          for (var p in cur) {
-
-            isEmpty = false;
-            recurse(cur[p], prop ? prop + "." + p : p);
-          }
-
-          if (isEmpty && prop) result[prop] = {};
-        }
-      }
-
-      recurse(data, "");
-      return result;
-    },
-
-    excelExport() {
-
-      var arr = []
-
-      for (var i = 0; i < this.treat.length; i++) {
-
-        for (var j = 0; j < this.treat[i].costTypes.length; j++) {
-
-          arr.push(this.JSONflatten(this.treat[i].costTypes[j]))
-        }
-      }
-
-      var csvContent = json2csv.convert(arr)
-
-      var a = document.createElement('a');
-
-      a.textContent='download';
-      a.download= "ReportCard.csv";
-      a.href='data:text/csv;charset=utf-8,'+escape(csvContent);
-      document.body.appendChild(a);
-      a.click()
-      a.remove()
-    }
   }
 }
+
 </script>
 
-<style lang="scss" scoped>
+<style>
 
+.container-table {
+    display: table;
+    height: 100%;
+}
+.vertical-center-row {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#BAsites {
+
+  color: #ed7d31
+}
+
+#CAsites {
+  color: #4472c4
+}
+
+#pct_GF {
+  color: #a5a5a5
+}
+
+#radio-group {
+  display: inline-block
+}
+
+h1 {
+  font-family: "Open Sans";
+  font-size: 28px;
+}
+
+h2 {
+  font-family: "Open Sans"
+}
+
+p {
+  font-family: "Open Sans";
+  font-size: 15px;
+}
+
+.cccLogo {
+  position: absolute;
+  z-index: 2;
+  right: 0px;
+
+}
+
+.selectEmbayment {
+  top: 0;
+  position: absolute;
+  z-index: 6;
+  /*width: 16%;*/
+  float: left;
+  background: #28536c;
+  /*border-radius: 25px;*/
+  /*padding: 1.5em;*/
+  /*border: 2px solid black;*/
+  /*opacity: 0.9;*/
+  color: #f0ead6;
+  padding: 0;
+  padding-bottom: 1%;
+}
+
+.selectEmbayment1 {
+  top: 5px;
+  right: 1px;
+  position: absolute;
+  z-index: 4;
+  float: right;
+  background: #28536c;
+  border-radius: 25px;
+  padding: 1.5em;
+  border: 2px solid black;
+  opacity: 0.9;
+  color: black;
+
+}
+
+.comparison {
+  bottom: 1px;
+  left: 1px;
+  position: absolute;
+  z-index: 5;
+  float: right;
+  background: #28536c;
+  border-radius: 25px;
+  /*padding: 1.5em;*/
+  border: 5px solid grey;
+  /*opacity: 0.9;*/
+  /*height: 40%*/
+  /*color: black;*/
+
+}
+
+.headthing {
+  z-index: 6;
+  top: 1px;
+  position: absolute;
+  padding: 0 !important;
+}
+
+.smallFont {
+  font-size: 10px;
+}
+
+#legendDiv {
+  float: right;
+  background: #28536c;
+  color: #f0ead6;
+}
+
+ html, body, #app {
+
+    height: 100%;
+ }
+
+ .fill-height {
+
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+ }
 </style>

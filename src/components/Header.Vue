@@ -17,17 +17,17 @@
         <div class = ' dropdown'>
           <button class = 'btn btn-block btn-lg headerBtn'>Transportation & Mobility <i class="fa fa-angle-down" ></i></button>
           <div class="dropdown-content">
-            <a style = 'border-bottom: 1px solid black' href="#">Pedestrian Accommodations <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
-            <a style = 'border-bottom: 1px solid black' href="#">Bicyclist Accommodations <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
-            <a style = 'border-bottom: 1px solid black' href="#">Traffic Circulation <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
-            <a style = 'border-bottom: 1px solid black' href="#">Parking <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
-            <a href="#">Transit <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' @click = "goTo('pedAccom')">Pedestrian Accommodations <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' @click = "goTo('bikeAccom')">Bicyclist Accommodations <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' @click = "goTo('trafficCirc')">Traffic Circulation <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black'  @click = "goTo('parking')">Parking <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a @click = "goTo('transit')">Transit <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
           </div>
         </div>
         <div class = 'dropdown'>
           <button class = 'btn btn-block btn-lg headerBtn'>Water Resources <i class="fa fa-angle-down" ></i></button>
           <div class="dropdown-content">
-            <a style = 'border-bottom: 1px solid black' href="#">Drinking Water <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' @click = "goTo('drWater')">Drinking Water <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
             <a style = 'border-bottom: 1px solid black' href="#">Stormwater <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
             <a style = 'border-bottom: 1px solid black' href="#">Wastewater <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
           </div>
@@ -35,7 +35,7 @@
         <div class = 'dropdown'>
           <button class = 'btn btn-block btn-lg headerBtn'>Community Services <i class="fa fa-angle-down" ></i></button>
           <div class="dropdown-content">
-            <a style = 'border-bottom: 1px solid black' href="#">Open Space & Recreation <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black'>Open Space & Recreation <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
             <a style = 'border-bottom: 1px solid black' href="#">Community Programming <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
             <a style = 'border-bottom: 1px solid black' href="#">Cultural & Marine Resources <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
             <a style = 'border-bottom: 1px solid black' href="#">Historic Resources <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
@@ -106,9 +106,9 @@ export default {
 
   methods: {
 
-    goComingSoon: function() {
+    goTo: function(x) {
 
-      router.go({name: 'comingSoon'})
+      router.go({name: x})
     }
   },
 
