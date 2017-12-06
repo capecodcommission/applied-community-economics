@@ -1,7 +1,7 @@
 <template>
 
   <div style = 'padding: 0 !important; background: #28536c;' class = "panel-body">
-    <div style = 'padding: 0 !important;' class = 'row text-center'><br><br>
+    <div style = 'padding: 0 !important; margin-right: 0px' class = 'row text-center'><br><br>
 
       <div style = 'padding: 0 !important' class = 'col-md-2'>
         <img style = 'width: 100%' class="img-fluid" src="https://i.imgur.com/2rnoGzZ.png">
@@ -36,8 +36,8 @@
           <button class = 'btn btn-block btn-lg headerBtn'>Community Services <i class="fa fa-angle-down" ></i></button>
           <div class="dropdown-content">
             <a style = 'border-bottom: 1px solid black' @click = "goTo('opnsprcr')">Open Space & Recreation <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
-            <a style = 'border-bottom: 1px solid black' href="#">Community Programming <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
-            <a style = 'border-bottom: 1px solid black' href="#">Cultural & Marine Resources <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' @click = "goTo('comprog')">Community Programming <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' @click = "goTo('cultmrrs')">Cultural & Marine Resources <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
             <a style = 'border-bottom: 1px solid black' href="#">Historic Resources <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
           </div>
         </div>

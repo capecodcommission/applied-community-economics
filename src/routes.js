@@ -52,6 +52,14 @@ export default function (router) {
         '/opnsprcr': {
           name: 'opnsprcr',
           component: require('./components/opnsprcr.vue')
+        },
+        '/comprog': {
+          name: 'comprog',
+          component: require('./components/comprog.vue')
+        },
+        '/cultmrrs': {
+          name: 'cultmrrs',
+          component: require('./components/cultmrrs.vue')
         }
       }
     }

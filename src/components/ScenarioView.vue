@@ -1,23 +1,37 @@
 <template>
 
-  <div transition = 'fade' v-show = 'showComparison' class = 'col-md-7 comparison'>
-    <comparison></comparison>
+  <div style = 'padding-bottom: 0px' class = 'row'>
+
+    <div style = 'padding-right: 0px; padding-left: 0px' class = 'col-md-12'>
+      <headthing></headthing>
+    </div>
+
   </div>
 
-  <div class = 'col-md-12 headthing'>
-    <headthing></headthing>
+  <div class = 'row'>
+
+    <div class = 'col-md-2 sidebar'>
+      <sidething></sidething>
+    </div>
+
+    <div style = 'margin-top: 5%' class = 'col-md-10 text-center'>
+      <router-view></router-view>
+    </div>
+
   </div>
 
-  <div class = 'col-md-2 selectEmbayment text-center'>
-    <sidething></sidething>
-  </div>
+  <div class = 'row'>
 
-  <router-view></router-view>
+    <div transition = 'fade' v-show = 'showComparison' class = 'col-md-8 Comparison'>
+      <comparison></comparison>
+    </div>
+
+  </div>
 
 </template>
 
 <script>
-import { getComparison } from '../vuex/getters'
+import { getComparison, getTownName } from '../vuex/getters'
 import treatmentDetail from './TreatmentDetail'
 import Header from './Header'
 import sidething from './sideBar'
@@ -47,7 +61,8 @@ export default {
 
     getters: {
 
-      showComparison: getComparison
+      showComparison: getComparison,
+      townName: getTownName
     }
   },
 
@@ -67,15 +82,6 @@ export default {
 </script>
 
 <style>
-
-.container-table {
-    display: table;
-    height: 100%;
-}
-.vertical-center-row {
-    display: table-cell;
-    vertical-align: middle;
-}
 
 #BAsites {
 
@@ -115,10 +121,16 @@ p {
 
 }
 
+.sidebar {
+  background: #28536c;
+  color: #f0ead6;
+  padding: 1%;
+}
+
 .selectEmbayment {
-  top: 0;
+  /*top: 0;*/
   position: absolute;
-  z-index: 6;
+  /*z-index: 6;*/
   /*width: 16%;*/
   float: left;
   background: #28536c;
@@ -149,8 +161,8 @@ p {
 .comparison {
   bottom: 1px;
   left: 1px;
-  position: absolute;
-  z-index: 5;
+  /*position: absolute;*/
+  /*z-index: 5;*/
   float: right;
   background: #28536c;
   border-radius: 25px;
@@ -162,8 +174,16 @@ p {
 
 }
 
+.Comparison {
+  background: #28536c;
+  border-radius: 25px;
+  border: 5px solid grey;
+  float: left;
+  margin-left: 1%
+}
+
 .headthing {
-  z-index: 6;
+  /*z-index: 6;*/
   top: 1px;
   position: absolute;
   padding: 0 !important;
@@ -182,6 +202,7 @@ p {
  html, body, #app {
 
     height: 100%;
+    width: 100%
  }
 
  .fill-height {

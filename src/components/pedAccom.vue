@@ -1,17 +1,11 @@
 <template>
 
-  <div class="container container-table">
-    <div class="row vertical-center-row">
-      <div class="col-md-4 col-md-offset-2">
-        <ul align = 'left' style = 'font-size: 20px;'>
-          <li>Average Daily Traffic Utilization</li>
-          <li>Traffic Jams</li>
-          <li>Frequency of Curb cuts</li>
-          <li>Road width/# lanes</li>
-        </ul>
-      </div>
-    </div>
-  </div>
+  <ul align = 'left' style = 'font-size: 20px;'>
+    <li>Average Daily Traffic Utilization</li>
+    <li>Traffic Jams</li>
+    <li>Frequency of Curb cuts</li>
+    <li>Road width/# lanes</li>
+  </ul>   
 
 </template>
 

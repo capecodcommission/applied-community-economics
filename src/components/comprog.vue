@@ -1,14 +1,12 @@
 <template>
 
+  <h3 align="left">Public Safety</h3>
   <ul align = 'left' style = 'font-size: 20px;'>
-    <li>Bus routes/stops</li>
-    <li>Utilization rates</li>
-    <li>Hyannis Youth Use of Transportation Services</li>
-    <li>Evening and Weekend Transportation Services Offered</li>
-    <li>Population served/within walking distance of bus stop</li>
-    <li># businesses, community activity sites along route</li>
+    <li># Police Calls (to Specific Locations)</li>
+    <li># of CSO (Community Service Officers) Committed to District</li>
+    <li>Relative -Violent Crime Hyannis/GIZ/TOB</li>
   </ul>
-    
+     
 </template>
 
 <script>

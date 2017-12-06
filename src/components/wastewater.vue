@@ -1,25 +1,19 @@
 <template>
 
-  <div class="container container-table">
-    <div class="row vertical-center-row">
-      <div class="col-md-offset-2 col-md-6">
-        <h3>Treatment</h3>
-        <ul align = 'left' style = 'font-size: 20px;'>
-          <li>Frequency of septic replacement</li>
-          <li>Percent town</li>
-        </ul>
-        <br>
-        <h3>Collection</h3>
-        <ul align = 'left' style = 'font-size: 20px;'>
-          <li>Residents served by sewer</li>
-          <li>Sewer capacity</li>
-          <li>Additional sewer demand</li>
-          <li>Miles of pipeline needed for additional demand</li>
-          <li># Parcels serviced per treatment facility</li>
-        </ul>
-      </div>
-    </div>
-  </div>
+  <h3 align = 'left'>Treatment</h3>
+  <ul align = 'left' style = 'font-size: 20px;'>
+    <li>Frequency of septic replacement</li>
+    <li>Percent town</li>
+  </ul>
+  <br>
+  <h3 align = 'left'>Collection</h3>
+  <ul align = 'left' style = 'font-size: 20px;'>
+    <li>Residents served by sewer</li>
+    <li>Sewer capacity</li>
+    <li>Additional sewer demand</li>
+    <li>Miles of pipeline needed for additional demand</li>
+    <li># Parcels serviced per treatment facility</li>
+  </ul>
 
 </template>
 

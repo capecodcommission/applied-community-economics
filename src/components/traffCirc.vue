@@ -1,18 +1,12 @@
 <template>
 
-  <div class="container container-table">
-    <div class="row vertical-center-row">
-      <div class="col-md-5 col-md-offset-2">
-        <ul align = 'left' style = 'font-size: 20px;'>
-          <li>Connectivity of Sidewalks, Crosswalks</li>
-          <li>Gaps in connectivity</li>
-          <li>Curb cuts</li>
-          <li>Walking paths</li>
-          <li>Presence of on-street parking buffers</li>
-        </ul>
-      </div>
-    </div>
-  </div>
+  <ul align = 'left' style = 'font-size: 20px;'>
+    <li>Connectivity of Sidewalks, Crosswalks</li>
+    <li>Gaps in connectivity</li>
+    <li>Curb cuts</li>
+    <li>Walking paths</li>
+    <li>Presence of on-street parking buffers</li>
+  </ul>
 
 </template>
 

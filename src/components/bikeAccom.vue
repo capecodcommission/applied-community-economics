@@ -1,20 +1,14 @@
 <template>
 
-  <div class="container container-table">
-    <div class="row vertical-center-row">
-      <div class="col-md-4 col-md-offset-2">
-        <ul align = 'left' style = 'font-size: 20px;'>
-          <li>Parking Supply</li>
-          <li>Parking demand</li>
-          <li>Parking Revenue</li>
-          <li>Vehicles parked (Turnover rate)</li>
-          <li>Availability of handicapped parking</li>
-          <li>Lot v. on-street</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
+  <ul align = 'left' style = 'font-size: 20px;'>
+    <li>Parking Supply</li>
+    <li>Parking demand</li>
+    <li>Parking Revenue</li>
+    <li>Vehicles parked (Turnover rate)</li>
+    <li>Availability of handicapped parking</li>
+    <li>Lot v. on-street</li>
+  </ul>
+      
 </template>
 
 <script>
