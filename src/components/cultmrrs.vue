@@ -86,18 +86,18 @@ export default {
 
   ready() {
 
-    if (!esriLoader.isLoaded()) {
-      esriLoader.bootstrap((err) => {
-        if (err) {
-          console.error(err)
-        }
-        createMap(esriLoader, this.$router)
-      }, {
-        url: 'https://js.arcgis.com/4.4/'
-      })
-    } else {
-      createMap(esriLoader, this.$router)
-    }
+    // if (!esriLoader.isLoaded()) {
+    //   esriLoader.bootstrap((err) => {
+    //     if (err) {
+    //       console.error(err)
+    //     }
+    //     createMap(esriLoader, this.$router)
+    //   }, {
+    //     url: 'https://js.arcgis.com/4.4/'
+    //   })
+    // } else {
+    //   createMap(esriLoader)
+    // }
   },
 
   methods: {
@@ -106,6 +106,21 @@ export default {
 
   watch: {
 
+    'townName': () => {
+
+      if (!esriLoader.isLoaded()) {
+        esriLoader.bootstrap((err) => {
+          if (err) {
+            console.error(err)
+          }
+          createMap(esriLoader, this.$router)
+        }, {
+          url: 'https://js.arcgis.com/4.4/'
+        })
+      } else {
+        createMap(esriLoader)
+      }
+    }
   }
 }
 

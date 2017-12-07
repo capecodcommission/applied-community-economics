@@ -1,5 +1,5 @@
 import { store } from '../vuex/store'
-export const createMap = function (loader, router) {
+export const createMap = function (loader) {
   const esriLoader = loader
   esriLoader.dojoRequire(
     [
