@@ -43,14 +43,21 @@
         </ul>
       </div>
     </div>
-    
+
+    <div class = 'row'>
+      <div id="viewDiv" class="balt-theme"></div>
+    </div>
   </div>
+
+  <!-- <div id="viewDiv" class="balt-theme"></div> -->
 
 </template>
 
 <script>
 
+import * as esriLoader from 'esri-loader'
 import { getTownName } from '../vuex/getters'
+import { createMap } from './esrimap'
 
 export default {
 
@@ -79,6 +86,18 @@ export default {
 
   ready() {
 
+    if (!esriLoader.isLoaded()) {
+      esriLoader.bootstrap((err) => {
+        if (err) {
+          console.error(err)
+        }
+        createMap(esriLoader, this.$router)
+      }, {
+        url: 'https://js.arcgis.com/4.4/'
+      })
+    } else {
+      createMap(esriLoader, this.$router)
+    }
   },
 
   methods: {
@@ -93,6 +112,37 @@ export default {
 </script>
 
 <style>
+
+.nav.is-default {
+    background-color: #f5f5f5;
+    margin-bottom: 2rem;
+  }
+  .nav-left{
+    align-items: center;
+  }
+  .nav-item img {
+      max-height: 2.2rem;
+  }
+  input {
+    margin-left: 1rem;
+    border: 0;
+    background: transparent;
+    font-weight: normal;
+  }
+  #home {
+    position: fixed;
+    top : 30px;
+    z-index: 10;
+  }
+  #viewDiv {
+    position: absolute;
+    /*top: 3.5rem;
+    bottom: 0;
+    left: 0;
+    right: 0;*/
+    height: 100%;
+    width: 100%;
+  }
 
 .container-table {
     display: table;

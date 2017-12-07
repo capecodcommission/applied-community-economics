@@ -20,4 +20,5 @@
 @import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 @import '../node_modules/intro.js/introjs.css';
 @import '../node_modules/intro.js/themes/introjs-modern.css';
+@import url('https://js.arcgis.com/4.5/esri/css/main.css');
 </style>
