@@ -93,7 +93,7 @@ export default {
         }
         createMap(esriLoader, this.$router)
       }, {
-        url: 'https://js.arcgis.com/4.4/'
+        url: 'https://js.arcgis.com/4.5/'
       })
     } else {
       createMap(esriLoader)
