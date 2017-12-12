@@ -44,9 +44,9 @@
       </div>
     </div>
 
-    <div class = 'row'>
+    <!-- <div class = 'row'>
       <div v-show = "townName != 'APPLIED COMMUNITY ECONOMICS' " id="viewDiv" class="balt-theme"></div>
-    </div>
+    </div> -->
   </div>
 
   <!-- <div id="viewDiv" class="balt-theme"></div> -->
@@ -86,18 +86,18 @@ export default {
 
   ready() {
 
-    if (!esriLoader.isLoaded()) {
-      esriLoader.bootstrap((err) => {
-        if (err) {
-          console.error(err)
-        }
-        createMap(esriLoader, this.$router)
-      }, {
-        url: 'https://js.arcgis.com/4.5/'
-      })
-    } else {
-      createMap(esriLoader)
-    }
+    // if (!esriLoader.isLoaded()) {
+    //   esriLoader.bootstrap((err) => {
+    //     if (err) {
+    //       console.error(err)
+    //     }
+    //     createMap(esriLoader, this.$router)
+    //   }, {
+    //     url: 'https://js.arcgis.com/4.5/'
+    //   })
+    // } else {
+    //   createMap(esriLoader)
+    // }
   },
 
   methods: {

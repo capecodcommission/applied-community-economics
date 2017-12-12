@@ -14,8 +14,9 @@
       <sidething></sidething>
     </div>
 
-    <div style = 'margin-top: 5%' class = 'col-md-10 text-center'>
-      <img width = '100%' src = 'https://i.imgur.com/K0h8OBD.jpg'>
+    <div style = 'padding-left: 0;' class = 'col-md-10 text-center'>
+      <!-- <img width = '100%' src = 'https://i.imgur.com/K0h8OBD.jpg'> -->
+      <div v-show = "townName != 'APPLIED COMMUNITY ECONOMICS' " id="viewDiv" class="balt-theme"></div>
     </div>
 
   </div>
@@ -35,15 +36,16 @@ import { getComparison, getTownName } from '../vuex/getters'
 import treatmentDetail from './TreatmentDetail'
 import Header from './Header'
 import sidething from './sideBar'
-import map from './map'
+
+import * as esriLoader from 'esri-loader'
+import { createMap } from './esrimap'
 
 export default {
 
   components: {
     'comparison': treatmentDetail,
     'headthing': Header,
-    'sidething': sidething,
-    'map': map
+    'sidething': sidething
   },
 
   data () {
@@ -68,6 +70,19 @@ export default {
 
   ready() {
 
+    if (!esriLoader.isLoaded()) {
+      esriLoader.bootstrap((err) => {
+        if (err) {
+          console.error(err)
+        }
+        createMap(esriLoader, this.$router)
+      }, {
+        url: 'https://js.arcgis.com/4.5/'
+      })
+    } else {
+      createMap(esriLoader)
+    }
+
   },
 
   methods: {
@@ -82,6 +97,17 @@ export default {
 </script>
 
 <style>
+
+#viewDiv {
+    position: fixed !important;
+    /*top: 3.5rem;
+    bottom: 0;
+    left: 0;
+    right: 0;*/
+    height: 100%;
+    width: 100%;
+  }
+
 
 #BAsites {
 

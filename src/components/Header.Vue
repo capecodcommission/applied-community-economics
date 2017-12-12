@@ -13,7 +13,7 @@
 
       <br><br><br>
 
-      <div style = 'display: inline-block' class = 'col-md-10'>
+      <div v-show = "townName != 'APPLIED COMMUNITY ECONOMICS' " style = 'display: inline-block' class = 'col-md-10'>
         <div class = ' dropdown'>
           <button class = 'btn btn-block btn-lg headerBtn'>Transportation & Mobility <i class="fa fa-angle-down" ></i></button>
           <div class="dropdown-content">
