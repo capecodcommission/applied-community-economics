@@ -102,7 +102,7 @@ export const createMap = function (loader) {
           }]
         });
 
-        view.ui.add(legend, "bottom-right");
+        view.ui.add(legend, "top-right");
 
         map.add(embayments)
 

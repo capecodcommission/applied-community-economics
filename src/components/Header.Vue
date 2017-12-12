@@ -9,6 +9,7 @@
 
       <div style = "color: #f0ead6; font-size: 30px; font-family: 'Open Sans'; margin-bottom: 1.5%" class = 'col-md-10'>
         {{townName}}
+        <button class = 'btn btn-primary pull-right' @click = "restart('APPLIED COMMUNITY ECONOMICS')">Restart</button>
       </div>
 
       <br><br><br>
@@ -74,7 +75,7 @@
 
 <script>
 
-import {  } from '../vuex/actions'
+import { loadTownName } from '../vuex/actions'
 import { getTownName } from '../vuex/getters'
 import {  } from 'vue-strap'
 import { introJs } from '../../node_modules/intro.js/intro.js'
@@ -95,9 +96,10 @@ export default {
   vuex: {
     actions: {
 
-      
+      loadTownName
     },
     getters: {
+
       townName: getTownName
     }
   },
@@ -109,6 +111,12 @@ export default {
     goTo: function(x) {
 
       router.go({name: x})
+    },
+
+    restart: function(x) {
+
+      this.loadTownName(x)
+      router.go({name: 'Start'})
     }
   },
 

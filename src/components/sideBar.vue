@@ -2,9 +2,9 @@
 
   <!-- <img style = 'width: 100%' class="img-fluid" src="https://i.imgur.com/2rnoGzZ.png"><br><br> -->
 
-  <p v-show = 'townName == false' style = 'margin-left: 3%' align = 'left'>This tool will score the form of an area based on Building Form, Business Activity, and Community Activity. It allows for the comparison of scores to other simlar geographics in the Report Card. In development is the ability to dig down into key metrics that will improve the score of an area.</p>
+  <p v-show = "townThing == 'APPLIED COMMUNITY ECONOMICS'" style = 'margin-left: 3%' align = 'left'>This tool will score the form of an area based on Building Form, Business Activity, and Community Activity. It allows for the comparison of scores to other simlar geographics in the Report Card. In development is the ability to dig down into key metrics that will improve the score of an area.</p>
 
-  <div v-show = 'townName != false'>
+  <div v-show = "townThing != 'APPLIED COMMUNITY ECONOMICS'">
     <p style = 'display: inline-block; margin-left: 3%' align = 'left'>
       <div style = "display: inline-block; font-size: 25px; font-family: 'Open Sans'">{{townName}}</div> currently has a 
       <div style = "display: inline-block; font-size: 20px; font-family: 'Open Sans'">{{rank}}</div> score, thanks to 
@@ -16,9 +16,9 @@
   </div>
   <br>
 
-  <p v-show = 'townName == false' style = 'margin-left: 3%' align = 'left'>Please select a neighborhood, activity center, or town to see the geography's ACE score.</p><br>
+  <p v-show = "townThing == 'APPLIED COMMUNITY ECONOMICS'" style = 'margin-left: 3%' align = 'left'>Please select a neighborhood, activity center, or town to see the geography's ACE score.</p><br>
 
-  <div v-show = 'townName == false' style = 'margin-left: 3%' align = 'left'>
+  <div v-show = "townThing == 'APPLIED COMMUNITY ECONOMICS'" style = 'margin-left: 3%' align = 'left'>
     <input @click = 'changenbh' type="radio" name="checkgroup" value="Neighborhood"> Neighborhood<br>
     <select style = 'color: black;' v-model = 'townName' v-show = "nbhselected" id = 'neighborhoodSelect'>
       <option value = '0'>Select a Neighborhood</option>
@@ -36,7 +36,7 @@
     </select>
   </div><br><br>
 
-  <button style = 'float: left; margin-left: 3%' v-show = "townName != false" @click = "toggleComparison()" class = "btn btn-primary">Compare to Other {{selectType}}s</button>
+  <button style = 'float: left; margin-left: 3%' v-show = "townThing != 'APPLIED COMMUNITY ECONOMICS'" @click = "toggleComparison()" class = "btn btn-primary">Compare to Other {{selectType}}s</button>
 
 </template>
 
@@ -44,7 +44,7 @@
 
 import {introJs} from '../../node_modules/intro.js/intro.js'
 import { loadNeighborhoods, loadActivityCenters, loadTowns, loadTownName, updated3Data, loadACScores, updateSelect, toggleComparison } from '../vuex/actions'
-import { getNeighborhoods, getActivityCenters, getTowns, getd3Data, getACScores, getType } from '../vuex/getters'
+import { getNeighborhoods, getActivityCenters, getTowns, getd3Data, getACScores, getType, getTownName } from '../vuex/getters'
 import * as d3 from "d3"
 
 export default {
@@ -87,7 +87,8 @@ export default {
       towns: getTowns,
       d3data: getd3Data,
       scores: getACScores,
-      selectType: getType
+      selectType: getType,
+      townThing: getTownName
     }
   },
 
