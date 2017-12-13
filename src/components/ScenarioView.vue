@@ -32,6 +32,7 @@
 
 <script>
 import { getComparison, getTownName } from '../vuex/getters'
+import { loadTownName } from '../vuex/actions'
 import treatmentDetail from './TreatmentDetail'
 import Header from './Header'
 import sidething from './sideBar'
@@ -61,8 +62,7 @@ export default {
 
     getters: {
 
-      showComparison: getComparison,
-      townName: getTownName
+      showComparison: getComparison
     }
   },
 

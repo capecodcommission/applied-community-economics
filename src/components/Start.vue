@@ -86,6 +86,17 @@ export default {
 
 <style>
 
+.esri-ui-bottom-left {
+  bottom: 15% !important;
+}
+
+.esri-legend {
+  background: #28536c;
+  color: #f0ead6;
+  border-radius: 25px;
+  border: 5px solid grey;
+}
+
 #viewDiv {
     position: fixed !important;
     /*top: 3.5rem;

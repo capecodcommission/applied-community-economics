@@ -38,3 +38,18 @@ export function getComparison (state) {
   
   return state.showComparison
 }
+
+export function getnbhselected (state) {
+  
+  return state.nbhselected
+}
+
+export function getacselected (state) {
+  
+  return state.acselected
+}
+
+export function gettownselected (state) {
+  
+  return state.townselected
+}

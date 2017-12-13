@@ -6,7 +6,7 @@ import { API_ROOT } from './config'
 Vue.use(VueResource)
 
 Vue.http.options.crossOrigin = true
-Vue.http.headers.common['Authorization'] = '123123'
+// Vue.http.headers.common['Authorization'] = '123123'
 
 // Export (out of this script) functions to access API 
 export default {

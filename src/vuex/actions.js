@@ -74,3 +74,18 @@ export const toggleComparison = function({dispatch, state}) {
 
   dispatch('TOGGLE_COMPARISON') 
 }
+
+export const updateNBH = function({dispatch, state}, toggle) {
+
+  dispatch('TOGGLE_NBHSELECTED', toggle) 
+}
+
+export const updateAC = function({dispatch, state}, toggle) {
+
+  dispatch('TOGGLE_ACSELECTED', toggle) 
+}
+
+export const updateTown = function({dispatch, state}, toggle) {
+
+  dispatch('TOGGLE_TOWNSELECTED', toggle) 
+}

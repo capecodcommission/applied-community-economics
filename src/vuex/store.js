@@ -5,6 +5,9 @@ Vue.use(Vuex)
 
 // Create state object that all Vues share, JSON from API is loaded here
 const state = {
+  townselected: false,
+  nbhselected: false,
+  acselected: false,
   showComparison: false,
   selectType: '',
   neighborhoods: [],
@@ -119,6 +122,22 @@ const state = {
 
 // Create mutations; functions to change data in the state
 const mutations = {
+
+  TOGGLE_TOWNSELECTED (state, toggle) {
+
+    state.townselected = toggle
+  },
+
+  TOGGLE_ACSELECTED (state, toggle) {
+
+    state.acselected = toggle
+  },
+
+
+  TOGGLE_NBHSELECTED (state, toggle) {
+
+    state.nbhselected = toggle
+  },
 
   TOGGLE_COMPARISON (state) {
 

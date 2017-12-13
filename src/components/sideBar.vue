@@ -6,7 +6,7 @@
 
   <div v-show = "townThing != 'APPLIED COMMUNITY ECONOMICS'">
     <p style = 'display: inline-block; margin-left: 3%' align = 'left'>
-      <div style = "display: inline-block; font-size: 25px; font-family: 'Open Sans'">{{townName}}</div> currently has a 
+      <div style = "display: inline-block; font-size: 25px; font-family: 'Open Sans'">{{townThing}}</div> currently has a 
       <div style = "display: inline-block; font-size: 20px; font-family: 'Open Sans'">{{rank}}</div> score, thanks to 
       <div style = 'font-size: 30px; display: inline-block;' id = 'CAsites'>{{d3data.Community}}</div> community activity sites, 
       <div style = 'font-size: 30px; display: inline-block;' id = 'BAsites'>{{d3data.Business}}</div> businesses and 
@@ -43,8 +43,8 @@
 <script>
 
 import {introJs} from '../../node_modules/intro.js/intro.js'
-import { loadNeighborhoods, loadActivityCenters, loadTowns, loadTownName, updated3Data, loadACScores, updateSelect, toggleComparison } from '../vuex/actions'
-import { getNeighborhoods, getActivityCenters, getTowns, getd3Data, getACScores, getType, getTownName } from '../vuex/getters'
+import { loadNeighborhoods, loadActivityCenters, loadTowns, loadTownName, updated3Data, loadACScores, updateSelect, toggleComparison, updateNBH, updateAC, updateTown } from '../vuex/actions'
+import { getNeighborhoods, getActivityCenters, getTowns, getd3Data, getACScores, getType, getTownName, getnbhselected, getacselected, gettownselected } from '../vuex/getters'
 import * as d3 from "d3"
 
 export default {
@@ -57,9 +57,9 @@ export default {
 
     return {
 
-      nbhselected: false,
-      acselected: false,
-      townselected: false,
+      // nbhselected: false,
+      // acselected: false,
+      // townselected: false,
       townName: false,      
       BAsites: false,
       rank: ''
@@ -77,7 +77,10 @@ export default {
       updated3Data,
       loadACScores,
       updateSelect,
-      toggleComparison
+      toggleComparison,
+      updateNBH,
+      updateAC,
+      updateTown
     },
 
     getters: {
@@ -88,7 +91,10 @@ export default {
       d3data: getd3Data,
       scores: getACScores,
       selectType: getType,
-      townThing: getTownName
+      townThing: getTownName,
+      nbhselected: getnbhselected,
+      acselected: getacselected,
+      townselected: gettownselected
     }
   },
 
@@ -96,44 +102,105 @@ export default {
 
     this.loadNeighborhoods()
 
-    $('#neighborhoodSelect').on('change', function() {
+    if (this.townThing != 'APPLIED COMMUNITY ECONOMICS') {
 
-      var x = $(this).val().toString()
+      this.rank = this.d3data.rank
 
-      if (x === '0') {
+      d3.select('#svgboi').selectAll("g > *").remove()
+      // Variables
+      var width = 230;
+      var height = 200;
+      var radius = Math.min(width, height) / 2;
+      var color = d3.scaleOrdinal(["#4472c4", "#a5a5a5","#ed7d31"]);
+      
 
-        this.townName = false
-      } else {
+      // Size our <svg> element, add a <g> element, and move translate 0,0 to the center of the element.
+      var g = d3.select('#svgboi')
+          .attr('width', width)
+          .attr('height', height)
+          .append('g')
+          .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
 
-        $('#acSelect').val("0")
+      // Create our sunburst data structure and size it.
+      var partition = d3.partition()
+          .size([2 * Math.PI, radius]);
 
-        var map = $('#map')
+      // Find the root node of our data, and begin sizing process.
+      var root = d3.hierarchy(this.d3data)
+        .sum(function (d) { return d.size});
+
+      // Calculate the sizes of each arc that we'll draw later.
+      partition(root);
+      var arc = d3.arc()
+        .startAngle(function (d) { return d.x0  })
+        .endAngle(function (d) { return d.x1 })
+        .innerRadius(function (d) { return d.y0  })
+        .outerRadius(function (d) { return d.y1 - 3 })
+        .padAngle(.04)
+
+        var buScore = root.descendants()[0].data.buScore
+        var comScore = root.descendants()[0].data.comScore
+        var formScore = root.descendants()[0].data.formScore
+
+        // Add a <g> element for each node in thd data, then append <path> elements and draw lines based on the arc
+        // variable calculations. Last, color the lines and the slices.
+      g.selectAll('g')
+        .data(root.descendants())
+        .enter().append('g').attr("class", "node").append('path')
+        .attr("display", function (d) { return d.depth ? null : "none"; })
+        .attr("d", arc)
+        // .style('stroke', '#000000')
+        .style("fill", function (d) { return color((d.children ? d : d.parent).data.name); })
+        .each(function(i) {
+
+          if (i.data.name === "Business Activity" && i.depth > buScore) {
+
+            d3.select(this).style('opacity', 0)
+          }
+
+          if (i.data.name === "Community Activity" && i.depth > comScore) {
+
+            d3.select(this).style('opacity', 0)
+          }
+
+          if (i.data.name === "Building Form" && i.depth > formScore) {
+
+            d3.select(this).style('opacity', 0)
+          }
+        })
         
-        
-        $('#map').contents().find('div.slide-div:eq(0)').click();
+      g.append("text")
+       .attr("text-anchor", "middle")
+       .attr('font-size', '2em')
+       .style('fill', '#f0ead6')
+       .attr('font-family', 'Open Sans')
+       .attr('y', 10)
+       .text(this.d3data.finalScore.toFixed(1));
+
+
+      function computeTextRotation(d) {
+        var angle = (d.x0 + d.x1) / Math.PI * 90;
+
+        // Avoid upside-down labels
+        return (angle < 120 || angle > 270) ? angle : angle + 180  // labels as rims
+        // return (angle < 180) ? angle - 90 : angle + 90;  // labels as spokes
       }
-    })
 
-    $('#acSelect').on('change', function() {
+      var y = ''
 
-      var x = $(this).val().toString()
+      if (this.nbhselected) {
 
-      if (x === '0') {
+        y = 'nbh'
+      } else if (this.acselected) {
 
-        this.townName = false
+        y = 'ac'
+      } else if (this.townselected) {
+
+        y = 'twn'
       }
-    })
 
-    $('#townSelect').on('change', function() {
-
-      var x = $(this).val().toString()
-
-      if (x === '0') {
-
-        this.townName = false
-      }
-    })
-
+      this.loadACScores(y)
+    }
   },
 
   methods: {
@@ -145,9 +212,10 @@ export default {
 
       $('#neighborhoodSelect').val('0')
 
-      this.nbhselected = true
-      this.acselected = false
-      this.townselected = false
+      
+      this.updateNBH(true)
+      this.updateAC(false)
+      this.updateTown(false)
     },
 
     changeac: function() {
@@ -157,9 +225,9 @@ export default {
 
       $('#acSelect').val('0')
 
-      this.nbhselected = false
-      this.acselected = true
-      this.townselected = false
+      this.updateNBH(false)
+      this.updateAC(true)
+      this.updateTown(false)
     },
 
     changetown: function() {
@@ -169,9 +237,9 @@ export default {
 
       $('#townSelect').val('0')
 
-      this.nbhselected = false
-      this.acselected = false
-      this.townselected = true
+      this.updateNBH(false)
+      this.updateAC(false)
+      this.updateTown(true)
     }
   },
 
@@ -321,7 +389,6 @@ export default {
 
 .compareButton {
 
-  width: 100% !important;
   white-space: normal !important;
 }
 

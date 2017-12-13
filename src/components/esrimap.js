@@ -98,7 +98,7 @@ export const createMap = function (loader) {
         }]
       });
 
-      view.ui.add(legend, "top-right");
+      view.ui.add(legend, "bottom-left");
 
       map.add(embayments)
 
@@ -118,7 +118,58 @@ export const createMap = function (loader) {
 
               layerview.queryExtent().then((response) => {
 
-                view.goTo(response.extent.expand(1.3))
+                view.goTo(response.extent.expand(1.3), {
+
+                  tilt: view.camera.tilt
+                })
+              })
+            }
+          })
+        })
+      })
+
+      $('#acSelect').on('change', function() {
+
+        var x = $(this).val().toString()
+
+        embayments.definitionExpression = "AC_FINAL = " + "'" + x + "'"
+
+        view.whenLayerView(embayments).then((layerview) => {
+
+          layerview.watch('updating', (val) => {
+
+            if (!val) {
+
+              layerview.queryExtent().then((response) => {
+
+                view.goTo(response.extent.expand(1.3), {
+
+                  tilt: view.camera.tilt
+                })
+              })
+            }
+          })
+        })
+      })
+
+      $('#townSelect').on('change', function() {
+
+        var x = $(this).val().toString()
+
+        embayments.definitionExpression = "Town = " + "'" + x + "'"
+
+        view.whenLayerView(embayments).then((layerview) => {
+
+          layerview.watch('updating', (val) => {
+
+            if (!val) {
+
+              layerview.queryExtent().then((response) => {
+
+                view.goTo(response.extent.expand(1.3), {
+
+                  tilt: view.camera.tilt
+                })
               })
             }
           })
