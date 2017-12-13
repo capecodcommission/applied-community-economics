@@ -36,7 +36,7 @@
     </select>
   </div><br><br>
 
-  <button style = 'float: left; margin-left: 3%' v-show = "townThing != 'APPLIED COMMUNITY ECONOMICS'" @click = "toggleComparison()" class = "btn btn-primary">Compare to Other {{selectType}}s</button>
+  <button style = 'float: left; margin-left: 3%' v-show = "townThing != 'APPLIED COMMUNITY ECONOMICS'" @click = "toggleComparison()" class = "btn btn-primary compareButton">Compare to Other {{selectType}}s</button>
 
 </template>
 
@@ -318,5 +318,11 @@ export default {
 </script>
 
 <style>
+
+.compareButton {
+
+  width: 100% !important;
+  white-space: normal !important;
+}
 
 </style>

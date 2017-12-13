@@ -15,7 +15,7 @@
     </div>
 
     <div style = 'padding-left: 0;' class = 'col-md-10 text-center'>
-      <!-- <img width = '100%' src = 'https://i.imgur.com/K0h8OBD.jpg'> -->
+      <img v-show = "townName === 'APPLIED COMMUNITY ECONOMICS' " width = '100%' src = 'https://i.imgur.com/K0h8OBD.jpg'>
       <div v-show = "townName != 'APPLIED COMMUNITY ECONOMICS' " id="viewDiv" class="balt-theme"></div>
     </div>
 
@@ -70,19 +70,7 @@ export default {
 
   ready() {
 
-    if (!esriLoader.isLoaded()) {
-      esriLoader.bootstrap((err) => {
-        if (err) {
-          console.error(err)
-        }
-        createMap(esriLoader, this.$router)
-      }, {
-        url: 'https://js.arcgis.com/4.5/'
-      })
-    } else {
-      createMap(esriLoader)
-    }
-
+    esriLoader.bootstrap((err) => { createMap(esriLoader)}, { url: 'https://js.arcgis.com/4.5/'})
   },
 
   methods: {

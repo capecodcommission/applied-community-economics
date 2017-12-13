@@ -26,6 +26,12 @@ export const createMap = function (loader) {
       
       var map = new Map({});
 
+      var custom = new TileLayer({
+        url: "http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer"
+      })
+
+      map.add(custom)
+
       var view = new SceneView({
         container: "viewDiv",  // Reference to the DOM node that will contain the view
         map: map,
@@ -37,81 +43,85 @@ export const createMap = function (loader) {
          }              // References the map object created in step 3
       });
 
-      var custom = new TileLayer({
-        url: "http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer"
+      var renderer = {
+        type: "unique-value",  // autocasts as new UniqueValueRenderer()
+        field: "HousingType",
+        defaultSymbol: {type: 'simple-fill'},
+        uniqueValueInfos: [
+          {
+            value: 'Apartments',
+            symbol: {
+              type: 'simple-fill',
+              color: 'blue'
+            }
+          },
+          {
+            value: 'MixedUse',
+            symbol: {
+              type: 'simple-fill',
+              color:'red'
+            }
+          },
+          {
+            value: 'MultiFamily',
+            symbol: {
+              type: 'simple-fill',
+              color:'yellow'
+            }
+          },
+          {
+            value: 'SingleFamily',
+            symbol: {
+              type: 'simple-fill',
+              color:'green'
+            }
+          }  
+        ]
+      };
+
+      var embayments = new FeatureLayer({
+        url: "http://gis-services.capecodcommission.org/arcgis/rest/services/ActivityCenters/CommunityCharacteristics/MapServer/0",
+        // definitionExpression: "Neighborhood = " + "'" + x + "'",
+        outFields: ['*'],
+        renderer: renderer,
+        popupTemplate: {
+          title: '{ClosestRoad_name}',
+          content: '{*}'
+        }
       })
 
-      map.add(custom)
+      var legend = new Legend({
+        view: view,
+        layerInfos: [{
+          layer: embayments,
+          title: "Legend"
+        }]
+      });
+
+      view.ui.add(legend, "top-right");
+
+      map.add(embayments)
+
+
 
       $('#neighborhoodSelect').on('change', function() {
 
-        var renderer = {
-            type: "unique-value",  // autocasts as new UniqueValueRenderer()
-            field: "HousingType",
-            defaultSymbol: {type: 'simple-fill'},
-            uniqueValueInfos: [
-              {
-                value: 'Apartments',
-                symbol: {
-                  type: 'simple-fill',
-                  color: 'blue'
-                }
-              },
-              {
-                value: 'MixedUse',
-                symbol: {
-                  type: 'simple-fill',
-                  color:'red'
-                }
-              },
-              {
-                value: 'MultiFamily',
-                symbol: {
-                  type: 'simple-fill',
-                  color:'yellow'
-                }
-              },
-              {
-                value: 'SingleFamily',
-                symbol: {
-                  type: 'simple-fill',
-                  color:'green'
-                }
-              }  
-            ]
-          };
-
         var x = $(this).val().toString()
 
-        var embayments = new FeatureLayer({
-          url: "http://gis-services.capecodcommission.org/arcgis/rest/services/ActivityCenters/CommunityCharacteristics/MapServer/0",
-          definitionExpression: "Neighborhood = " + "'" + x + "'",
-          outFields: ['*'],
-          renderer: renderer,
-          popupTemplate: {
-            title: '{ClosestRoad_name}',
-            content: '{*}'
-          }
-        })
+        embayments.definitionExpression = "Neighborhood = " + "'" + x + "'"
 
-        var legend = new Legend({
-          view: view,
-          layerInfos: [{
-            layer: embayments,
-            title: "Legend"
-          }]
-        });
+        view.whenLayerView(embayments).then((layerview) => {
 
-        view.ui.add(legend, "top-right");
+          layerview.watch('updating', (val) => {
 
-        map.add(embayments)
+            if (!val) {
 
-        embayments.then(() => {
+              layerview.queryExtent().then((response) => {
 
-          return embayments.queryExtent()
-        }).then((response) => {
-
-          view.goTo(response.extent.expand(1.3))
+                view.goTo(response.extent.expand(1.3))
+              })
+            }
+          })
         })
       })
     }
