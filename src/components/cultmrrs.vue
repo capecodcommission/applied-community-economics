@@ -21,11 +21,13 @@
   <div class = 'col-md-6'>
 
     <div class = 'row'>
-      <div class = 'col-md-8'>
-      <img  src = 'https://i.imgur.com/k2mnGoA.png' width = '100%'>
+      <div class = 'col-md-6'>
+      <!-- <img  src = 'https://i.imgur.com/k2mnGoA.png' width = '100%'> -->
+        <canvas id = 'myChart'></canvas>
       </div>
-      <div class = 'col-md-4'>
-        <img  src = 'https://i.imgur.com/10K2xt9.png' width = '100%'>
+      <div class = 'col-md-6'>
+        <!-- <img  src = 'https://i.imgur.com/10K2xt9.png' width = '100%'> -->
+        <canvas id = 'myChart1'></canvas>
       </div>
     </div>
 
@@ -86,18 +88,36 @@ export default {
 
   ready() {
 
-    // if (!esriLoader.isLoaded()) {
-    //   esriLoader.bootstrap((err) => {
-    //     if (err) {
-    //       console.error(err)
-    //     }
-    //     createMap(esriLoader, this.$router)
-    //   }, {
-    //     url: 'https://js.arcgis.com/4.5/'
-    //   })
-    // } else {
-    //   createMap(esriLoader)
-    // }
+    var ctx = $("#myChart");
+
+    var myChart = new Chart(ctx, {
+      type: 'pie',
+      data: {
+        datasets: [{
+          data: [10,20,30],
+          backgroundColor: ['#4286f4', '#f4a941', '#6c6772']
+        }],
+
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: [
+          'Community Score',
+          'Business Score',
+          'Form Score'
+        ]
+      }
+    })
+
+    var ctx1 = $("#myChart1");
+
+    var myChart1 = new Chart(ctx1, {
+      type: 'bar',
+      data: {
+        datasets: [{
+          data: [10,20,30],
+          backgroundColor: ['#4286f4', '#f4a941', '#6c6772']
+        }]
+      }
+    })
   },
 
   methods: {
@@ -106,9 +126,6 @@ export default {
 
   watch: {
 
-    'townName': (x) => {
-
-    }
   }
 }
 

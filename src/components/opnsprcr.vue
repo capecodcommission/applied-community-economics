@@ -38,7 +38,8 @@
         <li>4,475 acres of Parcel area (12.4% Open Space)</li>
       </ul>
     </ul>
-    <img width = '100%' src = 'https://i.imgur.com/ePoscEj.png'>
+    <!-- <img width = '100%' src = 'https://i.imgur.com/ePoscEj.png'> -->
+    <canvas id = 'myChart'></canvas>
   </div>
 
 </template>
@@ -73,6 +74,25 @@ export default {
   },
 
   ready() {
+
+    var ctx = $("#myChart");
+
+    var myChart = new Chart(ctx, {
+      type: 'bubble',
+      data: {
+        datasets: [{
+          data: [{x:1,y:2,r:10},{x:3,y:4,r:20},{x:5,y:6,r:30}],
+          backgroundColor: ['#4286f4', '#f4a941', '#6c6772']
+        }],
+
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: [
+          'Community Score',
+          'Business Score',
+          'Form Score'
+        ]
+      }
+    })
 
   },
 

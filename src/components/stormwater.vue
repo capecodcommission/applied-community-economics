@@ -14,7 +14,8 @@
     </ul>
   </div>
   <div class = 'col-md-6'>
-    <img width = '100%' src = 'https://i.imgur.com/s1zoH9n.png'>
+    <!-- <img width = '100%' src = 'https://i.imgur.com/s1zoH9n.png'> -->
+    <canvas id = 'myChart'></canvas>
   </div>
 
 
@@ -49,6 +50,24 @@ export default {
 
   ready() {
 
+    var ctx = $("#myChart");
+
+    var myChart = new Chart(ctx, {
+      type: 'polarArea',
+      data: {
+        datasets: [{
+          data: [1, 2, 3],
+          backgroundColor: ['#4286f4', '#f4a941', '#6c6772']
+        }],
+
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: [
+          'Community Score',
+          'Business Score',
+          'Form Score'
+        ]
+      }
+    })
   },
 
   methods: {
