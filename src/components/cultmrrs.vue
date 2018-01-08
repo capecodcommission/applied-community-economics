@@ -79,65 +79,44 @@ export default {
   },
 
   ready() {
-
-    var arrEx = [0,1]
-
-    for (var i = arrEx.length - 1; i >= 0; i--) {
       
-      var ctx = $("#pieChart" + i.toString());
+    var ctx = $("#pieChart0");
 
-      var myChart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-          datasets: [{
-            data: [10,20,30],
-            backgroundColor: ['#4286f4', '#f4a941', '#6c6772']
-          }],
+    var myChart = new Chart(ctx, {
+      type: 'pie',
+      data: {
+        datasets: [{
+          data: [10,20,30],
+          backgroundColor: ['#4286f4', '#f4a941', '#6c6772']
+        }],
 
-          // These labels appear in the legend and in the tooltips when hovering different arcs
-          labels: [
-            'Community Score',
-            'Business Score',
-            'Form Score'
-          ]
-        }
-      })
-    }
-    // var ctx = $("#myChart");
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: [
+          'Community Score',
+          'Business Score',
+          'Form Score'
+        ]
+      }
+    })
 
-    // var myChart = new Chart(ctx, {
-    //   type: 'pie',
-    //   data: {
-    //     datasets: [{
-    //       data: [10,20,30],
-    //       backgroundColor: ['#4286f4', '#f4a941', '#6c6772']
-    //     }],
+    var ctx1 = $("#pieChart1");
 
-    //     // These labels appear in the legend and in the tooltips when hovering different arcs
-    //     labels: [
-    //       'Community Score',
-    //       'Business Score',
-    //       'Form Score'
-    //     ]
-    //   }
-    // })
+    var myChart = new Chart(ctx1, {
+      type: 'bar',
+      data: {
+        datasets: [{
+          data: [10,20,30],
+          backgroundColor: ['#4286f4', '#f4a941', '#6c6772']
+        }],
 
-    // var ctx1 = $("#myChart1");
-
-    // var myChart1 = new Chart(ctx1, {
-    //   type: 'pie',
-    //   data: {
-    //     datasets: [{
-    //       data: [10,20,30],
-    //       backgroundColor: ['#4286f4', '#f4a941', '#6c6772']
-    //     }],
-    //     labels: [
-    //       'Community Score',
-    //       'Business Score',
-    //       'Form Score'
-    //     ]
-    //   }
-    // })
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: [
+          'Community Score',
+          'Business Score',
+          'Form Score'
+        ]
+      }
+    })
   },
 
   methods: {
