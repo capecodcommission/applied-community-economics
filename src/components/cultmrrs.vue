@@ -22,12 +22,10 @@
 
     <div class = 'row'>
       <div class = 'col-md-6'>
-      <!-- <img  src = 'https://i.imgur.com/k2mnGoA.png' width = '100%'> -->
-        <canvas id = 'myChart'></canvas>
+        <canvas id = 'pieChart0'></canvas>
       </div>
       <div class = 'col-md-6'>
-        <!-- <img  src = 'https://i.imgur.com/10K2xt9.png' width = '100%'> -->
-        <canvas id = 'myChart1'></canvas>
+        <canvas id = 'pieChart1'></canvas>
       </div>
     </div>
 
@@ -45,13 +43,7 @@
         </ul>
       </div>
     </div>
-
-    <!-- <div class = 'row'>
-      <div v-show = "townName != 'APPLIED COMMUNITY ECONOMICS' " id="viewDiv" class="balt-theme"></div>
-    </div> -->
   </div>
-
-  <!-- <div id="viewDiv" class="balt-theme"></div> -->
 
 </template>
 
@@ -88,36 +80,64 @@ export default {
 
   ready() {
 
-    var ctx = $("#myChart");
+    var arrEx = [0,1]
 
-    var myChart = new Chart(ctx, {
-      type: 'pie',
-      data: {
-        datasets: [{
-          data: [10,20,30],
-          backgroundColor: ['#4286f4', '#f4a941', '#6c6772']
-        }],
+    for (var i = arrEx.length - 1; i >= 0; i--) {
+      
+      var ctx = $("#pieChart" + i.toString());
 
-        // These labels appear in the legend and in the tooltips when hovering different arcs
-        labels: [
-          'Community Score',
-          'Business Score',
-          'Form Score'
-        ]
-      }
-    })
+      var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          datasets: [{
+            data: [10,20,30],
+            backgroundColor: ['#4286f4', '#f4a941', '#6c6772']
+          }],
 
-    var ctx1 = $("#myChart1");
+          // These labels appear in the legend and in the tooltips when hovering different arcs
+          labels: [
+            'Community Score',
+            'Business Score',
+            'Form Score'
+          ]
+        }
+      })
+    }
+    // var ctx = $("#myChart");
 
-    var myChart1 = new Chart(ctx1, {
-      type: 'bar',
-      data: {
-        datasets: [{
-          data: [10,20,30],
-          backgroundColor: ['#4286f4', '#f4a941', '#6c6772']
-        }]
-      }
-    })
+    // var myChart = new Chart(ctx, {
+    //   type: 'pie',
+    //   data: {
+    //     datasets: [{
+    //       data: [10,20,30],
+    //       backgroundColor: ['#4286f4', '#f4a941', '#6c6772']
+    //     }],
+
+    //     // These labels appear in the legend and in the tooltips when hovering different arcs
+    //     labels: [
+    //       'Community Score',
+    //       'Business Score',
+    //       'Form Score'
+    //     ]
+    //   }
+    // })
+
+    // var ctx1 = $("#myChart1");
+
+    // var myChart1 = new Chart(ctx1, {
+    //   type: 'pie',
+    //   data: {
+    //     datasets: [{
+    //       data: [10,20,30],
+    //       backgroundColor: ['#4286f4', '#f4a941', '#6c6772']
+    //     }],
+    //     labels: [
+    //       'Community Score',
+    //       'Business Score',
+    //       'Form Score'
+    //     ]
+    //   }
+    // })
   },
 
   methods: {
