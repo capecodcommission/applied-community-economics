@@ -1,7 +1,7 @@
 <template>
 
   <div style = 'padding: 0 !important; background: #28536c;' class = "panel-body">
-    <div style = 'padding: 0 !important; margin-right: 0px' class = 'row text-center'><br><br>
+    <div style = 'padding: 0 !important; margin-right: 0px; margin-top: .5%' class = 'row text-center'>
 
       <div style = 'padding: 0 !important' class = 'col-md-2'>
         <img style = 'width: 100%' class="img-fluid" src="https://i.imgur.com/2rnoGzZ.png">

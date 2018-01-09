@@ -105,6 +105,7 @@ export default {
       type: 'bar',
       data: {
         datasets: [{
+          label: 'Dataset',
           data: [10,20,30],
           backgroundColor: ['#4286f4', '#f4a941', '#6c6772']
         }],
