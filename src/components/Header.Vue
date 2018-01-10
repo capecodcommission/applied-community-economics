@@ -39,7 +39,7 @@
             <a style = 'border-bottom: 1px solid black' @click = "goTo('opnsprcr')">Open Space & Recreation <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
             <a style = 'border-bottom: 1px solid black' @click = "goTo('comprog')">Community Programming <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
             <a style = 'border-bottom: 1px solid black' @click = "goTo('cultmrrs')">Cultural & Marine Resources <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
-            <a style = 'border-bottom: 1px solid black' href="#">Historic Resources <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' @click = "goTo('hstrsrcs')" href="#">Historic Resources <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
           </div>
         </div>
         <div class = 'dropdown'>

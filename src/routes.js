@@ -60,6 +60,10 @@ export default function (router) {
         '/cultmrrs': {
           name: 'cultmrrs',
           component: require('./components/cultmrrs.vue')
+        },
+        '/hstrsrcs': {
+          name: 'hstrsrcs',
+          component: require('./components/hstrsrcs.vue')
         }
       }
     }
