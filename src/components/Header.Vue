@@ -45,7 +45,7 @@
         <div class = 'dropdown'>
           <button class = 'btn btn-block btn-lg headerBtn'>Neighborhoods <i class="fa fa-angle-down" ></i></button>
           <div class="dropdown-content">
-            <a style = 'border-bottom: 1px solid black' href="#">Neighborhoods <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' href="#" @click = "goTo('neighborhoods')">Neighborhoods <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
             <a style = 'border-bottom: 1px solid black' href="#">Housing <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
             <a style = 'border-bottom: 1px solid black' href="#">Walkability <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
           </div>

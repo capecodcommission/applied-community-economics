@@ -2,7 +2,7 @@
   
   <div class="col-md-6">
 
-    <h3 align = 'left' style = 'color: red'>Historic Resources</h3>
+    <h3 align = 'left' style = 'color: red'>Neighborhoods</h3>
 
     <ul align = 'left' style = 'font-size: 20px;'>
 
@@ -77,23 +77,23 @@ export default {
       data: {
         datasets: [{
           label: 'Area1',
-          data: [10,20,30,40,50,60,70],
-          backgroundColor: ['#4286f4']
+          data: [5,7.5,11.2,16.7,26],
+          backgroundColor: ['green']
         },
         {
           label: 'Area2',
-          data: [20,40,60,80,100,120,140],
-          backgroundColor: ['#f4a941']
+          data: [10,15,22.5,34,51],
+          backgroundColor: ['red']
         },
         {
           label: 'Area3',
-          data: [40,80,120,180,240,300,360],
-          backgroundColor: ['#6c6772']
+          data: [20,30,45,69,102],
+          backgroundColor: ['blue']
         },
         {
           label: 'Area4',
-          data: [80,160,240,360,480,600,720],
-          backgroundColor: ['red']
+          data: [40,60,90,135,205],
+          backgroundColor: ['yellow']
         }],
 
         // These labels appear in the legend and in the tooltips when hovering different arcs
@@ -102,9 +102,7 @@ export default {
           'Score2',
           'Score3',
           'Score4',
-          'Score5',
-          'Score6',
-          'Score7'
+          'Score5'
         ]
       }
     })

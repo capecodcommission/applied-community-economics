@@ -64,6 +64,10 @@ export default function (router) {
         '/hstrsrcs': {
           name: 'hstrsrcs',
           component: require('./components/hstrsrcs.vue')
+        },
+        '/neighborhoods': {
+          name: 'neighborhoods',
+          component: require('./components/neighborhoods.vue')
         }
       }
     }
