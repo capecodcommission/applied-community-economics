@@ -68,6 +68,14 @@ export default function (router) {
         '/neighborhoods': {
           name: 'neighborhoods',
           component: require('./components/neighborhoods.vue')
+        },
+        '/housing': {
+          name: 'housing',
+          component: require('./components/housing.vue')
+        },
+        '/walkability': {
+          name: 'walkability',
+          component: require('./components/walkability.vue')
         }
       }
     }

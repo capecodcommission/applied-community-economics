@@ -1,7 +1,7 @@
 <template>
 
   <div style = 'padding: 0 !important; background: #28536c;' class = "panel-body">
-    <div style = 'padding: 0 !important; margin-right: 0px; margin-top: .5%' class = 'row text-center'>
+    <div style = 'padding: 0 !important; margin-right: 0px; margin-top: .2%' class = 'row text-center'>
 
       <div style = 'padding: 0 !important' class = 'col-md-2'>
         <img style = 'width: 100%' class="img-fluid" src="https://i.imgur.com/2rnoGzZ.png">
@@ -46,8 +46,8 @@
           <button class = 'btn btn-block btn-lg headerBtn'>Neighborhoods <i class="fa fa-angle-down" ></i></button>
           <div class="dropdown-content">
             <a style = 'border-bottom: 1px solid black' href="#" @click = "goTo('neighborhoods')">Neighborhoods <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
-            <a style = 'border-bottom: 1px solid black' href="#">Housing <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
-            <a style = 'border-bottom: 1px solid black' href="#">Walkability <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' href="#" @click = "goTo('housing')">Housing <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' href="#" @click = "goTo('walkability')">Walkability <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
           </div>
         </div>
         <div class = 'dropdown'>
