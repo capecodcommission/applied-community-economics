@@ -76,6 +76,22 @@ export default function (router) {
         '/walkability': {
           name: 'walkability',
           component: require('./components/walkability.vue')
+        },
+        '/electric': {
+          name: 'electric',
+          component: require('./components/electric.vue')
+        },
+        '/natgas': {
+          name: 'natgas',
+          component: require('./components/natgas.vue')
+        },
+        '/brdtlcm': {
+          name: 'brdtlcm',
+          component: require('./components/brdtlcm.vue')
+        },
+        '/other': {
+          name: 'other',
+          component: require('./components/other.vue')
         }
       }
     }

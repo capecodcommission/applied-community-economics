@@ -53,10 +53,10 @@
         <div class = 'dropdown'>
           <button class = 'btn btn-block btn-lg headerBtn'>Utilities <i class="fa fa-angle-down" ></i></button>
           <div class="dropdown-content">
-            <a style = 'border-bottom: 1px solid black' href="#">Electric <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
-            <a style = 'border-bottom: 1px solid black' href="#">Natural Gas <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
-            <a style = 'border-bottom: 1px solid black' href="#">Broadband/Telecom <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
-            <a style = 'border-bottom: 1px solid black' href="#">Other <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' href="#" @click = "goTo('electric')">Electric <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' href="#" @click = "goTo('natgas')">Natural Gas <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' href="#" @click = "goTo('brdtlcm')">Broadband/Telecom <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' href="#" @click = "goTo('other')">Other <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
           </div>
         </div>
         <div class = 'dropdown'>
