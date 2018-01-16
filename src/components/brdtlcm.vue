@@ -83,7 +83,7 @@ export default {
         {
           label: 'Area2',
           data: [10,15,22.5,34,51],
-          backgroundColor: ['red']
+          backgroundColor: ['teal']
         },
         {
           label: 'Area3',
@@ -93,7 +93,7 @@ export default {
         {
           label: 'Area4',
           data: [40,60,90,135,205],
-          backgroundColor: ['yellow']
+          backgroundColor: ['gray']
         }],
 
         // These labels appear in the legend and in the tooltips when hovering different arcs

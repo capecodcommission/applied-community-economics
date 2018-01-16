@@ -78,22 +78,22 @@ export default {
         datasets: [{
           label: 'Area1',
           data: [5,7.5,11.2,16.7,26],
-          backgroundColor: ['green']
+          backgroundColor: ['yellow']
         },
         {
           label: 'Area2',
           data: [10,15,22.5,34,51],
-          backgroundColor: ['red']
+          backgroundColor: ['orange']
         },
         {
           label: 'Area3',
           data: [20,30,45,69,102],
-          backgroundColor: ['blue']
+          backgroundColor: ['red']
         },
         {
           label: 'Area4',
           data: [40,60,90,135,205],
-          backgroundColor: ['yellow']
+          backgroundColor: ['pink']
         }],
 
         // These labels appear in the legend and in the tooltips when hovering different arcs
