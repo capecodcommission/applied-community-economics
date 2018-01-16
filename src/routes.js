@@ -92,6 +92,18 @@ export default function (router) {
         '/other': {
           name: 'other',
           component: require('./components/other.vue')
+        },
+        '/hrdsltns': {
+          name: 'hrdsltns',
+          component: require('./components/hrdsltns.vue')
+        },
+        '/sftsltns': {
+          name: 'sftsltns',
+          component: require('./components/sftsltns.vue')
+        },
+        '/dsnchrctr': {
+          name: 'dsnchrctr',
+          component: require('./components/dsnchrctr.vue')
         }
       }
     }

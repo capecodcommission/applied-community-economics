@@ -62,9 +62,9 @@
         <div class = 'dropdown'>
           <button class = 'btn btn-block btn-lg headerBtn'>Coastal Resiliency <i class="fa fa-angle-down" ></i></button>
           <div class="dropdown-content">
-            <a style = 'border-bottom: 1px solid black' href="#">Hard Solutions <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
-            <a style = 'border-bottom: 1px solid black' href="#">Soft Solutions <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
-            <a style = 'border-bottom: 1px solid black' href="#">Design/Character <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' href="#" @click = "goTo('hrdsltns')">Hard Solutions <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' href="#" @click = "goTo('sftsltns')">Soft Solutions <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' href="#" @click = "goTo('dsnchrctr')">Design/Character <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
           </div>
         </div>
       </div><br><br><br>
