@@ -73,36 +73,29 @@ export default {
     var ctx2 = $("#pieChart2");
 
     var myChart = new Chart(ctx2, {
-      type: 'radar',
+      type: 'bar',
       data: {
-        datasets: [{
-          label: 'Area1',
-          data: [5,7.5,11.2,16.7,26],
-          backgroundColor: ['green']
-        },
-        {
-          label: 'Area2',
-          data: [10,15,22.5,34,51],
-          backgroundColor: ['red']
-        },
-        {
-          label: 'Area3',
-          data: [20,30,45,69,102],
-          backgroundColor: ['blue']
-        },
-        {
-          label: 'Area4',
-          data: [40,60,90,135,205],
-          backgroundColor: ['yellow']
-        }],
+        datasets: [
+          {
+            label: 'Bar',
+            data: [10,20,30,40,50],
+            backgroundColor: 'grey'
+          },
+          {
+            label: 'Line',
+            data: [5,10,20,40,60],
+            type: 'line',
+            backgroundColor: 'purple'
+          }
+        ],
 
         // These labels appear in the legend and in the tooltips when hovering different arcs
         labels: [
-          'Score1',
-          'Score2',
-          'Score3',
-          'Score4',
-          'Score5'
+          'January',
+          'February',
+          'March',
+          'April',
+          'May'
         ]
       }
     })
