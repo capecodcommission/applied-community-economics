@@ -11,6 +11,11 @@ export const createMap = function (loader) {
     "esri/layers/FeatureLayer",
     "esri/renderers/UniqueValueRenderer",
     "esri/widgets/Legend",
+    "esri/geometry/geometryEngine",
+    "esri/views/2d/draw/Draw",
+    "esri/geometry/Polygon",
+    "esri/Graphic",
+    "esri/tasks/support/BufferParameters",
     "dojo/domReady!"
     ],
     (
@@ -21,26 +26,32 @@ export const createMap = function (loader) {
       TileLayer,
       FeatureLayer,
       UniqueValueRenderer,
-      Legend
+      Legend,
+      geometryEngine,
+      Draw,
+      Polygon,
+      Graphic,
+      BufferParameters
     ) => {
       
-      var map = new Map({});
+      var map = new Map({basemap: 'dark-gray'});
 
       var custom = new TileLayer({
         url: "http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer"
       })
 
-      map.add(custom)
+      // map.add(custom)
 
-      var view = new SceneView({
+      var view = new MapView({
         container: "viewDiv",  // Reference to the DOM node that will contain the view
         map: map,
-        zoom: 20,
-        camera:{ 
-          position: [-70.303634, 41.701660],
-          heading: 0,
-          tilt: 60
-         }              // References the map object created in step 3
+        zoom: 12,
+        center: [-70.303634, 41.701660]
+        // camera:{ 
+        //   position: [-70.303634, 41.701660],
+        //   heading: 0,
+        //   tilt: 60
+        //  }              // References the map object created in step 3
       });
 
       var renderer = {
@@ -87,7 +98,19 @@ export const createMap = function (loader) {
         popupTemplate: {
           title: '{ClosestRoad_name}',
           content: '{*}'
-        }
+        },
+        visible: false
+      })
+
+      var blockGroups = new FeatureLayer({
+        url: "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Tracts_Blocks/MapServer/5",
+        definitionExpression: "STATE = 25 and COUNTY = 001",
+        outFields: ['*'],
+        popupTemplate: {
+          title: '{NAME}',
+          content: '{*}'
+        },
+        visible: false
       })
 
       var legend = new Legend({
@@ -101,8 +124,94 @@ export const createMap = function (loader) {
       view.ui.add(legend, "bottom-left");
 
       map.add(embayments)
+      map.add(blockGroups) 
 
+      function createGraphic(polygon) {
+        var graphic = new Graphic({
+          geometry: polygon,
+          symbol: {
+            type: "simple-fill", // autocasts as SimpleFillSymbol
+            color: [178, 102, 234, 0.8],
+            style: "solid",
+            outline: { // autocasts as SimpleLineSymbol
+              color: [255, 255, 255],
+              width: 2
+            }
+          }
+        });
+        return graphic;
+      }
 
+      function createPolygon(vertices) {
+        return new Polygon({
+          rings: vertices,
+          spatialReference: view.spatialReference
+        });
+      }
+
+      function drawPolygon(evt) {
+        var vertices = evt.vertices;
+
+        //remove existing graphic
+        view.graphics.removeAll();
+
+        // create a new polygon
+        var polygon = createPolygon(vertices);
+
+        // create a new graphic representing the polygon, add it to the view
+        var graphic = createGraphic(polygon);
+        view.graphics.add(graphic);
+      }
+
+      function queryBlockGroup(evt) {
+
+        var vertices = evt.vertices
+        var polygon = createPolygon(vertices);
+
+        var buff = geometryEngine.buffer(polygon,[1],'miles',true)
+
+        var query = blockGroups.createQuery()
+        query.geometry = buff
+        query.spatialRelationship = 'intersects'
+
+        blockGroups.queryFeatures(query).then(function(response) {
+
+          var blkGrps = response.features
+
+          console.log(blkGrps)
+        })
+      }
+
+      function enableCreatePolygon(draw, view) {
+        // create() will return a reference to an instance of PolygonDrawAction
+        var action = draw.create("polygon");
+
+        // focus the view to activate keyboard shortcuts for drawing polygons
+        view.focus();
+
+        // listen to vertex-add event on the action
+        action.on("vertex-add", drawPolygon);
+
+        // listen to cursor-update event on the action
+        action.on("cursor-update", drawPolygon);
+
+        // listen to vertex-remove event on the action
+        action.on("vertex-remove", drawPolygon);
+
+        // *******************************************
+        // listen to draw-complete event on the action
+        // *******************************************
+        action.on("draw-complete", queryBlockGroup);
+      }
+      
+      $('#Draw').on('click', function() {
+
+        var draw = new Draw({
+          view: view
+        });
+
+        enableCreatePolygon(draw, view);
+      })
 
       $('#neighborhoodSelect').on('change', function() {
 
@@ -112,16 +221,15 @@ export const createMap = function (loader) {
 
         view.whenLayerView(embayments).then((layerview) => {
 
+          embayments.visible = true
+
           layerview.watch('updating', (val) => {
 
             if (!val) {
 
               layerview.queryExtent().then((response) => {
 
-                view.goTo(response.extent.expand(1.3), {
-
-                  tilt: view.camera.tilt
-                })
+                view.goTo(response.extent.expand(1.3))
               })
             }
           })

@@ -15,8 +15,8 @@
     </div>
 
     <div style = 'padding-left: 0;' class = 'col-md-10 text-center'>
-      <img v-show = "townName === 'APPLIED COMMUNITY ECONOMICS' " width = '100%' src = 'https://i.imgur.com/K0h8OBD.jpg'>
-      <div v-show = "townName != 'APPLIED COMMUNITY ECONOMICS' " id="viewDiv" class="balt-theme"></div>
+      <!-- <img v-show = "townName === 'APPLIED COMMUNITY ECONOMICS' " width = '100%' src = 'https://i.imgur.com/K0h8OBD.jpg'> -->
+      <div id="viewDiv" class="balt-theme"></div>
     </div>
 
   </div>

@@ -1,7 +1,7 @@
 <template>
 
   <!-- <img style = 'width: 100%' class="img-fluid" src="https://i.imgur.com/2rnoGzZ.png"><br><br> -->
-
+  <button id = 'Draw' class = 'btn btn-primary'>Draw Poly</button>
   <p v-show = "townThing == 'APPLIED COMMUNITY ECONOMICS'" style = 'margin-left: 3%' align = 'left'>This tool will score the form of an area based on Building Form, Business Activity, and Community Activity. It allows for the comparison of scores to other simlar geographics in the Report Card. In development is the ability to dig down into key metrics that will improve the score of an area.</p>
 
   <div v-show = "townThing != 'APPLIED COMMUNITY ECONOMICS'">
