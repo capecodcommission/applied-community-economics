@@ -16,6 +16,7 @@ export const createMap = function (loader) {
     "esri/geometry/Polygon",
     "esri/Graphic",
     "esri/tasks/support/BufferParameters",
+    "esri/layers/GraphicsLayer",
     "dojo/domReady!"
     ],
     (
@@ -31,28 +32,10 @@ export const createMap = function (loader) {
       Draw,
       Polygon,
       Graphic,
-      BufferParameters
+      BufferParameters,
+      GraphicsLayer
     ) => {
-      
-      var map = new Map({basemap: 'dark-gray'});
-
-      var custom = new TileLayer({
-        url: "http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer"
-      })
-
-      // map.add(custom)
-
-      var view = new MapView({
-        container: "viewDiv",  // Reference to the DOM node that will contain the view
-        map: map,
-        zoom: 12,
-        center: [-70.303634, 41.701660]
-        // camera:{ 
-        //   position: [-70.303634, 41.701660],
-        //   heading: 0,
-        //   tilt: 60
-        //  }              // References the map object created in step 3
-      });
+    
 
       var renderer = {
         type: "unique-value",  // autocasts as new UniqueValueRenderer()
@@ -113,6 +96,28 @@ export const createMap = function (loader) {
         visible: false
       })
 
+      var resultLayer = new GraphicsLayer()
+
+      var map = new Map({basemap: 'dark-gray', layers: [embayments, blockGroups, resultLayer]});
+
+      var custom = new TileLayer({
+        url: "http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer"
+      })
+
+      // map.add(custom)
+
+      var view = new MapView({
+        container: "viewDiv",  // Reference to the DOM node that will contain the view
+        map: map,
+        zoom: 12,
+        center: [-70.303634, 41.701660]
+        // camera:{ 
+        //   position: [-70.303634, 41.701660],
+        //   heading: 0,
+        //   tilt: 60
+        //  }              // References the map object created in step 3
+      });
+
       var legend = new Legend({
         view: view,
         layerInfos: [{
@@ -122,9 +127,6 @@ export const createMap = function (loader) {
       });
 
       view.ui.add(legend, "bottom-left");
-
-      map.add(embayments)
-      map.add(blockGroups) 
 
       function createGraphic(polygon) {
         var graphic = new Graphic({
@@ -165,6 +167,8 @@ export const createMap = function (loader) {
 
       function queryBlockGroup(evt) {
 
+        resultLayer.removeAll();
+
         var vertices = evt.vertices
         var polygon = createPolygon(vertices);
 
@@ -178,7 +182,22 @@ export const createMap = function (loader) {
 
           var blkGrps = response.features
 
-          console.log(blkGrps)
+          var features = response.features.map(function(graphic) {
+
+            graphic.symbol = {
+
+              type: 'simple-fill',
+              outline: { 
+                color: [255, 255, 255],
+                width: 2
+              }
+            }
+
+            return graphic
+          })
+
+          console.log(features)
+          resultLayer.addMany(features)
         })
       }
 
