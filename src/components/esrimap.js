@@ -180,8 +180,6 @@ export const createMap = function (loader) {
 
         blockGroups.queryFeatures(query).then(function(response) {
 
-          var blkGrps = response.features
-
           var features = response.features.map(function(graphic) {
 
             graphic.symbol = {
@@ -269,10 +267,7 @@ export const createMap = function (loader) {
 
               layerview.queryExtent().then((response) => {
 
-                view.goTo(response.extent.expand(1.3), {
-
-                  tilt: view.camera.tilt
-                })
+                view.goTo(response.extent.expand(1.3))
               })
             }
           })
@@ -293,10 +288,7 @@ export const createMap = function (loader) {
 
               layerview.queryExtent().then((response) => {
 
-                view.goTo(response.extent.expand(1.3), {
-
-                  tilt: view.camera.tilt
-                })
+                view.goTo(response.extent.expand(1.3))
               })
             }
           })
