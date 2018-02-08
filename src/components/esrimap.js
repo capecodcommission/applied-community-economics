@@ -180,6 +180,8 @@ export const createMap = function (loader,attributes) {
         var totalLand = 0
         var totalWater = 0
 
+        var features = ''
+
         blockGroups.queryFeatures(query).then(function(response) {
 
           for (var i = response.features.length - 1; i >= 0; i--) {
@@ -187,7 +189,7 @@ export const createMap = function (loader,attributes) {
             totalWater += response.features[i].attributes.AREAWATER
           }
 
-          var features = response.features.map(function(graphic) {
+          features = response.features.map(function(graphic) {
 
             graphic.symbol = {
 
@@ -246,6 +248,7 @@ export const createMap = function (loader,attributes) {
       $('#neighborhoodSelect').on('change', function() {
 
         resultLayer.removeAll();
+        view.graphics.removeAll();
 
         var x = $(this).val().toString()
 
@@ -271,6 +274,7 @@ export const createMap = function (loader,attributes) {
       $('#acSelect').on('change', function() {
 
         resultLayer.removeAll();
+        view.graphics.removeAll();
 
         var x = $(this).val().toString()
 
@@ -296,6 +300,7 @@ export const createMap = function (loader,attributes) {
       $('#townSelect').on('change', function() {
 
         resultLayer.removeAll();
+        view.graphics.removeAll();
 
         var x = $(this).val().toString()
 
