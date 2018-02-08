@@ -53,3 +53,8 @@ export function gettownselected (state) {
   
   return state.townselected
 }
+
+export function getAttrib (state) {
+  
+  return state.attributes
+}

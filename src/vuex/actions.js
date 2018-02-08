@@ -89,3 +89,8 @@ export const updateTown = function({dispatch, state}, toggle) {
 
   dispatch('TOGGLE_TOWNSELECTED', toggle) 
 }
+
+export const updateAttrib = function({dispatch, state}, land, water) {
+
+  dispatch('TOGGLE_ATTRIB', land, water) 
+}

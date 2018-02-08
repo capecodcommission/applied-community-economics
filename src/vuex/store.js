@@ -5,6 +5,11 @@ Vue.use(Vuex)
 
 // Create state object that all Vues share, JSON from API is loaded here
 const state = {
+  attributes: {
+    Land: false,
+    Water: false,
+    Toggle: false
+  },
   townselected: false,
   nbhselected: false,
   acselected: false,
@@ -122,6 +127,12 @@ const state = {
 
 // Create mutations; functions to change data in the state
 const mutations = {
+
+  TOGGLE_ATTRIB (state, land, water) {
+
+    state.attributes.Land = land
+    state.attributes.Water = water
+  },
 
   TOGGLE_TOWNSELECTED (state, toggle) {
 

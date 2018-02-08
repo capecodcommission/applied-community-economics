@@ -1,5 +1,6 @@
 import { store } from '../vuex/store'
-export const createMap = function (loader) {
+import { updateAttrib } from '../vuex/actions'
+export const createMap = function (loader,attributes) {
   const esriLoader = loader
   esriLoader.dojoRequire(
     [
@@ -100,9 +101,9 @@ export const createMap = function (loader) {
 
       var map = new Map({basemap: 'dark-gray', layers: [embayments, blockGroups, resultLayer]});
 
-      var custom = new TileLayer({
-        url: "http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer"
-      })
+      // var custom = new TileLayer({
+      //   url: "http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer"
+      // })
 
       // map.add(custom)
 
@@ -115,7 +116,7 @@ export const createMap = function (loader) {
         //   position: [-70.303634, 41.701660],
         //   heading: 0,
         //   tilt: 60
-        //  }              // References the map object created in step 3
+        //  }            
       });
 
       var legend = new Legend({
@@ -167,8 +168,6 @@ export const createMap = function (loader) {
 
       function queryBlockGroup(evt) {
 
-        resultLayer.removeAll();
-
         var vertices = evt.vertices
         var polygon = createPolygon(vertices);
 
@@ -178,7 +177,15 @@ export const createMap = function (loader) {
         query.geometry = buff
         query.spatialRelationship = 'intersects'
 
+        var totalLand = 0
+        var totalWater = 0
+
         blockGroups.queryFeatures(query).then(function(response) {
+
+          for (var i = response.features.length - 1; i >= 0; i--) {
+            totalLand += response.features[i].attributes.AREALAND
+            totalWater += response.features[i].attributes.AREAWATER
+          }
 
           var features = response.features.map(function(graphic) {
 
@@ -194,14 +201,20 @@ export const createMap = function (loader) {
             return graphic
           })
 
-          console.log(features)
           resultLayer.addMany(features)
+
+          attributes.Land = (totalLand / 43560).toFixed(2)
+          attributes.Water = (totalWater / 43560).toFixed(2)
+          attributes.Toggle = true
         })
       }
 
       function enableCreatePolygon(draw, view) {
         // create() will return a reference to an instance of PolygonDrawAction
         var action = draw.create("polygon");
+
+        attributes.Toggle = false
+        resultLayer.removeAll();
 
         // focus the view to activate keyboard shortcuts for drawing polygons
         view.focus();
@@ -232,6 +245,8 @@ export const createMap = function (loader) {
 
       $('#neighborhoodSelect').on('change', function() {
 
+        resultLayer.removeAll();
+
         var x = $(this).val().toString()
 
         embayments.definitionExpression = "Neighborhood = " + "'" + x + "'"
@@ -246,7 +261,7 @@ export const createMap = function (loader) {
 
               layerview.queryExtent().then((response) => {
 
-                view.goTo(response.extent.expand(1.3))
+                view.goTo(response.extent.expand(1.5))
               })
             }
           })
@@ -255,11 +270,15 @@ export const createMap = function (loader) {
 
       $('#acSelect').on('change', function() {
 
+        resultLayer.removeAll();
+
         var x = $(this).val().toString()
 
         embayments.definitionExpression = "AC_FINAL = " + "'" + x + "'"
 
         view.whenLayerView(embayments).then((layerview) => {
+
+          embayments.visible = true
 
           layerview.watch('updating', (val) => {
 
@@ -267,7 +286,7 @@ export const createMap = function (loader) {
 
               layerview.queryExtent().then((response) => {
 
-                view.goTo(response.extent.expand(1.3))
+                view.goTo(response.extent.expand(1.5))
               })
             }
           })
@@ -276,11 +295,15 @@ export const createMap = function (loader) {
 
       $('#townSelect').on('change', function() {
 
+        resultLayer.removeAll();
+
         var x = $(this).val().toString()
 
         embayments.definitionExpression = "Town = " + "'" + x + "'"
 
         view.whenLayerView(embayments).then((layerview) => {
+
+          embayments.visible = true
 
           layerview.watch('updating', (val) => {
 

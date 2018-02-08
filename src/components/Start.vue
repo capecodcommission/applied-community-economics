@@ -15,8 +15,15 @@
     </div>
 
     <div style = 'padding-left: 0;' class = 'col-md-10 text-center'>
-      <!-- <img v-show = "townName === 'APPLIED COMMUNITY ECONOMICS' " width = '100%' src = 'https://i.imgur.com/K0h8OBD.jpg'> -->
       <div id="viewDiv" class="balt-theme"></div>
+
+      <div transition = 'fade' v-show = 'attributes.Toggle' class = 'col-md-2 Results'>
+        <div class = 'row text-center'>
+          <p>Land (Acres): {{attributes.Land}}</p>
+          <p>Water (Acres): {{attributes.Water}}</p>
+        </div>
+      </div>
+
     </div>
 
   </div>
@@ -32,7 +39,9 @@
 </template>
 
 <script>
-import { getComparison, getTownName } from '../vuex/getters'
+import { getComparison, getTownName, getAttrib } from '../vuex/getters'
+
+import {updateAttrib} from '../vuex/actions'
 import treatmentDetail from './TreatmentDetail'
 import Header from './Header'
 import sidething from './sideBar'
@@ -59,18 +68,20 @@ export default {
 
     actions: {
 
+      updateAttrib
     },
 
     getters: {
 
       showComparison: getComparison,
-      townName: getTownName
+      townName: getTownName,
+      attributes: getAttrib
     }
   },
 
   ready() {
 
-    esriLoader.bootstrap((err) => { createMap(esriLoader)}, { url: 'https://js.arcgis.com/4.5/'})
+    esriLoader.bootstrap((err) => { createMap(esriLoader, this.attributes)}, { url: 'https://js.arcgis.com/4.5/'})
   },
 
   methods: {
@@ -205,6 +216,18 @@ p {
   border: 5px solid grey;
   float: left;
   margin-left: 1%
+}
+
+.Results {
+  background: #28536c;
+  border-radius: 25px;
+  border: 5px solid grey;
+  float: right;
+  margin-right: 1%;
+  color: white;
+  text-align: center;
+  font-family: "Open Sans";
+  
 }
 
 .headthing {
