@@ -1,8 +1,6 @@
-import { store } from '../vuex/store'
-import { updateAttrib } from '../vuex/actions'
-export const createMap = function (loader,attributes) {
-  const esriLoader = loader
-  esriLoader.dojoRequire(
+export const createMap = function (loader, attributes, blkGrps) {
+
+  loader.dojoRequire(
     [
     "esri/Map",
     "esri/views/MapView",
@@ -18,6 +16,7 @@ export const createMap = function (loader,attributes) {
     "esri/Graphic",
     "esri/tasks/support/BufferParameters",
     "esri/layers/GraphicsLayer",
+    "esri/widgets/Home",
     "dojo/domReady!"
     ],
     (
@@ -34,7 +33,8 @@ export const createMap = function (loader,attributes) {
       Polygon,
       Graphic,
       BufferParameters,
-      GraphicsLayer
+      GraphicsLayer,
+      Home
     ) => {
     
 
@@ -76,7 +76,6 @@ export const createMap = function (loader,attributes) {
 
       var embayments = new FeatureLayer({
         url: "http://gis-services.capecodcommission.org/arcgis/rest/services/ActivityCenters/CommunityCharacteristics/MapServer/0",
-        // definitionExpression: "Neighborhood = " + "'" + x + "'",
         outFields: ['*'],
         renderer: renderer,
         popupTemplate: {
@@ -112,11 +111,6 @@ export const createMap = function (loader,attributes) {
         map: map,
         zoom: 12,
         center: [-70.303634, 41.701660]
-        // camera:{ 
-        //   position: [-70.303634, 41.701660],
-        //   heading: 0,
-        //   tilt: 60
-        //  }            
       });
 
       var legend = new Legend({
@@ -129,14 +123,20 @@ export const createMap = function (loader,attributes) {
 
       view.ui.add(legend, "bottom-left");
 
+      var homeBtn = new Home({
+        view: view
+      });
+
+      view.ui.add(homeBtn, "top-left");
+
       function createGraphic(polygon) {
         var graphic = new Graphic({
           geometry: polygon,
           symbol: {
-            type: "simple-fill", // autocasts as SimpleFillSymbol
+            type: "simple-fill", 
             color: [178, 102, 234, 0.8],
             style: "solid",
-            outline: { // autocasts as SimpleLineSymbol
+            outline: { 
               color: [255, 255, 255],
               width: 2
             }
@@ -146,13 +146,16 @@ export const createMap = function (loader,attributes) {
       }
 
       function createPolygon(vertices) {
+
         return new Polygon({
+
           rings: vertices,
           spatialReference: view.spatialReference
         });
       }
 
       function drawPolygon(evt) {
+
         var vertices = evt.vertices;
 
         //remove existing graphic
@@ -179,17 +182,26 @@ export const createMap = function (loader,attributes) {
 
         var totalLand = 0
         var totalWater = 0
+        var totalPop = 0
 
         var features = ''
 
         blockGroups.queryFeatures(query).then(function(response) {
 
-          for (var i = response.features.length - 1; i >= 0; i--) {
-            totalLand += response.features[i].attributes.AREALAND
-            totalWater += response.features[i].attributes.AREAWATER
-          }
-
           features = response.features.map(function(graphic) {
+
+            totalLand += graphic.attributes.AREALAND
+            totalWater += graphic.attributes.AREAWATER
+
+            blkGrps.map(function(i) {
+
+              if (i.indexOf(graphic.attributes.TRACT) >= 0 && i.indexOf(graphic.attributes.BLKGRP)  >= 0) {
+
+                graphic.attributes.population = parseInt(i[1])
+              }
+            })
+
+            totalPop += graphic.attributes.population
 
             graphic.symbol = {
 
@@ -207,6 +219,7 @@ export const createMap = function (loader,attributes) {
 
           attributes.Land = (totalLand / 43560).toFixed(2)
           attributes.Water = (totalWater / 43560).toFixed(2)
+          attributes.Population = totalPop.toFixed(0)
           attributes.Toggle = true
         })
       }
@@ -235,6 +248,63 @@ export const createMap = function (loader,attributes) {
         // *******************************************
         action.on("draw-complete", queryBlockGroup);
       }
+
+      function queryEmblks() {
+
+        embayments.visible = true
+
+        embayments.queryExtent().then((response) => {
+
+          var buff = geometryEngine.buffer(response.extent,[1],'miles',true)
+
+          var query = blockGroups.createQuery()
+          query.geometry = buff
+          query.spatialRelationship = 'intersects'
+
+          var features = ''
+
+          var totalLand = 0
+          var totalWater = 0
+          var totalPop = 0
+
+          blockGroups.queryFeatures(query).then(function(response1) {
+
+            features = response1.features.map(function(graphic) {
+
+                totalLand += graphic.attributes.AREALAND
+                totalWater += graphic.attributes.AREAWATER
+
+                blkGrps.map(function(i) {
+
+                  if (i.indexOf(graphic.attributes.TRACT) >= 0 && i.indexOf(graphic.attributes.BLKGRP)  >= 0) {
+
+                    graphic.attributes.population = parseInt(i[1])
+                  }
+                })
+
+                totalPop += graphic.attributes.population
+
+                graphic.symbol = {
+
+                  type: 'simple-fill',
+                  outline: { 
+                    color: [255, 255, 255],
+                    width: 2
+                  }
+                }
+
+                return graphic 
+            })
+
+            resultLayer.addMany(features)
+
+            attributes.Land = (totalLand / 43560).toFixed(2)
+            attributes.Water = (totalWater / 43560).toFixed(2)
+            attributes.Population = totalPop.toFixed(0)
+            attributes.Toggle = true
+          })
+        })
+      }
       
       $('#Draw').on('click', function() {
 
@@ -254,21 +324,7 @@ export const createMap = function (loader,attributes) {
 
         embayments.definitionExpression = "Neighborhood = " + "'" + x + "'"
 
-        view.whenLayerView(embayments).then((layerview) => {
-
-          embayments.visible = true
-
-          layerview.watch('updating', (val) => {
-
-            if (!val) {
-
-              layerview.queryExtent().then((response) => {
-
-                view.goTo(response.extent.expand(1.5))
-              })
-            }
-          })
-        })
+        queryEmblks()
       })
 
       $('#acSelect').on('change', function() {
@@ -280,21 +336,7 @@ export const createMap = function (loader,attributes) {
 
         embayments.definitionExpression = "AC_FINAL = " + "'" + x + "'"
 
-        view.whenLayerView(embayments).then((layerview) => {
-
-          embayments.visible = true
-
-          layerview.watch('updating', (val) => {
-
-            if (!val) {
-
-              layerview.queryExtent().then((response) => {
-
-                view.goTo(response.extent.expand(1.5))
-              })
-            }
-          })
-        })
+        queryEmblks()
       })
 
       $('#townSelect').on('change', function() {
@@ -306,21 +348,7 @@ export const createMap = function (loader,attributes) {
 
         embayments.definitionExpression = "Town = " + "'" + x + "'"
 
-        view.whenLayerView(embayments).then((layerview) => {
-
-          embayments.visible = true
-
-          layerview.watch('updating', (val) => {
-
-            if (!val) {
-
-              layerview.queryExtent().then((response) => {
-
-                view.goTo(response.extent.expand(1.3))
-              })
-            }
-          })
-        })
+        queryEmblks()
       })
     }
   )

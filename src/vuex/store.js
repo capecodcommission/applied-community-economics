@@ -5,9 +5,11 @@ Vue.use(Vuex)
 
 // Create state object that all Vues share, JSON from API is loaded here
 const state = {
+  blockGroups: [],
   attributes: {
     Land: false,
     Water: false,
+    Population: false,
     Toggle: false
   },
   townselected: false,
@@ -127,6 +129,11 @@ const state = {
 
 // Create mutations; functions to change data in the state
 const mutations = {
+
+  LOAD_BLKS (state, blks) {
+
+    state.blockGroups = blks
+  },
 
   TOGGLE_ATTRIB (state, land, water) {
 

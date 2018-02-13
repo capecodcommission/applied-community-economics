@@ -21,6 +21,7 @@
         <div class = 'row text-center'>
           <p>Land (Acres): {{attributes.Land}}</p>
           <p>Water (Acres): {{attributes.Water}}</p>
+          <p>Population: {{attributes.Population}}</p>
         </div>
       </div>
 
@@ -39,9 +40,9 @@
 </template>
 
 <script>
-import { getComparison, getTownName, getAttrib } from '../vuex/getters'
+import { getComparison, getTownName, getAttrib, getBlks } from '../vuex/getters'
 
-import {updateAttrib} from '../vuex/actions'
+import {updateAttrib, loadBlks} from '../vuex/actions'
 import treatmentDetail from './TreatmentDetail'
 import Header from './Header'
 import sidething from './sideBar'
@@ -68,20 +69,24 @@ export default {
 
     actions: {
 
-      updateAttrib
+      updateAttrib,
+      loadBlks
     },
 
     getters: {
 
       showComparison: getComparison,
       townName: getTownName,
-      attributes: getAttrib
+      attributes: getAttrib,
+      blockGroups: getBlks
     }
   },
 
   ready() {
 
-    esriLoader.bootstrap((err) => { createMap(esriLoader, this.attributes)}, { url: 'https://js.arcgis.com/4.5/'})
+    this.loadBlks()
+
+    esriLoader.bootstrap((err) => { createMap(esriLoader, this.attributes, this.blockGroups)}, { url: 'https://js.arcgis.com/4.5/'})
   },
 
   methods: {
@@ -90,6 +95,10 @@ export default {
 
   watch: {
 
+    'blockGroups': function(x) {
+
+      // console.log(x)
+    }
   }
 }
 

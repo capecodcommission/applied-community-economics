@@ -58,3 +58,8 @@ export function getAttrib (state) {
   
   return state.attributes
 }
+
+export function getBlks (state) {
+
+  return state.blockGroups
+}

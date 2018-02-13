@@ -94,3 +94,12 @@ export const updateAttrib = function({dispatch, state}, land, water) {
 
   dispatch('TOGGLE_ATTRIB', land, water) 
 }
+
+export const loadBlks = function({dispatch, state}) {
+
+    $.getJSON("https://api.census.gov/data/2016/acs/acs5?get=NAME,B00001_001E&for=block%20group:*&in=state:25%20county:001&key=8c7a3c5bf959c4358f3e0eee9b07cd95d7856f5c", function (result) {
+
+      dispatch("LOAD_BLKS", result)
+    })
+
+  }
