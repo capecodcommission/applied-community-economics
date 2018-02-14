@@ -17,11 +17,11 @@
     <div style = 'padding-left: 0;' class = 'col-md-10 text-center'>
       <div id="viewDiv" class="balt-theme"></div>
 
-      <div transition = 'fade' v-show = 'attributes.Toggle' class = 'col-md-2 Results'>
+      <div transition = 'fade' v-show = 'totals.Toggle' class = 'col-md-2 Results'>
         <div class = 'row text-center'>
-          <p>Land (Acres): {{attributes.Land}}</p>
-          <p>Water (Acres): {{attributes.Water}}</p>
-          <p>Population: {{attributes.Population}}</p>
+          <p>Land (Acres): {{totals.Land}}</p>
+          <p>Water (Acres): {{totals.Water}}</p>
+          <p>Population: {{totals.Population}}</p>
         </div>
       </div>
 
@@ -77,7 +77,7 @@ export default {
 
       showComparison: getComparison,
       townName: getTownName,
-      attributes: getAttrib,
+      totals: getAttrib,
       blockGroups: getBlks
     }
   },
@@ -86,7 +86,7 @@ export default {
 
     this.loadBlks()
 
-    esriLoader.bootstrap((err) => { createMap(esriLoader, this.attributes, this.blockGroups)}, { url: 'https://js.arcgis.com/4.5/'})
+    esriLoader.bootstrap((err) => { createMap(esriLoader, this.totals, this.blockGroups)}, { url: 'https://js.arcgis.com/4.5/'})
   },
 
   methods: {
@@ -97,7 +97,6 @@ export default {
 
     'blockGroups': function(x) {
 
-      // console.log(x)
     }
   }
 }

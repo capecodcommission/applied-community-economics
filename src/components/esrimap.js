@@ -1,4 +1,4 @@
-export const createMap = function (loader, attributes, blkGrps) {
+export const createMap = function (loader, totals, censusData) {
 
   loader.dojoRequire(
     [
@@ -96,7 +96,7 @@ export const createMap = function (loader, attributes, blkGrps) {
         visible: false
       })
 
-      var resultLayer = new GraphicsLayer()
+      var resultLayer = new GraphicsLayer() // Initialize blank layer to fill with queried block group symbology
 
       var map = new Map({basemap: 'dark-gray', layers: [embayments, blockGroups, resultLayer]});
 
@@ -169,16 +169,19 @@ export const createMap = function (loader, attributes, blkGrps) {
         view.graphics.add(graphic);
       }
 
+      // Query block groups with 1mi-buffered user-defined polygon
+      // Total selected attributes for results pane
+      // Add queried block groups to results layer on map
       function queryBlockGroup(evt) {
 
         var vertices = evt.vertices
-        var polygon = createPolygon(vertices);
+        var polygon = createPolygon(vertices); // Create polygon 
 
-        var buff = geometryEngine.buffer(polygon,[1],'miles',true)
+        var buff = geometryEngine.buffer(polygon,[1],'miles',true) // Create 1mi buffer
 
         var query = blockGroups.createQuery()
         query.geometry = buff
-        query.spatialRelationship = 'intersects'
+        query.spatialRelationship = 'intersects' 
 
         var totalLand = 0
         var totalWater = 0
@@ -186,49 +189,53 @@ export const createMap = function (loader, attributes, blkGrps) {
 
         var features = ''
 
-        blockGroups.queryFeatures(query).then(function(response) {
+        blockGroups.queryFeatures(query).then(function(i) { // Query using 1mi buffer
 
-          features = response.features.map(function(graphic) {
+          // Obtain totals from queried blockgroup attributes
+          // Create/fill new attribute using census data
+          // Create/fill block group polygon symbology
+          features = i.features.map(function(j) { 
 
-            totalLand += graphic.attributes.AREALAND
-            totalWater += graphic.attributes.AREAWATER
+            totalLand += j.attributes.AREALAND
+            totalWater += j.attributes.AREAWATER
 
-            blkGrps.map(function(i) {
+            censusData.map(function(k) { 
 
-              if (i.indexOf(graphic.attributes.TRACT) >= 0 && i.indexOf(graphic.attributes.BLKGRP)  >= 0) {
+              if (k.indexOf(j.attributes.TRACT) >= 0 && k.indexOf(j.attributes.BLKGRP)  >= 0) { // key:value pairs
 
-                graphic.attributes.population = parseInt(i[1])
+                j.attributes.population = parseInt(k[1]) // Fill population attribute in feature with populations from census data
               }
             })
 
-            totalPop += graphic.attributes.population
+            totalPop += j.attributes.population
 
-            graphic.symbol = {
+              j.symbol = {
 
-              type: 'simple-fill',
-              outline: { 
-                color: [255, 255, 255],
-                width: 2
+                type: 'simple-fill',
+                outline: { 
+                  color: [255, 255, 255],
+                  width: 2
+                }
               }
-            }
 
-            return graphic
+              return j   
           })
 
           resultLayer.addMany(features)
 
-          attributes.Land = (totalLand / 43560).toFixed(2)
-          attributes.Water = (totalWater / 43560).toFixed(2)
-          attributes.Population = totalPop.toFixed(0)
-          attributes.Toggle = true
+          totals.Land = (totalLand / 43560).toFixed(2)
+          totals.Water = (totalWater / 43560).toFixed(2)
+          totals.Population = totalPop.toFixed(0)
+          totals.Toggle = true
         })
       }
+
 
       function enableCreatePolygon(draw, view) {
         // create() will return a reference to an instance of PolygonDrawAction
         var action = draw.create("polygon");
 
-        attributes.Toggle = false
+        totals.Toggle = false
         resultLayer.removeAll();
 
         // focus the view to activate keyboard shortcuts for drawing polygons
@@ -249,42 +256,49 @@ export const createMap = function (loader, attributes, blkGrps) {
         action.on("draw-complete", queryBlockGroup);
       }
 
+
+      // Turn on embayments feature layer, use extent w/ 1mi buffer to query for block groups
+      // Match group and tract codes to append population column from census API data
+      // Assign attributes data from state with totals from queried layers
+      // Display results
       function queryEmblks() {
 
-        embayments.visible = true
+        embayments.visible = true // Turn on layer
 
-        embayments.queryExtent().then((response) => {
+        embayments.queryExtent().then((h) => {
 
-          var buff = geometryEngine.buffer(response.extent,[1],'miles',true)
+          var buff = geometryEngine.buffer(h.extent,[1],'miles',true) // Create geometry buffer w/ 1mi radius from defined embayment layer extent
 
           var query = blockGroups.createQuery()
           query.geometry = buff
           query.spatialRelationship = 'intersects'
 
           var features = ''
-
           var totalLand = 0
           var totalWater = 0
           var totalPop = 0
 
-          blockGroups.queryFeatures(query).then(function(response1) {
+          blockGroups.queryFeatures(query).then((i) => { // Query for block groups intersecting the buffered extent
 
-            features = response1.features.map(function(graphic) {
+            // Obtain totals from queried blockgroup attributes
+            // Create/fill new attribute using census data
+            // Create/fill block group polygon symbology
+            features = i.features.map((j) => {  // Iterate through response features
 
-                totalLand += graphic.attributes.AREALAND
-                totalWater += graphic.attributes.AREAWATER
+                totalLand += j.attributes.AREALAND // Obtain totals
+                totalWater += j.attributes.AREAWATER
 
-                blkGrps.map(function(i) {
+                censusData.map((k) => { // Search ACS rows by block group
 
-                  if (i.indexOf(graphic.attributes.TRACT) >= 0 && i.indexOf(graphic.attributes.BLKGRP)  >= 0) {
+                  if (k.indexOf(j.attributes.TRACT) >= 0 && k.indexOf(j.attributes.BLKGRP)  >= 0) { // If key-match
 
-                    graphic.attributes.population = parseInt(i[1])
+                    j.attributes.population = parseInt(k[1]) // Append/fill population (index 1) from store, convert to integer
                   }
                 })
 
-                totalPop += graphic.attributes.population
+                totalPop += j.attributes.population
 
-                graphic.symbol = {
+                j.symbol = { // Set block group symbology
 
                   type: 'simple-fill',
                   outline: { 
@@ -293,19 +307,20 @@ export const createMap = function (loader, attributes, blkGrps) {
                   }
                 }
 
-                return graphic 
+                return j 
             })
 
-            resultLayer.addMany(features)
+            resultLayer.addMany(features) // Add queried features to results layer
 
-            attributes.Land = (totalLand / 43560).toFixed(2)
-            attributes.Water = (totalWater / 43560).toFixed(2)
-            attributes.Population = totalPop.toFixed(0)
-            attributes.Toggle = true
+            totals.Land = (totalLand / 43560).toFixed(2) // Update state values using queried totals
+            totals.Water = (totalWater / 43560).toFixed(2)
+            totals.Population = totalPop.toFixed(0)
+            totals.Toggle = true // Show results pane
           })
         })
       }
       
+      // Activate and attach polygon draw to view on button click
       $('#Draw').on('click', function() {
 
         var draw = new Draw({
