@@ -196,20 +196,21 @@ export const createMap = function (loader, totals, censusData) {
           // Create/fill block group polygon symbology
           features = i.features.map(function(j) { 
 
-            totalLand += j.attributes.AREALAND
-            totalWater += j.attributes.AREAWATER
+            if (j.attributes.TRACT != "990000") {
+              totalLand += j.attributes.AREALAND // Obtain totals
+              totalWater += j.attributes.AREAWATER
 
-            censusData.map(function(k) { 
+              censusData.map((k) => { // Search ACS rows by block group
 
-              if (k.indexOf(j.attributes.TRACT) >= 0 && k.indexOf(j.attributes.BLKGRP)  >= 0) { // key:value pairs
+                if (k.indexOf(j.attributes.TRACT) >= 0 && k.indexOf(j.attributes.BLKGRP)  >= 0) { // If key-match
 
-                j.attributes.population = parseInt(k[1]) // Fill population attribute in feature with populations from census data
-              }
-            })
+                  j.attributes.population = parseInt(k[1]) // Append/fill population (index 1) from store, convert to integer
+                }
+              })
 
-            totalPop += j.attributes.population
+              totalPop += j.attributes.population
 
-              j.symbol = {
+              j.symbol = { // Set block group symbology
 
                 type: 'simple-fill',
                 outline: { 
@@ -217,8 +218,19 @@ export const createMap = function (loader, totals, censusData) {
                   width: 2
                 }
               }
+            } else {
+              j.symbol = { // Set block group symbology
 
-              return j   
+                type: 'simple-fill',
+                outline: { 
+                  color: [0, 0, 0, 0],
+                  width: 0
+                },
+                style: 'none'
+              }
+            }
+
+            return j   
           })
 
           resultLayer.addMany(features)
@@ -285,6 +297,7 @@ export const createMap = function (loader, totals, censusData) {
             // Create/fill block group polygon symbology
             features = i.features.map((j) => {  // Iterate through response features
 
+              if (j.attributes.TRACT != "990000") {
                 totalLand += j.attributes.AREALAND // Obtain totals
                 totalWater += j.attributes.AREAWATER
 
@@ -306,8 +319,19 @@ export const createMap = function (loader, totals, censusData) {
                     width: 2
                   }
                 }
+              } else {
+                j.symbol = { // Set block group symbology
 
-                return j 
+                  type: 'simple-fill',
+                  outline: { 
+                    color: [0, 0, 0, 0],
+                    width: 0
+                  },
+                  style: 'none'
+                }
+              }       
+
+              return j 
             })
 
             resultLayer.addMany(features) // Add queried features to results layer
