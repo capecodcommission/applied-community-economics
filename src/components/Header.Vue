@@ -65,6 +65,7 @@
             <a style = 'border-bottom: 1px solid black' href="#" @click = "goTo('hrdsltns')">Hard Solutions <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
             <a style = 'border-bottom: 1px solid black' href="#" @click = "goTo('sftsltns')">Soft Solutions <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
             <a style = 'border-bottom: 1px solid black' href="#" @click = "goTo('dsnchrctr')">Design/Character <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' href="#" @click = "goTo('economy')">Economy <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
           </div>
         </div>
       </div><br><br><br>
@@ -76,7 +77,7 @@
 <script>
 
 import { loadTownName } from '../vuex/actions'
-import { getTownName } from '../vuex/getters'
+import { getTownName, getAttrib } from '../vuex/getters'
 import {  } from 'vue-strap'
 import { introJs } from '../../node_modules/intro.js/intro.js'
 
@@ -100,7 +101,8 @@ export default {
     },
     getters: {
 
-      townName: getTownName
+      townName: getTownName,
+      totals: getAttrib
     }
   },
 
@@ -117,6 +119,7 @@ export default {
 
       this.loadTownName(x)
       router.go({name: 'Start'})
+      this.totals.Toggle = false
     }
   },
 

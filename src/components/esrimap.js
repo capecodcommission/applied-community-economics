@@ -85,6 +85,16 @@ export const createMap = function (loader, totals, censusData) {
         visible: false
       })
 
+      var parcelLayer = new FeatureLayer({
+        url: "http://gis-services.capecodcommission.org/arcgis/rest/services/ActivityCenters/CommunityCharacteristics/MapServer/1",
+        outFields: ['*'],
+        visible: false,
+        popupTemplate: {
+          title: '{SITE_ADDRESS}',
+          content: '{*}'
+        }
+      })
+
       var blockGroups = new FeatureLayer({
         url: "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Tracts_Blocks/MapServer/5",
         definitionExpression: "STATE = 25 and COUNTY = 001",
@@ -97,8 +107,9 @@ export const createMap = function (loader, totals, censusData) {
       })
 
       var resultLayer = new GraphicsLayer() // Initialize blank layer to fill with queried block group symbology
+      var resultLayer1 = new GraphicsLayer()
 
-      var map = new Map({basemap: 'dark-gray', layers: [embayments, blockGroups, resultLayer]});
+      var map = new Map({basemap: 'dark-gray', layers: [embayments, blockGroups, parcelLayer, resultLayer, resultLayer1]});
 
       // var custom = new TileLayer({
       //   url: "http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer"
@@ -196,7 +207,8 @@ export const createMap = function (loader, totals, censusData) {
           // Create/fill block group polygon symbology
           features = i.features.map(function(j) { 
 
-            if (j.attributes.TRACT != "990000") {
+            if (j.attributes.TRACT != "990000") { // If any block group isn't the water tract
+
               totalLand += j.attributes.AREALAND // Obtain totals
               totalWater += j.attributes.AREAWATER
 
@@ -210,7 +222,7 @@ export const createMap = function (loader, totals, censusData) {
 
               totalPop += j.attributes.population
 
-              j.symbol = { // Set block group symbology
+              j.symbol = { // Set normal block group symbology
 
                 type: 'simple-fill',
                 outline: { 
@@ -219,7 +231,8 @@ export const createMap = function (loader, totals, censusData) {
                 }
               }
             } else {
-              j.symbol = { // Set block group symbology
+
+              j.symbol = { // Set empty block group symbology
 
                 type: 'simple-fill',
                 outline: { 
@@ -275,7 +288,7 @@ export const createMap = function (loader, totals, censusData) {
       // Display results
       function queryEmblks() {
 
-        embayments.visible = true // Turn on layer
+        // embayments.visible = true // Turn on layer
 
         embayments.queryExtent().then((h) => {
 
@@ -283,12 +296,37 @@ export const createMap = function (loader, totals, censusData) {
 
           var query = blockGroups.createQuery()
           query.geometry = buff
-          query.spatialRelationship = 'intersects'
+          query.spatialRelationship = 'contains'
+
+          var query1 = parcelLayer.createQuery()
+          query1.geometry = h.extent
+          query1.spatialRelationship = 'contains'
 
           var features = ''
+          var features1 = ''
           var totalLand = 0
           var totalWater = 0
           var totalPop = 0
+          var totalPrcl = 0
+
+          parcelLayer.queryFeatures(query1).then((i) => {
+
+            features1 = i.features.map((j) => {
+
+              j.symbol = { // Set normal block group symbology
+
+                type: 'simple-fill',
+                outline: { 
+                  color: [255, 255, 255],
+                  width: 2
+                }
+              }
+
+              return j
+            })
+
+            resultLayer1.addMany(features1)
+          })
 
           blockGroups.queryFeatures(query).then((i) => { // Query for block groups intersecting the buffered extent
 
@@ -297,7 +335,20 @@ export const createMap = function (loader, totals, censusData) {
             // Create/fill block group polygon symbology
             features = i.features.map((j) => {  // Iterate through response features
 
-              if (j.attributes.TRACT != "990000") {
+              if (j.attributes.TRACT != "990000") { // If census tract isn't cape cod water body
+
+                j.attributes.popPrcl = 0 // Initialize population by parcel
+
+                resultLayer1.graphics.items.map((k) => { // Look through parcels from queried results
+
+                  if (geometryEngine.intersects(k.geometry, j.geometry)) { // If block group geometry intersects parcels
+
+                    k.attributes.BLKGRP = j.attributes.BLKGRP // Assign block group to individual parcel
+
+                    j.attributes.popPrcl += parseInt(k.attributes.POP_10) // Sum population field in block group layer using POP_10 from individual parcels
+                  }
+                })
+
                 totalLand += j.attributes.AREALAND // Obtain totals
                 totalWater += j.attributes.AREAWATER
 
@@ -311,16 +362,34 @@ export const createMap = function (loader, totals, censusData) {
 
                 totalPop += j.attributes.population
 
-                j.symbol = { // Set block group symbology
+                console.log(j.attributes.popPrcl / j.attributes.population)
 
-                  type: 'simple-fill',
-                  outline: { 
-                    color: [255, 255, 255],
-                    width: 2
+                if ((j.attributes.popPrcl / j.attributes.population) >= .5) { // If queried parcel population is greater than 50% of block group population
+
+                  j.symbol = { // Set normal block group symbology
+
+                    type: 'simple-fill',
+                    outline: { 
+                      color: [255, 255, 255],
+                      width: 2
+                    }
+                  }
+                } else {
+
+                  j.symbol = { // Set empty block group symbology
+
+                    type: 'simple-fill',
+                    outline: { 
+                      color: [0, 0, 0, 0],
+                      width: 0
+                    },
+                    style: 'none'
                   }
                 }
+
               } else {
-                j.symbol = { // Set block group symbology
+
+                j.symbol = { // Set empty block group symbology
 
                   type: 'simple-fill',
                   outline: { 
@@ -357,6 +426,7 @@ export const createMap = function (loader, totals, censusData) {
       $('#neighborhoodSelect').on('change', function() {
 
         resultLayer.removeAll();
+        resultLayer1.removeAll();
         view.graphics.removeAll();
 
         var x = $(this).val().toString()
@@ -369,6 +439,7 @@ export const createMap = function (loader, totals, censusData) {
       $('#acSelect').on('change', function() {
 
         resultLayer.removeAll();
+        resultLayer1.removeAll();
         view.graphics.removeAll();
 
         var x = $(this).val().toString()
@@ -381,6 +452,7 @@ export const createMap = function (loader, totals, censusData) {
       $('#townSelect').on('change', function() {
 
         resultLayer.removeAll();
+        resultLayer1.removeAll();
         view.graphics.removeAll();
 
         var x = $(this).val().toString()

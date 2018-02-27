@@ -104,6 +104,10 @@ export default function (router) {
         '/dsnchrctr': {
           name: 'dsnchrctr',
           component: require('./components/dsnchrctr.vue')
+        },
+        '/economy': {
+          name: 'economy',
+          component: require('./components/economy.vue')
         }
       }
     }

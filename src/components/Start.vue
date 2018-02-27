@@ -21,7 +21,8 @@
         <div class = 'row text-center'>
           <p>Land (Acres): {{totals.Land}}</p>
           <p>Water (Acres): {{totals.Water}}</p>
-          <p>Population: {{totals.Population}}</p>
+          <p>Population (Block Group): {{totals.popBlk}}</p>
+          <p>Population (Parcels): {{totals.popPrcl}}</p>
         </div>
       </div>
 

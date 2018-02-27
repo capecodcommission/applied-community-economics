@@ -9,7 +9,8 @@ const state = {
   attributes: {
     Land: false,
     Water: false,
-    Population: false,
+    popBlk: false,
+    popPrcl: false,
     Toggle: false
   },
   townselected: false,
