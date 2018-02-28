@@ -144,11 +144,9 @@ export const createMap = function (loader, totals, censusData) {
         var graphic = new Graphic({
           geometry: polygon,
           symbol: {
-            type: "simple-fill", 
-            color: [178, 102, 234, 0.8],
-            style: "solid",
+            type: "simple-fill",
             outline: { 
-              color: [255, 255, 255],
+              color: [178, 102, 234],
               width: 2
             }
           }
@@ -170,7 +168,10 @@ export const createMap = function (loader, totals, censusData) {
         var vertices = evt.vertices;
 
         //remove existing graphic
+        resultLayer.removeAll();
+        resultLayer1.removeAll();
         view.graphics.removeAll();
+
 
         // create a new polygon
         var polygon = createPolygon(vertices);
@@ -188,70 +189,122 @@ export const createMap = function (loader, totals, censusData) {
         var vertices = evt.vertices
         var polygon = createPolygon(vertices); // Create polygon 
 
-        var buff = geometryEngine.buffer(polygon,[1],'miles',true) // Create 1mi buffer
+        var buff = geometryEngine.buffer(polygon.extent,[1],'miles',true) // Create 1mi buffer
 
         var query = blockGroups.createQuery()
         query.geometry = buff
-        query.spatialRelationship = 'intersects' 
+        query.spatialRelationship = 'contains' 
 
+        var query1 = parcelLayer.createQuery() // Initialize parcel query using unbuffered extent
+        query1.geometry = polygon.extent
+        query1.spatialRelationship = 'contains'
+
+        var features = ''
+        var features1 = ''
         var totalLand = 0
         var totalWater = 0
         var totalPop = 0
+        var totalPrcl = 0
 
-        var features = ''
+        parcelLayer.queryFeatures(query1).then((i) => { // Query parcels using extent of defined embayment layer
 
-        blockGroups.queryFeatures(query).then(function(i) { // Query using 1mi buffer
+          features1 = i.features.map((j) => {
 
-          // Obtain totals from queried blockgroup attributes
-          // Create/fill new attribute using census data
-          // Create/fill block group polygon symbology
-          features = i.features.map(function(j) { 
+            j.symbol = { // Set normal block group symbology
 
-            if (j.attributes.TRACT != "990000") { // If any block group isn't the water tract
-
-              totalLand += j.attributes.AREALAND // Obtain totals
-              totalWater += j.attributes.AREAWATER
-
-              censusData.map((k) => { // Search ACS rows by block group
-
-                if (k.indexOf(j.attributes.TRACT) >= 0 && k.indexOf(j.attributes.BLKGRP)  >= 0) { // If key-match
-
-                  j.attributes.population = parseInt(k[1]) // Append/fill population (index 1) from store, convert to integer
-                }
-              })
-
-              totalPop += j.attributes.population
-
-              j.symbol = { // Set normal block group symbology
-
-                type: 'simple-fill',
-                outline: { 
-                  color: [255, 255, 255],
-                  width: 2
-                }
-              }
-            } else {
-
-              j.symbol = { // Set empty block group symbology
-
-                type: 'simple-fill',
-                outline: { 
-                  color: [0, 0, 0, 0],
-                  width: 0
-                },
-                style: 'none'
+              type: 'simple-fill',
+              outline: { 
+                color: [255, 255, 255],
+                width: 2
               }
             }
 
-            return j   
+            return j
           })
 
-          resultLayer.addMany(features)
+          resultLayer1.addMany(features1) // Push queried parcels to new graphics layer
+        })
+        .then((j) => {
 
-          totals.Land = (totalLand / 43560).toFixed(2)
-          totals.Water = (totalWater / 43560).toFixed(2)
-          totals.Population = totalPop.toFixed(0)
-          totals.Toggle = true
+          blockGroups.queryFeatures(query).then(function(i) { // Query using 1mi buffer
+
+            // Obtain totals from queried blockgroup attributes
+            // Create/fill new attribute using census data
+            // Create/fill block group polygon symbology
+            features = i.features.map(function(j) { 
+
+              if (j.attributes.TRACT != "990000") { // If any block group isn't the water tract
+
+                j.attributes.popPrcl = 0 // Initialize population by parcel field
+
+                resultLayer1.graphics.items.map((k) => { // Look through parcels from queried results
+
+                  if (geometryEngine.intersects(k.geometry, j.geometry)) { // If block group geometry intersects parcels
+
+                    k.attributes.BLKGRP = j.attributes.BLKGRP // Assign block group to individual parcel
+
+                    j.attributes.popPrcl += parseInt(k.attributes.POP_10) // Sum population field in block group layer using POP_10 from individual parcels
+                  }
+                })
+
+                totalLand += j.attributes.AREALAND // Obtain totals
+                totalWater += j.attributes.AREAWATER
+
+                censusData.map((k) => { // Search ACS rows by block group
+
+                  if (k.indexOf(j.attributes.TRACT) >= 0 && k.indexOf(j.attributes.BLKGRP)  >= 0) { // If key-match
+
+                    j.attributes.population = parseInt(k[1]) // Append/fill population (index 1) from store, convert to integer
+                  }
+                })
+
+                totalPop += j.attributes.population
+
+                if ((j.attributes.popPrcl / j.attributes.population) >= .5) {
+
+                  j.symbol = { // Set normal block group symbology
+
+                    type: 'simple-fill',
+                    outline: { 
+                      color: [66, 134, 244],
+                      width: 2
+                    }
+                  }
+                } else {
+
+                  j.symbol = { // Set empty block group symbology
+
+                    type: 'simple-fill',
+                    outline: { 
+                      color: [0, 0, 0, 0],
+                      width: 0
+                    },
+                    style: 'none'
+                  }
+                }
+              } else {
+
+                j.symbol = { // Set empty block group symbology
+
+                  type: 'simple-fill',
+                  outline: { 
+                    color: [0, 0, 0, 0],
+                    width: 0
+                  },
+                  style: 'none'
+                }
+              }
+
+              return j   
+            })
+
+            resultLayer.addMany(features)
+
+            totals.Land = (totalLand / 43560).toFixed(2)
+            totals.Water = (totalWater / 43560).toFixed(2)
+            totals.Population = totalPop.toFixed(0)
+            totals.Toggle = true
+          })
         })
       }
 
@@ -282,23 +335,21 @@ export const createMap = function (loader, totals, censusData) {
       }
 
 
-      // Turn on embayments feature layer, use extent w/ 1mi buffer to query for block groups
+      // Use embayment feature layer extent w/ 1mi buffer to query for block groups
       // Match group and tract codes to append population column from census API data
       // Assign attributes data from state with totals from queried layers
       // Display results
       function queryEmblks() {
 
-        // embayments.visible = true // Turn on layer
-
         embayments.queryExtent().then((h) => {
 
           var buff = geometryEngine.buffer(h.extent,[1],'miles',true) // Create geometry buffer w/ 1mi radius from defined embayment layer extent
 
-          var query = blockGroups.createQuery()
+          var query = blockGroups.createQuery() // Initialize block group query using buffered extent
           query.geometry = buff
           query.spatialRelationship = 'contains'
 
-          var query1 = parcelLayer.createQuery()
+          var query1 = parcelLayer.createQuery() // Initialize parcel query using unbuffered extent
           query1.geometry = h.extent
           query1.spatialRelationship = 'contains'
 
@@ -309,7 +360,7 @@ export const createMap = function (loader, totals, censusData) {
           var totalPop = 0
           var totalPrcl = 0
 
-          parcelLayer.queryFeatures(query1).then((i) => {
+          parcelLayer.queryFeatures(query1).then((i) => { // Query parcels using extent of defined embayment layer
 
             features1 = i.features.map((j) => {
 
@@ -325,55 +376,69 @@ export const createMap = function (loader, totals, censusData) {
               return j
             })
 
-            resultLayer1.addMany(features1)
+            resultLayer1.addMany(features1) // Push queried parcels to new graphics layer
           })
+          .then((j) => {
 
-          blockGroups.queryFeatures(query).then((i) => { // Query for block groups intersecting the buffered extent
+            blockGroups.queryFeatures(query).then((i) => { // Query for block groups intersecting the buffered extent
 
-            // Obtain totals from queried blockgroup attributes
-            // Create/fill new attribute using census data
-            // Create/fill block group polygon symbology
-            features = i.features.map((j) => {  // Iterate through response features
+              // Obtain totals from queried blockgroup attributes
+              // Create/fill new attribute using census data
+              // Create/fill block group polygon symbology
+              features = i.features.map((j) => {  // Iterate through response features
 
-              if (j.attributes.TRACT != "990000") { // If census tract isn't cape cod water body
+                if (j.attributes.TRACT != "990000") { // If census tract isn't cape cod water body
 
-                j.attributes.popPrcl = 0 // Initialize population by parcel
+                  j.attributes.popPrcl = 0 // Initialize population by parcel field
 
-                resultLayer1.graphics.items.map((k) => { // Look through parcels from queried results
+                  resultLayer1.graphics.items.map((k) => { // Look through parcels from queried results
 
-                  if (geometryEngine.intersects(k.geometry, j.geometry)) { // If block group geometry intersects parcels
+                    if (geometryEngine.intersects(k.geometry, j.geometry)) { // If block group geometry intersects parcels
 
-                    k.attributes.BLKGRP = j.attributes.BLKGRP // Assign block group to individual parcel
+                      k.attributes.BLKGRP = j.attributes.BLKGRP // Assign block group to individual parcel
 
-                    j.attributes.popPrcl += parseInt(k.attributes.POP_10) // Sum population field in block group layer using POP_10 from individual parcels
-                  }
-                })
+                      j.attributes.popPrcl += parseInt(k.attributes.POP_10) // Sum population field in block group layer using POP_10 from individual parcels
+                    }
+                  })
 
-                totalLand += j.attributes.AREALAND // Obtain totals
-                totalWater += j.attributes.AREAWATER
+                  totalLand += j.attributes.AREALAND // Obtain totals
+                  totalWater += j.attributes.AREAWATER
 
-                censusData.map((k) => { // Search ACS rows by block group
+                  censusData.map((k) => { // Search ACS rows by block group
 
-                  if (k.indexOf(j.attributes.TRACT) >= 0 && k.indexOf(j.attributes.BLKGRP)  >= 0) { // If key-match
+                    if (k.indexOf(j.attributes.TRACT) >= 0 && k.indexOf(j.attributes.BLKGRP)  >= 0) { // If key-match
 
-                    j.attributes.population = parseInt(k[1]) // Append/fill population (index 1) from store, convert to integer
-                  }
-                })
+                      j.attributes.population = parseInt(k[1]) // Append/fill population (index 1) from store, convert to integer
+                    }
+                  })
 
-                totalPop += j.attributes.population
+                  totalPop += j.attributes.population
 
-                console.log(j.attributes.popPrcl / j.attributes.population)
+                  console.log(j.attributes.popPrcl / j.attributes.population)
 
-                if ((j.attributes.popPrcl / j.attributes.population) >= .5) { // If queried parcel population is greater than 50% of block group population
+                  if ((j.attributes.popPrcl / j.attributes.population) >= .5) { // If queried parcel population is greater than 50% of block group population
 
-                  j.symbol = { // Set normal block group symbology
+                    j.symbol = { // Set normal block group symbology
 
-                    type: 'simple-fill',
-                    outline: { 
-                      color: [255, 255, 255],
-                      width: 2
+                      type: 'simple-fill',
+                      outline: { 
+                        color: [66, 134, 244],
+                        width: 2
+                      }
+                    }
+                  } else {
+
+                    j.symbol = { // Set empty block group symbology
+
+                      type: 'simple-fill',
+                      outline: { 
+                        color: [0, 0, 0, 0],
+                        width: 0
+                      },
+                      style: 'none'
                     }
                   }
+
                 } else {
 
                   j.symbol = { // Set empty block group symbology
@@ -385,30 +450,18 @@ export const createMap = function (loader, totals, censusData) {
                     },
                     style: 'none'
                   }
-                }
+                }       
 
-              } else {
+                return j 
+              })
 
-                j.symbol = { // Set empty block group symbology
+              resultLayer.addMany(features) // Add queried features to results layer
 
-                  type: 'simple-fill',
-                  outline: { 
-                    color: [0, 0, 0, 0],
-                    width: 0
-                  },
-                  style: 'none'
-                }
-              }       
-
-              return j 
+              totals.Land = (totalLand / 43560).toFixed(2) // Update state values using queried totals
+              totals.Water = (totalWater / 43560).toFixed(2)
+              totals.Population = totalPop.toFixed(0)
+              totals.Toggle = true // Show results pane
             })
-
-            resultLayer.addMany(features) // Add queried features to results layer
-
-            totals.Land = (totalLand / 43560).toFixed(2) // Update state values using queried totals
-            totals.Water = (totalWater / 43560).toFixed(2)
-            totals.Population = totalPop.toFixed(0)
-            totals.Toggle = true // Show results pane
           })
         })
       }
