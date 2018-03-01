@@ -1,27 +1,53 @@
 <template>
 
-  <div class = 'row'>
-
-    <h1 align = 'left' style = 'color: white; background-color: gray'>ECONOMY</h1>
+  <div class = 'row col-heading'>
+    <h2 class = 'pull-left'>ECONOMY</h2>
   </div>
-  
-  <div class="col-md-6">
-
-    <div class = 'row'>
-
-      <h4 align = 'left' style = 'color: white; background-color: gray'>COMMERCIAL</h4>
-      <canvas id = 'pieChart2'></canvas> 
+    
+  <div class = 'row col-heading'>
+    <div class = 'col-md-6'>
+      <h1 class = 'pull-left'>COMMERCIAL</h2>
     </div>
-
-  </div>
-
-  <div class = 'col-md-6'>
-
-    <div class = 'row'>
-
-      <h4 align = 'left' style = 'color: white; background-color: gray'>RESIDENTIAL</h4>
+    <div class = 'col-md-6'>
+      <h1 class = 'pull-left'>RESIDENTIAL</h2>
     </div>
   </div>
+
+  <div style = 'background-color: #d0d5dd' class = 'row'>
+    <div class = 'col-md-6'>
+      <div class = 'col-md-6'>
+        <h3>Business</h3>
+        <canvas id = 'donutChart1'></canvas>
+      </div>
+      <div class = 'col-md-6'>
+        <h3>Employment</h3>
+        <canvas id = 'donutChart2'></canvas>
+      </div>
+    </div>
+
+    <div class = 'col-md-6'>
+      <div class = 'col-md-4 housing-stats'>
+        <div class = 'row'>
+          <h1>$26,255</h1>
+          <p>Median Household Income</p>
+        </div>
+        <div class = 'row'>
+          <h1>7.5%</h1>
+          <p>Unemployment</p>
+        </div>
+      </div>
+      <div class = 'col-md-4'>
+        <h3>Educational Attainment</h3>
+        <canvas id = 'donutChart3'></canvas>
+      </div>
+      <div class = 'col-md-4'>
+        <h3>Median Earnings</h3>
+        <canvas id = 'barChart1'></canvas>
+      </div>
+    </div>
+  </div>
+
+      
 
 </template>
 
@@ -58,16 +84,19 @@ export default {
 
   ready() {
 
-    var ctx2 = $("#pieChart2");
+    var ctx1 = $("#donutChart1");
+    var ctx2 = $("#donutChart2");
+    var ctx3 = $("#donutChart3");
+    var ctx4 = $("#barChart1");
 
-    var myChart = new Chart(ctx2, {
+    var myChart1 = new Chart(ctx1, {
       type: 'doughnut',
       data: {
         datasets: [
           {
             label: 'data1',
-            data: [10,20,30,40,50],
-            backgroundColor: ['red','yellow','blue','green','purple']
+            data: [10,20,30,40,50,60],
+            backgroundColor: ['orange','yellow','blue','green','grey', 'red']
           }
         ],
 
@@ -79,6 +108,92 @@ export default {
           'April',
           'May'
         ]
+      },
+      options: {
+        legend: {
+          display: false
+        }
+      }
+    })
+
+    var myChart2 = new Chart(ctx2, {
+      type: 'doughnut',
+      data: {
+        datasets: [
+          {
+            label: 'data1',
+            data: [10,20,30,40,50, 60],
+            backgroundColor: ['orange','yellow','blue','green','grey', 'red']
+          }
+        ],
+
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: [
+          'January',
+          'February',
+          'March',
+          'April',
+          'May'
+        ]
+      },
+      options: {
+        legend: {
+          display: false
+        }
+      }
+    })
+
+    var myChart3 = new Chart(ctx3, {
+      type: 'doughnut',
+      data: {
+        datasets: [
+          {
+            label: 'data1',
+            data: [10,20,30,40,50],
+            backgroundColor: ['#d2d7dd','#a8bfdb','#689ad6','#3f7fcc','#1365c6']
+          }
+        ],
+
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: [
+          'January',
+          'February',
+          'March',
+          'April',
+          'May'
+        ]
+      },
+      options: {
+        legend: {
+          display: false
+        }
+      }
+    })
+
+    var myChart4 = new Chart(ctx4, {
+      type: 'horizontalBar',
+      data: {
+        datasets: [
+          {
+            label: 'data1',
+            data: [10,20,30,40,50],
+            backgroundColor: ['#d2d7dd','#a8bfdb','#689ad6','#3f7fcc','#1365c6']
+          }
+        ],
+
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: [
+          'January',
+          'February',
+          'March',
+          'April',
+          'May'
+        ]
+      },
+      options: {
+        legend: {
+          display: false
+        }
       }
     })
   },
@@ -95,6 +210,17 @@ export default {
 </script>
 
 <style>
+
+.housing-stats {
+
+  color: #28536c;
+}
+
+.col-heading {
+
+  background-color: grey; 
+  color: white
+}
 
 .nav.is-default {
     background-color: #f5f5f5;

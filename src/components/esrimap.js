@@ -260,6 +260,8 @@ export const createMap = function (loader, totals, censusData) {
 
                 totalPop += j.attributes.population
 
+                console.log(j.attributes.popPrcl / j.attributes.population)
+
                 if ((j.attributes.popPrcl / j.attributes.population) >= .5) {
 
                   j.symbol = { // Set normal block group symbology
