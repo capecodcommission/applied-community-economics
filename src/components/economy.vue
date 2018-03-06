@@ -15,18 +15,18 @@
     </div>
   </div>
 
-  <div style = 'background-color: #d0d5dd' class = 'row'>
+  <div class = 'row'>
     <div class = 'col-md-6'>
-      <div class = 'col-md-6'>
+      <div style = 'background-color: #d0d5dd' class = 'col-md-6'>
         <h4>Business</h4>
         <canvas id = 'donutChart1'></canvas>
       </div>
-      <div class = 'col-md-6'>
+      <div style = 'background-color: #d0d5dd' class = 'col-md-6'>
         <h4>Employment</h4>
         <canvas id = 'donutChart2'></canvas>
       </div>
     </div>
-    <div class = 'col-md-6'>
+    <div style = 'background-color: #d0d5dd' class = 'col-md-6'>
       <div class = 'col-md-4 housing-stats'>
         <div class = 'row'>
           <h1>$26,255</h1>
@@ -48,18 +48,18 @@
     </div>
   </div>
 
-  <div style = 'background-color: #d0d5dd' class = 'row'>
+  <div class = 'row'>
     <div class = 'col-md-6'>
-      <div class = 'col-md-6'>
+      <div style = 'background-color: #d0d5dd' class = 'col-md-6'>
         <h4>Business</h4>
         <canvas id = 'donutChart4'></canvas>
       </div>
-      <div class = 'col-md-6'>
+      <div style = 'background-color: #d0d5dd' class = 'col-md-6'>
         <h4>Employment</h4>
         <canvas id = 'donutChart5'></canvas>
       </div>
     </div>
-    <div class = 'col-md-6'>
+    <div style = 'background-color: #d0d5dd' class = 'col-md-6'>
       <div class = 'col-md-4 housing-stats'>
         <div class = 'row'>
           <h1>$66,279</h1>
@@ -168,7 +168,7 @@ export default {
         datasets: [
           {
             label: 'data1',
-            data: [10,20,30,40,50, 60],
+            data: [10,25,40,55,70, 85],
             backgroundColor: ['orange','yellow','blue','green','grey', 'red']
           }
         ],
@@ -204,11 +204,11 @@ export default {
 
         // These labels appear in the legend and in the tooltips when hovering different arcs
         labels: [
-          'January',
-          'February',
-          'March',
-          'April',
-          'May'
+          'Less than high school graduate',
+          'High school graduate',
+          'Some college or associates degree',
+          'Bachelors degree',
+          'Grduate or professional degree'
         ]
       },
       options: {
@@ -231,16 +231,28 @@ export default {
 
         // These labels appear in the legend and in the tooltips when hovering different arcs
         labels: [
-          'January',
-          'February',
-          'March',
-          'April',
-          'May'
+          'Less than high school graduate',
+          'High school graduate',
+          'Some college or associates degree',
+          'Bachelors degree',
+          'Grduate or professional degree'
         ]
       },
       options: {
         legend: {
           display: false
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              fontSize: 8
+            }
+          }],
+          xAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
         }
       }
     })
@@ -348,16 +360,28 @@ export default {
 
         // These labels appear in the legend and in the tooltips when hovering different arcs
         labels: [
-          'January',
-          'February',
-          'March',
-          'April',
-          'May'
+          'Less than high school graduate',
+          'High school graduate',
+          'Some college or associates degree',
+          'Bachelors degree',
+          'Grduate or professional degree'
         ]
       },
       options: {
         legend: {
           display: false
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              fontSize: 8
+            }
+          }],
+          xAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
         }
       }
     })
