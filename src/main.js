@@ -10,6 +10,7 @@ import VueResource from 'vue-resource'
 import VueTables from 'vue-tables'
 import moment from 'moment'
 import Chart from 'chart.js'
+import VueCharts from 'vue-charts'
 
 
 // Load technology icon path
@@ -18,7 +19,7 @@ const iconPath = 'http://208.capecodcommission.org/Images/AltIcons/'
 // Start Vue state management services
 Vue.use(VueResource)
 Vue.use(VueRouter)
-// Vue.use(VueCharts)
+Vue.use(VueCharts)
 // Vue.use(GoogleCharts)
 Vue.use(VueTables.client)
 

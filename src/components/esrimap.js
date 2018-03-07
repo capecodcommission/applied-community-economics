@@ -260,7 +260,9 @@ export const createMap = function (loader, totals, censusData) {
 
                 totalPop += j.attributes.population
 
-                console.log(j.attributes.popPrcl / j.attributes.population)
+                // console.log(j.attributes.population)
+
+                // console.log(j.attributes.popPrcl)
 
                 if ((j.attributes.popPrcl / j.attributes.population) >= .5) {
 
@@ -343,7 +345,7 @@ export const createMap = function (loader, totals, censusData) {
       // Display results
       function queryEmblks() {
 
-        embayments.queryExtent().then((h) => {
+        parcelLayer.queryExtent().then((h) => {
 
           var buff = geometryEngine.buffer(h.extent,[1],'miles',true) // Create geometry buffer w/ 1mi radius from defined embayment layer extent
 
@@ -416,7 +418,9 @@ export const createMap = function (loader, totals, censusData) {
 
                   totalPop += j.attributes.population
 
-                  console.log(j.attributes.popPrcl / j.attributes.population)
+                  // console.log(j.attributes.popPrcl)
+
+                  // console.log(j.attributes.population)
 
                   if ((j.attributes.popPrcl / j.attributes.population) >= .5) { // If queried parcel population is greater than 50% of block group population
 
@@ -486,7 +490,7 @@ export const createMap = function (loader, totals, censusData) {
 
         var x = $(this).val().toString()
 
-        embayments.definitionExpression = "Neighborhood = " + "'" + x + "'"
+        parcelLayer.definitionExpression = "NEIGHB_1 = " + "'" + x + "'"
 
         queryEmblks()
       })
@@ -499,7 +503,7 @@ export const createMap = function (loader, totals, censusData) {
 
         var x = $(this).val().toString()
 
-        embayments.definitionExpression = "AC_FINAL = " + "'" + x + "'"
+        parcelLayer.definitionExpression = "AC_NAME = " + "'" + x + "'"
 
         queryEmblks()
       })
@@ -512,7 +516,7 @@ export const createMap = function (loader, totals, censusData) {
 
         var x = $(this).val().toString()
 
-        embayments.definitionExpression = "Town = " + "'" + x + "'"
+        parcelLayer.definitionExpression = "CITY = " + "'" + x + "'"
 
         queryEmblks()
       })

@@ -21,6 +21,7 @@
     "moment": "^2.17.1",
     "nice-json2csv": "^0.2.2",
     "vue": "^1.0.21",
+    "vue-charts": "^0.1.14",
     "vue-resource": "^0.7.2",
     "vue-router": "^0.7.13",
     "vue-strap": "^1.0.11",
