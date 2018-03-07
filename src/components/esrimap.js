@@ -124,15 +124,15 @@ export const createMap = function (loader, totals, censusData) {
         center: [-70.303634, 41.701660]
       });
 
-      var legend = new Legend({
-        view: view,
-        layerInfos: [{
-          layer: embayments,
-          title: "Legend"
-        }]
-      });
+      // var legend = new Legend({
+      //   view: view,
+      //   layerInfos: [{
+      //     layer: embayments,
+      //     title: "Legend"
+      //   }]
+      // });
 
-      view.ui.add(legend, "bottom-left");
+      // view.ui.add(legend, "bottom-left");
 
       var homeBtn = new Home({
         view: view
@@ -185,6 +185,8 @@ export const createMap = function (loader, totals, censusData) {
       // Total selected attributes for results pane
       // Add queried block groups to results layer on map
       function queryBlockGroup(evt) {
+
+        parcelLayer.definitionExpression = ""
 
         var vertices = evt.vertices
         var polygon = createPolygon(vertices); // Create polygon 
