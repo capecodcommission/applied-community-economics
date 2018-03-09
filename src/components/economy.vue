@@ -103,6 +103,7 @@ export default {
 
     return {
 
+      // Define chart types, column data types, row data types, and options for each chart
       chartType1: 'PieChart',
       chartType2: 'PieChart',
       chartType3: 'PieChart',
@@ -148,11 +149,11 @@ export default {
         },
         {
           'type': 'string',
-          'role': 'style'
+          'role': 'style' // Define bar color using hex value
         },
         {
           'type': 'string',
-          'role': 'annotation'
+          'role': 'annotation' // Define bar label with string 
         },
         {
           'type': 'number',
@@ -224,7 +225,7 @@ export default {
         ['Less than high school graduate', 10000, '#d2d7dd', 'Less than high school graduate', 25000, 'Town of']
       ],
       options1: {
-        pieHole: 0.5,
+        pieHole: 0.5, // Define donut hole width
         backgroundColor: '#d0d5dd',
         legend: {
           position: 'left',
@@ -291,6 +292,8 @@ export default {
   },
 
   ready() {
+
+    // Chartsjs version. Commented out for now
 
     // // row 1
     // var ctx1 = $("#donutChart1");

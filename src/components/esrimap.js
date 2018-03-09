@@ -37,7 +37,7 @@ export const createMap = function (loader, totals, censusData) {
       Home
     ) => {
     
-
+      // Color parcels based on housing type
       var renderer = {
         type: "unique-value",  // autocasts as new UniqueValueRenderer()
         field: "HousingType",
@@ -74,6 +74,7 @@ export const createMap = function (loader, totals, censusData) {
         ]
       };
 
+      // parcel layer
       var embayments = new FeatureLayer({
         url: "http://gis-services.capecodcommission.org/arcgis/rest/services/ActivityCenters/CommunityCharacteristics/MapServer/0",
         outFields: ['*'],
@@ -85,6 +86,7 @@ export const createMap = function (loader, totals, censusData) {
         visible: false
       })
 
+      // parcel layer containing some census api estimates
       var parcelLayer = new FeatureLayer({
         url: "http://gis-services.capecodcommission.org/arcgis/rest/services/ActivityCenters/CommunityCharacteristics/MapServer/1",
         outFields: ['*'],
@@ -95,6 +97,7 @@ export const createMap = function (loader, totals, censusData) {
         }
       })
 
+      // block group layer from tigerweb services
       var blockGroups = new FeatureLayer({
         url: "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Tracts_Blocks/MapServer/5",
         definitionExpression: "STATE = 25 and COUNTY = 001",
@@ -109,6 +112,7 @@ export const createMap = function (loader, totals, censusData) {
       var resultLayer = new GraphicsLayer() // Initialize blank layer to fill with queried block group symbology
       var resultLayer1 = new GraphicsLayer()
 
+      // create basemap with layers prepared but hidden
       var map = new Map({basemap: 'dark-gray', layers: [embayments, blockGroups, parcelLayer, resultLayer, resultLayer1]});
 
       // var custom = new TileLayer({
@@ -121,7 +125,7 @@ export const createMap = function (loader, totals, censusData) {
         container: "viewDiv",  // Reference to the DOM node that will contain the view
         map: map,
         zoom: 12,
-        center: [-70.303634, 41.701660]
+        center: [-70.303634, 41.701660] // Center map over Barnstable
       });
 
       // var legend = new Legend({
@@ -134,13 +138,13 @@ export const createMap = function (loader, totals, censusData) {
 
       // view.ui.add(legend, "bottom-left");
 
-      var homeBtn = new Home({
+      var homeBtn = new Home({ // Home button resets zoom/center
         view: view
       });
 
       view.ui.add(homeBtn, "top-left");
 
-      function createGraphic(polygon) {
+      function createGraphic(polygon) { //
         var graphic = new Graphic({
           geometry: polygon,
           symbol: {
@@ -341,7 +345,7 @@ export const createMap = function (loader, totals, censusData) {
       }
 
 
-      // Use embayment feature layer extent w/ 1mi buffer to query for block groups
+      // Use parcel feature layer extent w/ 1mi buffer to query for block groups
       // Match group and tract codes to append population column from census API data
       // Assign attributes data from state with totals from queried layers
       // Display results
@@ -486,39 +490,39 @@ export const createMap = function (loader, totals, censusData) {
 
       $('#neighborhoodSelect').on('change', function() {
 
-        resultLayer.removeAll();
+        resultLayer.removeAll(); // Reset graphics layers 
         resultLayer1.removeAll();
         view.graphics.removeAll();
 
         var x = $(this).val().toString()
 
-        parcelLayer.definitionExpression = "NEIGHB_1 = " + "'" + x + "'"
+        parcelLayer.definitionExpression = "NEIGHB_1 = " + "'" + x + "'" // set definition expression on parcel layer
 
         queryEmblks()
       })
 
       $('#acSelect').on('change', function() {
 
-        resultLayer.removeAll();
+        resultLayer.removeAll(); // Reset graphics layers 
         resultLayer1.removeAll();
         view.graphics.removeAll();
 
         var x = $(this).val().toString()
 
-        parcelLayer.definitionExpression = "AC_NAME = " + "'" + x + "'"
+        parcelLayer.definitionExpression = "AC_NAME = " + "'" + x + "'" // set definition expression on parcel layer
 
         queryEmblks()
       })
 
       $('#townSelect').on('change', function() {
 
-        resultLayer.removeAll();
+        resultLayer.removeAll(); // Reset graphics layers 
         resultLayer1.removeAll();
         view.graphics.removeAll();
 
         var x = $(this).val().toString()
 
-        parcelLayer.definitionExpression = "CITY = " + "'" + x + "'"
+        parcelLayer.definitionExpression = "CITY = " + "'" + x + "'" // set definition expression on parcel layer
 
         queryEmblks()
       })
