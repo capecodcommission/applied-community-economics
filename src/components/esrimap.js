@@ -195,14 +195,14 @@ export const createMap = function (loader, totals, censusData) {
         var vertices = evt.vertices
         var polygon = createPolygon(vertices); // Create polygon 
 
-        var buff = geometryEngine.buffer(polygon.extent,[1],'miles',true) // Create 1mi buffer
+        var buff = geometryEngine.buffer(polygon,[1],'miles',true) // Create 1mi buffer
 
         var query = blockGroups.createQuery()
         query.geometry = buff
         query.spatialRelationship = 'contains' 
 
         var query1 = parcelLayer.createQuery() // Initialize parcel query using unbuffered extent
-        query1.geometry = polygon.extent
+        query1.geometry = polygon
         query1.spatialRelationship = 'contains'
 
         var features = ''
@@ -355,12 +355,14 @@ export const createMap = function (loader, totals, censusData) {
 
           var buff = geometryEngine.buffer(h.extent,[1],'miles',true) // Create geometry buffer w/ 1mi radius from defined embayment layer extent
 
+          parcelLayer.definitionExpression = ""
+
           var query = blockGroups.createQuery() // Initialize block group query using buffered extent
           query.geometry = buff
           query.spatialRelationship = 'contains'
 
           var query1 = parcelLayer.createQuery() // Initialize parcel query using unbuffered extent
-          query1.geometry = h.extent
+          query1.geometry = buff
           query1.spatialRelationship = 'contains'
 
           var features = ''
@@ -368,19 +370,35 @@ export const createMap = function (loader, totals, censusData) {
           var totalLand = 0
           var totalWater = 0
           var totalPop = 0
-          var totalPrcl = 0
+          var totalLess10k = 0
+          var totalTen14 = 0
+          var totalFif19 = 0
+          var totalTwenty24 = 0
+          var totalTwentyFive29 = 0
+          var totalThirty34 = 0
+          var totalThirtyFive39 = 0
+          var totalFourty44 = 0
+          var totalFourtyFive49 = 0
+          var totalFifty59 = 0
+          var totalSixty74 = 0
+          var totalSeventyFive99 = 0
+          var totalHundred124 = 0
+          var totalHundredTwentyFive149 = 0
+          var totalHundredFifty199 = 0
+          var totalTwoHundredPlus = 0
 
           parcelLayer.queryFeatures(query1).then((i) => { // Query parcels using extent of defined embayment layer
 
             features1 = i.features.map((j) => {
 
-              j.symbol = { // Set normal block group symbology
+              j.symbol = { // Set empty block group symbology
 
                 type: 'simple-fill',
                 outline: { 
-                  color: [255, 255, 255],
-                  width: 2
-                }
+                  color: [0, 0, 0, 0],
+                  width: 0
+                },
+                style: 'none'
               }
 
               return j
@@ -418,17 +436,47 @@ export const createMap = function (loader, totals, censusData) {
 
                     if (k.indexOf(j.attributes.TRACT) >= 0 && k.indexOf(j.attributes.BLKGRP)  >= 0) { // If key-match
 
-                      j.attributes.population = parseInt(k[1]) // Append/fill population (index 1) from store, convert to integer
+                      j.attributes.population = parseInt(k[1]) // Append/fill census attributes by column index
+                      j.attributes.less10k = parseInt(k[2])
+                      j.attributes.ten14 = parseInt(k[3])
+                      j.attributes.fifteen19 = parseInt(k[4])
+                      j.attributes.twenty24 = parseInt(k[5])
+                      j.attributes.twentyFive29 = parseInt(k[6])
+                      j.attributes.thirty34 = parseInt(k[7])
+                      j.attributes.thirtyFive39 = parseInt(k[8])
+                      j.attributes.fourty44 = parseInt(k[9])
+                      j.attributes.fourtyFive49 = parseInt(k[10])
+                      j.attributes.fifty59 = parseInt(k[11])
+                      j.attributes.sixty74 = parseInt(k[12])
+                      j.attributes.seventyFive99 = parseInt(k[13])
+                      j.attributes.hundred124 = parseInt(k[14])
+                      j.attributes.hundredTwentyFive149 = parseInt(k[15])
+                      j.attributes.hundredFifty199 = parseInt(k[16])
+                      j.attributes.twoHundredPlus = parseInt(k[17])
                     }
                   })
 
                   totalPop += j.attributes.population
-
-                  // console.log(j.attributes.popPrcl)
-
-                  // console.log(j.attributes.population)
+                  
 
                   if ((j.attributes.popPrcl / j.attributes.population) >= .5) { // If queried parcel population is greater than 50% of block group population
+
+                    totalLess10k += j.attributes.less10k // Sum income population attributes for selected block groups
+                    totalTen14 += j.attributes.ten14
+                    totalFif19 += j.attributes.fifteen19
+                    totalTwenty24 += j.attributes.twenty24
+                    totalTwentyFive29 += j.attributes.twentyFive29
+                    totalThirty34 += j.attributes.thirty34
+                    totalThirtyFive39 += j.attributes.thirtyFive39
+                    totalFourty44 += j.attributes.fourty44
+                    totalFourtyFive49 += j.attributes.fourtyFive49
+                    totalFifty59 += j.attributes.fifty59
+                    totalSixty74 += j.attributes.sixty74
+                    totalSeventyFive99 += j.attributes.seventyFive99
+                    totalHundred124 += j.attributes.hundred124
+                    totalHundredTwentyFive149 += j.attributes.hundredTwentyFive149
+                    totalHundredFifty199 += j.attributes.hundredFifty199
+                    totalTwoHundredPlus += j.attributes.twoHundredPlus
 
                     j.symbol = { // Set normal block group symbology
 
@@ -471,7 +519,60 @@ export const createMap = function (loader, totals, censusData) {
 
               totals.Land = (totalLand / 43560).toFixed(2) // Update state values using queried totals
               totals.Water = (totalWater / 43560).toFixed(2)
-              totals.Population = totalPop.toFixed(0)
+              totals.less10k = totalLess10k.toFixed(0)
+              totals.ten14 = totalTen14.toFixed(0)
+              totals.fifteen19 = totalFif19.toFixed(0)
+              totals.twenty24 = totalTwenty24.toFixed(0)
+              totals.twentyFive29 = totalTwentyFive29.toFixed(0)
+              totals.thirty34 = totalThirty34.toFixed(0)
+              totals.thirtyFive39 = totalThirtyFive39.toFixed(0)
+              totals.fourty44 = totalFourty44.toFixed(0)
+              totals.fourtyFive49 = totalFourtyFive49.toFixed(0)
+              totals.fifty59 = totalFifty59.toFixed(0)
+              totals.sixty74 = totalSixty74.toFixed(0)
+              totals.seventyFive99 = totalSeventyFive99.toFixed(0)
+              totals.hundred124 = totalHundred124.toFixed(0)
+              totals.hundredTwentyFive149 = totalHundredTwentyFive149.toFixed(0)
+              totals.hundredFifty199 = totalHundredFifty199.toFixed(0)
+              totals.twoHundredPlus = totalTwoHundredPlus.toFixed(0)
+
+              var totalHousehold = totals.less10k + totals.ten14 + totals.fifteen19 + totals.twenty24 + totals.twentyFive29 + totals.thirty34 + totals.thirtyFive39 + totals.fourty44 + totals.fourtyFive49 + totals.fifty59 + totals.sixty74 + totals.seventyFive99 + totals.hundred124 + totals.hundredTwentyFive149 + totals.hundredFifty199 + totals.twoHundredPlus
+ 
+              var totalsArr = [
+                totalHousehold,
+                totals.less10k,
+                totals.ten14,
+                totals.fifteen19,
+                totals.twenty24,
+                totals.twentyFive29,
+                totals.thirty34,
+                totals.thirtyFive39,
+                totals.fourty44,
+                totals.fourtyFive49,
+                totals.fifty59,
+                totals.sixty74,
+                totals.seventyFive99,
+                totals.hundred124,
+                totals.hundredTwentyFive149,
+                totals.hundredFifty199,
+                totals.twoHundredPlus
+              ]
+
+              function calc_Median(incomeData) {
+
+                var bucketTops = [10000, 15000, 20000, 25000, 30000, 35000, 40000, 45000, 50000, 60000, 75000, 100000, 125000, 150000, 200000]
+                var total =  incomeData[0]
+
+                for (var i = 18 - 1; i >= 2; i--) {
+                  
+                  if (incomeData.slice(1,i).reduce((a,b) => {return a + b}) > total/2.0) {
+
+                    var lowerBucket = i - 2
+                    var upperBucket = i - 1 // continue here https://gist.github.com/albertsun/1245817
+                  }
+                }
+              }
+              
               totals.Toggle = true // Show results pane
             })
           })

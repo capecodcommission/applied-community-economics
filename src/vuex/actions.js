@@ -96,10 +96,10 @@ export const updateAttrib = function({dispatch, state}, land, water) {
 }
 
 
-// Load array of block groups, tracts, and population counts (B01003_001E) from census API
+// Load array of block groups, tracts, and population counts from census API
 export const loadBlks = function({dispatch, state}) {
 
-    $.getJSON("https://api.census.gov/data/2016/acs/acs5?get=NAME,B01003_001E&for=block%20group:*&in=state:25%20county:001&key=8c7a3c5bf959c4358f3e0eee9b07cd95d7856f5c", function (result) {
+    $.getJSON("https://api.census.gov/data/2016/acs/acs5?get=NAME,B01003_001E,B19001_002E,B19001_003E,B19001_004E,B19001_005E,B19001_006E,B19001_007E,B19001_008E,B19001_009E,B19001_010E,B19001_011E,B19001_012E,B19001_013E,B19001_014E,B19001_015E,B19001_016E,B19001_017E&for=block%20group:*&in=state:25%20county:001&key=8c7a3c5bf959c4358f3e0eee9b07cd95d7856f5c", function (result) {
 
       dispatch("LOAD_BLKS", result)
     })

@@ -21,6 +21,22 @@
         <div class = 'row text-center'>
           <p>Land (Acres): {{totals.Land}}</p>
           <p>Water (Acres): {{totals.Water}}</p>
+          <p>Population (Less than $10,000): {{totals.less10k}}</p>
+          <p>Population ($10,000 - $14,000): {{totals.ten14}}</p>
+          <p>Population ($15,000 - $19,000): {{totals.fifteen19}}</p>
+          <p>Population ($20,000 - $24,000): {{totals.twenty24}}</p>
+          <p>Population ($25,000 - $29,000): {{totals.twentyFive29}}</p>
+          <p>Population ($30,000 - $34,000): {{totals.thirty34}}</p>
+          <p>Population ($35,000 - $39,000): {{totals.thirtyFive39}}</p>
+          <p>Population ($40,000 - $44,000): {{totals.fourty44}}</p>
+          <p>Population ($45,000 - $49,000): {{totals.fourtyFive49}}</p>
+          <p>Population ($50,000 - $59,000): {{totals.fifty59}}</p>
+          <p>Population ($60,000 - $74,000): {{totals.sixty74}}</p>
+          <p>Population ($75,000 - $99,000): {{totals.seventyFive99}}</p>
+          <p>Population ($100,000 - $124,000): {{totals.hundred124}}</p>
+          <p>Population ($125,000 - $149,000): {{totals.hundredTwentyFive149}}</p>
+          <p>Population ($150,000 - $199,000): {{totals.hundredFifty199}}</p>
+          <p>Population ($200,000 +): {{totals.twoHundredPlus}}</p>
         </div>
       </div>
 
