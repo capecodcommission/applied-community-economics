@@ -346,7 +346,8 @@ export const createMap = function (loader, totals, censusData) {
 
 
       // Use parcel feature layer extent w/ 1mi buffer to query for block groups
-      // Match group and tract codes to append population column from census API data
+      // Match group and tract codes to append properties from census API data
+      // Estimate additional parameters as necessary
       // Assign attributes data from state with totals from queried layers
       // Display results
       function queryEmblks() {
@@ -436,6 +437,8 @@ export const createMap = function (loader, totals, censusData) {
 
                     if (k.indexOf(j.attributes.TRACT) >= 0 && k.indexOf(j.attributes.BLKGRP)  >= 0) { // If key-match
 
+                      console.log(k)
+
                       j.attributes.population = parseInt(k[1]) // Append/fill census attributes by column index
                       j.attributes.less10k = parseInt(k[2])
                       j.attributes.ten14 = parseInt(k[3])
@@ -517,27 +520,29 @@ export const createMap = function (loader, totals, censusData) {
 
               resultLayer.addMany(features) // Add queried features to results layer
 
-              totals.Land = (totalLand / 43560).toFixed(2) // Update state values using queried totals
-              totals.Water = (totalWater / 43560).toFixed(2)
-              totals.less10k = totalLess10k.toFixed(0)
-              totals.ten14 = totalTen14.toFixed(0)
-              totals.fifteen19 = totalFif19.toFixed(0)
-              totals.twenty24 = totalTwenty24.toFixed(0)
-              totals.twentyFive29 = totalTwentyFive29.toFixed(0)
-              totals.thirty34 = totalThirty34.toFixed(0)
-              totals.thirtyFive39 = totalThirtyFive39.toFixed(0)
-              totals.fourty44 = totalFourty44.toFixed(0)
-              totals.fourtyFive49 = totalFourtyFive49.toFixed(0)
-              totals.fifty59 = totalFifty59.toFixed(0)
-              totals.sixty74 = totalSixty74.toFixed(0)
-              totals.seventyFive99 = totalSeventyFive99.toFixed(0)
-              totals.hundred124 = totalHundred124.toFixed(0)
-              totals.hundredTwentyFive149 = totalHundredTwentyFive149.toFixed(0)
-              totals.hundredFifty199 = totalHundredFifty199.toFixed(0)
-              totals.twoHundredPlus = totalTwoHundredPlus.toFixed(0)
+              totals.Land = parseFloat(totalLand / 43560).toFixed(2) // Update state values using queried totals
+              totals.Water = parseFloat(totalWater / 43560).toFixed(2)
+              totals.less10k = parseInt(totalLess10k)
+              totals.ten14 = parseInt(totalTen14)
+              totals.fifteen19 = parseInt(totalFif19)
+              totals.twenty24 = parseInt(totalTwenty24)
+              totals.twentyFive29 = parseInt(totalTwentyFive29)
+              totals.thirty34 = parseInt(totalThirty34)
+              totals.thirtyFive39 = parseInt(totalThirtyFive39)
+              totals.fourty44 = parseInt(totalFourty44)
+              totals.fourtyFive49 = parseInt(totalFourtyFive49)
+              totals.fifty59 = parseInt(totalFifty59)
+              totals.sixty74 = parseInt(totalSixty74)
+              totals.seventyFive99 = parseInt(totalSeventyFive99)
+              totals.hundred124 = parseInt(totalHundred124)
+              totals.hundredTwentyFive149 = parseInt(totalHundredTwentyFive149)
+              totals.hundredFifty199 = parseInt(totalHundredFifty199)
+              totals.twoHundredPlus = parseInt(totalTwoHundredPlus)
 
+              // Sum total household population
               var totalHousehold = totals.less10k + totals.ten14 + totals.fifteen19 + totals.twenty24 + totals.twentyFive29 + totals.thirty34 + totals.thirtyFive39 + totals.fourty44 + totals.fourtyFive49 + totals.fifty59 + totals.sixty74 + totals.seventyFive99 + totals.hundred124 + totals.hundredTwentyFive149 + totals.hundredFifty199 + totals.twoHundredPlus
  
+              // Create array to be passed to calc_Median function
               var totalsArr = [
                 totalHousehold,
                 totals.less10k,
@@ -558,20 +563,94 @@ export const createMap = function (loader, totals, censusData) {
                 totals.twoHundredPlus
               ]
 
+              // Estimate Median Household Income using Pareto Interpolation, given frequency distribution of income bins
+              // https://en.wikipedia.org/wiki/Pareto_interpolation
               function calc_Median(incomeData) {
 
+                // Obtain upper bounds for each income bin along with sample population total
                 var bucketTops = [10000, 15000, 20000, 25000, 30000, 35000, 40000, 45000, 50000, 60000, 75000, 100000, 125000, 150000, 200000]
                 var total =  incomeData[0]
 
-                for (var i = 18 - 1; i >= 2; i--) {
-                  
-                  if (incomeData.slice(1,i).reduce((a,b) => {return a + b}) > total/2.0) {
+                // Initialize variables to be conditionally filled
+                var lowerBucket = 0
+                var upperBucket = 0
+                var lowerBin = 0
+                var lowerSum = 0
+                var upperBin = 0
+                var upperSum = 0 
+                var lowerPerc = 0
+                var upperPerc = 0
+                var lowerIncome = 0
+                var upperIncome = 0
 
-                    var lowerBucket = i - 2
-                    var upperBucket = i - 1 // continue here https://gist.github.com/albertsun/1245817
+                var sampleMedian = 0
+                var thetaHat = 0
+                var kHat = 0
+
+                // Start with second smallest income bin, skipping the first element (total population), and second element (smallest income bin)
+                for (var i = 2; i < 17; i++) {
+
+                  var bin = incomeData.slice(1,i) // Subset array starting from smallest income bin to ith element
+                  var binSum = bin.reduce((a,b) => {return a + b}) // Sum subset array
+                  var halfTotal = total / 2.0
+                  
+                  // If the summed subset array is greater than half the sample population
+                  if (binSum > halfTotal) {
+
+                    lowerBucket = i - 2 // Set lower/upper bucket bounds
+                    upperBucket = i - 1 
+
+                    if (i == 16) { // Break loop if at final income bin
+
+                      break
+                    } else {
+
+                      // Create further lower/upper bounds expressed as sample proportions (%)
+                      lowerBin = incomeData.slice(1,lowerBucket+1)
+                      lowerSum = lowerBin.reduce((a,b) => {return a + b})
+
+                      upperBin = incomeData.slice(1,upperBucket+1)
+                      upperSum = upperBin.reduce((a,b) => {return a + b})
+
+                      lowerPerc = lowerSum / total 
+                      upperPerc = upperSum / total
+
+                      lowerIncome = bucketTops[lowerBucket - 1]
+                      upperIncome = bucketTops[upperBucket - 1]
+
+                      console.log('sums, percs, incomes filled')
+                      break
+                    }
                   }
+
+                  if (i == 16) { // return highest income bin if proportion condition unmet
+
+                    console.log('i == 16')
+
+                    return 200000
+                  }
+                } // end loop
+
+                if (lowerPerc == 0.0) { // Use simple sample median calculation if lower bound proportion at zero, otherise interpolate
+
+                  console.log('lowerperc is 0')
+
+                  sampleMedian = lowerIncome + ((upperIncome - lowerIncome) / 2.0)
+                } else {
+
+                  // Estimate theta (Pareto Index) ("distribution tail thinness") (Larger value indicates smaller proportion of incomes significantly larger than the lowest allowable income)
+                  // Estimate k (Lowest allowable income in population)
+                  thetaHat = (Math.log(1.0 - lowerPerc) - Math.log(1.0 - upperPerc)) / (Math.log(upperIncome) - Math.log(lowerIncome))
+                  kHat = Math.pow( (upperPerc - lowerPerc) / ( (1/Math.pow(lowerIncome,thetaHat)) - (1/Math.pow(upperIncome,thetaHat)) ), (1/thetaHat) )
+                  sampleMedian = kHat * Math.pow(2,(1/thetaHat))
+
+                  console.log('stats calculated')
                 }
+
+                return sampleMedian.toLocaleString() // Add thousands separator
               }
+
+              totals.paretoMedian = calc_Median(totalsArr) // Pass sample median to state property
               
               totals.Toggle = true // Show results pane
             })

@@ -33,7 +33,7 @@
     <div style = 'background-color: #d0d5dd' class = 'col-md-7'>
       <div class = 'col-md-4 housing-stats vizCol'>
         <div class = 'row'>
-          <h1>$26,255</h1>
+          <h1>${{totals.paretoMedian}}</h1>
           <p>Median Household Income</p>
         </div>
         <div class = 'row'>
@@ -90,7 +90,7 @@
 <script>
 
 import * as esriLoader from 'esri-loader'
-import { getTownName } from '../vuex/getters'
+import { getAttrib, getTownName } from '../vuex/getters'
 import { createMap } from './esrimap'
 
 export default {
@@ -287,7 +287,8 @@ export default {
 
     getters: {
 
-      townName: getTownName
+      townName: getTownName,
+      totals: getAttrib
     }
   },
 

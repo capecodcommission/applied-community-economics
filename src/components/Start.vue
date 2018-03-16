@@ -37,6 +37,7 @@
           <p>Population ($125,000 - $149,000): {{totals.hundredTwentyFive149}}</p>
           <p>Population ($150,000 - $199,000): {{totals.hundredFifty199}}</p>
           <p>Population ($200,000 +): {{totals.twoHundredPlus}}</p>
+          <p>Pareto Median: ${{totals.paretoMedian}}</p>
         </div>
       </div>
 

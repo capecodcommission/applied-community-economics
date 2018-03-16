@@ -25,7 +25,8 @@ const state = {
     hundred124: false,
     hundredTwentyFive149: false,
     hundredFifty199: false,
-    twoHundredPlus: false
+    twoHundredPlus: false,
+    paretoMedian: false
   },
   townselected: false,
   nbhselected: false,
