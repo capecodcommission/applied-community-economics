@@ -354,6 +354,8 @@ export const createMap = function (loader, totals, censusData) {
 
         parcelLayer.queryExtent().then((h) => {
 
+          console.log('queried parcel layer extent')
+
           var buff = geometryEngine.buffer(h.extent,[1],'miles',true) // Create geometry buffer w/ 1mi radius from defined embayment layer extent
 
           parcelLayer.definitionExpression = ""
@@ -406,10 +408,13 @@ export const createMap = function (loader, totals, censusData) {
             })
 
             resultLayer1.addMany(features1) // Push queried parcels to new graphics layer
+            console.log('queried parcels added to new layer')
           })
           .then((j) => {
 
             blockGroups.queryFeatures(query).then((i) => { // Query for block groups intersecting the buffered extent
+
+              console.log('querying blockgroup feature layer')
 
               // Obtain totals from queried blockgroup attributes
               // Create/fill new attribute using census data
@@ -435,7 +440,7 @@ export const createMap = function (loader, totals, censusData) {
 
                   censusData.map((k) => { // Search ACS rows by block group
 
-                    if (k.indexOf(j.attributes.TRACT) >= 0 && k.indexOf(j.attributes.BLKGRP)  >= 0) { // If key-match
+                    if (k[20] == j.attributes.TRACT && k[21] == j.attributes.BLKGRP) { // If key-match
 
                       console.log(k)
 
@@ -519,6 +524,8 @@ export const createMap = function (loader, totals, censusData) {
               })
 
               resultLayer.addMany(features) // Add queried features to results layer
+
+              console.log('added selected blockgroup features to new results layer')
 
               totals.Land = parseFloat(totalLand / 43560).toFixed(2) // Update state values using queried totals
               totals.Water = parseFloat(totalWater / 43560).toFixed(2)
