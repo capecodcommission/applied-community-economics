@@ -38,6 +38,9 @@
           <p>Population ($150,000 - $199,000): {{totals.hundredFifty199}}</p>
           <p>Population ($200,000 +): {{totals.twoHundredPlus}}</p>
           <p>Pareto Median: ${{totals.paretoMedian}}</p>
+          <p>Unemployment: {{(totals.percUnemp * 100).toFixed(2)}}%</p>
+
+          <p>Less-than High School: {{totals.lessHS}} </p>
         </div>
       </div>
 
@@ -101,8 +104,6 @@ export default {
   ready() {
 
     this.loadBlks()
-
-    esriLoader.bootstrap((err) => { createMap(esriLoader, this.totals, this.blockGroups)}, { url: 'https://js.arcgis.com/4.5/'})
   },
 
   methods: {
@@ -113,6 +114,7 @@ export default {
 
     'blockGroups': function(x) {
 
+      esriLoader.bootstrap((err) => { createMap(esriLoader, this.totals, this.blockGroups)}, { url: 'https://js.arcgis.com/4.5/'})
     }
   }
 }

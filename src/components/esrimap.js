@@ -368,10 +368,13 @@ export const createMap = function (loader, totals, censusData) {
           query1.geometry = buff
           query1.spatialRelationship = 'contains'
 
+          // Initialize running totals
           var features = ''
           var features1 = ''
           var totalLand = 0
           var totalWater = 0
+
+          // Household income
           var totalPop = 0
           var totalLess10k = 0
           var totalTen14 = 0
@@ -389,6 +392,42 @@ export const createMap = function (loader, totals, censusData) {
           var totalHundredTwentyFive149 = 0
           var totalHundredFifty199 = 0
           var totalTwoHundredPlus = 0
+
+          // Unemployment
+          var totalCivilLabor = 0
+          var totalUnemp = 0
+          var percUnemp = 0
+
+          // Education
+          var totalEdu = 0
+          var totalNoSchool = 0
+          var totalNursery = 0
+          var totalKindergarten = 0
+          var totalG1 = 0
+          var totalG2 = 0
+          var totalG3 = 0
+          var totalG4 = 0
+          var totalG5 = 0
+          var totalG6 = 0
+          var totalG7 = 0
+          var totalG8 = 0
+          var totalG9 = 0
+          var totalG10 = 0
+          var totalG11 = 0
+          var totalG12 = 0
+          var totalLessHS = 0  
+          var totalHS = 0
+          var totalGED = 0
+          var totalHSG = 0
+          var totalSCLess1 = 0
+          var totalSCMore1 = 0
+          var totalAss = 0
+          var totalSCA = 0
+          var totalBac = 0
+          var totalMas = 0
+          var totalPro = 0
+          var totalDoc = 0
+          var totalGradPro = 0
 
           parcelLayer.queryFeatures(query1).then((i) => { // Query parcels using extent of defined embayment layer
 
@@ -423,7 +462,7 @@ export const createMap = function (loader, totals, censusData) {
 
                 if (j.attributes.TRACT != "990000") { // If census tract isn't cape cod water body
 
-                  j.attributes.popPrcl = 0 // Initialize population by parcel field
+                  var popPrcl = 0 // Initialize population by parcel field
 
                   resultLayer1.graphics.items.map((k) => { // Look through parcels from queried results
 
@@ -431,20 +470,21 @@ export const createMap = function (loader, totals, censusData) {
 
                       k.attributes.BLKGRP = j.attributes.BLKGRP // Assign block group to individual parcel
 
-                      j.attributes.popPrcl += parseInt(k.attributes.POP_10) // Sum population field in block group layer using POP_10 from individual parcels
+                      popPrcl += parseInt(k.attributes.POP_10) // Sum population field in block group layer using POP_10 from individual parcels
                     }
                   })
+
+                  j.attributes.popPrcl = popPrcl
 
                   totalLand += j.attributes.AREALAND // Obtain totals
                   totalWater += j.attributes.AREAWATER
 
                   censusData.map((k) => { // Search ACS rows by block group
 
-                    if (k[20] == j.attributes.TRACT && k[21] == j.attributes.BLKGRP) { // If key-match
-
-                      console.log(k)
+                    if (k[47] == j.attributes.TRACT && k[48] == j.attributes.BLKGRP) { // If key-match
 
                       j.attributes.population = parseInt(k[1]) // Append/fill census attributes by column index
+
                       j.attributes.less10k = parseInt(k[2])
                       j.attributes.ten14 = parseInt(k[3])
                       j.attributes.fifteen19 = parseInt(k[4])
@@ -461,6 +501,35 @@ export const createMap = function (loader, totals, censusData) {
                       j.attributes.hundredTwentyFive149 = parseInt(k[15])
                       j.attributes.hundredFifty199 = parseInt(k[16])
                       j.attributes.twoHundredPlus = parseInt(k[17])
+
+                      j.attributes.civil = parseInt(k[18])
+                      j.attributes.unemp = parseInt(k[19])
+
+                      j.attributes.edu = parseInt(k[20])
+                      j.attributes.noSchool = parseInt(k[21])
+                      j.attributes.nursery = parseInt(k[22])
+                      j.attributes.kindergarten = parseInt(k[23])
+                      j.attributes.g1 = parseInt(k[24])
+                      j.attributes.g2 = parseInt(k[25])
+                      j.attributes.g3 = parseInt(k[26])
+                      j.attributes.g4 = parseInt(k[27])
+                      j.attributes.g5 = parseInt(k[28])
+                      j.attributes.g6 = parseInt(k[29])
+                      j.attributes.g7 = parseInt(k[30])
+                      j.attributes.g8 = parseInt(k[31])
+                      j.attributes.g9 = parseInt(k[32])
+                      j.attributes.g10 = parseInt(k[33])
+                      j.attributes.g11 = parseInt(k[34])
+                      j.attributes.g12 = parseInt(k[35])
+                      j.attributes.hs = parseInt(k[36])
+                      j.attributes.ged = parseInt(k[37])
+                      j.attributes.scLess1 = parseInt(k[38])
+                      j.attributes.scMore1 = parseInt(k[39])
+                      j.attributes.ass = parseInt(k[40])
+                      j.attributes.bac = parseInt(k[41])
+                      j.attributes.mas = parseInt(k[42])
+                      j.attributes.pro = parseInt(k[43])
+                      j.attributes.doc = parseInt(k[44])
                     }
                   })
 
@@ -485,6 +554,36 @@ export const createMap = function (loader, totals, censusData) {
                     totalHundredTwentyFive149 += j.attributes.hundredTwentyFive149
                     totalHundredFifty199 += j.attributes.hundredFifty199
                     totalTwoHundredPlus += j.attributes.twoHundredPlus
+
+                    totalCivilLabor += j.attributes.civil
+                    totalUnemp += j.attributes.unemp
+
+                    totalEdu += j.attributes.edu
+                    totalNoSchool += j.attributes.noSchool
+                    totalNursery += j.attributes.nursery
+                    totalKindergarten += j.attributes.kindergarten
+                    totalG1 += j.attributes.g1
+                    totalG2 += j.attributes.g2
+                    totalG3 += j.attributes.g3
+                    totalG4 += j.attributes.g4
+                    totalG5 += j.attributes.g5
+                    totalG6 += j.attributes.g6
+                    totalG7 += j.attributes.g7
+                    totalG8 += j.attributes.g8
+                    totalG9 += j.attributes.g9
+                    totalG10 += j.attributes.g10
+                    totalG11 += j.attributes.g11
+                    totalG12 += j.attributes.g12
+                    totalHS += j.attributes.hs
+                    totalGED += j.attributes.ged
+                    totalSCLess1 += j.attributes.scLess1
+                    totalSCMore1 += j.attributes.scMore1
+                    totalAss += j.attributes.ass
+                    totalBac += j.attributes.bac
+                    totalMas += j.attributes.mas
+                    totalPro += j.attributes.pro
+                    totalDoc += j.attributes.doc
+
 
                     j.symbol = { // Set normal block group symbology
 
@@ -527,6 +626,16 @@ export const createMap = function (loader, totals, censusData) {
 
               console.log('added selected blockgroup features to new results layer')
 
+              totalHSG = totalHS + totalGED
+
+              totalSCA = totalSCLess1 + totalSCMore1 + totalAss
+
+              totalGradPro = totalMas + totalPro + totalDoc
+
+              percUnemp = totalUnemp / totalCivilLabor
+
+              totalLessHS = totalNoSchool + totalNursery + totalKindergarten + totalG1 + totalG2 + totalG3 + totalG4 + totalG5 + totalG6 + totalG7 + totalG8 + totalG9 + totalG10 + totalG11 + totalG12
+
               totals.Land = parseFloat(totalLand / 43560).toFixed(2) // Update state values using queried totals
               totals.Water = parseFloat(totalWater / 43560).toFixed(2)
               totals.less10k = parseInt(totalLess10k)
@@ -545,6 +654,15 @@ export const createMap = function (loader, totals, censusData) {
               totals.hundredTwentyFive149 = parseInt(totalHundredTwentyFive149)
               totals.hundredFifty199 = parseInt(totalHundredFifty199)
               totals.twoHundredPlus = parseInt(totalTwoHundredPlus)
+              totals.percUnemp = parseFloat(percUnemp).toFixed(2)
+              totals.lessHS = parseInt(totalLessHS)
+              totals.hsg = parseInt(totalHSG)
+              totals.sca = parseInt(totalSCA)
+              totals.bac = parseInt(totalBac)
+              totals.gradPro = parseInt(totalGradPro)
+              totals.totalEdu = parseInt(totalEdu)
+
+              console.log('state (store) totals filled by blockgroups')
 
               // Sum total household population
               var totalHousehold = totals.less10k + totals.ten14 + totals.fifteen19 + totals.twenty24 + totals.twentyFive29 + totals.thirty34 + totals.thirtyFive39 + totals.fourty44 + totals.fourtyFive49 + totals.fifty59 + totals.sixty74 + totals.seventyFive99 + totals.hundred124 + totals.hundredTwentyFive149 + totals.hundredFifty199 + totals.twoHundredPlus
@@ -651,7 +769,7 @@ export const createMap = function (loader, totals, censusData) {
                   kHat = Math.pow( (upperPerc - lowerPerc) / ( (1/Math.pow(lowerIncome,thetaHat)) - (1/Math.pow(upperIncome,thetaHat)) ), (1/thetaHat) )
                   sampleMedian = kHat * Math.pow(2,(1/thetaHat))
 
-                  console.log('stats calculated')
+                  console.log('median calculated')
                 }
 
                 return sampleMedian.toLocaleString() // Add thousands separator

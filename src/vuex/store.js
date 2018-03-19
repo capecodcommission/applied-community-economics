@@ -26,7 +26,14 @@ const state = {
     hundredTwentyFive149: false,
     hundredFifty199: false,
     twoHundredPlus: false,
-    paretoMedian: false
+    paretoMedian: false,
+    percUnemp: false,
+    lessHS: false,
+    hsg: false,
+    sca: false,
+    bac: false,
+    gradPro: false,
+    totalEdu: false
   },
   townselected: false,
   nbhselected: false,
@@ -151,6 +158,7 @@ const mutations = {
     state.blockGroups = blks
 
     console.log('Census Data Loaded')
+    console.log(state.blockGroups[1])
   },
 
   TOGGLE_ATTRIB (state, land, water) {

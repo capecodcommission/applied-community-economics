@@ -37,13 +37,14 @@
           <p>Median Household Income</p>
         </div>
         <div class = 'row'>
-          <h1>7.5%</h1>
+          <h1>{{(totals.percUnemp * 100).toFixed(2)}}%</h1>
           <p>Unemployment</p>
         </div>
       </div>
       <div class = 'col-md-4 vizCol'>
         <h4>Educational Attainment</h4>
         <vue-chart :chart-type="chartType3" :columns="columns3" :rows="rows3" :options="options3"></vue-chart>
+        <p class = 'housing-stats'>Population > 25 years: {{totals.totalEdu}}</p>
       </div>
       <div class = 'col-md-4 vizCol'>
         <h4>Median Earnings</h4>
@@ -181,11 +182,11 @@ export default {
         ['Other',7]
       ],
       rows3: [
-        ['Less than high school graduate',13],
-        ['High school graduate',42],
-        ['Some college or associates degree',33],
-        ['Bachelors degree',7],
-        ['Grduate or professional degree',5]
+        ['Less than high school graduate',this.totals.lessHS],
+        ['High school graduate',this.totals.hsg],
+        ['Some college or associates degree',this.totals.sca],
+        ['Bachelors degree',this.totals.bac],
+        ['Grduate or professional degree',this.totals.gradPro]
       ],
       rows4: [
         ['Grduate or professional degree', 50000, '#1365c6', 'Graduate or professional degree', 62000, 'Town of'],
