@@ -59,9 +59,9 @@
 </template>
 
 <script>
-import { getComparison, getTownName, getAttrib, getBlks } from '../vuex/getters'
+import { getComparison, getTownName, getAttrib, getBlks, getTracts } from '../vuex/getters'
 
-import {updateAttrib, loadBlks} from '../vuex/actions'
+import {updateAttrib, loadBlks, loadTracts} from '../vuex/actions'
 import treatmentDetail from './TreatmentDetail'
 import Header from './Header'
 import sidething from './sideBar'
@@ -89,7 +89,8 @@ export default {
     actions: {
 
       updateAttrib,
-      loadBlks
+      loadBlks,
+      loadTracts
     },
 
     getters: {
@@ -97,7 +98,8 @@ export default {
       showComparison: getComparison,
       townName: getTownName,
       totals: getAttrib,
-      blockGroups: getBlks
+      blockGroups: getBlks,
+      tracts: getTracts
     }
   },
 
@@ -114,7 +116,12 @@ export default {
 
     'blockGroups': function(x) {
 
-      esriLoader.bootstrap((err) => { createMap(esriLoader, this.totals, this.blockGroups)}, { url: 'https://js.arcgis.com/4.5/'})
+      this.loadTracts()
+    },
+
+    'tracts': function(x) {
+
+      esriLoader.bootstrap((err) => { createMap(esriLoader, this.totals, this.blockGroups, this.tracts)}, { url: 'https://js.arcgis.com/4.5/'})
     }
   }
 }

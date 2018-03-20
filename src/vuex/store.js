@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 // Create state object that all Vues share, JSON from API is loaded here
 const state = {
+  tracts: [],
   blockGroups: [],
   attributes: {
     Land: false,
@@ -33,7 +34,12 @@ const state = {
     sca: false,
     bac: false,
     gradPro: false,
-    totalEdu: false
+    totalEdu: false,
+    incLessHS: false,
+    incHSG: false,
+    incSCA: false,
+    incBac: false,
+    incGrad: false
   },
   townselected: false,
   nbhselected: false,
@@ -153,11 +159,19 @@ const state = {
 // Create mutations; functions to change data in the state
 const mutations = {
 
+  LOAD_TRACTS (state, tracts) {
+
+    state.tracts = tracts
+
+    console.log('Census Tracts Loaded')
+    console.log(state.tracts[1])
+  },
+
   LOAD_BLKS (state, blks) {
 
     state.blockGroups = blks
 
-    console.log('Census Data Loaded')
+    console.log('Census BlockGroups Loaded')
     console.log(state.blockGroups[1])
   },
 

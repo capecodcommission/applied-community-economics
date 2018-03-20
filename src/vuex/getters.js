@@ -63,3 +63,8 @@ export function getBlks (state) {
 
   return state.blockGroups
 }
+
+export function getTracts (state) {
+
+  return state.tracts
+}

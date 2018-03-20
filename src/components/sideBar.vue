@@ -12,7 +12,7 @@
       <div style = 'font-size: 30px; display: inline-block;' id = 'BAsites'>{{d3data.Business}}</div> businesses and 
       <div style = 'font-size: 30px; display: inline-block;' id = 'pct_GF'>{{(d3data.pctgf * 100).toFixed()}}%</div> of buildings with great form.
     </p>
-    <svg style = 'display: block; margin: 0 auto' id = 'svgboi'></svg>
+    <svg style = 'display: block; margin: 0 auto;' id = 'svgboi'></svg>
   </div>
   <br>
 

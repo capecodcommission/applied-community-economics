@@ -23,32 +23,41 @@
     <div class = 'col-md-5'>
       <div class = 'col-md-6 vizCol'>
         <h4>Business</h4>
-        <vue-chart :chart-type="chartType1" :columns="columns1" :rows="rows1" :options="options1"></vue-chart>
+        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows1" :options="options1"></vue-chart>
       </div>
       <div class = 'col-md-6 vizCol'>
         <h4>Employment</h4>
-        <vue-chart :chart-type="chartType2" :columns="columns2" :rows="rows2" :options="options2"></vue-chart>
+        <vue-chart class = 'chart' :chart-type="chartType2" :columns="columns2" :rows="rows2" :options="options2"></vue-chart>
       </div>
     </div>
     <div style = 'background-color: #d0d5dd' class = 'col-md-7'>
       <div class = 'col-md-4 housing-stats vizCol'>
         <div class = 'row'>
           <h1>${{totals.paretoMedian}}</h1>
-          <p>Median Household Income</p>
+          <p><b>Median Household Income</b></p>
         </div>
         <div class = 'row'>
           <h1>{{(totals.percUnemp * 100).toFixed(2)}}%</h1>
-          <p>Unemployment</p>
+          <p><b>Unemployment</b></p>
+        </div>
+        <div class = 'row'>
+          <ul class="legend">
+            <li><span class="superawesome"></span> Less than high school graduate</li>
+            <li><span class="awesome"></span> High school graduate (includes equivalency)</li>
+            <li><span class="kindaawesome"></span> Some college or associate's degree</li>
+            <li><span class="notawesome"></span> Bachelor's degree</li>
+            <li><span class="neato"></span> Graduate or professional degree</li>
+          </ul>
         </div>
       </div>
       <div class = 'col-md-4 vizCol'>
         <h4>Educational Attainment</h4>
-        <vue-chart :chart-type="chartType3" :columns="columns3" :rows="rows3" :options="options3"></vue-chart>
+        <vue-chart class = 'chart' :chart-type="chartType3" :columns="columns3" :rows="rows3" :options="options3"></vue-chart>
         <p class = 'housing-stats'>Population > 25 years: {{totals.totalEdu}}</p>
       </div>
       <div class = 'col-md-4 vizCol'>
         <h4>Median Earnings</h4>
-        <vue-chart :chart-type="chartType4" :columns="columns4" :rows="rows4" :options="options4"></vue-chart>
+        <vue-chart class = 'chart' :chart-type="chartType4" :columns="columns4" :rows="rows4" :options="options4"></vue-chart>
       </div>
     </div>
   </div>
@@ -57,31 +66,40 @@
     <div class = 'col-md-5'>
       <div class = 'col-md-6 vizCol'>
         <h4>Business</h4>
-        <vue-chart :chart-type="chartType1" :columns="columns1" :rows="rows5" :options="options1"></vue-chart>
+        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows5" :options="options1"></vue-chart>
       </div>
       <div class = 'col-md-6 vizCol'>
         <h4>Employment</h4>
-        <vue-chart :chart-type="chartType2" :columns="columns2" :rows="rows6" :options="options2"></vue-chart>
+        <vue-chart class = 'chart' :chart-type="chartType2" :columns="columns2" :rows="rows6" :options="options2"></vue-chart>
       </div>
     </div>
     <div style = 'background-color: #d0d5dd' class = 'col-md-7'>
       <div class = 'col-md-4 housing-stats vizCol'>
         <div class = 'row'>
           <h1>$66,279</h1>
-          <p>Median Household Income</p>
+          <p><b>Median Household Income</b></p>
         </div>
         <div class = 'row'>
           <h1>6.5%</h1>
-          <p>Unemployment</p>
+          <p><b>Unemployment</b></p>
+        </div>
+        <div class = 'row'>
+          <ul class="legend">
+            <li><span class="superawesome"></span> Less than high school graduate</li>
+            <li><span class="awesome"></span> High school graduate (includes equivalency)</li>
+            <li><span class="kindaawesome"></span> Some college or associate's degree</li>
+            <li><span class="notawesome"></span> Bachelor's degree</li>
+            <li><span class="neato"></span> Graduate or professional degree</li>
+          </ul>
         </div>
       </div>
       <div class = 'col-md-4 vizCol'>
         <h4>Educational Attainment</h4>
-        <vue-chart :chart-type="chartType3" :columns="columns3" :rows="rows7" :options="options3"></vue-chart>
+        <vue-chart class = 'chart' :chart-type="chartType3" :columns="columns3" :rows="rows7" :options="options3"></vue-chart>
       </div>
       <div class = 'col-md-4 vizCol'>
         <h4>Median Earnings</h4>
-        <vue-chart :chart-type="chartType4" :columns="columns4" :rows="rows8" :options="options4"></vue-chart>
+        <vue-chart class = 'chart' :chart-type="chartType4" :columns="columns4" :rows="rows8" :options="options4"></vue-chart>
       </div>
     </div>
   </div>
@@ -189,11 +207,11 @@ export default {
         ['Grduate or professional degree',this.totals.gradPro]
       ],
       rows4: [
-        ['Grduate or professional degree', 50000, '#1365c6', 'Graduate or professional degree', 62000, 'Town of'],
-        ['Bachelors degree', 65000, '#3f7fcc', 'Bachelors degree', 50000, 'Town of'],
-        ['Some college or associates degree', 30000, '#689ad6', 'Some college or associates degree', 35000, 'Town of'],
-        ['High school graduate', 25000, '#a8bfdb', 'High school graduate', 30000, 'Town of'],
-        ['Less than high school graduate', 10000, '#d2d7dd', 'Less than high school graduate', 25000, 'Town of']
+        ['Grduate or professional degree', this.totals.incGrad, '#222a35', 'Graduate or professional degree', 62000, 'Town of'],
+        ['Bachelors degree', this.totals.incBac, '#333f50', 'Bachelors degree', 50000, 'Town of'],
+        ['Some college or associates degree', this.totals.incSCA, '#849bb0', 'Some college or associates degree', 35000, 'Town of'],
+        ['High school graduate', this.totals.incHSG, '#adb9ca', 'High school graduate', 30000, 'Town of'],
+        ['Less than high school graduate', this.totals.incLessHS, '#dae3f3', 'Less than high school graduate', 25000, 'Town of']
       ],
       rows5: [
         ['Retail/Rest./Entertainment',26],
@@ -240,7 +258,7 @@ export default {
           left: 0,
           top: 0
         },
-        colors: ['red','orange','green','yellow','blue', 'grey']
+        colors: ['#c00000','#ed7d31','#92d050','#ffc000','5b9bd5', '#bfbfbf']
       },
       options2: {
         pieHole: 0.5,
@@ -250,7 +268,7 @@ export default {
           width: '100%',
           height: '100%'
         },
-        colors: ['red','orange','green','yellow','blue', 'grey']
+        colors: ['#c00000','#ed7d31','#92d050','#ffc000','5b9bd5', '#bfbfbf']
       },
       options3: {
         pieHole: 0.5,
@@ -260,7 +278,7 @@ export default {
           width: '100%',
           height: '100%'
         },
-        colors: ['#d2d7dd','#a8bfdb','#689ad6','#3f7fcc','#1365c6']
+        colors: ['#dae3f3','#adb9ca','#849bb0','#333f50','#222a35']
       },
       options4: {
         backgroundColor: '#d0d5dd',
@@ -580,6 +598,18 @@ export default {
 </script>
 
 <style>
+
+vue-chart { width: 100% !important }
+
+.legend { list-style: none; }
+.legend li { font-size: 10px; float: left; }
+.legend span { border: 1px solid #ccc; float: left; width: 10px; height: 10px; margin: 2px; }
+
+.legend .superawesome { background-color: #dae3f3;}
+.legend .awesome { background-color: #adb9ca; }
+.legend .kindaawesome { background-color: #849bb0; }
+.legend .notawesome { background-color: #333f50; }
+.legend .neato { background-color: #222a35; }
 
 .vizCol { 
   background-color: #d0d5dd; 

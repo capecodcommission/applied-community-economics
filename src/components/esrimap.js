@@ -1,4 +1,4 @@
-export const createMap = function (loader, totals, censusData) {
+export const createMap = function (loader, totals, censusBlocks, censusTracts) {
 
   loader.dojoRequire(
     [
@@ -17,6 +17,9 @@ export const createMap = function (loader, totals, censusData) {
     "esri/tasks/support/BufferParameters",
     "esri/layers/GraphicsLayer",
     "esri/widgets/Home",
+    "esri/symbols/SimpleFillSymbol",
+    "esri/symbols/SimpleLineSymbol",
+    "esri/renderers/SimpleRenderer",
     "dojo/domReady!"
     ],
     (
@@ -34,7 +37,10 @@ export const createMap = function (loader, totals, censusData) {
       Graphic,
       BufferParameters,
       GraphicsLayer,
-      Home
+      Home,
+      SimpleFillSymbol,
+      SimpleLineSymbol,
+      SimpleRenderer
     ) => {
     
       // Color parcels based on housing type
@@ -86,7 +92,7 @@ export const createMap = function (loader, totals, censusData) {
         visible: false
       })
 
-      // parcel layer containing some census api estimates
+      // parcel layer containing census api estimates
       var parcelLayer = new FeatureLayer({
         url: "http://gis-services.capecodcommission.org/arcgis/rest/services/ActivityCenters/CommunityCharacteristics/MapServer/1",
         outFields: ['*'],
@@ -109,11 +115,37 @@ export const createMap = function (loader, totals, censusData) {
         visible: false
       })
 
+      
+
+      var tbRenderer = {
+        type: 'simple',
+        symbol: {
+          type: 'simple-line',
+          color: [0,0,0,1],
+          outline: {
+            width: 1,
+            color: 'black'
+          }
+        }
+      }
+
+      // Town boundary layer to query block groups
+      var townBoundaries = new FeatureLayer ({
+        url: "https://gis-services.capecodcommission.org/arcgis/rest/services/Data_People/Boundary/MapServer/8",
+        outFields: ['*'],
+        renderer: tbRenderer,
+        visible: true,
+        popupTemplate: {
+          content: '{*}'
+        },
+        definitionExpression: "TOWN = 'BARNSTABLE'" // Filter to Barnstable for now
+      })
+
       var resultLayer = new GraphicsLayer() // Initialize blank layer to fill with queried block group symbology
       var resultLayer1 = new GraphicsLayer()
 
       // create basemap with layers prepared but hidden
-      var map = new Map({basemap: 'dark-gray', layers: [embayments, blockGroups, parcelLayer, resultLayer, resultLayer1]});
+      var map = new Map({basemap: 'dark-gray', layers: [embayments, blockGroups, parcelLayer, resultLayer, resultLayer1, townBoundaries]});
 
       // var custom = new TileLayer({
       //   url: "http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer"
@@ -428,6 +460,17 @@ export const createMap = function (loader, totals, censusData) {
           var totalPro = 0
           var totalDoc = 0
           var totalGradPro = 0
+          var totalIncLessHS = 0
+          var totalIncHSG = 0
+          var totalIncSCA = 0
+          var totalIncBac = 0
+          var totalIncGrad = 0
+          var totalIncLength = 0
+          var avgIncLessHS = 0
+          var avgIncHSG = 0
+          var avgIncSCA = 0
+          var avgIncBac = 0
+          var avgIncGrad = 0
 
           parcelLayer.queryFeatures(query1).then((i) => { // Query parcels using extent of defined embayment layer
 
@@ -479,9 +522,9 @@ export const createMap = function (loader, totals, censusData) {
                   totalLand += j.attributes.AREALAND // Obtain totals
                   totalWater += j.attributes.AREAWATER
 
-                  censusData.map((k) => { // Search ACS rows by block group
+                  censusBlocks.map((k) => { // Search ACS rows by block group
 
-                    if (k[47] == j.attributes.TRACT && k[48] == j.attributes.BLKGRP) { // If key-match
+                    if (k[52] == j.attributes.TRACT && k[53] == j.attributes.BLKGRP) { // If key-match
 
                       j.attributes.population = parseInt(k[1]) // Append/fill census attributes by column index
 
@@ -530,6 +573,44 @@ export const createMap = function (loader, totals, censusData) {
                       j.attributes.mas = parseInt(k[42])
                       j.attributes.pro = parseInt(k[43])
                       j.attributes.doc = parseInt(k[44])
+                    }
+                  })
+
+                  censusTracts.map((k) => { // Search ACS by tract
+
+                    if (k[8] === j.attributes.TRACT) {
+
+                      j.attributes.incLessHS = parseInt(k[1])
+                      j.attributes.incHSG = parseInt(k[2])
+                      j.attributes.incSCA = parseInt(k[3])
+                      j.attributes.incBac = parseInt(k[4])
+                      j.attributes.incGrad = parseInt(k[5])
+
+                      // Replace negative values with 1
+                      if (j.attributes.incLessHS < 0) {
+
+                        j.attributes.incLessHS = 1
+                      }
+
+                      if (j.attributes.incHSG < 0) {
+
+                        j.attributes.incHSG = 1
+                      }
+
+                      if (j.attributes.incSCA < 0) {
+
+                        j.attributes.incSCA = 1
+                      }
+
+                      if (j.attributes.incBac < 0) {
+
+                        j.attributes.incBac = 1
+                      }
+
+                      if (j.attributes.incGrad < 0) {
+
+                        j.attributes.incGrad = 1
+                      }
                     }
                   })
 
@@ -584,6 +665,13 @@ export const createMap = function (loader, totals, censusData) {
                     totalPro += j.attributes.pro
                     totalDoc += j.attributes.doc
 
+                    totalIncLessHS += j.attributes.incLessHS
+                    totalIncHSG += j.attributes.incHSG
+                    totalIncSCA += j.attributes.incSCA
+                    totalIncBac += j.attributes.incBac
+                    totalIncGrad += j.attributes.incGrad
+                    totalIncLength += 1
+
 
                     j.symbol = { // Set normal block group symbology
 
@@ -626,15 +714,18 @@ export const createMap = function (loader, totals, censusData) {
 
               console.log('added selected blockgroup features to new results layer')
 
+              avgIncLessHS = totalIncLessHS / totalIncLength
+              avgIncHSG = totalIncHSG / totalIncLength
+              avgIncSCA = totalIncSCA / totalIncLength
+              avgIncBac = totalIncBac / totalIncLength
+              avgIncGrad = totalIncGrad / totalIncLength
+
               totalHSG = totalHS + totalGED
-
               totalSCA = totalSCLess1 + totalSCMore1 + totalAss
-
               totalGradPro = totalMas + totalPro + totalDoc
+              totalLessHS = totalNoSchool + totalNursery + totalKindergarten + totalG1 + totalG2 + totalG3 + totalG4 + totalG5 + totalG6 + totalG7 + totalG8 + totalG9 + totalG10 + totalG11 + totalG12
 
               percUnemp = totalUnemp / totalCivilLabor
-
-              totalLessHS = totalNoSchool + totalNursery + totalKindergarten + totalG1 + totalG2 + totalG3 + totalG4 + totalG5 + totalG6 + totalG7 + totalG8 + totalG9 + totalG10 + totalG11 + totalG12
 
               totals.Land = parseFloat(totalLand / 43560).toFixed(2) // Update state values using queried totals
               totals.Water = parseFloat(totalWater / 43560).toFixed(2)
@@ -661,6 +752,11 @@ export const createMap = function (loader, totals, censusData) {
               totals.bac = parseInt(totalBac)
               totals.gradPro = parseInt(totalGradPro)
               totals.totalEdu = parseInt(totalEdu)
+              totals.incLessHS = parseInt(avgIncLessHS)
+              totals.incHSG = parseInt(avgIncHSG)
+              totals.incSCA = parseInt(avgIncSCA)
+              totals.incBac = parseInt(avgIncBac)
+              totals.incGrad = parseInt(avgIncGrad)
 
               console.log('state (store) totals filled by blockgroups')
 
