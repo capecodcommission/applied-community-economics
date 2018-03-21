@@ -115,7 +115,17 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
         visible: false
       })
 
-      
+      // census tract layer from tigerweb services
+      var tracts = new FeatureLayer({
+        url: "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Tracts_Blocks/MapServer/4",
+        definitionExpression: "STATE = 25 and COUNTY = 001",
+        outFields: ['*'],
+        popupTemplate: {
+          title: '{NAME}',
+          content: '{*}'
+        },
+        visible: false
+      })
 
       var tbRenderer = {
         type: 'simple',
@@ -384,7 +394,9 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
       // Display results
       function queryEmblks() {
 
-        parcelLayer.queryExtent().then((h) => {
+        document.getElementById('loading').style.display = true ? 'block' : 'none';
+
+        parcelLayer.queryExtent().then((h) => { // Obtain GIZ extent
 
           console.log('queried parcel layer extent')
 
@@ -517,7 +529,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
                     }
                   })
 
-                  j.attributes.popPrcl = popPrcl
+                  j.attributes.popPrcl = popPrcl // Set summed population as block group attribute
 
                   totalLand += j.attributes.AREALAND // Obtain totals
                   totalWater += j.attributes.AREAWATER
@@ -528,6 +540,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
 
                       j.attributes.population = parseInt(k[1]) // Append/fill census attributes by column index
 
+                      // Income
                       j.attributes.less10k = parseInt(k[2])
                       j.attributes.ten14 = parseInt(k[3])
                       j.attributes.fifteen19 = parseInt(k[4])
@@ -545,9 +558,11 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
                       j.attributes.hundredFifty199 = parseInt(k[16])
                       j.attributes.twoHundredPlus = parseInt(k[17])
 
+                      // Employment
                       j.attributes.civil = parseInt(k[18])
                       j.attributes.unemp = parseInt(k[19])
 
+                      // Education
                       j.attributes.edu = parseInt(k[20])
                       j.attributes.noSchool = parseInt(k[21])
                       j.attributes.nursery = parseInt(k[22])
@@ -578,8 +593,9 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
 
                   censusTracts.map((k) => { // Search ACS by tract
 
-                    if (k[8] === j.attributes.TRACT) {
+                    if (k[8] === j.attributes.TRACT) { // If match, append/fill census data as block group attributes
 
+                      // Income by education
                       j.attributes.incLessHS = parseInt(k[1])
                       j.attributes.incHSG = parseInt(k[2])
                       j.attributes.incSCA = parseInt(k[3])
@@ -619,7 +635,8 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
 
                   if ((j.attributes.popPrcl / j.attributes.population) >= .5) { // If queried parcel population is greater than 50% of block group population
 
-                    totalLess10k += j.attributes.less10k // Sum income population attributes for selected block groups
+                    // Sum income, employment, and education attributes across block groups
+                    totalLess10k += j.attributes.less10k 
                     totalTen14 += j.attributes.ten14
                     totalFif19 += j.attributes.fifteen19
                     totalTwenty24 += j.attributes.twenty24
@@ -708,7 +725,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
                 }       
 
                 return j 
-              })
+              }) // End of feature map
 
               resultLayer.addMany(features) // Add queried features to results layer
 
@@ -872,8 +889,102 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
               }
 
               totals.paretoMedian = calc_Median(totalsArr) // Pass sample median to state property
-              
-              totals.Toggle = true // Show results pane
+
+              var query2 = tracts.createQuery() // Initialize block group query using town boundary geometry
+              query2.geometry = townBoundaries
+              query2.spatialRelationship = 'contains'
+
+              console.log('begin querying tracts within Barnstable')
+
+              tracts.queryFeatures(query2).then((i) => { // Query tracts within town boundary geometry
+
+                // Initialize rolling sums and avgs of income by education
+                var townTotalIncLessHS = 0
+                var townTotalIncHSG = 0
+                var townTotalIncSCA = 0
+                var townTotalIncBac = 0
+                var townTotalIncGrad = 0
+                var townTotalIncLength = 0
+                var townAvgIncLessHS = 0
+                var townAvgIncHSG = 0
+                var townAvgIncSCA = 0
+                var townAvgIncBac = 0
+                var townAvgIncGrad = 0
+
+                i.features.map((j) => { // Iterate through tract features
+
+                  if (j.attributes.TRACT != '990000') {
+
+                    censusTracts.map((k) => { // Iterate through census API by tract
+
+                      if (k[8] === j.attributes.TRACT) { // If tract match
+
+                        // Income by education
+                        j.attributes.incLessHS = parseInt(k[1])
+                        j.attributes.incHSG = parseInt(k[2])
+                        j.attributes.incSCA = parseInt(k[3])
+                        j.attributes.incBac = parseInt(k[4])
+                        j.attributes.incGrad = parseInt(k[5])
+
+                        // Replace negative values with 1
+                        if (j.attributes.incLessHS < 0) {
+
+                          j.attributes.incLessHS = 1
+                        }
+
+                        if (j.attributes.incHSG < 0) {
+
+                          j.attributes.incHSG = 1
+                        }
+
+                        if (j.attributes.incSCA < 0) {
+
+                          j.attributes.incSCA = 1
+                        }
+
+                        if (j.attributes.incBac < 0) {
+
+                          j.attributes.incBac = 1
+                        }
+
+                        if (j.attributes.incGrad < 0) {
+
+                          j.attributes.incGrad = 1
+                        }
+                      }
+                    })
+
+                    // Sum income by education across tracts
+                    townTotalIncLessHS += j.attributes.incLessHS
+                    townTotalIncHSG += j.attributes.incHSG
+                    townTotalIncSCA += j.attributes.incSCA
+                    townTotalIncBac += j.attributes.incBac
+                    townTotalIncGrad += j.attributes.incGrad
+                    townTotalIncLength += 1
+                  }
+                })
+
+                console.log('town tracts attributed with census data')
+
+                // Calculate average income by education level
+                townAvgIncLessHS = townTotalIncLessHS / townTotalIncLength
+                townAvgIncHSG =  townTotalIncHSG / townTotalIncLength
+                townAvgIncSCA = townTotalIncSCA / townTotalIncLength
+                townAvgIncBac = townTotalIncBac / townTotalIncLength
+                townAvgIncGrad = townTotalIncGrad / townTotalIncLength
+
+                // Set totals as state properties
+                totals.townIncLessHS = parseInt(townAvgIncLessHS)
+                totals.townIncHSG = parseInt(townAvgIncHSG)
+                totals.townIncSCA = parseInt(townAvgIncSCA)
+                totals.townIncBac = parseInt(townAvgIncBac)
+                totals.townIncGrad = parseInt(townAvgIncGrad)
+
+                console.log('town tract income averages saved to state')
+
+                totals.Toggle = true // Show results pane
+                document.getElementById('loading').style.display = false ? 'block' : 'none';
+              })
             })
           })
         })

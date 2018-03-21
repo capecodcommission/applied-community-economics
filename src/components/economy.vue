@@ -207,11 +207,11 @@ export default {
         ['Grduate or professional degree',this.totals.gradPro]
       ],
       rows4: [
-        ['Grduate or professional degree', this.totals.incGrad, '#222a35', 'Graduate or professional degree', 62000, 'Town of'],
-        ['Bachelors degree', this.totals.incBac, '#333f50', 'Bachelors degree', 50000, 'Town of'],
-        ['Some college or associates degree', this.totals.incSCA, '#849bb0', 'Some college or associates degree', 35000, 'Town of'],
-        ['High school graduate', this.totals.incHSG, '#adb9ca', 'High school graduate', 30000, 'Town of'],
-        ['Less than high school graduate', this.totals.incLessHS, '#dae3f3', 'Less than high school graduate', 25000, 'Town of']
+        ['Grduate or professional degree', this.totals.incGrad, '#222a35', 'Graduate or professional degree', this.totals.townIncGrad, 'Town of Barnstable'],
+        ['Bachelors degree', this.totals.incBac, '#333f50', 'Bachelors degree', this.totals.townIncBac, 'Town of Barnstable'],
+        ['Some college or associates degree', this.totals.incSCA, '#849bb0', 'Some college or associates degree', this.totals.townIncSAC, 'Town of Barnstable'],
+        ['High school graduate', this.totals.incHSG, '#adb9ca', 'High school graduate', this.totals.townIncHSG, 'Town of Barnstable'],
+        ['Less than high school graduate', this.totals.incLessHS, '#dae3f3', 'Less than high school graduate', this.totals.townIncLessHS, 'Town of Barnstable']
       ],
       rows5: [
         ['Retail/Rest./Entertainment',26],

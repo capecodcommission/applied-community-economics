@@ -39,7 +39,12 @@ const state = {
     incHSG: false,
     incSCA: false,
     incBac: false,
-    incGrad: false
+    incGrad: false,
+    townIncLessHS: false,
+    townIncHSG: false,
+    townIncSCA: false,
+    townIncBac: false,
+    townIncGrad: false
   },
   townselected: false,
   nbhselected: false,

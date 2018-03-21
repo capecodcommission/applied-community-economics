@@ -1,5 +1,5 @@
 <template>
-
+    <div id="loading"></div>
   <div style = 'padding-bottom: 0px' class = 'row'>
 
     <div style = 'padding-right: 0px; padding-left: 0px' class = 'col-md-12'>
@@ -81,6 +81,7 @@ export default {
 
     return {
 
+      
     }
   },
 
@@ -104,6 +105,7 @@ export default {
   },
 
   ready() {
+    document.getElementById('loading').style.display = false ? 'block' : 'none';
 
     this.loadBlks()
   },
@@ -129,6 +131,20 @@ export default {
 </script>
 
 <style>
+
+#loading {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(192, 192, 192, 0.5);
+    background-image: url("http://i.stack.imgur.com/MnyxU.gif");
+    background-repeat: no-repeat;
+    background-position: center;
+}
 
 .esri-ui-bottom-left {
   bottom: 15% !important;
