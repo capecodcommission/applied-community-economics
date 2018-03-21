@@ -398,6 +398,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
 
         parcelLayer.queryExtent().then((h) => { // Obtain GIZ extent
 
+          $('#progress').text('queried parcel layer extent')
           console.log('queried parcel layer extent')
 
           var buff = geometryEngine.buffer(h.extent,[1],'miles',true) // Create geometry buffer w/ 1mi radius from defined embayment layer extent
@@ -503,12 +504,14 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
 
             resultLayer1.addMany(features1) // Push queried parcels to new graphics layer
             console.log('queried parcels added to new layer')
+            $('#progress').append('<br/>queried parcels added to new layer')
           })
           .then((j) => {
 
             blockGroups.queryFeatures(query).then((i) => { // Query for block groups intersecting the buffered extent
 
               console.log('querying blockgroup feature layer')
+              $('#progress').append('<br/>querying blockgroup feature layer')
 
               // Obtain totals from queried blockgroup attributes
               // Create/fill new attribute using census data
@@ -730,6 +733,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
               resultLayer.addMany(features) // Add queried features to results layer
 
               console.log('added selected blockgroup features to new results layer')
+              $('#progress').append('<br/>added selected blockgroup features to new results layer')
 
               avgIncLessHS = totalIncLessHS / totalIncLength
               avgIncHSG = totalIncHSG / totalIncLength
@@ -776,6 +780,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
               totals.incGrad = parseInt(avgIncGrad)
 
               console.log('state (store) totals filled by blockgroups')
+              $('#progress').append('<br/>state (store) totals filled by blockgroups')
 
               // Sum total household population
               var totalHousehold = totals.less10k + totals.ten14 + totals.fifteen19 + totals.twenty24 + totals.twentyFive29 + totals.thirty34 + totals.thirtyFive39 + totals.fourty44 + totals.fourtyFive49 + totals.fifty59 + totals.sixty74 + totals.seventyFive99 + totals.hundred124 + totals.hundredTwentyFive149 + totals.hundredFifty199 + totals.twoHundredPlus
@@ -856,7 +861,8 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
                       lowerIncome = bucketTops[lowerBucket - 1]
                       upperIncome = bucketTops[upperBucket - 1]
 
-                      console.log('sums, percs, incomes filled')
+                      console.log('sums, percts, incomes filled')
+                      $('#progress').append('<br/>sums, percentiles, incomes filled')
                       break
                     }
                   }
@@ -882,7 +888,8 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
                   kHat = Math.pow( (upperPerc - lowerPerc) / ( (1/Math.pow(lowerIncome,thetaHat)) - (1/Math.pow(upperIncome,thetaHat)) ), (1/thetaHat) )
                   sampleMedian = kHat * Math.pow(2,(1/thetaHat))
 
-                  console.log('median calculated')
+                  console.log('stats calculated')
+                  $('#progress').append('<br/>stats calculated')
                 }
 
                 return sampleMedian.toLocaleString() // Add thousands separator
@@ -895,6 +902,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
               query2.spatialRelationship = 'contains'
 
               console.log('begin querying tracts within Barnstable')
+              $('#progress').append('<br/>begin querying tracts within Barnstable')
 
               tracts.queryFeatures(query2).then((i) => { // Query tracts within town boundary geometry
 
@@ -965,6 +973,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
                 })
 
                 console.log('town tracts attributed with census data')
+                $('#progress').append('<br/>town tracts attributed with census data')
 
                 // Calculate average income by education level
                 townAvgIncLessHS = townTotalIncLessHS / townTotalIncLength
@@ -981,6 +990,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
                 totals.townIncGrad = parseInt(townAvgIncGrad)
 
                 console.log('town tract income averages saved to state')
+                $('#progress').append('<br/>town tract income averages saved to state')
 
                 totals.Toggle = true // Show results pane
                 document.getElementById('loading').style.display = false ? 'block' : 'none';

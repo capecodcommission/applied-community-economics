@@ -1,5 +1,7 @@
 <template>
-    <div id="loading"></div>
+    <div id="loading">
+      <p id = 'progress' class = 'center'></p>
+    </div>
   <div style = 'padding-bottom: 0px' class = 'row'>
 
     <div style = 'padding-right: 0px; padding-left: 0px' class = 'col-md-12'>
@@ -123,7 +125,7 @@ export default {
 
     'tracts': function(x) {
 
-      esriLoader.bootstrap((err) => { createMap(esriLoader, this.totals, this.blockGroups, this.tracts)}, { url: 'https://js.arcgis.com/4.5/'})
+      esriLoader.bootstrap((err) => { createMap(esriLoader, this.totals, this.blockGroups, this.tracts, this.updateProg)}, { url: 'https://js.arcgis.com/4.5/'})
     }
   }
 }
@@ -131,6 +133,20 @@ export default {
 </script>
 
 <style>
+
+.center {
+    width: 450px;
+    height: 300px;
+    color: #f0ead6;
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 101;
+
+    margin: auto;
+}
 
 #loading {
     display: block;

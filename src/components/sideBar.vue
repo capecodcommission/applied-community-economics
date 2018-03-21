@@ -36,7 +36,7 @@
     </select>
   </div><br><br>
 
-  <button v-show = "townThing == 'APPLIED COMMUNITY ECONOMICS'" id = 'Draw' class = 'btn btn-primary'>Draw Poly</button>
+  <!-- <button v-show = "townThing == 'APPLIED COMMUNITY ECONOMICS'" id = 'Draw' class = 'btn btn-primary'>Draw Poly</button> -->
   <button style = 'float: left; margin-left: 3%' v-show = "townThing != 'APPLIED COMMUNITY ECONOMICS'" @click = "toggleComparison()" class = "btn btn-primary compareButton">Compare to Other {{selectType}}s</button>
 
 </template>
