@@ -596,14 +596,14 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
 
                   censusTracts.map((k) => { // Search ACS by tract
 
-                    if (k[8] === j.attributes.TRACT) { // If match, append/fill census data as block group attributes
+                    if (k[52] === j.attributes.TRACT) { // If match, append/fill census data as block group attributes
 
                       // Income by education
-                      j.attributes.incLessHS = parseInt(k[1])
-                      j.attributes.incHSG = parseInt(k[2])
-                      j.attributes.incSCA = parseInt(k[3])
-                      j.attributes.incBac = parseInt(k[4])
-                      j.attributes.incGrad = parseInt(k[5])
+                      j.attributes.incLessHS = parseInt(k[18])
+                      j.attributes.incHSG = parseInt(k[19])
+                      j.attributes.incSCA = parseInt(k[20])
+                      j.attributes.incBac = parseInt(k[21])
+                      j.attributes.incGrad = parseInt(k[22])
 
                       // Replace negative values with 1
                       if (j.attributes.incLessHS < 0) {
@@ -906,6 +906,22 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
 
               tracts.queryFeatures(query2).then((i) => { // Query tracts within town boundary geometry
 
+                var tractIds = []
+
+                // Push tract ids to new array
+                i.features.map((j) => {
+
+                  tractIds.push(j.attributes.TRACT)
+                })
+
+                // Filter census tracts from state using ids from array
+                var filteredArray = censusTracts.filter(el => {
+
+                  return tractIds.includes(el[52])
+                });
+
+                console.log(filteredArray)
+
                 // Initialize rolling sums and avgs of income by education
                 var townTotalIncLessHS = 0
                 var townTotalIncHSG = 0
@@ -919,56 +935,291 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
                 var townAvgIncBac = 0
                 var townAvgIncGrad = 0
 
+                // Household income
+                var townTotalLess10k = 0
+                var townTotalTen14 = 0
+                var townTotalFif19 = 0
+                var townTotalTwenty24 = 0
+                var townTotalTwentyFive29 = 0
+                var townTotalThirty34 = 0
+                var townTotalThirtyFive39 = 0
+                var townTotalFourty44 = 0
+                var townTotalFourtyFive49 = 0
+                var townTotalFifty59 = 0
+                var townTotalSixty74 = 0
+                var townTotalSeventyFive99 = 0
+                var townTotalHundred124 = 0
+                var townTotalHundredTwentyFive149 = 0
+                var townTotalHundredFifty199 = 0
+                var townTotalTwoHundredPlus = 0
+
+                // Employment
+                var townTotalCivil = 0
+                var townTotalUnemp = 0
+                var townPercUnemp = 0
+
+                // Education
+                var townTotalEdu = 0
+                var townTotalNoSchool = 0
+                var townTotalNursery = 0
+                var townTotalKindergarten = 0
+                var townTotalG1 = 0
+                var townTotalG2 = 0
+                var townTotalG3 = 0
+                var townTotalG4 = 0
+                var townTotalG5 = 0
+                var townTotalG6 = 0
+                var townTotalG7 = 0
+                var townTotalG8 = 0
+                var townTotalG9 = 0
+                var townTotalG10 = 0
+                var townTotalG11 = 0
+                var townTotalG12 = 0
+                var townTotalLessHS = 0  
+                var townTotalHS = 0
+                var townTotalGED = 0
+                var townTotalHSG = 0
+                var townTotalSCLess1 = 0
+                var townTotalSCMore1 = 0
+                var townTotalAss = 0
+                var townTotalSCA = 0
+                var townTotalBac = 0
+                var townTotalMas = 0
+                var townTotalPro = 0
+                var townTotalDoc = 0
+                var townTotalGradPro = 0
+
+                filteredArray.map((k) => { // Iterate through census API by tract
+
+                  // Sum api totals
+                  townTotalLess10k += parseInt(k[2]) // Continue here
+                  townTotalTen14 += parseInt(k[3])
+                  j.attributes.townfifteen19 = parseInt(k[4])
+                  j.attributes.towntwenty24 = parseInt(k[5])
+                  j.attributes.towntwentyFive29 = parseInt(k[6])
+                  j.attributes.townthirty34 = parseInt(k[7])
+                  j.attributes.townthirtyFive39 = parseInt(k[8])
+                  j.attributes.townfourty44 = parseInt(k[9])
+                  j.attributes.townfourtyFive49 = parseInt(k[10])
+                  j.attributes.townfifty59 = parseInt(k[11])
+                  j.attributes.townsixty74 = parseInt(k[12])
+                  j.attributes.townseventyFive99 = parseInt(k[13])
+                  j.attributes.townhundred124 = parseInt(k[14])
+                  j.attributes.townhundredTwentyFive149 = parseInt(k[15])
+                  j.attributes.townhundredFifty199 = parseInt(k[16])
+                  j.attributes.towntwoHundredPlus = parseInt(k[17])
+
+                  // Income by education
+                  j.attributes.townincLessHS = parseInt(k[18])
+                  j.attributes.townincHSG = parseInt(k[19])
+                  j.attributes.townincSCA = parseInt(k[20])
+                  j.attributes.townincBac = parseInt(k[21])
+                  j.attributes.townincGrad = parseInt(k[22])
+
+                  // Employment
+                  j.attributes.towncivil = parseInt(k[23])
+                  j.attributes.townunemp = parseInt(k[24])
+
+                  // Education
+                  j.attributes.townedu = parseInt(k[25])
+                  j.attributes.townnoSchool = parseInt(k[26])
+                  j.attributes.townnursery = parseInt(k[27])
+                  j.attributes.townkindergarten = parseInt(k[28])
+                  j.attributes.towng1 = parseInt(k[29])
+                  j.attributes.towng2 = parseInt(k[30])
+                  j.attributes.towng3 = parseInt(k[31])
+                  j.attributes.towng4 = parseInt(k[32])
+                  j.attributes.towng5 = parseInt(k[33])
+                  j.attributes.towng6 = parseInt(k[34])
+                  j.attributes.towng7 = parseInt(k[35])
+                  j.attributes.towng8 = parseInt(k[36])
+                  j.attributes.towng9 = parseInt(k[37])
+                  j.attributes.towng10 = parseInt(k[38])
+                  j.attributes.towng11 = parseInt(k[39])
+                  j.attributes.towng12 = parseInt(k[40])
+                  j.attributes.townhs = parseInt(k[41])
+                  j.attributes.townged = parseInt(k[42])
+                  j.attributes.townscLess1 = parseInt(k[43])
+                  j.attributes.townscMore1 = parseInt(k[44])
+                  j.attributes.townass = parseInt(k[45])
+                  j.attributes.townbac = parseInt(k[46])
+                  j.attributes.townmas = parseInt(k[47])
+                  j.attributes.townpro = parseInt(k[48])
+                  j.attributes.towndoc = parseInt(k[49])
+
+                  // Replace negative values with 1
+                  if (j.attributes.townincLessHS < 0) {
+
+                    j.attributes.townincLessHS = 1
+                  }
+
+                  if (j.attributes.townincHSG < 0) {
+
+                    j.attributes.townincHSG = 1
+                  }
+
+                  if (j.attributes.townincSCA < 0) {
+
+                    j.attributes.townincSCA = 1
+                  }
+
+                  if (j.attributes.townincBac < 0) {
+
+                    j.attributes.townincBac = 1
+                  }
+
+                  if (j.attributes.townincGrad < 0) {
+
+                    j.attributes.townincGrad = 1
+                  }
+                })
+
+                $('#progress').append('<br/>iterate through town tract features')
+
                 i.features.map((j) => { // Iterate through tract features
 
                   if (j.attributes.TRACT != '990000') {
 
-                    censusTracts.map((k) => { // Iterate through census API by tract
+                    filteredArray.map((k) => { // Iterate through census API by tract
 
-                      if (k[8] === j.attributes.TRACT) { // If tract match
+                      if (k[52] === j.attributes.TRACT) { // If tract match
+
+                        j.attributes.townless10k = parseInt(k[2])
+                        j.attributes.townten14 = parseInt(k[3])
+                        j.attributes.townfifteen19 = parseInt(k[4])
+                        j.attributes.towntwenty24 = parseInt(k[5])
+                        j.attributes.towntwentyFive29 = parseInt(k[6])
+                        j.attributes.townthirty34 = parseInt(k[7])
+                        j.attributes.townthirtyFive39 = parseInt(k[8])
+                        j.attributes.townfourty44 = parseInt(k[9])
+                        j.attributes.townfourtyFive49 = parseInt(k[10])
+                        j.attributes.townfifty59 = parseInt(k[11])
+                        j.attributes.townsixty74 = parseInt(k[12])
+                        j.attributes.townseventyFive99 = parseInt(k[13])
+                        j.attributes.townhundred124 = parseInt(k[14])
+                        j.attributes.townhundredTwentyFive149 = parseInt(k[15])
+                        j.attributes.townhundredFifty199 = parseInt(k[16])
+                        j.attributes.towntwoHundredPlus = parseInt(k[17])
 
                         // Income by education
-                        j.attributes.incLessHS = parseInt(k[1])
-                        j.attributes.incHSG = parseInt(k[2])
-                        j.attributes.incSCA = parseInt(k[3])
-                        j.attributes.incBac = parseInt(k[4])
-                        j.attributes.incGrad = parseInt(k[5])
+                        j.attributes.townincLessHS = parseInt(k[18])
+                        j.attributes.townincHSG = parseInt(k[19])
+                        j.attributes.townincSCA = parseInt(k[20])
+                        j.attributes.townincBac = parseInt(k[21])
+                        j.attributes.townincGrad = parseInt(k[22])
+
+                        // Employment
+                        j.attributes.towncivil = parseInt(k[23])
+                        j.attributes.townunemp = parseInt(k[24])
+
+                        // Education
+                        j.attributes.townedu = parseInt(k[25])
+                        j.attributes.townnoSchool = parseInt(k[26])
+                        j.attributes.townnursery = parseInt(k[27])
+                        j.attributes.townkindergarten = parseInt(k[28])
+                        j.attributes.towng1 = parseInt(k[29])
+                        j.attributes.towng2 = parseInt(k[30])
+                        j.attributes.towng3 = parseInt(k[31])
+                        j.attributes.towng4 = parseInt(k[32])
+                        j.attributes.towng5 = parseInt(k[33])
+                        j.attributes.towng6 = parseInt(k[34])
+                        j.attributes.towng7 = parseInt(k[35])
+                        j.attributes.towng8 = parseInt(k[36])
+                        j.attributes.towng9 = parseInt(k[37])
+                        j.attributes.towng10 = parseInt(k[38])
+                        j.attributes.towng11 = parseInt(k[39])
+                        j.attributes.towng12 = parseInt(k[40])
+                        j.attributes.townhs = parseInt(k[41])
+                        j.attributes.townged = parseInt(k[42])
+                        j.attributes.townscLess1 = parseInt(k[43])
+                        j.attributes.townscMore1 = parseInt(k[44])
+                        j.attributes.townass = parseInt(k[45])
+                        j.attributes.townbac = parseInt(k[46])
+                        j.attributes.townmas = parseInt(k[47])
+                        j.attributes.townpro = parseInt(k[48])
+                        j.attributes.towndoc = parseInt(k[49])
 
                         // Replace negative values with 1
-                        if (j.attributes.incLessHS < 0) {
+                        if (j.attributes.townincLessHS < 0) {
 
-                          j.attributes.incLessHS = 1
+                          j.attributes.townincLessHS = 1
                         }
 
-                        if (j.attributes.incHSG < 0) {
+                        if (j.attributes.townincHSG < 0) {
 
-                          j.attributes.incHSG = 1
+                          j.attributes.townincHSG = 1
                         }
 
-                        if (j.attributes.incSCA < 0) {
+                        if (j.attributes.townincSCA < 0) {
 
-                          j.attributes.incSCA = 1
+                          j.attributes.townincSCA = 1
                         }
 
-                        if (j.attributes.incBac < 0) {
+                        if (j.attributes.townincBac < 0) {
 
-                          j.attributes.incBac = 1
+                          j.attributes.townincBac = 1
                         }
 
-                        if (j.attributes.incGrad < 0) {
+                        if (j.attributes.townincGrad < 0) {
 
-                          j.attributes.incGrad = 1
+                          j.attributes.townincGrad = 1
                         }
                       }
                     })
 
                     // Sum income by education across tracts
-                    townTotalIncLessHS += j.attributes.incLessHS
-                    townTotalIncHSG += j.attributes.incHSG
-                    townTotalIncSCA += j.attributes.incSCA
-                    townTotalIncBac += j.attributes.incBac
-                    townTotalIncGrad += j.attributes.incGrad
+                    townTotalIncLessHS += j.attributes.townincLessHS
+                    townTotalIncHSG += j.attributes.townincHSG
+                    townTotalIncSCA += j.attributes.townincSCA
+                    townTotalIncBac += j.attributes.townincBac
+                    townTotalIncGrad += j.attributes.townincGrad
                     townTotalIncLength += 1
+
+                    townTotalLess10k += j.attributes.townless10k 
+                    townTotalTen14 += j.attributes.townten14
+                    townTotalFif19 += j.attributes.townfifteen19
+                    townTotalTwenty24 += j.attributes.towntwenty24
+                    townTotalTwentyFive29 += j.attributes.towntwentyFive29
+                    townTotalThirty34 += j.attributes.townthirty34
+                    townTotalThirtyFive39 += j.attributes.townthirtyFive39
+                    townTotalFourty44 += j.attributes.townfourty44
+                    townTotalFourtyFive49 += j.attributes.townfourtyFive49
+                    townTotalFifty59 += j.attributes.townfifty59
+                    townTotalSixty74 += j.attributes.townsixty74
+                    townTotalSeventyFive99 += j.attributes.townseventyFive99
+                    townTotalHundred124 += j.attributes.townhundred124
+                    townTotalHundredTwentyFive149 += j.attributes.townhundredTwentyFive149
+                    townTotalHundredFifty199 += j.attributes.townhundredFifty199
+                    townTotalTwoHundredPlus += j.attributes.towntwoHundredPlus
+
+                    townTotalCivil += j.attributes.towncivil
+                    townTotalUnemp += j.attributes.townunemp
+
+                    townTotalEdu += j.attributes.townedu
+                    townTotalNoSchool += j.attributes.townnoSchool
+                    townTotalNursery += j.attributes.townnursery
+                    townTotalKindergarten += j.attributes.townkindergarten
+                    townTotalG1 += j.attributes.towng1
+                    townTotalG2 += j.attributes.towng2
+                    towntotalG3 += j.attributes.towng3
+                    townTotalG4 += j.attributes.towng4
+                    townTotalG5 += j.attributes.towng5
+                    townTotalG6 += j.attributes.towng6
+                    townTotalG7 += j.attributes.towng7
+                    townTotalG8 += j.attributes.towng8
+                    townTotalG9 += j.attributes.towng9
+                    townTotalG10 += j.attributes.towng10
+                    townTotalG11 += j.attributes.towng11
+                    townTotalG12 += j.attributes.towng12
+                    townTotalHS += j.attributes.townhs
+                    townTotalGED += j.attributes.townged
+                    townTotalSCLess1 += j.attributes.townscLess1
+                    townTotalSCMore1 += j.attributes.townscMore1
+                    townTotalAss += j.attributes.townass
+                    townTotalBac += j.attributes.townbac
+                    townTotalMas += j.attributes.townmas
+                    townTotalPro += j.attributes.townpro
+                    townTotalDoc += j.attributes.towndoc
                   }
                 })
 
@@ -982,12 +1233,50 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
                 townAvgIncBac = townTotalIncBac / townTotalIncLength
                 townAvgIncGrad = townTotalIncGrad / townTotalIncLength
 
+                townPercUnemp = townTotalUnemp / townTotalCivil
+
+                townTotalHSG = townTotalHS + townTotalGED
+                townTotalSCA = townTotalSCLess1 + townTotalSCMore1 + townTotalAss
+                townTotalGradPro = townTotalMas + townTotalPro + townTotalDoc
+                townTotalLessHS = townTotalNoSchool + townTotalNursery + townTotalKindergarten + townTotalG1 + townTotalG2 + townTotalG3 + townTotalG4 + townTotalG5 + townTotalG6 + townTotalG7 + townTotalG8 + townTotalG9 + townTotalG10 + townTotalG11 + townTotalG12
+
+                totals.townHSG = townTotalHSG
+                totals.townSCA = townTotalSCA
+                totals.townGradPro = townTotalGradPro
+                totals.townLessHS = townTotalLessHS
+
                 // Set totals as state properties
                 totals.townIncLessHS = parseInt(townAvgIncLessHS)
                 totals.townIncHSG = parseInt(townAvgIncHSG)
                 totals.townIncSCA = parseInt(townAvgIncSCA)
                 totals.townIncBac = parseInt(townAvgIncBac)
                 totals.townIncGrad = parseInt(townAvgIncGrad)
+                totals.townPercUnemp = parseFloat(townPercUnemp)
+
+                var townTotalHousehold = townTotalLess10k + townTotalTen14 + townTotalFif19 + townTotalTwenty24 + townTotalTwentyFive29 + townTotalThirty34 + townTotalThirtyFive39 + townTotalFourty44 + townTotalFourtyFive49 + townTotalFifty59 + townTotalSixty74 + townTotalSeventyFive99 + townTotalHundred124 + townTotalHundredTwentyFive149 + townTotalHundredFifty199 + townTotalTwoHundredPlus
+ 
+                // Create array to be passed to calc_Median function
+                var townTotalsArr = [
+                  townTotalHousehold,
+                  townTotalLess10k,
+                  townTotalTen14,
+                  townTotalFif19,
+                  townTotalTwenty24,
+                  townTotalTwentyFive29,
+                  townTotalThirty34,
+                  townTotalThirtyFive39,
+                  townTotalFourty44,
+                  townTotalFourtyFive49,
+                  townTotalFifty59,
+                  townTotalSixty74,
+                  townTotalSeventyFive99,
+                  townTotalHundred124,
+                  townTotalHundredTwentyFive149,
+                  townTotalHundredFifty199,
+                  townTotalTwoHundredPlus
+                ]
+
+                totals.townParetoMedian = calc_Median(townTotalsArr)
 
                 console.log('town tract income averages saved to state')
                 $('#progress').append('<br/>town tract income averages saved to state')

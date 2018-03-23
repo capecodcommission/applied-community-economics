@@ -44,7 +44,13 @@ const state = {
     townIncHSG: false,
     townIncSCA: false,
     townIncBac: false,
-    townIncGrad: false
+    townIncGrad: false,
+    townParetoMedian: false,
+    townPercUnemp: false,
+    townHSG: false,
+    townSCA: false,
+    townGradPro: false,
+    townLessHS: false
   },
   townselected: false,
   nbhselected: false,

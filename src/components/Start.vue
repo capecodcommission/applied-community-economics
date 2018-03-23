@@ -135,7 +135,7 @@ export default {
 <style>
 
 .center {
-    width: 450px;
+    width: 650px;
     height: 300px;
     color: #f0ead6;
     position: absolute;

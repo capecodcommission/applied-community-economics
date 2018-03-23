@@ -76,11 +76,11 @@
     <div style = 'background-color: #d0d5dd' class = 'col-md-7'>
       <div class = 'col-md-4 housing-stats vizCol'>
         <div class = 'row'>
-          <h1>$66,279</h1>
+          <h1>${{totals.townParetoMedian}}</h1>
           <p><b>Median Household Income</b></p>
         </div>
         <div class = 'row'>
-          <h1>6.5%</h1>
+          <h1>{{(totals.townPercUnemp * 100).toFixed(2)}}%</h1>
           <p><b>Unemployment</b></p>
         </div>
         <div class = 'row'>
@@ -230,18 +230,18 @@ export default {
         ['Other',11]
       ],
       rows7: [
-        ['Less than high school graduate',5],
-        ['High school graduate',27],
-        ['Some college or associates degree',29],
-        ['Bachelors degree',23],
-        ['Grduate or professional degree',16]
+        ['Less than high school graduate',this.totals.townlessHS],
+        ['High school graduate',this.totals.townHSG],
+        ['Some college or associates degree',this.totals.townSCA],
+        ['Bachelors degree',this.totals.townBac],
+        ['Grduate or professional degree',this.totals.townGradPro]
       ],
       rows8: [
-        ['Grduate or professional degree', 50000, '#1365c6', 'Graduate or professional degree', 62000, 'Town of'],
-        ['Bachelors degree', 65000, '#3f7fcc', 'Bachelors degree', 50000, 'Town of'],
-        ['Some college or associates degree', 30000, '#689ad6', 'Some college or associates degree', 35000, 'Town of'],
-        ['High school graduate', 25000, '#a8bfdb', 'High school graduate', 30000, 'Town of'],
-        ['Less than high school graduate', 10000, '#d2d7dd', 'Less than high school graduate', 25000, 'Town of']
+        ['Grduate or professional degree', 50000, '#222a35', 'Graduate or professional degree', 62000, 'Town of Barnstable'],
+        ['Bachelors degree', 65000, '#333f50', 'Bachelors degree', 50000, 'Town of Barnstable'],
+        ['Some college or associates degree', 30000, '#849bb0', 'Some college or associates degree', 35000, 'Town of Barnstable'],
+        ['High school graduate', 25000, '#adb9ca', 'High school graduate', 30000, 'Town of Barnstable'],
+        ['Less than high school graduate', 10000, '#dae3f3', 'Less than high school graduate', 25000, 'Town of Barnstable']
       ],
       options1: {
         pieHole: 0.5, // Define donut hole width
