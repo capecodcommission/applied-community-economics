@@ -96,6 +96,7 @@
       <div class = 'col-md-4 vizCol'>
         <h4>Educational Attainment</h4>
         <vue-chart class = 'chart' :chart-type="chartType3" :columns="columns3" :rows="rows7" :options="options3"></vue-chart>
+        <p class = 'housing-stats'>Population > 25 years: {{totals.totalTownEdu}}</p>
       </div>
       <div class = 'col-md-4 vizCol'>
         <h4>Median Earnings</h4>
@@ -209,7 +210,7 @@ export default {
       rows4: [
         ['Grduate or professional degree', this.totals.incGrad, '#222a35', 'Graduate or professional degree', this.totals.townIncGrad, 'Town of Barnstable'],
         ['Bachelors degree', this.totals.incBac, '#333f50', 'Bachelors degree', this.totals.townIncBac, 'Town of Barnstable'],
-        ['Some college or associates degree', this.totals.incSCA, '#849bb0', 'Some college or associates degree', this.totals.townIncSAC, 'Town of Barnstable'],
+        ['Some college or associates degree', this.totals.incSCA, '#849bb0', 'Some college or associates degree', this.totals.townIncSCA, 'Town of Barnstable'],
         ['High school graduate', this.totals.incHSG, '#adb9ca', 'High school graduate', this.totals.townIncHSG, 'Town of Barnstable'],
         ['Less than high school graduate', this.totals.incLessHS, '#dae3f3', 'Less than high school graduate', this.totals.townIncLessHS, 'Town of Barnstable']
       ],
@@ -230,7 +231,7 @@ export default {
         ['Other',11]
       ],
       rows7: [
-        ['Less than high school graduate',this.totals.townlessHS],
+        ['Less than high school graduate',this.totals.townLessHS],
         ['High school graduate',this.totals.townHSG],
         ['Some college or associates degree',this.totals.townSCA],
         ['Bachelors degree',this.totals.townBac],

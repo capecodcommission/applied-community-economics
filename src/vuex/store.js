@@ -50,7 +50,8 @@ const state = {
     townHSG: false,
     townSCA: false,
     townGradPro: false,
-    townLessHS: false
+    townLessHS: false,
+    townBac: false
   },
   townselected: false,
   nbhselected: false,
@@ -175,7 +176,7 @@ const mutations = {
     state.tracts = tracts
 
     console.log('Census Tracts Loaded')
-    console.log(state.tracts[1])
+    // console.log(state.tracts[1])
   },
 
   LOAD_BLKS (state, blks) {
@@ -183,7 +184,7 @@ const mutations = {
     state.blockGroups = blks
 
     console.log('Census BlockGroups Loaded')
-    console.log(state.blockGroups[1])
+    // console.log(state.blockGroups[1])
   },
 
   TOGGLE_ATTRIB (state, land, water) {
