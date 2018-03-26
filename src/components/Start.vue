@@ -21,33 +21,24 @@
 
       <div transition = 'fade' v-show = 'totals.Toggle' class = 'col-md-2 Results'>
         <div class = 'row text-center'>
-          <p>Land (Acres): {{totals.Land}}</p>
-          <p>Water (Acres): {{totals.Water}}</p>
-          <p>Population (Less than $10,000): {{totals.less10k}}</p>
-          <p>Population ($10,000 - $14,000): {{totals.ten14}}</p>
-          <p>Population ($15,000 - $19,000): {{totals.fifteen19}}</p>
-          <p>Population ($20,000 - $24,000): {{totals.twenty24}}</p>
-          <p>Population ($25,000 - $29,000): {{totals.twentyFive29}}</p>
-          <p>Population ($30,000 - $34,000): {{totals.thirty34}}</p>
-          <p>Population ($35,000 - $39,000): {{totals.thirtyFive39}}</p>
-          <p>Population ($40,000 - $44,000): {{totals.fourty44}}</p>
-          <p>Population ($45,000 - $49,000): {{totals.fourtyFive49}}</p>
-          <p>Population ($50,000 - $59,000): {{totals.fifty59}}</p>
-          <p>Population ($60,000 - $74,000): {{totals.sixty74}}</p>
-          <p>Population ($75,000 - $99,000): {{totals.seventyFive99}}</p>
-          <p>Population ($100,000 - $124,000): {{totals.hundred124}}</p>
-          <p>Population ($125,000 - $149,000): {{totals.hundredTwentyFive149}}</p>
-          <p>Population ($150,000 - $199,000): {{totals.hundredFifty199}}</p>
-          <p>Population ($200,000 +): {{totals.twoHundredPlus}}</p>
-          <p>Pareto Median: ${{totals.paretoMedian}}</p>
-          <p>Unemployment: {{(totals.percUnemp * 100).toFixed(2)}}%</p>
+          <p>GIZ Pareto Median: ${{totals.paretoMedian}}</p>
+          <p>GIZ Unemployment: {{(totals.percUnemp * 100).toFixed(2)}}%</p>
+          <p>GIZ LessHS: ${{totals.incLessHS}}</p>
+          <p>GIZ HSG: ${{totals.incHSG}}</p>
+          <p>GIZ SCA: ${{totals.incSCA}}</p>
+          <p>GIZ Bac: ${{totals.incBac}}</p>
+          <p>GIZ Grad: ${{totals.townIncGrad.toFixed(2)}}</p>
 
-          <p>Less-than High School: {{totals.lessHS}} </p>
+          <p>Rest of Town Pareto Median: ${{totals.townParetoMedian}}</p>
+          <p>Rest of Town Unemployment: {{(totals.townPercUnemp * 100).toFixed(2)}}</p>
+          <p>Rest of Town Income (Less than High School): ${{totals.townIncLessHSROT.toFixed(2)}}</p>
+          <p>Rest of Town Income (High School Grad): ${{totals.townIncHSGROT.toFixed(2)}}</p>
+          <p>Rest of Town Income (Some College / Associates): ${{totals.townIncSCAROT.toFixed(2)}}</p>
+          <p>Rest of Town Income (Bachelor's): ${{totals.townIncBacROT.toFixed(2)}}</p>
+          <p>Rest of Town Income (Graduate): ${{totals.townIncGradROT.toFixed(2)}}</p>
         </div>
       </div>
-
     </div>
-
   </div>
 
   <div class = 'row'>
@@ -55,7 +46,6 @@
     <div transition = 'fade' v-show = 'showComparison' class = 'col-md-8 Comparison'>
       <comparison></comparison>
     </div>
-
   </div>
 
 </template>

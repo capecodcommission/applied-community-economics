@@ -581,13 +581,16 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
 
               $('#progress').append('<br/>block group feature mapping done')
 
+              // Obtain unique tract id's
               var tractIDUnique = tractIDArr.filter((item, pos) => { return tractIDArr.indexOf(item) == pos})
 
+              // Subset census API data by unique tract id's within GIZ
               var censusTractsFiltered = censusTracts.filter(el => {
 
                 return tractIDUnique.includes(el[52])
               });
 
+              // Use tractblock key to subset API by block group
               var censusBlocksFiltered = censusBlocks.filter(el => {
 
                 return blockIDArr.includes(el[52] + el[53])
@@ -700,6 +703,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
 
               $('#progress').append('<br/>added selected blockgroup features to new results layer')
 
+              // Average income categories
               avgIncLessHS = totalIncLessHS / totalIncLength
               avgIncHSG = totalIncHSG / totalIncLength
               avgIncSCA = totalIncSCA / totalIncLength
@@ -843,259 +847,363 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
 
               totals.paretoMedian = calc_Median(totalsArr) // Pass sample median to state property
 
-              var query2 = tracts.createQuery() // Initialize block group query using town boundary geometry
-              query2.geometry = townBoundaries
-              query2.spatialRelationship = 'contains'
+              townBoundaries.queryExtent().then((i) => {
 
-              console.log('begin querying tracts within Barnstable')
+                var query2 = tracts.createQuery() // Initialize block group query using town boundary geometry
+                query2.geometry = i.extent
+                query2.spatialRelationship = 'contains'
 
-              $('#progress').append('<br/>begin querying tracts within Barnstable')
+                console.log('begin querying tracts within Barnstable')
 
-              tracts.queryFeatures(query2).then((i) => { // Query tracts within town boundary geometry
+                $('#progress').append('<br/>begin querying tracts within Barnstable')
 
-                var tractIds = []
+                tracts.queryFeatures(query2).then((i) => { // Query tracts within town boundary geometry
 
-                // Push tract ids to new array
-                i.features.map((j) => {
+                  var tractsROT = [] // Initialize tract array for remainder of town
+                  var tractsTown = [] // Create id array for all town tracts
 
-                  if (j.attributes.TRACT != "990000") {
+                  // Push tract ids to new array
+                  i.features.map((j) => {
 
-                    tractIds.push(j.attributes.TRACT)
-                  }
-                })
+                    if (j.attributes.TRACT != "990000" & !tractIDUnique.includes(j.attributes.TRACT)) { // Omit GIZ tracts
 
-                $('#progress').append('<br/>iterate through town tract features for IDs')
+                      tractsROT.push(j.attributes.TRACT)
+                    }  
 
-                // Filter census tracts from state using ids from array
-                var censusTractsTownFiltered = censusTracts.filter(el => {
+                    if (j.attributes.TRACT != "990000") { // Include all town tracts
 
-                  return tractIds.includes(el[52])
-                });
+                      tractsTown.push(j.attributes.TRACT)
+                    }
+                  })
 
-                // Initialize rolling sums and avgs of income by education
-                var townTotalIncLessHS = 0
-                var townTotalIncHSG = 0
-                var townTotalIncSCA = 0
-                var townTotalIncBac = 0
-                var townTotalIncGrad = 0
-                var townTotalIncLength = 0
-                var townAvgIncLessHS = 0
-                var townAvgIncHSG = 0
-                var townAvgIncSCA = 0
-                var townAvgIncBac = 0
-                var townAvgIncGrad = 0
+                  console.log(tractIDUnique)
+                  console.log(tractsROT)
+                  console.log(tractsTown)
 
-                // Household income
-                var townTotalLess10k = 0
-                var townTotalTen14 = 0
-                var townTotalFif19 = 0
-                var townTotalTwenty24 = 0
-                var townTotalTwentyFive29 = 0
-                var townTotalThirty34 = 0
-                var townTotalThirtyFive39 = 0
-                var townTotalFourty44 = 0
-                var townTotalFourtyFive49 = 0
-                var townTotalFifty59 = 0
-                var townTotalSixty74 = 0
-                var townTotalSeventyFive99 = 0
-                var townTotalHundred124 = 0
-                var townTotalHundredTwentyFive149 = 0
-                var townTotalHundredFifty199 = 0
-                var townTotalTwoHundredPlus = 0
+                  $('#progress').append('<br/>iterate through remainder town tract features for IDs')
 
-                // Employment
-                var townTotalCivil = 0
-                var townTotalUnemp = 0
-                var townPercUnemp = 0
+                  // Filter census tracts from state using ids from array
+                  var censusTractsTownFiltered = censusTracts.filter(el => {
 
-                // Education
-                var townTotalEdu = 0
-                var townTotalNoSchool = 0
-                var townTotalNursery = 0
-                var townTotalKindergarten = 0
-                var townTotalG1 = 0
-                var townTotalG2 = 0
-                var townTotalG3 = 0
-                var townTotalG4 = 0
-                var townTotalG5 = 0
-                var townTotalG6 = 0
-                var townTotalG7 = 0
-                var townTotalG8 = 0
-                var townTotalG9 = 0
-                var townTotalG10 = 0
-                var townTotalG11 = 0
-                var townTotalG12 = 0
-                var townTotalLessHS = 0  
-                var townTotalHS = 0
-                var townTotalGED = 0
-                var townTotalHSG = 0
-                var townTotalSCLess1 = 0
-                var townTotalSCMore1 = 0
-                var townTotalAss = 0
-                var townTotalSCA = 0
-                var townTotalBac = 0
-                var townTotalMas = 0
-                var townTotalPro = 0
-                var townTotalDoc = 0
-                var townTotalGradPro = 0
+                    return tractsROT.includes(el[52])
+                  });
 
-                censusTractsTownFiltered.map((k) => { // Iterate through census API by tract
+                  $('#progress').append('<br/>iterate through all town tract features for IDs')
 
-                  // Income
-                  townTotalLess10k += parseInt(k[2]) 
-                  townTotalTen14 += parseInt(k[3])
-                  townTotalFif19 += parseInt(k[4])
-                  townTotalTwenty24 += parseInt(k[5])
-                  townTotalTwentyFive29 += parseInt(k[6])
-                  townTotalThirty34 += parseInt(k[7])
-                  townTotalThirtyFive39 += parseInt(k[8])
-                  townTotalFourty44 += parseInt(k[9])
-                  townTotalFourtyFive49 += parseInt(k[10])
-                  townTotalFifty59 += parseInt(k[11])
-                  townTotalSixty74 += parseInt(k[12])
-                  townTotalSeventyFive99 += parseInt(k[13])
-                  townTotalHundred124 += parseInt(k[14])
-                  townTotalHundredTwentyFive149 += parseInt(k[15])
-                  townTotalHundredFifty199 += parseInt(k[16])
-                  townTotalTwoHundredPlus += parseInt(k[17])
+                  // Filter tracts for entire town
+                  var censusTractsAllTown = censusTracts.filter(el => {
 
-                  // Income by education
-                  townTotalIncLength++
+                    return tractsTown.includes(el[52])
+                  })
+
+                  // Initialize rolling sums and avgs of income by education
+                  var townTotalIncLessHS = 0
+                  var townTotalIncHSG = 0
+                  var townTotalIncSCA = 0
+                  var townTotalIncBac = 0
+                  var townTotalIncGrad = 0
+                  var townTotalIncLength = 0
+                  var townAvgIncLessHS = 0
+                  var townAvgIncHSG = 0
+                  var townAvgIncSCA = 0
+                  var townAvgIncBac = 0
+                  var townAvgIncGrad = 0
+
+                  // Income by education for rest of town
+                  var townTotalIncLessHSROT = 0
+                  var townTotalIncHSGROT = 0
+                  var townTotalIncSCAROT = 0
+                  var townTotalIncBacROT = 0
+                  var townTotalIncGradROT = 0
+                  var townTotalIncLengthROT = 0
+                  var townAvgIncLessHSROT = 0
+                  var townAvgIncHSGROT = 0
+                  var townAvgIncSCAROT = 0
+                  var townAvgIncBacROT = 0
+                  var townAvgIncGradROT = 0
+
+                  // Household income
+                  var townTotalLess10k = 0
+                  var townTotalTen14 = 0
+                  var townTotalFif19 = 0
+                  var townTotalTwenty24 = 0
+                  var townTotalTwentyFive29 = 0
+                  var townTotalThirty34 = 0
+                  var townTotalThirtyFive39 = 0
+                  var townTotalFourty44 = 0
+                  var townTotalFourtyFive49 = 0
+                  var townTotalFifty59 = 0
+                  var townTotalSixty74 = 0
+                  var townTotalSeventyFive99 = 0
+                  var townTotalHundred124 = 0
+                  var townTotalHundredTwentyFive149 = 0
+                  var townTotalHundredFifty199 = 0
+                  var townTotalTwoHundredPlus = 0
 
                   // Employment
-                  townTotalCivil += parseInt(k[23])
-                  townTotalUnemp += parseInt(k[24])
+                  var townTotalCivil = 0
+                  var townTotalUnemp = 0
+                  var townPercUnemp = 0
 
                   // Education
-                  townTotalEdu += parseInt(k[25])
-                  townTotalNoSchool += parseInt(k[26])
-                  townTotalNursery += parseInt(k[27])
-                  townTotalKindergarten = parseInt(k[28])
-                  townTotalG1 += parseInt(k[29])
-                  townTotalG2 += parseInt(k[30])
-                  townTotalG3 += parseInt(k[31])
-                  townTotalG4 += parseInt(k[32])
-                  townTotalG5 += parseInt(k[33])
-                  townTotalG6 += parseInt(k[34])
-                  townTotalG7 += parseInt(k[35])
-                  townTotalG8 += parseInt(k[36])
-                  townTotalG9 += parseInt(k[37])
-                  townTotalG10 += parseInt(k[38])
-                  townTotalG11 += parseInt(k[39])
-                  townTotalG12 += parseInt(k[40])
-                  townTotalHS += parseInt(k[41])
-                  townTotalGED += parseInt(k[42])
-                  townTotalSCLess1 += parseInt(k[43])
-                  townTotalSCMore1 += parseInt(k[44])
-                  townTotalAss += parseInt(k[45])
-                  townTotalBac += parseInt(k[46])
-                  townTotalMas += parseInt(k[47])
-                  townTotalPro += parseInt(k[48])
-                  townTotalDoc += parseInt(k[49])
+                  var townTotalEdu = 0
+                  var townTotalNoSchool = 0
+                  var townTotalNursery = 0
+                  var townTotalKindergarten = 0
+                  var townTotalG1 = 0
+                  var townTotalG2 = 0
+                  var townTotalG3 = 0
+                  var townTotalG4 = 0
+                  var townTotalG5 = 0
+                  var townTotalG6 = 0
+                  var townTotalG7 = 0
+                  var townTotalG8 = 0
+                  var townTotalG9 = 0
+                  var townTotalG10 = 0
+                  var townTotalG11 = 0
+                  var townTotalG12 = 0
+                  var townTotalLessHS = 0  
+                  var townTotalHS = 0
+                  var townTotalGED = 0
+                  var townTotalHSG = 0
+                  var townTotalSCLess1 = 0
+                  var townTotalSCMore1 = 0
+                  var townTotalAss = 0
+                  var townTotalSCA = 0
+                  var townTotalBac = 0
+                  var townTotalMas = 0
+                  var townTotalPro = 0
+                  var townTotalDoc = 0
+                  var townTotalGradPro = 0
 
-                  // Replace negative values with 1
-                  if (parseInt(k[18]) < 0) {
+                  $('#progress').append('<br/>map all town')
+                  censusTractsAllTown.map((k) => {
 
-                    townTotalIncLessHS += 1
-                  } else {
+                    // Replace negative values with 1
+                    if (parseInt(k[18]) < 0) {
 
-                    townTotalIncLessHS += parseInt(k[18])
-                  }
+                      townTotalIncLessHS += 1
+                    } else {
 
-                  if (parseInt(k[19]) < 0) {
+                      townTotalIncLessHS += parseInt(k[18])
+                    }
 
-                    townTotalIncHSG += 1
-                  } else {
+                    if (parseInt(k[19]) < 0) {
 
-                    townTotalIncHSG += parseInt(k[19])
-                  }
+                      townTotalIncHSG += 1
+                    } else {
 
-                  if (parseInt(k[20]) < 0) {
+                      townTotalIncHSG += parseInt(k[19])
+                    }
 
-                    townTotalIncSCA += 1
-                  } else {
+                    if (parseInt(k[20]) < 0) {
 
-                    townTotalIncSCA += parseInt(k[20])
-                  }
+                      townTotalIncSCA += 1
+                    } else {
 
-                  if (parseInt(k[21]) < 0) {
+                      townTotalIncSCA += parseInt(k[20])
+                    }
 
-                    townTotalIncBac += 1
-                  } else {
+                    if (parseInt(k[21]) < 0) {
 
-                    townTotalIncBac += parseInt(k[21])
-                  }
+                      townTotalIncBac += 1
+                    } else {
 
-                  if (parseInt(k[22]) < 0) {
+                      townTotalIncBac += parseInt(k[21])
+                    }
 
-                    townTotalIncGrad += 1
-                  } else {
+                    if (parseInt(k[22]) < 0) {
 
-                    townTotalIncGrad += parseInt(k[22])
-                  }
+                      townTotalIncGrad += 1
+                    } else {
+
+                      townTotalIncGrad += parseInt(k[22])
+                    }
+
+                    townTotalIncLength++
+                  })
+
+                  $('#progress').append('<br/>map remainder')
+                  censusTractsTownFiltered.map((k) => { // Iterate through census API by tract
+
+                    // Income
+                    townTotalLess10k += parseInt(k[2]) 
+                    townTotalTen14 += parseInt(k[3])
+                    townTotalFif19 += parseInt(k[4])
+                    townTotalTwenty24 += parseInt(k[5])
+                    townTotalTwentyFive29 += parseInt(k[6])
+                    townTotalThirty34 += parseInt(k[7])
+                    townTotalThirtyFive39 += parseInt(k[8])
+                    townTotalFourty44 += parseInt(k[9])
+                    townTotalFourtyFive49 += parseInt(k[10])
+                    townTotalFifty59 += parseInt(k[11])
+                    townTotalSixty74 += parseInt(k[12])
+                    townTotalSeventyFive99 += parseInt(k[13])
+                    townTotalHundred124 += parseInt(k[14])
+                    townTotalHundredTwentyFive149 += parseInt(k[15])
+                    townTotalHundredFifty199 += parseInt(k[16])
+                    townTotalTwoHundredPlus += parseInt(k[17])
+
+                    // Income by education
+                    townTotalIncLengthROT++
+
+                    // Employment
+                    townTotalCivil += parseInt(k[23])
+                    townTotalUnemp += parseInt(k[24])
+
+                    // Education
+                    townTotalEdu += parseInt(k[25])
+                    townTotalNoSchool += parseInt(k[26])
+                    townTotalNursery += parseInt(k[27])
+                    townTotalKindergarten = parseInt(k[28])
+                    townTotalG1 += parseInt(k[29])
+                    townTotalG2 += parseInt(k[30])
+                    townTotalG3 += parseInt(k[31])
+                    townTotalG4 += parseInt(k[32])
+                    townTotalG5 += parseInt(k[33])
+                    townTotalG6 += parseInt(k[34])
+                    townTotalG7 += parseInt(k[35])
+                    townTotalG8 += parseInt(k[36])
+                    townTotalG9 += parseInt(k[37])
+                    townTotalG10 += parseInt(k[38])
+                    townTotalG11 += parseInt(k[39])
+                    townTotalG12 += parseInt(k[40])
+                    townTotalHS += parseInt(k[41])
+                    townTotalGED += parseInt(k[42])
+                    townTotalSCLess1 += parseInt(k[43])
+                    townTotalSCMore1 += parseInt(k[44])
+                    townTotalAss += parseInt(k[45])
+                    townTotalBac += parseInt(k[46])
+                    townTotalMas += parseInt(k[47])
+                    townTotalPro += parseInt(k[48])
+                    townTotalDoc += parseInt(k[49])
+
+                    // Replace negative values with 1
+                    if (parseInt(k[18]) < 0) {
+
+                      townTotalIncLessHSROT += 1
+                    } else {
+
+                      townTotalIncLessHSROT += parseInt(k[18])
+                    }
+
+                    if (parseInt(k[19]) < 0) {
+
+                      townTotalIncHSGROT += 1
+                    } else {
+
+                      townTotalIncHSGROT += parseInt(k[19])
+                    }
+
+                    if (parseInt(k[20]) < 0) {
+
+                      townTotalIncSCAROT += 1
+                    } else {
+
+                      townTotalIncSCAROT += parseInt(k[20])
+                    }
+
+                    if (parseInt(k[21]) < 0) {
+
+                      townTotalIncBacROT += 1
+                    } else {
+
+                      townTotalIncBacROT += parseInt(k[21])
+                    }
+
+                    if (parseInt(k[22]) < 0) {
+
+                      townTotalIncGradROT += 1
+                    } else {
+
+                      townTotalIncGradROT += parseInt(k[22])
+                    }
+
+                    $('#progress').append('<br/>row done')
+                  })
+
+                  $('#progress').append('<br/>Calculate average income by education level for entire town')
+                  // Calculate average income by education level
+                  townAvgIncLessHS = townTotalIncLessHS / townTotalIncLength
+                  townAvgIncHSG =  townTotalIncHSG / townTotalIncLength
+                  townAvgIncSCA = townTotalIncSCA / townTotalIncLength
+                  townAvgIncBac = townTotalIncBac / townTotalIncLength
+                  townAvgIncGrad = townTotalIncGrad / townTotalIncLength
+
+                  $('#progress').append('<br/>Calculate average income by education level for rest of town outside GIZ')
+                  townAvgIncLessHSROT = townTotalIncLessHSROT / townTotalIncLengthROT
+                  townAvgIncHSGROT =  townTotalIncHSGROT / townTotalIncLengthROT
+                  townAvgIncSCAROT = townTotalIncSCAROT / townTotalIncLengthROT
+                  townAvgIncBacROT = townTotalIncBacROT / townTotalIncLengthROT
+                  townAvgIncGradROT = townTotalIncGradROT / townTotalIncLengthROT
+
+
+                  townPercUnemp = townTotalUnemp / townTotalCivil
+
+                  townTotalHSG = townTotalHS + townTotalGED
+                  townTotalSCA = townTotalSCLess1 + townTotalSCMore1 + townTotalAss
+                  townTotalGradPro = townTotalMas + townTotalPro + townTotalDoc
+                  townTotalLessHS = townTotalNoSchool + townTotalNursery + townTotalKindergarten + townTotalG1 + townTotalG2 + townTotalG3 + townTotalG4 + townTotalG5 + townTotalG6 + townTotalG7 + townTotalG8 + townTotalG9 + townTotalG10 + townTotalG11 + townTotalG12
+
+                  $('#progress').append('<br/>Set education totals as state properties')
+                  // Set education totals as state properties
+                  totals.townHSG = townTotalHSG
+                  totals.townSCA = townTotalSCA
+                  totals.townGradPro = townTotalGradPro
+                  totals.townLessHS = townTotalLessHS
+                  totals.townBac = townTotalBac
+
+                  $('#progress').append('<br/>Set income totals as state properties')
+                  // Set income totals as state properties
+                  totals.townIncLessHS = townAvgIncLessHS
+                  totals.townIncHSG = townAvgIncHSG
+                  totals.townIncSCA = townAvgIncSCA
+                  totals.townIncBac = townAvgIncBac
+                  totals.townIncGrad = townAvgIncGrad
+                  totals.townPercUnemp = townPercUnemp
+                  totals.townEdu = townTotalEdu
+
+                  $('#progress').append('<br/>Set income totals for remainder of town')
+                  totals.townIncLessHSROT = townAvgIncLessHSROT
+                  totals.townIncHSGROT = townAvgIncHSGROT
+                  totals.townIncSCAROT = townAvgIncSCAROT
+                  totals.townIncBacROT = townAvgIncBacROT
+                  totals.townIncGradROT = townAvgIncGradROT
+
+                  $('#progress').append('<br/>Sum income bins for sample population')
+                  var townTotalHousehold = townTotalLess10k + townTotalTen14 + townTotalFif19 + townTotalTwenty24 + townTotalTwentyFive29 + townTotalThirty34 + townTotalThirtyFive39 + townTotalFourty44 + townTotalFourtyFive49 + townTotalFifty59 + townTotalSixty74 + townTotalSeventyFive99 + townTotalHundred124 + townTotalHundredTwentyFive149 + townTotalHundredFifty199 + townTotalTwoHundredPlus
+   
+                  $('#progress').append('<br/>Create town income array to be passed to calc_Median function')
+                  // Create array to be passed to calc_Median function
+                  var townTotalsArr = [
+                    townTotalHousehold,
+                    townTotalLess10k,
+                    townTotalTen14,
+                    townTotalFif19,
+                    townTotalTwenty24,
+                    townTotalTwentyFive29,
+                    townTotalThirty34,
+                    townTotalThirtyFive39,
+                    townTotalFourty44,
+                    townTotalFourtyFive49,
+                    townTotalFifty59,
+                    townTotalSixty74,
+                    townTotalSeventyFive99,
+                    townTotalHundred124,
+                    townTotalHundredTwentyFive149,
+                    townTotalHundredFifty199,
+                    townTotalTwoHundredPlus
+                  ]
+
+                  $('#progress').append('<br/>Calculated median income for remainder of town using pareto interpolation')
+                  totals.townParetoMedian = calc_Median(townTotalsArr)
+
+                  console.log('town tract income averages saved to state')
+                  $('#progress').append('<br/>town tract income averages saved to state')
+
+                  totals.Toggle = true // Show results pane
+                  document.getElementById('loading').style.display = false ? 'block' : 'none';
                 })
-
-                // Calculate average income by education level
-                townAvgIncLessHS = townTotalIncLessHS / townTotalIncLength
-                townAvgIncHSG =  townTotalIncHSG / townTotalIncLength
-                townAvgIncSCA = townTotalIncSCA / townTotalIncLength
-                townAvgIncBac = townTotalIncBac / townTotalIncLength
-                townAvgIncGrad = townTotalIncGrad / townTotalIncLength
-
-
-                townPercUnemp = townTotalUnemp / townTotalCivil
-
-                townTotalHSG = townTotalHS + townTotalGED
-                townTotalSCA = townTotalSCLess1 + townTotalSCMore1 + townTotalAss
-                townTotalGradPro = townTotalMas + townTotalPro + townTotalDoc
-                townTotalLessHS = townTotalNoSchool + townTotalNursery + townTotalKindergarten + townTotalG1 + townTotalG2 + townTotalG3 + townTotalG4 + townTotalG5 + townTotalG6 + townTotalG7 + townTotalG8 + townTotalG9 + townTotalG10 + townTotalG11 + townTotalG12
-
-                
-                // Set education totals as state properties
-                totals.townHSG = townTotalHSG
-                totals.townSCA = townTotalSCA
-                totals.townGradPro = townTotalGradPro
-                totals.townLessHS = townTotalLessHS
-                totals.townBac = townTotalBac
-
-                // Set income totals as state properties
-                totals.townIncLessHS = townAvgIncLessHS
-                totals.townIncHSG = townAvgIncHSG
-                totals.townIncSCA = townAvgIncSCA
-                totals.townIncBac = townAvgIncBac
-                totals.townIncGrad = townAvgIncGrad
-                totals.townPercUnemp = townPercUnemp
-
-                var townTotalHousehold = townTotalLess10k + townTotalTen14 + townTotalFif19 + townTotalTwenty24 + townTotalTwentyFive29 + townTotalThirty34 + townTotalThirtyFive39 + townTotalFourty44 + townTotalFourtyFive49 + townTotalFifty59 + townTotalSixty74 + townTotalSeventyFive99 + townTotalHundred124 + townTotalHundredTwentyFive149 + townTotalHundredFifty199 + townTotalTwoHundredPlus
- 
-                // Create array to be passed to calc_Median function
-                var townTotalsArr = [
-                  townTotalHousehold,
-                  townTotalLess10k,
-                  townTotalTen14,
-                  townTotalFif19,
-                  townTotalTwenty24,
-                  townTotalTwentyFive29,
-                  townTotalThirty34,
-                  townTotalThirtyFive39,
-                  townTotalFourty44,
-                  townTotalFourtyFive49,
-                  townTotalFifty59,
-                  townTotalSixty74,
-                  townTotalSeventyFive99,
-                  townTotalHundred124,
-                  townTotalHundredTwentyFive149,
-                  townTotalHundredFifty199,
-                  townTotalTwoHundredPlus
-                ]
-
-                totals.townParetoMedian = calc_Median(townTotalsArr)
-
-                console.log('town tract income averages saved to state')
-                $('#progress').append('<br/>town tract income averages saved to state')
-
-                totals.Toggle = true // Show results pane
-                document.getElementById('loading').style.display = false ? 'block' : 'none';
               })
             })
           })

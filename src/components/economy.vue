@@ -96,7 +96,7 @@
       <div class = 'col-md-4 vizCol'>
         <h4>Educational Attainment</h4>
         <vue-chart class = 'chart' :chart-type="chartType3" :columns="columns3" :rows="rows7" :options="options3"></vue-chart>
-        <p class = 'housing-stats'>Population > 25 years: {{totals.totalTownEdu}}</p>
+        <p class = 'housing-stats'>Population > 25 years: {{totals.townEdu}}</p>
       </div>
       <div class = 'col-md-4 vizCol'>
         <h4>Median Earnings</h4>
@@ -238,11 +238,11 @@ export default {
         ['Grduate or professional degree',this.totals.townGradPro]
       ],
       rows8: [
-        ['Grduate or professional degree', 50000, '#222a35', 'Graduate or professional degree', 62000, 'Town of Barnstable'],
-        ['Bachelors degree', 65000, '#333f50', 'Bachelors degree', 50000, 'Town of Barnstable'],
-        ['Some college or associates degree', 30000, '#849bb0', 'Some college or associates degree', 35000, 'Town of Barnstable'],
-        ['High school graduate', 25000, '#adb9ca', 'High school graduate', 30000, 'Town of Barnstable'],
-        ['Less than high school graduate', 10000, '#dae3f3', 'Less than high school graduate', 25000, 'Town of Barnstable']
+        ['Grduate or professional degree', this.totals.townIncGradROT, '#222a35', 'Graduate or professional degree', this.totals.townIncGrad, 'Town of Barnstable'],
+        ['Bachelors degree', this.totals.townIncBacROT, '#333f50', 'Bachelors degree', this.totals.townIncBac, 'Town of Barnstable'],
+        ['Some college or associates degree', this.totals.townIncSCAROT, '#849bb0', 'Some college or associates degree', this.totals.townIncSCA, 'Town of Barnstable'],
+        ['High school graduate', this.totals.townIncHSGROT, '#adb9ca', 'High school graduate', this.totals.townIncHSG, 'Town of Barnstable'],
+        ['Less than high school graduate', this.totals.townIncLessHSROT, '#dae3f3', 'Less than high school graduate', this.totals.townIncLessHS, 'Town of Barnstable']
       ],
       options1: {
         pieHole: 0.5, // Define donut hole width
