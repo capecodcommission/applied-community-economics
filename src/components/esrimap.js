@@ -106,7 +106,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
       // block group layer from tigerweb services
       var blockGroups = new FeatureLayer({
         url: "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Tracts_Blocks/MapServer/5",
-        definitionExpression: "STATE = 25 and COUNTY = 001",
+        definitionExpression: "STATE = 25 and COUNTY = 001", // Filter layer to Barnstable county
         outFields: ['*'],
         popupTemplate: {
           title: '{NAME}',
@@ -118,7 +118,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
       // census tract layer from tigerweb services
       var tracts = new FeatureLayer({
         url: "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Tracts_Blocks/MapServer/4",
-        definitionExpression: "STATE = 25 and COUNTY = 001",
+        definitionExpression: "STATE = 25 and COUNTY = 001", // Filter layer to Barnstable county
         outFields: ['*'],
         popupTemplate: {
           title: '{NAME}',
@@ -127,6 +127,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
         visible: false
       })
 
+      // Create custom boundary renderer with black boundary outline
       var tbRenderer = {
         type: 'simple',
         symbol: {
@@ -157,12 +158,6 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
       // create basemap with layers prepared but hidden
       var map = new Map({basemap: 'dark-gray', layers: [embayments, blockGroups, parcelLayer, resultLayer, resultLayer1, townBoundaries]});
 
-      // var custom = new TileLayer({
-      //   url: "http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer"
-      // })
-
-      // map.add(custom)
-
       var view = new MapView({
         container: "viewDiv",  // Reference to the DOM node that will contain the view
         map: map,
@@ -170,23 +165,13 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
         center: [-70.303634, 41.701660] // Center map over Barnstable
       });
 
-      // var legend = new Legend({
-      //   view: view,
-      //   layerInfos: [{
-      //     layer: embayments,
-      //     title: "Legend"
-      //   }]
-      // });
-
-      // view.ui.add(legend, "bottom-left");
-
       var homeBtn = new Home({ // Home button resets zoom/center
         view: view
       });
 
       view.ui.add(homeBtn, "top-left");
 
-      function createGraphic(polygon) { //
+      function createGraphic(polygon) { // Create graphic from user-defined polygon
         var graphic = new Graphic({
           geometry: polygon,
           symbol: {
@@ -200,7 +185,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
         return graphic;
       }
 
-      function createPolygon(vertices) {
+      function createPolygon(vertices) { // Create polygon object from user-defined vertices
 
         return new Polygon({
 
@@ -209,7 +194,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
         });
       }
 
-      function drawPolygon(evt) {
+      function drawPolygon(evt) { // Add user-defined polygon to map layer
 
         var vertices = evt.vertices;
 
@@ -401,9 +386,29 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
           $('#progress').text('queried parcel layer extent')
           console.log('queried parcel layer extent')
 
-          var buff = geometryEngine.buffer(h.extent,[1],'miles',true) // Create geometry buffer w/ 1mi radius from defined embayment layer extent
+          var inBuffer = []
+          var union = []
 
-          parcelLayer.definitionExpression = ""
+          // parcelLayer.queryFeatures().then((i) => {
+
+          //   i.features.map((j) => {
+
+          //     inBuffer.push(j.geometry)
+          //   })
+          // }).then((k) => {
+
+          //   console.log(inBuffer)
+
+          //   union = geometryEngine.union(inBuffer)
+
+          //   console.log(union)
+          // })
+
+          console.log(parcelLayer)
+
+          var buff = geometryEngine.buffer(parcelLayer,[1],'miles',true) // Create geometry buffer w/ 1mi radius from defined embayment layer extent
+
+          // parcelLayer.definitionExpression = ""
 
           var query = blockGroups.createQuery() // Initialize block group query using buffered extent
           query.geometry = buff
@@ -486,7 +491,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
           var avgIncGrad = 0
 
           $('#progress').text('querying parcels 1mi from GIZ')
-          parcelLayer.queryFeatures(query1).then((i) => { // Query parcels using extent of defined embayment layer
+          parcelLayer.queryFeatures().then((i) => { // Query parcels using extent of defined embayment layer
 
             features1 = i.features.map((j) => {
 
@@ -494,10 +499,10 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
 
                 type: 'simple-fill',
                 outline: { 
-                  color: [0, 0, 0, 0],
-                  width: 0
-                },
-                style: 'none'
+                  color: [255, 255, 255, 1],
+                  width: 1
+                }
+                // style: 'none'
               }
 
               return j
