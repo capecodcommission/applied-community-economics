@@ -293,10 +293,6 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
 
                 totalPop += j.attributes.population
 
-                // console.log(j.attributes.population)
-
-                // console.log(j.attributes.popPrcl)
-
                 if ((j.attributes.popPrcl / j.attributes.population) >= .5) {
 
                   j.symbol = { // Set normal block group symbology
@@ -388,6 +384,9 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
 
           var inBuffer = []
           var union = []
+          var buff = []
+          var query = []
+          var query1 = []
 
           // parcelLayer.queryFeatures().then((i) => {
 
@@ -397,18 +396,41 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
           //   })
           // }).then((k) => {
 
-          //   console.log(inBuffer)
+          //    buff = geometryEngine.buffer(inBuffer,[1],'miles',true) // Create geometry buffer w/ 1mi radius from defined embayment layer extent
+          // }).then((l) => {
 
-          //   union = geometryEngine.union(inBuffer)
+          //   console.log(buff)
 
-          //   console.log(union)
+          //   parcelLayer.definitionExpression = ""
+
+          //   query = blockGroups.createQuery() // Initialize block group query using buffered extent
+          //   query.geometry = buff
+          //   query.spatialRelationship = 'contains'
+
+          //   query1 = parcelLayer.createQuery() // Initialize parcel query using unbuffered extent
+          //   query1.geometry = buff
+          //   query1.spatialRelationship = 'contains'
           // })
 
-          console.log(parcelLayer)
 
-          var buff = geometryEngine.buffer(parcelLayer,[1],'miles',true) // Create geometry buffer w/ 1mi radius from defined embayment layer extent
+          //   console.log('buffer created. simplifying')
+          //   union = geometryEngine.simplify(inBuffer)
 
-          // parcelLayer.definitionExpression = ""
+          //   console.log('buffering simlified polygon')
+          //   buff = geometryEngine.buffer(union,[1],'miles',true)
+           
+          // })
+
+          // console.log(geometryEngine.isSimple(parcelLayer))
+
+          // Using Module to Union
+          // union = geometryEngine.union([inBuffer[1], inBuffer[2]]);
+          // console.log("geometryEngine.union: %o", union);
+
+          var buff = geometryEngine.buffer(h.extent,[1],'miles',true) // Create geometry buffer w/ 1mi radius from defined embayment layer extent
+
+        
+          parcelLayer.definitionExpression = ""
 
           var query = blockGroups.createQuery() // Initialize block group query using buffered extent
           query.geometry = buff
@@ -491,7 +513,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
           var avgIncGrad = 0
 
           $('#progress').text('querying parcels 1mi from GIZ')
-          parcelLayer.queryFeatures().then((i) => { // Query parcels using extent of defined embayment layer
+          parcelLayer.queryFeatures(query1).then((i) => { // Query parcels using extent of defined embayment layer
 
             features1 = i.features.map((j) => {
 
