@@ -152,11 +152,18 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
         definitionExpression: "TOWN = 'BARNSTABLE'" // Filter to Barnstable for now
       })
 
+      // Town boundary layer to query block groups
+      var acBoundaries = new FeatureLayer ({
+        url: "http://gis-app-04.cccom.barnstablecounty.org:6080/arcgis/rest/services/ActivityCenters/AC_Boundaries/FeatureServer/0",
+        outFields: ['*'],
+        visible: false
+      })
+
       var resultLayer = new GraphicsLayer() // Initialize blank layer to fill with queried block group symbology
       var resultLayer1 = new GraphicsLayer()
 
       // create basemap with layers prepared but hidden
-      var map = new Map({basemap: 'dark-gray', layers: [embayments, blockGroups, parcelLayer, resultLayer, resultLayer1, townBoundaries]});
+      var map = new Map({basemap: 'dark-gray', layers: [embayments, blockGroups, parcelLayer, resultLayer, resultLayer1, townBoundaries, acBoundaries]});
 
       var view = new MapView({
         container: "viewDiv",  // Reference to the DOM node that will contain the view
@@ -226,11 +233,11 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
 
         var query = blockGroups.createQuery()
         query.geometry = buff
-        query.spatialRelationship = 'contains' 
+        query.spatialRelationship = 'intersects' 
 
         var query1 = parcelLayer.createQuery() // Initialize parcel query using unbuffered extent
         query1.geometry = polygon
-        query1.spatialRelationship = 'contains'
+        query1.spatialRelationship = 'intersects'
 
         var features = ''
         var features1 = ''
@@ -377,68 +384,29 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
 
         document.getElementById('loading').style.display = true ? 'block' : 'none';
 
-        parcelLayer.queryExtent().then((h) => { // Obtain GIZ extent
+        acBoundaries.queryFeatures().then((h) => { // Obtain GIZ extent
 
           $('#progress').text('queried parcel layer extent')
           console.log('queried parcel layer extent')
 
-          var inBuffer = []
-          var union = []
-          var buff = []
-          var query = []
-          var query1 = []
+          var buff = h.features[0].geometry
 
-          // parcelLayer.queryFeatures().then((i) => {
-
-          //   i.features.map((j) => {
-
-          //     inBuffer.push(j.geometry)
-          //   })
-          // }).then((k) => {
-
-          //    buff = geometryEngine.buffer(inBuffer,[1],'miles',true) // Create geometry buffer w/ 1mi radius from defined embayment layer extent
-          // }).then((l) => {
-
-          //   console.log(buff)
-
-          //   parcelLayer.definitionExpression = ""
-
-          //   query = blockGroups.createQuery() // Initialize block group query using buffered extent
-          //   query.geometry = buff
-          //   query.spatialRelationship = 'contains'
-
-          //   query1 = parcelLayer.createQuery() // Initialize parcel query using unbuffered extent
-          //   query1.geometry = buff
-          //   query1.spatialRelationship = 'contains'
-          // })
-
-
-          //   console.log('buffer created. simplifying')
-          //   union = geometryEngine.simplify(inBuffer)
-
-          //   console.log('buffering simlified polygon')
-          //   buff = geometryEngine.buffer(union,[1],'miles',true)
-           
-          // })
-
-          // console.log(geometryEngine.isSimple(parcelLayer))
-
-          // Using Module to Union
-          // union = geometryEngine.union([inBuffer[1], inBuffer[2]]);
-          // console.log("geometryEngine.union: %o", union);
-
-          var buff = geometryEngine.buffer(h.extent,[1],'miles',true) // Create geometry buffer w/ 1mi radius from defined embayment layer extent
-
-        
-          parcelLayer.definitionExpression = ""
+          acBoundaries.visible = true
+          // parcelLayer.definitionExpression = ""
 
           var query = blockGroups.createQuery() // Initialize block group query using buffered extent
           query.geometry = buff
-          query.spatialRelationship = 'contains'
+          query.spatialRelationship = 'intersects'
+          query.returnGeometry = true
+          query.distance = 1
+          query.units = 'miles'
 
           var query1 = parcelLayer.createQuery() // Initialize parcel query using unbuffered extent
           query1.geometry = buff
-          query1.spatialRelationship = 'contains'
+          query1.spatialRelationship = 'intersects'
+          query1.returnGeometry = true
+          query1.distance = 1
+          query1.units = 'miles'
 
           // Initialize running totals
           var features = ''
@@ -521,10 +489,10 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
 
                 type: 'simple-fill',
                 outline: { 
-                  color: [255, 255, 255, 1],
-                  width: 1
-                }
-                // style: 'none'
+                  color: [0,0,0,0],
+                  width: 0
+                },
+                style: 'none'
               }
 
               return j
@@ -552,7 +520,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
 
                   var popPrcl = 0 // Initialize population rolling sum by parcel field
                   var blockRow = censusBlocks.find((i) => { return i[53] === j.attributes.BLKGRP && i[52] === j.attributes.TRACT}) 
-                  var blockPop = blockRow[1]
+                  var blockPop = parseInt(blockRow[1])
 
                   resultLayer1.graphics.items.map((k) => { // Look through parcels from queried results
 
@@ -1236,6 +1204,52 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
           })
         })
       }
+
+      // function queryAC() {
+
+      //   acBoundaries.queryFeatures().then((i) => {
+
+      //     acBoundaries.visible = true
+
+      //     var query = parcelLayer.createQuery()
+      //     query.geometry = i.features[0].geometry
+      //     query.distance = 1
+      //     query.units = 'miles'
+      //     query.spatialRelationship = 'intersects'
+
+      //     var query1 = blockGroups.createQuery()
+      //     query1.geometry = i.features[0].geometry
+      //     query1.distance = 1
+      //     query1.units = 'miles'
+      //     query1.spatialRelationship = 'intersects'
+
+      //     var blkGeom = []
+      //     var prclGeom = []
+
+      //     var intersect = []
+
+      //     blockGroups.queryFeatures(query1).then((j) => {
+
+      //       j.features.map((k) => {
+
+      //         blkGeom.push(k.geometry)
+      //       })
+
+      //       parcelLayer.queryFeatures(query).then((j) => {
+
+      //         j.features.map((k) => {
+
+      //           prclGeom.push(k.geometry)
+      //         })
+
+      //         blkGeom.map((k) => {
+
+      //           prclGeom.map((l) => [])
+      //         })
+      //       })
+      //     })
+      //   })
+      // }
       
       // Activate and attach polygon draw to view on button click
       $('#Draw').on('click', function() {
@@ -1268,7 +1282,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
 
         var x = $(this).val().toString()
 
-        parcelLayer.definitionExpression = "AC_NAME = " + "'" + x + "'" // set definition expression on parcel layer
+        acBoundaries.definitionExpression = "ac_name = " + "'" + x + "'" // set definition expression on parcel layer
 
         queryEmblks()
       })
