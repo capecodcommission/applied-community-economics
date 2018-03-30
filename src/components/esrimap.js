@@ -145,11 +145,8 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
         url: "https://gis-services.capecodcommission.org/arcgis/rest/services/Data_People/Boundary/MapServer/8",
         outFields: ['*'],
         renderer: tbRenderer,
-        visible: true,
-        popupTemplate: {
-          content: '{*}'
-        },
-        definitionExpression: "TOWN = 'BARNSTABLE'" // Filter to Barnstable for now
+        visible: true
+        // definitionExpression: "TOWN = 'BARNSTABLE'" // Filter to Barnstable for now
       })
 
       // Town boundary layer to query block groups
@@ -229,15 +226,19 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
         var vertices = evt.vertices
         var polygon = createPolygon(vertices); // Create polygon 
 
-        var buff = geometryEngine.buffer(polygon,[1],'miles',true) // Create 1mi buffer
+        // var buff = geometryEngine.buffer(polygon,[1],'miles',true) // Create 1mi buffer
 
         var query = blockGroups.createQuery()
-        query.geometry = buff
+        query.geometry = polygon
         query.spatialRelationship = 'intersects' 
+        query.distance = 1
+        query.units = 'miles'
 
         var query1 = parcelLayer.createQuery() // Initialize parcel query using unbuffered extent
         query1.geometry = polygon
         query1.spatialRelationship = 'intersects'
+        query1.distance = 1
+        query1.units = 'miles'
 
         var features = ''
         var features1 = ''
@@ -392,7 +393,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
           var buff = h.features[0].geometry
 
           acBoundaries.visible = true
-          // parcelLayer.definitionExpression = ""
+          parcelLayer.definitionExpression = ""
 
           var query = blockGroups.createQuery() // Initialize block group query using buffered extent
           query.geometry = buff
@@ -480,8 +481,16 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
           var avgIncBac = 0
           var avgIncGrad = 0
 
+          var town = ''
+
           $('#progress').text('querying parcels 1mi from GIZ')
           parcelLayer.queryFeatures(query1).then((i) => { // Query parcels using extent of defined embayment layer
+
+            var rowWithCity = i.features.find((i) => {return i.attributes.CITY})
+
+            town = rowWithCity.attributes.CITY
+
+            console.log(town)
 
             features1 = i.features.map((j) => {
 
@@ -842,6 +851,8 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
 
               totals.paretoMedian = calc_Median(totalsArr) // Pass sample median to state property
 
+              townBoundaries.definitionExpression = "TOWN = " + "'" + town + "'"
+
               townBoundaries.queryExtent().then((i) => {
 
                 var query2 = tracts.createQuery() // Initialize block group query using town boundary geometry
@@ -870,7 +881,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
                       tractsTown.push(j.attributes.TRACT)
                     }
                   })
-
+                  console.log(blockIDArr)
                   console.log(tractIDUnique)
                   console.log(tractsROT)
                   console.log(tractsTown)
@@ -1205,51 +1216,48 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
         })
       }
 
-      // function queryAC() {
+      function queryAC() {
 
-      //   acBoundaries.queryFeatures().then((i) => {
+        var query = 0
+        var features = 0
 
-      //     acBoundaries.visible = true
+        parcelLayer.definitionExpression = ""
 
-      //     var query = parcelLayer.createQuery()
-      //     query.geometry = i.features[0].geometry
-      //     query.distance = 1
-      //     query.units = 'miles'
-      //     query.spatialRelationship = 'intersects'
+        acBoundaries.queryFeatures().then((i) => {
 
-      //     var query1 = blockGroups.createQuery()
-      //     query1.geometry = i.features[0].geometry
-      //     query1.distance = 1
-      //     query1.units = 'miles'
-      //     query1.spatialRelationship = 'intersects'
+          acBoundaries.visible = true
 
-      //     var blkGeom = []
-      //     var prclGeom = []
+          query = parcelLayer.createQuery()
+          query.geometry = i.features[0].geometry
+          // query.distance = 1
+          // query.units = 'miles'
+          query.spatialRelationship = 'intersects'
+          query.returnGeometry = true
+        })
+        .then((i) => {
 
-      //     var intersect = []
+          parcelLayer.queryFeatures(query).then((i) => {
 
-      //     blockGroups.queryFeatures(query1).then((j) => {
+            features = i.features.map((j) => {
 
-      //       j.features.map((k) => {
+              j.symbol = { // Set empty block group symbology
 
-      //         blkGeom.push(k.geometry)
-      //       })
+                type: 'simple-fill',
+                outline: { 
+                  color: [255,255,255],
+                  width: 2
+                }
+              }
 
-      //       parcelLayer.queryFeatures(query).then((j) => {
+              return j
+            })
 
-      //         j.features.map((k) => {
+            resultLayer.addMany(features)
 
-      //           prclGeom.push(k.geometry)
-      //         })
-
-      //         blkGeom.map((k) => {
-
-      //           prclGeom.map((l) => [])
-      //         })
-      //       })
-      //     })
-      //   })
-      // }
+            console.log(resultLayer)
+          })
+        })
+      }
       
       // Activate and attach polygon draw to view on button click
       $('#Draw').on('click', function() {
@@ -1285,6 +1293,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
         acBoundaries.definitionExpression = "ac_name = " + "'" + x + "'" // set definition expression on parcel layer
 
         queryEmblks()
+        // queryAC()
       })
 
       $('#townSelect').on('change', function() {
