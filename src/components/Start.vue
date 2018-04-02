@@ -1,51 +1,44 @@
 <template>
-    <div id="loading">
-      <p id = 'progress' class = 'center'></p>
-    </div>
-  <div style = 'padding-bottom: 0px' class = 'row'>
 
+  <div id="loading">
+    <p id = 'progress' class = 'center'></p>
+  </div>
+
+  <div style = 'padding-bottom: 0px; flex-shrink: 0 !important' class = 'row'>
     <div style = 'padding-right: 0px; padding-left: 0px' class = 'col-md-12'>
       <headthing></headthing>
     </div>
-
   </div>
 
-  <div class = 'row'>
-
-    <div class = 'col-md-2 sidebar'>
+  <div style = 'height: calc(100% - 123.797px); padding-bottom: 0' class = 'row'>
+    <div class = 'col-md-2 sidething'>
       <sidething></sidething>
     </div>
-
     <div style = 'padding-left: 0;' class = 'col-md-10 text-center'>
       <div id="viewDiv" class="balt-theme"></div>
-
       <div transition = 'fade' v-show = 'totals.Toggle' class = 'col-md-2 Results'>
         <div class = 'row text-center'>
-          <p>GIZ Pareto Median: ${{totals.paretoMedian}}</p>
-          <p>GIZ Unemployment: {{(totals.percUnemp * 100).toFixed(2)}}%</p>
-          <p>GIZ LessHS: ${{totals.incLessHS}}</p>
-          <p>GIZ HSG: ${{totals.incHSG}}</p>
-          <p>GIZ SCA: ${{totals.incSCA}}</p>
-          <p>GIZ Bac: ${{totals.incBac}}</p>
-          <p>GIZ Grad: ${{totals.townIncGrad.toFixed(2)}}</p>
-
+          <p>Selected Pareto Median: ${{totals.paretoMedian}}</p>
+          <p>Selected Unemployment: {{(totals.percUnemp * 100).toFixed(0)}}%</p>
+          <p>Selected LessHS: ${{totals.incLessHS.toFixed(0)}}</p>
+          <p>Selected HSG: ${{totals.incHSG.toFixed(0)}}</p>
+          <p>Selected SCA: ${{totals.incSCA.toFixed(0)}}</p>
+          <p>Selected Bac: ${{totals.incBac.toFixed(0)}}</p>
+          <p>Selected Grad: ${{totals.townIncGrad.toFixed(0)}}</p>
           <p>Rest of Town Pareto Median: ${{totals.townParetoMedian}}</p>
-          <p>Rest of Town Unemployment: {{(totals.townPercUnemp * 100).toFixed(2)}}</p>
-          <p>Rest of Town Income (Less than High School): ${{totals.townIncLessHSROT.toFixed(2)}}</p>
-          <p>Rest of Town Income (High School Grad): ${{totals.townIncHSGROT.toFixed(2)}}</p>
-          <p>Rest of Town Income (Some College / Associates): ${{totals.townIncSCAROT.toFixed(2)}}</p>
-          <p>Rest of Town Income (Bachelor's): ${{totals.townIncBacROT.toFixed(2)}}</p>
-          <p>Rest of Town Income (Graduate): ${{totals.townIncGradROT.toFixed(2)}}</p>
+          <p>Rest of Town Unemployment: {{(totals.townPercUnemp * 100).toFixed(0)}}%</p>
+          <p>Rest of Town Income (Less than High School): ${{totals.townIncLessHSROT.toFixed(0)}}</p>
+          <p>Rest of Town Income (High School Grad): ${{totals.townIncHSGROT.toFixed(0)}}</p>
+          <p>Rest of Town Income (Some College / Associates): ${{totals.townIncSCAROT.toFixed(0)}}</p>
+          <p>Rest of Town Income (Bachelor's): ${{totals.townIncBacROT.toFixed(0)}}</p>
+          <p>Rest of Town Income (Graduate): ${{totals.townIncGradROT.toFixed(0)}}</p>
         </div>
       </div>
     </div>
   </div>
 
-  <div class = 'row'>
-
-    <div transition = 'fade' v-show = 'showComparison' class = 'col-md-8 Comparison'>
-      <comparison></comparison>
-    </div>
+  <div transition = 'fade' v-show = 'showComparison' class = 'col-md-8 Comparison'>
+    <comparison></comparison>
   </div>
 
 </template>
@@ -123,6 +116,14 @@ export default {
 </script>
 
 <style>
+
+.maxHeight {
+  min-height: 100% !important;
+  height:100% !important;
+  flex-shrink: 0 !important;
+  padding-bottom: 0;
+  /*max-height: 88%;*/
+}
 
 .center {
     width: 650px;
@@ -212,10 +213,16 @@ p {
 
 }
 
-.sidebar {
+.sidething {
+  /*position: absolute !important;*/
   background: #28536c;
   color: #f0ead6;
   padding: 1%;
+  height: 100% !important;
+  max-height: 100%;
+  overflow: hidden;
+  /*display: flex; */
+  flex-direction: column; 
 }
 
 .selectEmbayment {
@@ -270,7 +277,8 @@ p {
   border-radius: 25px;
   border: 5px solid grey;
   float: left;
-  margin-left: 1%
+  margin-left: 1%;
+  z-index: 99;
 }
 
 .Results {
@@ -290,6 +298,7 @@ p {
   top: 1px;
   position: absolute;
   padding: 0 !important;
+  /*flex-shrink: 0 !important;*/
 }
 
 .smallFont {

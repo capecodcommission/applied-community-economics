@@ -1,7 +1,7 @@
 <template>
 
   <!-- <img style = 'width: 100%' class="img-fluid" src="https://i.imgur.com/2rnoGzZ.png"><br><br> -->
-  
+
   <p v-show = "townThing == 'APPLIED COMMUNITY ECONOMICS'" style = 'margin-left: 3%' align = 'left'>This tool will score the form of an area based on Building Form, Business Activity, and Community Activity. It allows for the comparison of scores to other simlar geographics in the Report Card. In development is the ability to dig down into key metrics that will improve the score of an area.</p>
 
   <div v-show = "townThing != 'APPLIED COMMUNITY ECONOMICS'">
@@ -37,7 +37,11 @@
   </div><br><br>
 
   <button v-show = "townThing == 'APPLIED COMMUNITY ECONOMICS'" id = 'Draw' class = 'btn btn-primary'>Draw Poly</button>
+  <button @click = "townName = 'Hyannis GIZ' " v-show = "townThing == 'APPLIED COMMUNITY ECONOMICS'" id = 'computeGIZ' class = 'btn btn-primary pull-right'>Compute GIZ</button>
   <button style = 'float: left; margin-left: 3%' v-show = "townThing != 'APPLIED COMMUNITY ECONOMICS'" @click = "toggleComparison()" class = "btn btn-primary compareButton">Compare to Other {{selectType}}s</button>
+
+  <p id = 'cont1MI' style = 'visibility: hidden; margin-top: 30%;'>Tracts within 1mi: <div id = 'tracts1MI'></div></p>
+  <p id = 'contROT' style = 'visibility: hidden; overflow: auto;'>Tracts within rest of town: <div style = 'overflow: auto' id = 'tractsROT'></div></p>
 
 </template>
 
@@ -45,7 +49,7 @@
 
 import {introJs} from '../../node_modules/intro.js/intro.js'
 import { loadNeighborhoods, loadActivityCenters, loadTowns, loadTownName, updated3Data, loadACScores, updateSelect, toggleComparison, updateNBH, updateAC, updateTown } from '../vuex/actions'
-import { getNeighborhoods, getActivityCenters, getTowns, getd3Data, getACScores, getType, getTownName, getnbhselected, getacselected, gettownselected } from '../vuex/getters'
+import { getNeighborhoods, getActivityCenters, getTowns, getd3Data, getACScores, getType, getTownName, getnbhselected, getacselected, gettownselected, getTracts1MI, getTractsROT } from '../vuex/getters'
 import * as d3 from "d3"
 
 export default {
@@ -169,6 +173,11 @@ export default {
             d3.select(this).style('opacity', 0)
           }
         })
+
+      if (!this.d3data.finalScore) {
+
+        this.d3data.finalScore = 0
+      }
         
       g.append("text")
        .attr("text-anchor", "middle")
@@ -274,10 +283,15 @@ export default {
         this.updateSelect('Town')
       }
 
-      if (x != '0') {
+      if (x != '0' && x != 'Hyannis GIZ') {
         
         this.loadTownName(x)
         this.updated3Data(y, x)
+      } else if (x === 'Hyannis GIZ') {
+
+        this.loadTownName(x)
+        this.updated3Data('GIZ', x)
+        this.updateSelect('GIZ')
       }
     },
 
@@ -387,6 +401,12 @@ export default {
 </script>
 
 <style>
+
+.maxHeight {
+
+  height: 100%;
+  max-height: 100%;
+}
 
 .compareButton {
 

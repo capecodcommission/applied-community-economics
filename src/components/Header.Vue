@@ -117,6 +117,11 @@ export default {
 
     restart: function(x) {
 
+      $('#cont1MI').css('visibility','hidden')
+      $('#contROT').css('visibility','hidden')
+      $('#tracts1MI').css('visibility','hidden')
+      $('#tractsROT').css('visibility','hidden')
+
       this.loadTownName(x)
       router.go({name: 'Start'})
       this.totals.Toggle = false

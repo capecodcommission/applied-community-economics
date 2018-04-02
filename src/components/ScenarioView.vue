@@ -179,7 +179,8 @@ p {
   border-radius: 25px;
   border: 5px solid grey;
   float: left;
-  margin-left: 1%
+  margin-left: 1%;
+  bottom: 40%;
 }
 
 .headthing {

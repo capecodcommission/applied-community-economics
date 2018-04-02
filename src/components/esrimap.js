@@ -156,11 +156,22 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
         visible: false
       })
 
+      // Town boundary layer to query block groups
+      var gizBoundaries = new FeatureLayer ({
+        url: "http://gis-services.capecodcommission.org/arcgis/rest/services/Data_People/Boundary/MapServer/20",
+        outFields: ['*'],
+        definitionExpression: "OBJECTID = 1",
+        popupTemplate: {
+          content: '{*}'
+        },
+        visible: false
+      })
+
       var resultLayer = new GraphicsLayer() // Initialize blank layer to fill with queried block group symbology
       var resultLayer1 = new GraphicsLayer()
 
       // create basemap with layers prepared but hidden
-      var map = new Map({basemap: 'dark-gray', layers: [embayments, blockGroups, parcelLayer, resultLayer, resultLayer1, townBoundaries, acBoundaries]});
+      var map = new Map({basemap: 'dark-gray', layers: [embayments, blockGroups, parcelLayer, resultLayer, resultLayer1, townBoundaries, acBoundaries, gizBoundaries]});
 
       var view = new MapView({
         container: "viewDiv",  // Reference to the DOM node that will contain the view
@@ -381,18 +392,28 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
       // Estimate additional parameters as necessary
       // Assign attributes data from state with totals from queried layers
       // Display results
-      function queryEmblks() {
+      function queryEmblks(x = null) {
+
+        var selection = []
+
+        if (x === 'GIZ') {
+
+          selection = gizBoundaries
+        } else {
+
+          selection = acBoundaries
+        }
 
         document.getElementById('loading').style.display = true ? 'block' : 'none';
 
-        acBoundaries.queryFeatures().then((h) => { // Obtain GIZ extent
+        selection.queryFeatures().then((h) => { // Obtain GIZ extent
 
           $('#progress').text('queried parcel layer extent')
           console.log('queried parcel layer extent')
 
           var buff = h.features[0].geometry
 
-          acBoundaries.visible = true
+          selection.visible = true
           parcelLayer.definitionExpression = ""
 
           var query = blockGroups.createQuery() // Initialize block group query using buffered extent
@@ -840,7 +861,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
                   // Estimate k (Lowest allowable income in population)
                   thetaHat = (Math.log(1.0 - lowerPerc) - Math.log(1.0 - upperPerc)) / (Math.log(upperIncome) - Math.log(lowerIncome))
                   kHat = Math.pow( (upperPerc - lowerPerc) / ( (1/Math.pow(lowerIncome,thetaHat)) - (1/Math.pow(upperIncome,thetaHat)) ), (1/thetaHat) )
-                  sampleMedian = kHat * Math.pow(2,(1/thetaHat))
+                  sampleMedian = (kHat * Math.pow(2,(1/thetaHat))).toFixed(0)
 
                   console.log('stats calculated')
                   $('#progress').append('<br/>stats calculated')
@@ -882,8 +903,20 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
                     }
                   })
                   console.log(blockIDArr)
-                  console.log(tractIDUnique)
-                  console.log(tractsROT)
+                  $('#cont1MI').css('visibility','visible')
+                  $("#tracts1MI").html(tractIDUnique.map(function(value) {
+
+                    return('<p>' + value + '</p>');
+                  }))
+                  $('#tracts1MI').css('visibility','visible')
+
+                  $('#contROT').css('visibility','visible')
+                  $("#tractsROT").html(tractsROT.map(function(value) {
+
+                    return('<p>' + value + '</p>');
+                  }))
+                  $('#tractsROT').css('visibility','visible')
+                  // $('#tractsROT').html(tractsROT)
                   console.log(tractsTown)
 
                   $('#progress').append('<br/>iterate through remainder town tract features for IDs')
@@ -1293,7 +1326,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
         acBoundaries.definitionExpression = "ac_name = " + "'" + x + "'" // set definition expression on parcel layer
 
         queryEmblks()
-        // queryAC()
+        gizBoundaries.visible = false
       })
 
       $('#townSelect').on('change', function() {
@@ -1307,6 +1340,16 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
         parcelLayer.definitionExpression = "CITY = " + "'" + x + "'" // set definition expression on parcel layer
 
         queryEmblks()
+      })
+
+      $('#computeGIZ').on('click', function() {
+
+        resultLayer.removeAll(); // Reset graphics layers 
+        resultLayer1.removeAll();
+        view.graphics.removeAll();
+
+        acBoundaries.visible = false
+        queryEmblks('GIZ')
       })
     }
   )
