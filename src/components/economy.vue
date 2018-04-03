@@ -33,11 +33,54 @@
     <div style = 'background-color: #d0d5dd' class = 'col-md-7'>
       <div class = 'col-md-4 housing-stats vizCol'>
         <div class = 'row'>
+          <h1>${{totals.paretoMedianCont}}</h1>
+          <p><b>Median Household Income</b></p>
+        </div>
+        <div class = 'row'>
+          <h1>{{(totals.percUnempCont * 100).toFixed(0)}}%</h1>
+          <p><b>Unemployment</b></p>
+        </div>
+        <div class = 'row'>
+          <ul class="legend">
+            <li><span class="superawesome"></span> Less than high school graduate</li>
+            <li><span class="awesome"></span> High school graduate (includes equivalency)</li>
+            <li><span class="kindaawesome"></span> Some college or associate's degree</li>
+            <li><span class="notawesome"></span> Bachelor's degree</li>
+            <li><span class="neato"></span> Graduate or professional degree</li>
+          </ul>
+        </div>
+      </div>
+      <div class = 'col-md-4 vizCol'>
+        <h4>Educational Attainment</h4>
+        <vue-chart class = 'chart' :chart-type="chartType3" :columns="columns3" :rows="rows9" :options="options3"></vue-chart>
+        <p class = 'housing-stats'>Population > 25 years: {{totals.totalEduCont}}</p>
+      </div>
+      <div class = 'col-md-4 vizCol'>
+        <h4>Median Earnings</h4>
+        <vue-chart class = 'chart' :chart-type="chartType4" :columns="columns4" :rows="rows10" :options="options4"></vue-chart>
+      </div>
+    </div>
+  </div>
+
+  <div class = 'row'>
+    <div class = 'col-md-5'>
+      <div class = 'col-md-6 vizCol'>
+        <h4>Business</h4>
+        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows1" :options="options1"></vue-chart>
+      </div>
+      <div class = 'col-md-6 vizCol'>
+        <h4>Employment</h4>
+        <vue-chart class = 'chart' :chart-type="chartType2" :columns="columns2" :rows="rows2" :options="options2"></vue-chart>
+      </div>
+    </div>
+    <div style = 'background-color: #d0d5dd' class = 'col-md-7'>
+      <div class = 'col-md-4 housing-stats vizCol'>
+        <div class = 'row'>
           <h1>${{totals.paretoMedian}}</h1>
           <p><b>Median Household Income</b></p>
         </div>
         <div class = 'row'>
-          <h1>{{(totals.percUnemp * 100).toFixed(2)}}%</h1>
+          <h1>{{(totals.percUnemp * 100).toFixed(0)}}%</h1>
           <p><b>Unemployment</b></p>
         </div>
         <div class = 'row'>
@@ -80,7 +123,7 @@
           <p><b>Median Household Income</b></p>
         </div>
         <div class = 'row'>
-          <h1>{{(totals.townPercUnemp * 100).toFixed(2)}}%</h1>
+          <h1>{{(totals.townPercUnemp * 100).toFixed(0)}}%</h1>
           <p><b>Unemployment</b></p>
         </div>
         <div class = 'row'>
@@ -243,6 +286,20 @@ export default {
         ['Some college or associates degree', this.totals.townIncSCAROT, '#849bb0', 'Some college or associates degree', this.totals.townIncSCA, 'Town of Barnstable'],
         ['High school graduate', this.totals.townIncHSGROT, '#adb9ca', 'High school graduate', this.totals.townIncHSG, 'Town of Barnstable'],
         ['Less than high school graduate', this.totals.townIncLessHSROT, '#dae3f3', 'Less than high school graduate', this.totals.townIncLessHS, 'Town of Barnstable']
+      ],
+      rows9: [
+        ['Less than high school graduate',this.totals.lessHSCont],
+        ['High school graduate',this.totals.hsgCont],
+        ['Some college or associates degree',this.totals.scaCont],
+        ['Bachelors degree',this.totals.bacCont],
+        ['Grduate or professional degree',this.totals.gradProCont]
+      ],
+      rows10: [
+        ['Grduate or professional degree', this.totals.incGradCont, '#222a35', 'Graduate or professional degree', this.totals.townIncGrad, 'Town of Barnstable'],
+        ['Bachelors degree', this.totals.incBacCont, '#333f50', 'Bachelors degree', this.totals.townIncBac, 'Town of Barnstable'],
+        ['Some college or associates degree', this.totals.incSCACont, '#849bb0', 'Some college or associates degree', this.totals.townIncSCA, 'Town of Barnstable'],
+        ['High school graduate', this.totals.incHSGCont, '#adb9ca', 'High school graduate', this.totals.townIncHSG, 'Town of Barnstable'],
+        ['Less than high school graduate', this.totals.incLessHSCont, '#dae3f3', 'Less than high school graduate', this.totals.townIncLessHS, 'Town of Barnstable']
       ],
       options1: {
         pieHole: 0.5, // Define donut hole width

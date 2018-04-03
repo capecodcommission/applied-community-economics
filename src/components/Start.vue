@@ -1,6 +1,6 @@
 <template>
 
-  <div id="loading">
+  <div style = 'overflow: hidden' id="loading">
     <p id = 'progress' class = 'center'></p>
   </div>
 
@@ -32,6 +32,13 @@
           <p>Rest of Town Income (Some College / Associates): ${{totals.townIncSCAROT.toFixed(0)}}</p>
           <p>Rest of Town Income (Bachelor's): ${{totals.townIncBacROT.toFixed(0)}}</p>
           <p>Rest of Town Income (Graduate): ${{totals.townIncGradROT.toFixed(0)}}</p>
+          <p>Selected Pareto Median: ${{totals.paretoMedianCont}}</p>
+          <p>Selected Unemployment: {{(totals.percUnempCont * 100).toFixed(0)}}%</p>
+          <p>Selected LessHS: ${{totals.incLessHSCont.toFixed(0)}}</p>
+          <p>Selected HSG: ${{totals.incHSGCont.toFixed(0)}}</p>
+          <p>Selected SCA: ${{totals.incSCACont.toFixed(0)}}</p>
+          <p>Selected Bac: ${{totals.incBacCont.toFixed(0)}}</p>
+          <p>Selected Grad: ${{totals.townIncGradCont.toFixed(0)}}</p>
         </div>
       </div>
     </div>
@@ -279,6 +286,8 @@ p {
   float: left;
   margin-left: 1%;
   z-index: 99;
+  bottom: 40%;
+  left: 15%;
 }
 
 .Results {

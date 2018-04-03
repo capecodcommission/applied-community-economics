@@ -207,6 +207,11 @@ export default {
       } else if (this.townselected) {
 
         y = 'twn'
+      } 
+
+      if (this.townName === 'Hyannis') {
+
+        y = 'ac'
       }
 
       this.loadACScores(y)
@@ -289,9 +294,9 @@ export default {
         this.updated3Data(y, x)
       } else if (x === 'Hyannis GIZ') {
 
-        this.loadTownName(x)
-        this.updated3Data('GIZ', x)
         this.updateSelect('GIZ')
+        this.loadTownName('Hyannis')
+        this.updated3Data('ac', 'Hyannis')
       }
     },
 
@@ -391,6 +396,11 @@ export default {
       } else if (this.townselected) {
 
         y = 'twn'
+      }
+
+      if (this.townName === 'Hyannis GIZ') {
+
+        y = 'ac'
       }
 
       this.loadACScores(y)

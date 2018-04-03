@@ -1,6 +1,6 @@
 <template>
 
-  <div style = 'padding-bottom: 0px' class = 'row'>
+  <div style = 'padding-bottom: 0px; flex-shrink: 0 !important' class = 'row'>
 
     <div style = 'padding-right: 0px; padding-left: 0px' class = 'col-md-12'>
       <headthing></headthing>
@@ -8,7 +8,7 @@
 
   </div>
 
-  <div class = 'row'>
+  <div style = 'height: 100%; padding-bottom: 0' class = 'row'>
 
     <div class = 'col-md-2 sidebar'>
       <sidething></sidething>
@@ -20,12 +20,9 @@
 
   </div>
 
-  <div class = 'row'>
 
-    <div transition = 'fade' v-show = 'showComparison' class = 'col-md-8 Comparison'>
-      <comparison></comparison>
-    </div>
-
+  <div transition = 'fade' v-show = 'showComparison' class = 'col-md-8 Comparison'>
+    <comparison></comparison>
   </div>
 
 </template>
@@ -125,6 +122,10 @@ p {
   background: #28536c;
   color: #f0ead6;
   padding: 1%;
+  height: 100% !important;
+  max-height: 100%;
+  overflow: hidden;
+  flex-direction: column; 
 }
 
 .selectEmbayment {
@@ -161,17 +162,11 @@ p {
 .comparison {
   bottom: 1px;
   left: 1px;
-  /*position: absolute;*/
-  /*z-index: 5;*/
   float: right;
   background: #28536c;
   border-radius: 25px;
-  /*padding: 1.5em;*/
   border: 5px solid grey;
-  /*opacity: 0.9;*/
-  /*height: 40%*/
-  /*color: black;*/
-
+  z-index: 99;
 }
 
 .Comparison {
@@ -180,7 +175,7 @@ p {
   border: 5px solid grey;
   float: left;
   margin-left: 1%;
-  bottom: 40%;
+  z-index: 99;
 }
 
 .headthing {
