@@ -7,14 +7,14 @@
   </div>
     
   <div class = 'row'>
-    <div class = 'col-md-5'>
+    <div class = 'col-md-6'>
       <div class = 'col-md-12 col-heading'>
-        <h3 class = 'pull-left'>COMMERCIAL</h3>
+        <h3 class = 'pull-left'>1MI WITHIN SELECTION</h3>
       </div>
     </div>
-    <div style = 'padding-left: 0 !important; padding-right: 0 !important' class = 'col-md-7'>
+    <div style = 'padding-left: 0 !important; padding-right: 0 !important' class = 'col-md-6'>
       <div class = 'col-md-12 col-heading'>
-        <h3 class = 'pull-left'>RESIDENTIAL</h3>
+        <h3 class = 'pull-left'>REST OF TOWN (OUTSIDE 1MI SELECTION)</h3>
       </div>
     </div>
   </div>
@@ -63,85 +63,94 @@
   </div> -->
 
   <div class = 'row'>
-    <div class = 'col-md-5'>
-      <div class = 'col-md-6 vizCol'>
+    <div id = '1miSelection' class = 'col-md-6'>
+      <div class = 'col-md-12 vizCol text-center'>
+        <ul class="legend">
+          <li><span class="superawesome1"></span> Retail/Rest./Entertainment</li>
+          <li><span class="awesome1"></span> Industrial</li>
+          <li><span class="kindaawesome1"></span> Professional Services</li>
+          <li><span class="notawesome1"></span> Health Care</li>
+          <li><span class="neato1"></span> Public/Educ.</li>
+          <li><span class="great"></span> Other</li>
+        </ul>
+      </div>
+      <div class = 'col-md-12 vizCol text-center'>
         <h4>Business</h4>
         <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows1" :options="options1"></vue-chart>
       </div>
-      <div class = 'col-md-6 vizCol'>
+      <div class = 'col-md-12 vizCol text-center'>
         <h4>Employment</h4>
         <vue-chart class = 'chart' :chart-type="chartType2" :columns="columns2" :rows="rows2" :options="options2"></vue-chart>
       </div>
-    </div>
-    <div style = 'background-color: #d0d5dd' class = 'col-md-7'>
-      <div class = 'col-md-4 housing-stats vizCol'>
-        <div class = 'row'>
-          <h1>${{totals.paretoMedian}}</h1>
-          <p><b>Median Household Income</b></p>
-        </div>
-        <div class = 'row'>
-          <h1>{{(totals.percUnemp * 100).toFixed(0)}}%</h1>
-          <p><b>Unemployment</b></p>
-        </div>
-        <div class = 'row'>
-          <ul class="legend">
-            <li><span class="superawesome"></span> Less than high school graduate</li>
-            <li><span class="awesome"></span> High school graduate (includes equivalency)</li>
-            <li><span class="kindaawesome"></span> Some college or associate's degree</li>
-            <li><span class="notawesome"></span> Bachelor's degree</li>
-            <li><span class="neato"></span> Graduate or professional degree</li>
-          </ul>
-        </div>
+      <div class = 'col-md-12 vizCol text-center'>
+        <h1>${{totals.paretoMedian}}</h1>
+        <p><b>Median Household Income</b></p>
       </div>
-      <div class = 'col-md-4 vizCol'>
+      <div class = 'col-md-12 vizCol text-center'>
+        <h1>{{(totals.percUnemp * 100).toFixed(0)}}%</h1>
+        <p><b>Unemployment</b></p>
+      </div>
+      <div class = 'col-md-12 vizCol text-center'>
+        <ul class="legend">
+          <li><span class="superawesome"></span> Less than high school graduate</li>
+          <li><span class="awesome"></span> High school graduate (includes equivalency)</li>
+          <li><span class="kindaawesome"></span> Some college or associate's degree</li>
+          <li><span class="notawesome"></span> Bachelor's degree</li>
+          <li><span class="neato"></span> Graduate or professional degree</li>
+        </ul>
+      </div>
+      <div class = 'col-md-12 vizCol text-center'>
         <h4>Educational Attainment</h4>
         <vue-chart class = 'chart' :chart-type="chartType3" :columns="columns3" :rows="rows3" :options="options3"></vue-chart>
         <p class = 'housing-stats'>Population > 25 years: {{totals.totalEdu}}</p>
       </div>
-      <div class = 'col-md-4 vizCol'>
+      <div class = 'col-md-12 vizCol text-center'>
         <h4>Median Earnings</h4>
         <vue-chart class = 'chart' :chart-type="chartType4" :columns="columns4" :rows="rows4" :options="options4"></vue-chart>
       </div>
     </div>
-  </div>
-
-  <div class = 'row'>
-    <div class = 'col-md-5'>
-      <div class = 'col-md-6 vizCol'>
+    <div style = 'background-color: #d0d5dd; padding-left: 0' class = 'col-md-6'>
+      <div class = 'col-md-12 vizCol text-center'>
+        <ul class="legend">
+          <li><span class="superawesome1"></span> Retail/Rest./Entertainment</li>
+          <li><span class="awesome1"></span> Industrial</li>
+          <li><span class="kindaawesome1"></span> Professional Services</li>
+          <li><span class="notawesome1"></span> Health Care</li>
+          <li><span class="neato1"></span> Public/Educ.</li>
+          <li><span class="great"></span> Other</li>
+        </ul>
+      </div>
+      <div class = 'col-md-12 vizCol text-center'>
         <h4>Business</h4>
         <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows5" :options="options1"></vue-chart>
       </div>
-      <div class = 'col-md-6 vizCol'>
+      <div class = 'col-md-12 vizCol text-center'>
         <h4>Employment</h4>
         <vue-chart class = 'chart' :chart-type="chartType2" :columns="columns2" :rows="rows6" :options="options2"></vue-chart>
       </div>
-    </div>
-    <div style = 'background-color: #d0d5dd' class = 'col-md-7'>
-      <div class = 'col-md-4 housing-stats vizCol'>
-        <div class = 'row'>
-          <h1>${{totals.townParetoMedian}}</h1>
-          <p><b>Median Household Income</b></p>
-        </div>
-        <div class = 'row'>
-          <h1>{{(totals.townPercUnemp * 100).toFixed(0)}}%</h1>
-          <p><b>Unemployment</b></p>
-        </div>
-        <div class = 'row'>
-          <ul class="legend">
-            <li><span class="superawesome"></span> Less than high school graduate</li>
-            <li><span class="awesome"></span> High school graduate (includes equivalency)</li>
-            <li><span class="kindaawesome"></span> Some college or associate's degree</li>
-            <li><span class="notawesome"></span> Bachelor's degree</li>
-            <li><span class="neato"></span> Graduate or professional degree</li>
-          </ul>
-        </div>
+      <div class = 'col-md-12 vizCol text-center'>
+        <h1>${{totals.townParetoMedian}}</h1>
+        <p><b>Median Household Income</b></p>
       </div>
-      <div class = 'col-md-4 vizCol'>
+      <div class = 'col-md-12 vizCol text-center'>
+        <h1>{{(totals.townPercUnemp * 100).toFixed(0)}}%</h1>
+        <p><b>Unemployment</b></p>
+      </div>
+      <div class = 'col-md-12 vizCol text-center'>
+        <ul class="legend">
+          <li><span class="superawesome"></span> Less than high school graduate</li>
+          <li><span class="awesome"></span> High school graduate (includes equivalency)</li>
+          <li><span class="kindaawesome"></span> Some college or associate's degree</li>
+          <li><span class="notawesome"></span> Bachelor's degree</li>
+          <li><span class="neato"></span> Graduate or professional degree</li>
+        </ul>
+      </div>
+      <div class = 'col-md-12 vizCol text-center'>
         <h4>Educational Attainment</h4>
         <vue-chart class = 'chart' :chart-type="chartType3" :columns="columns3" :rows="rows7" :options="options3"></vue-chart>
         <p class = 'housing-stats'>Population > 25 years: {{totals.townEdu}}</p>
       </div>
-      <div class = 'col-md-4 vizCol'>
+      <div style = '' class = 'col-md-12 vizCol text-center'>
         <h4>Median Earnings</h4>
         <vue-chart class = 'chart' :chart-type="chartType4" :columns="columns4" :rows="rows8" :options="options4"></vue-chart>
       </div>
@@ -304,19 +313,14 @@ export default {
       options1: {
         pieHole: 0.5, // Define donut hole width
         backgroundColor: '#d0d5dd',
-        legend: {
-          position: 'left',
-          textStyle: {
-            fontSize: 9
-          }
-        },
+        legend: 'none',
         chartArea: {
           width: '100%',
           height: '100%',
           left: 0,
           top: 0
         },
-        colors: ['#c00000','#ed7d31','#92d050','#ffc000','5b9bd5', '#bfbfbf']
+        colors: ['#c00000','#ed7d31','#92d050','#ffc000','#5b9bd5', '#bfbfbf']
       },
       options2: {
         pieHole: 0.5,
@@ -326,7 +330,7 @@ export default {
           width: '100%',
           height: '100%'
         },
-        colors: ['#c00000','#ed7d31','#92d050','#ffc000','5b9bd5', '#bfbfbf']
+        colors: ['#c00000','#ed7d31','#92d050','#ffc000','#5b9bd5', '#bfbfbf']
       },
       options3: {
         pieHole: 0.5,
@@ -349,7 +353,11 @@ export default {
         },
         hAxis: {
           title: "Thousands",
-          format: 'currency'
+          format: 'currency',
+          viewWindow: {
+            min: 0,
+            max: 110000
+          }
         },
         colors: ['grey']
       }
@@ -371,277 +379,6 @@ export default {
 
   ready() {
 
-    // Chartsjs version. Commented out for now
-
-    // // row 1
-    // var ctx1 = $("#donutChart1");
-    // var ctx2 = $("#donutChart2");
-    // var ctx3 = $("#donutChart3");
-    // var ctx4 = $("#barChart1");
-
-    // // row 2
-    // var ctx5 = $("#donutChart4");
-    // var ctx6 = $("#donutChart5");
-    // var ctx7 = $("#donutChart6");
-    // var ctx8 = $("#barChart2");
-
-    // var myChart1 = new Chart(ctx1, {
-    //   type: 'doughnut',
-    //   data: {
-    //     datasets: [
-    //       {
-    //         label: 'data1',
-    //         data: [10,20,30,40,50,60],
-    //         backgroundColor: ['orange','yellow','blue','green','grey', 'red']
-    //       }
-    //     ],
-
-    //     // These labels appear in the legend and in the tooltips when hovering different arcs
-    //     labels: [
-    //       'Retail/Rest./Entertainment',
-    //       'Industrial',
-    //       'Professional Services',
-    //       'Health Care',
-    //       'Public/Educ.',
-    //       'Other'
-    //     ]
-    //   },
-    //   options: {
-    //     cutoutPercentage: 60,
-    //     legend: {
-    //       display: true,
-    //       position: 'left',
-    //       labels: {
-    //         fontSize: 10,
-    //         boxWidth: 10
-    //       }
-    //     }
-    //   }
-    // })
-
-    // var myChart2 = new Chart(ctx2, {
-    //   type: 'doughnut',
-    //   data: {
-    //     datasets: [
-    //       {
-    //         label: 'data1',
-    //         data: [10,25,40,55,70, 85],
-    //         backgroundColor: ['orange','yellow','blue','green','grey', 'red']
-    //       }
-    //     ],
-
-    //     // These labels appear in the legend and in the tooltips when hovering different arcs
-    //     labels: [
-    //       'Retail/Rest./Entertainment',
-    //       'Industrial',
-    //       'Professional Services',
-    //       'Health Care',
-    //       'Public/Educ.',
-    //       'Other'
-    //     ]
-    //   },
-    //   options: {
-    //     cutoutPercentage: 60,
-    //     legend: {
-    //       display: false
-    //     }
-    //   }
-    // })
-
-    // var myChart3 = new Chart(ctx3, {
-    //   type: 'doughnut',
-    //   data: {
-    //     datasets: [
-    //       {
-    //         label: 'data1',
-    //         data: [10,20,30,40,50],
-    //         backgroundColor: ['#d2d7dd','#a8bfdb','#689ad6','#3f7fcc','#1365c6']
-    //       }
-    //     ],
-
-    //     // These labels appear in the legend and in the tooltips when hovering different arcs
-    //     labels: [
-    //       'Less than high school graduate',
-    //       'High school graduate',
-    //       'Some college or associates degree',
-    //       'Bachelors degree',
-    //       'Grduate or professional degree'
-    //     ]
-    //   },
-    //   options: {
-    //     legend: {
-    //       display: false
-    //     }
-    //   }
-    // })
-
-    // var myChart4 = new Chart(ctx4, {
-    //   type: 'horizontalBar',
-    //   data: {
-    //     datasets: [
-    //       {
-    //         label: 'data1',
-    //         data: [10,20,30,40,50],
-    //         backgroundColor: ['#d2d7dd','#a8bfdb','#689ad6','#3f7fcc','#1365c6']
-    //       }
-    //     ],
-
-    //     // These labels appear in the legend and in the tooltips when hovering different arcs
-    //     labels: [
-    //       'Less than high school graduate',
-    //       'High school graduate',
-    //       'Some college or associates degree',
-    //       'Bachelors degree',
-    //       'Grduate or professional degree'
-    //     ]
-    //   },
-    //   options: {
-    //     legend: {
-    //       display: false
-    //     },
-    //     scales: {
-    //       yAxes: [{
-    //         ticks: {
-    //           fontSize: 8
-    //         }
-    //       }],
-    //       xAxes: [{
-    //         ticks: {
-    //           beginAtZero: true
-    //         }
-    //       }]
-    //     }
-    //   }
-    // })
-
-    // var myChart5 = new Chart(ctx5, {
-    //   type: 'doughnut',
-    //   data: {
-    //     datasets: [
-    //       {
-    //         label: 'data1',
-    //         data: [10,20,30,40,50,60],
-    //         backgroundColor: ['orange','yellow','blue','green','grey', 'red']
-    //       }
-    //     ],
-
-    //     // These labels appear in the legend and in the tooltips when hovering different arcs
-    //     labels: [
-    //       'Retail/Rest./Entertainment',
-    //       'Industrial',
-    //       'Professional Services',
-    //       'Health Care',
-    //       'Public/Educ.',
-    //       'Other'
-    //     ]
-    //   },
-    //   options: {
-    //     cutoutPercentage: 60,
-    //     legend: {
-    //       display: true,
-    //       position: 'left',
-    //       labels: {
-    //         fontSize: 10,
-    //         boxWidth: 10
-    //       }
-    //     }
-    //   }
-    // })
-
-    // var myChart6 = new Chart(ctx6, {
-    //   type: 'doughnut',
-    //   data: {
-    //     datasets: [
-    //       {
-    //         label: 'data1',
-    //         data: [10,20,30,40,50,60],
-    //         backgroundColor: ['orange','yellow','blue','green','grey', 'red']
-    //       }
-    //     ],
-
-    //     // These labels appear in the legend and in the tooltips when hovering different arcs
-    //     labels: [
-    //       'Retail/Rest./Entertainment',
-    //       'Industrial',
-    //       'Professional Services',
-    //       'Health Care',
-    //       'Public/Educ.',
-    //       'Other'
-    //     ]
-    //   },
-    //   options: {
-    //     cutoutPercentage: 60,
-    //     legend: {
-    //       display: false
-    //     }
-    //   }
-    // })
-
-    // var myChart7 = new Chart(ctx7, {
-    //   type: 'doughnut',
-    //   data: {
-    //     datasets: [
-    //       {
-    //         label: 'data1',
-    //         data: [10,20,30,40,50],
-    //         backgroundColor: ['#d2d7dd','#a8bfdb','#689ad6','#3f7fcc','#1365c6']
-    //       }
-    //     ],
-
-    //     // These labels appear in the legend and in the tooltips when hovering different arcs
-    //     labels: [
-    //       'January',
-    //       'February',
-    //       'March',
-    //       'April',
-    //       'May'
-    //     ]
-    //   },
-    //   options: {
-    //     legend: {
-    //       display: false
-    //     }
-    //   }
-    // })
-
-    // var myChart8 = new Chart(ctx8, {
-    //   type: 'horizontalBar',
-    //   data: {
-    //     datasets: [
-    //       {
-    //         label: 'data1',
-    //         data: [10,20,30,40,50],
-    //         backgroundColor: ['#d2d7dd','#a8bfdb','#689ad6','#3f7fcc','#1365c6']
-    //       }
-    //     ],
-
-    //     // These labels appear in the legend and in the tooltips when hovering different arcs
-    //     labels: [
-    //       'Less than high school graduate',
-    //       'High school graduate',
-    //       'Some college or associates degree',
-    //       'Bachelors degree',
-    //       'Grduate or professional degree'
-    //     ]
-    //   },
-    //   options: {
-    //     legend: {
-    //       display: false
-    //     },
-    //     scales: {
-    //       yAxes: [{
-    //         ticks: {
-    //           fontSize: 8
-    //         }
-    //       }],
-    //       xAxes: [{
-    //         ticks: {
-    //           beginAtZero: true
-    //         }
-    //       }]
-    //     }
-    //   }
-    // })
   },
 
   methods: {
@@ -657,6 +394,7 @@ export default {
 
 <style>
 
+
 vue-chart { width: 100% !important }
 
 .legend { list-style: none; }
@@ -668,6 +406,13 @@ vue-chart { width: 100% !important }
 .legend .kindaawesome { background-color: #849bb0; }
 .legend .notawesome { background-color: #333f50; }
 .legend .neato { background-color: #222a35; }
+
+.legend .superawesome1 { background-color: #c00000;}
+.legend .awesome1 { background-color: #ed7d31; }
+.legend .kindaawesome1 { background-color: #92d050; }
+.legend .notawesome1 { background-color: #ffc000; }
+.legend .neato1 { background-color: #5b9bd5; }
+.legend .great { background-color: #bfbfbf; }
 
 .vizCol { 
   background-color: #d0d5dd; 

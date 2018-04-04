@@ -18,13 +18,20 @@
       <div id="viewDiv" class="balt-theme"></div>
       <div transition = 'fade' v-show = 'totals.Toggle' class = 'col-md-2 Results'>
         <div class = 'row text-center'>
-          <p>Selected Pareto Median: ${{totals.paretoMedian}}</p>
-          <p>Selected Unemployment: {{(totals.percUnemp * 100).toFixed(0)}}%</p>
-          <p>Selected LessHS: ${{totals.incLessHS.toFixed(0)}}</p>
-          <p>Selected HSG: ${{totals.incHSG.toFixed(0)}}</p>
-          <p>Selected SCA: ${{totals.incSCA.toFixed(0)}}</p>
-          <p>Selected Bac: ${{totals.incBac.toFixed(0)}}</p>
-          <p>Selected Grad: ${{totals.townIncGrad.toFixed(0)}}</p>
+          <!-- <p>Selected Pareto Median: ${{totals.paretoMedianCont}}</p>
+          <p>Selected Unemployment: {{(totals.percUnempCont * 100).toFixed(0)}}%</p>
+          <p>Selected LessHS: ${{totals.incLessHSCont.toFixed(0)}}</p>
+          <p>Selected HSG: ${{totals.incHSGCont.toFixed(0)}}</p>
+          <p>Selected SCA: ${{totals.incSCACont.toFixed(0)}}</p>
+          <p>Selected Bac: ${{totals.incBacCont.toFixed(0)}}</p>
+          <p>Selected Grad: ${{totals.townIncGradCont.toFixed(0)}}</p> -->
+          <p>1mi Pareto Median: ${{totals.paretoMedian}}</p>
+          <p>1mi Unemployment: {{(totals.percUnemp * 100).toFixed(0)}}%</p>
+          <p>1mi LessHS: ${{totals.incLessHS.toFixed(0)}}</p>
+          <p>1mi HSG: ${{totals.incHSG.toFixed(0)}}</p>
+          <p>1mi SCA: ${{totals.incSCA.toFixed(0)}}</p>
+          <p>1mi Bac: ${{totals.incBac.toFixed(0)}}</p>
+          <p>1mi Grad: ${{totals.townIncGrad.toFixed(0)}}</p>
           <p>Rest of Town Pareto Median: ${{totals.townParetoMedian}}</p>
           <p>Rest of Town Unemployment: {{(totals.townPercUnemp * 100).toFixed(0)}}%</p>
           <p>Rest of Town Income (Less than High School): ${{totals.townIncLessHSROT.toFixed(0)}}</p>
@@ -32,13 +39,6 @@
           <p>Rest of Town Income (Some College / Associates): ${{totals.townIncSCAROT.toFixed(0)}}</p>
           <p>Rest of Town Income (Bachelor's): ${{totals.townIncBacROT.toFixed(0)}}</p>
           <p>Rest of Town Income (Graduate): ${{totals.townIncGradROT.toFixed(0)}}</p>
-          <p>Selected Pareto Median: ${{totals.paretoMedianCont}}</p>
-          <p>Selected Unemployment: {{(totals.percUnempCont * 100).toFixed(0)}}%</p>
-          <p>Selected LessHS: ${{totals.incLessHSCont.toFixed(0)}}</p>
-          <p>Selected HSG: ${{totals.incHSGCont.toFixed(0)}}</p>
-          <p>Selected SCA: ${{totals.incSCACont.toFixed(0)}}</p>
-          <p>Selected Bac: ${{totals.incBacCont.toFixed(0)}}</p>
-          <p>Selected Grad: ${{totals.townIncGradCont.toFixed(0)}}</p>
         </div>
       </div>
     </div>

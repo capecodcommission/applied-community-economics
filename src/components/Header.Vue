@@ -66,6 +66,7 @@
             <a style = 'border-bottom: 1px solid black' href="#" @click = "goTo('sftsltns')">Soft Solutions <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
             <a style = 'border-bottom: 1px solid black' href="#" @click = "goTo('dsnchrctr')">Design/Character <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
             <a style = 'border-bottom: 1px solid black' href="#" @click = "goTo('economy')">Economy <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
+            <a style = 'border-bottom: 1px solid black' href="#" @click = "goTo('economyVertical')">Economy (Vertical) <i style = 'float: right;' class="fa fa-angle-right" ></i></a>
           </div>
         </div>
       </div><br><br><br>

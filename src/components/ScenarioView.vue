@@ -14,7 +14,7 @@
       <sidething></sidething>
     </div>
 
-    <div style = 'margin-top: 5%' class = 'col-md-10 text-center'>
+    <div id = 'selectionRow' style = 'margin-top: 5%' class = 'col-md-10 text-center'>
       <router-view></router-view>
     </div>
 
@@ -72,7 +72,7 @@ export default {
   },
 
   watch: {
-
+    
   }
 }
 
@@ -122,8 +122,8 @@ p {
   background: #28536c;
   color: #f0ead6;
   padding: 1%;
-  height: 100% !important;
-  max-height: 100%;
+  height: 100%;
+  /*max-height: 100%;*/
   overflow: hidden;
   flex-direction: column; 
 }

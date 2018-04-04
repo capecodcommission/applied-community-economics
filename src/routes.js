@@ -108,6 +108,10 @@ export default function (router) {
         '/economy': {
           name: 'economy',
           component: require('./components/economy.vue')
+        },
+        '/economyVertical': {
+          name: 'economyVertical',
+          component: require('./components/economyVertical.vue')
         }
       }
     }
