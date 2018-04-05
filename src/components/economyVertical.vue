@@ -320,6 +320,10 @@ export default {
           left: 0,
           top: 0
         },
+        slices: {
+          2: {textStyle: {color: '#000000'}},
+          3: {textStyle: {color: '#000000'}}
+        },
         colors: ['#c00000','#ed7d31','#92d050','#ffc000','#5b9bd5', '#bfbfbf']
       },
       options2: {
@@ -330,6 +334,10 @@ export default {
           width: '100%',
           height: '100%'
         },
+        slices: {
+          2: {textStyle: {color: '#000000'}},
+          3: {textStyle: {color: '#000000'}}
+        },
         colors: ['#c00000','#ed7d31','#92d050','#ffc000','#5b9bd5', '#bfbfbf']
       },
       options3: {
@@ -339,6 +347,9 @@ export default {
         chartArea: {
           width: '100%',
           height: '100%'
+        },
+        slices: {
+          0: {textStyle: {color: '#000000'}}
         },
         colors: ['#dae3f3','#adb9ca','#849bb0','#333f50','#222a35']
       },
@@ -379,6 +390,7 @@ export default {
 
   ready() {
 
+    $('.sidebar').css('height','calc(100% + 310px)')
   },
 
   methods: {

@@ -19,7 +19,7 @@
     </div>
   </div>
 
-  <!-- <div class = 'row'>
+  <div class = 'row'>
     <div class = 'col-md-5'>
       <div class = 'col-md-6 vizCol'>
         <h4>Business</h4>
@@ -60,7 +60,7 @@
         <vue-chart class = 'chart' :chart-type="chartType4" :columns="columns4" :rows="rows10" :options="options4"></vue-chart>
       </div>
     </div>
-  </div> -->
+  </div>
 
   <div class = 'row'>
     <div class = 'col-md-5'>
@@ -310,6 +310,10 @@ export default {
             fontSize: 9
           }
         },
+        slices: {
+          2: {textStyle: {color: '#000000'}},
+          3: {textStyle: {color: '#000000'}}
+        },
         chartArea: {
           width: '100%',
           height: '100%',
@@ -326,6 +330,10 @@ export default {
           width: '100%',
           height: '100%'
         },
+        slices: {
+          2: {textStyle: {color: '#000000'}},
+          3: {textStyle: {color: '#000000'}}
+        },
         colors: ['#c00000','#ed7d31','#92d050','#ffc000','5b9bd5', '#bfbfbf']
       },
       options3: {
@@ -335,6 +343,9 @@ export default {
         chartArea: {
           width: '100%',
           height: '100%'
+        },
+        slices: {
+          0: {textStyle: {color: '#000000'}}
         },
         colors: ['#dae3f3','#adb9ca','#849bb0','#333f50','#222a35']
       },

@@ -36,11 +36,12 @@
     </select>
   </div><br><br>
 
-  <button v-show = "townThing == 'APPLIED COMMUNITY ECONOMICS'" id = 'Draw' class = 'btn btn-primary'>Draw Poly</button>
+  <!-- <button v-show = "townThing == 'APPLIED COMMUNITY ECONOMICS'" id = 'Draw' class = 'btn btn-primary'>Draw Poly</button> -->
   <button @click = "townName = 'Hyannis GIZ' " v-show = "townThing == 'APPLIED COMMUNITY ECONOMICS'" id = 'computeGIZ' class = 'btn btn-primary pull-right'>Compute GIZ</button>
   <button style = 'float: left; margin-left: 3%' v-show = "townThing != 'APPLIED COMMUNITY ECONOMICS'" @click = "toggleComparison()" class = "btn btn-primary compareButton">Compare to Other {{selectType}}s</button>
 
-  <p id = 'cont1MI' style = 'visibility: hidden; margin-top: 30%;'>Tracts within 1mi: <div id = 'tracts1MI'></div></p>
+  <p id = 'contSel' style = 'visibility: hidden; margin-top: 30%;'>Tracts within selection: <div id = 'tractSel'></div></p>
+  <p id = 'cont1MI' style = 'visibility: hidden;'>Tracts within 1mi: <div id = 'tracts1MI'></div></p>
   <p id = 'contROT' style = 'visibility: hidden; overflow: auto;'>Tracts within rest of town: <div style = 'overflow: auto' id = 'tractsROT'></div></p>
 
 </template>

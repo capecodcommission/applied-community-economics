@@ -18,13 +18,13 @@
       <div id="viewDiv" class="balt-theme"></div>
       <div transition = 'fade' v-show = 'totals.Toggle' class = 'col-md-2 Results'>
         <div class = 'row text-center'>
-          <!-- <p>Selected Pareto Median: ${{totals.paretoMedianCont}}</p>
+          <p>Selected Pareto Median: ${{totals.paretoMedianCont}}</p>
           <p>Selected Unemployment: {{(totals.percUnempCont * 100).toFixed(0)}}%</p>
           <p>Selected LessHS: ${{totals.incLessHSCont.toFixed(0)}}</p>
           <p>Selected HSG: ${{totals.incHSGCont.toFixed(0)}}</p>
           <p>Selected SCA: ${{totals.incSCACont.toFixed(0)}}</p>
           <p>Selected Bac: ${{totals.incBacCont.toFixed(0)}}</p>
-          <p>Selected Grad: ${{totals.townIncGradCont.toFixed(0)}}</p> -->
+          <p>Selected Grad: ${{totals.townIncGradCont.toFixed(0)}}</p>
           <p>1mi Pareto Median: ${{totals.paretoMedian}}</p>
           <p>1mi Unemployment: {{(totals.percUnemp * 100).toFixed(0)}}%</p>
           <p>1mi LessHS: ${{totals.incLessHS.toFixed(0)}}</p>

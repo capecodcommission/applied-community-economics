@@ -169,9 +169,11 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
 
       var resultLayer = new GraphicsLayer() // Initialize blank layer to fill with queried block group symbology
       var resultLayer1 = new GraphicsLayer()
+      var resultLayer2 = new GraphicsLayer()
+      var resultLayer3 = new GraphicsLayer()
 
       // create basemap with layers prepared but hidden
-      var map = new Map({basemap: 'dark-gray', layers: [embayments, blockGroups, parcelLayer, resultLayer, resultLayer1, townBoundaries, acBoundaries, gizBoundaries]});
+      var map = new Map({basemap: 'dark-gray', layers: [embayments, blockGroups, parcelLayer, resultLayer, resultLayer1, townBoundaries, acBoundaries, gizBoundaries, resultLayer2, resultLayer3]});
 
       var view = new MapView({
         container: "viewDiv",  // Reference to the DOM node that will contain the view
@@ -902,22 +904,24 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
                       tractsTown.push(j.attributes.TRACT)
                     }
                   })
-                  console.log(blockIDArr)
+
                   $('#cont1MI').css('visibility','visible')
+
                   $("#tracts1MI").html(tractIDUnique.map(function(value) {
 
                     return('<p>' + value + '</p>');
                   }))
+
                   $('#tracts1MI').css('visibility','visible')
 
                   $('#contROT').css('visibility','visible')
+
                   $("#tractsROT").html(tractsROT.map(function(value) {
 
                     return('<p>' + value + '</p>');
                   }))
+
                   $('#tractsROT').css('visibility','visible')
-                  // $('#tractsROT').html(tractsROT)
-                  console.log(tractsTown)
 
                   $('#progress').append('<br/>iterate through remainder town tract features for IDs')
 
@@ -1237,57 +1241,366 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
                   $('#progress').append('<br/>Calculated median income for remainder of town using pareto interpolation')
                   totals.townParetoMedian = calc_Median(townTotalsArr)
 
-                  console.log('town tract income averages saved to state')
-                  $('#progress').append('<br/>town tract income averages saved to state')
+                  var query3 = parcelLayer.createQuery()
+                  query3.geometry = buff
+                  query3.spatialRelationship = 'contains'
+                  query3.returnGeometry = true
 
-                  totals.Toggle = true // Show results pane
-                  document.getElementById('loading').style.display = false ? 'block' : 'none';
+                  // Household income
+                  var totalPop = 0
+                  var totalLess10k = 0
+                  var totalTen14 = 0
+                  var totalFif19 = 0
+                  var totalTwenty24 = 0
+                  var totalTwentyFive29 = 0
+                  var totalThirty34 = 0
+                  var totalThirtyFive39 = 0
+                  var totalFourty44 = 0
+                  var totalFourtyFive49 = 0
+                  var totalFifty59 = 0
+                  var totalSixty74 = 0
+                  var totalSeventyFive99 = 0
+                  var totalHundred124 = 0
+                  var totalHundredTwentyFive149 = 0
+                  var totalHundredFifty199 = 0
+                  var totalTwoHundredPlus = 0
+
+                  // Unemployment
+                  var totalCivilLabor = 0
+                  var totalUnemp = 0
+                  var percUnemp = 0
+
+                  // Education
+                  var totalEdu = 0
+                  var totalNoSchool = 0
+                  var totalNursery = 0
+                  var totalKindergarten = 0
+                  var totalG1 = 0
+                  var totalG2 = 0
+                  var totalG3 = 0
+                  var totalG4 = 0
+                  var totalG5 = 0
+                  var totalG6 = 0
+                  var totalG7 = 0
+                  var totalG8 = 0
+                  var totalG9 = 0
+                  var totalG10 = 0
+                  var totalG11 = 0
+                  var totalG12 = 0
+                  var totalLessHS = 0  
+                  var totalHS = 0
+                  var totalGED = 0
+                  var totalHSG = 0
+                  var totalSCLess1 = 0
+                  var totalSCMore1 = 0
+                  var totalAss = 0
+                  var totalSCA = 0
+                  var totalBac = 0
+                  var totalMas = 0
+                  var totalPro = 0
+                  var totalDoc = 0
+                  var totalGradPro = 0
+                  var totalIncLessHS = 0
+                  var totalIncHSG = 0
+                  var totalIncSCA = 0
+                  var totalIncBac = 0
+                  var totalIncGrad = 0
+                  var totalIncLength = 0
+                  var avgIncLessHS = 0
+                  var avgIncHSG = 0
+                  var avgIncSCA = 0
+                  var avgIncBac = 0
+                  var avgIncGrad = 0
+
+                  $('#progress').text('querying parcels within selection')
+                  parcelLayer.queryFeatures(query3).then((i) => {
+
+                    var features2 = i.features.map((j) => {
+
+                      j.symbol = { // Set empty block group symbology
+
+                        type: 'simple-fill',
+                        outline: { 
+                          color: [0,0,0,0],
+                          width: 0
+                        },
+                        style: 'none'
+                      }
+
+                      return j
+                    })
+
+                    resultLayer2.addMany(features2) // Push queried parcels to new graphics layer
+
+                    $('#progress').append('<br/>parcel query done')
+                  })
+                  .then((j) => {
+
+                    var query4 = blockGroups.createQuery()
+                    query4.geometry = buff
+                    query4.spatialRelationship = 'intersects'
+                    query4.returnGeometry = true
+
+                    blockGroups.queryFeatures(query4).then((i) => {
+
+                      var blockIDArr = []
+                      var tractIDArr = []
+
+                      // Obtain totals from queried blockgroup attributes
+                      // Create/fill new attribute using census data
+                      // Create/fill block group polygon symbology
+                      var features3 = i.features.map((j) => {  // Iterate through response features
+
+                        if (j.attributes.TRACT != "990000") { // If census tract isn't cape cod water body
+
+                          var popPrcl = 0 // Initialize population rolling sum by parcel field
+                          var blockRow = censusBlocks.find((i) => { return i[53] === j.attributes.BLKGRP && i[52] === j.attributes.TRACT}) 
+                          var blockPop = parseInt(blockRow[1])
+
+                          resultLayer2.graphics.items.map((k) => { // Look through parcels from queried results
+
+                            if (geometryEngine.intersects(k.geometry, j.geometry)) { // If block group geometry intersects parcels
+
+                              k.attributes.BLKGRP = j.attributes.BLKGRP // Assign block group to individual parcel
+
+                              popPrcl += parseInt(k.attributes.POP_10) // Sum population field in block group layer using POP_10 from individual parcels
+                            }
+                          })
+
+                          if ((popPrcl / blockPop) >= .5) { // If queried parcel population is greater than 50% of block group population
+
+                            blockIDArr.push(j.attributes.TRACT + j.attributes.BLKGRP)
+                            tractIDArr.push(j.attributes.TRACT)
+
+                            j.symbol = { // Set normal block group symbology
+
+                              type: 'simple-fill',
+                              outline: { 
+                                color: [66, 134, 244],
+                                width: 2
+                              }
+                            }
+                          } else {
+
+                            j.symbol = { // Set empty block group symbology
+
+                              type: 'simple-fill',
+                              outline: { 
+                                color: [0, 0, 0, 0],
+                                width: 0
+                              },
+                              style: 'none'
+                            }
+                          }
+
+                        } else {
+
+                          j.symbol = { // Set empty block group symbology
+
+                            type: 'simple-fill',
+                            outline: { 
+                              color: [0, 0, 0, 0],
+                              width: 0
+                            },
+                            style: 'none'
+                          }
+                        }       
+
+                        return j 
+                      }) // End of feature map
+
+                      var tractIDUnique = tractIDArr.filter((item, pos) => { return tractIDArr.indexOf(item) == pos})
+
+                      $('#contSel').css('visibility','visible')
+
+                      $("#tractSel").html(tractIDUnique.map(function(value) {
+
+                        return('<p>' + value + '</p>');
+                      }))
+
+                      // Subset census API data by unique tract id's within GIZ
+                      var censusTractsFiltered = censusTracts.filter(el => {
+
+                        return tractIDUnique.includes(el[52])
+                      });
+
+                      // Use tractblock key to subset API by block group
+                      var censusBlocksFiltered = censusBlocks.filter(el => {
+
+                        return blockIDArr.includes(el[52] + el[53])
+                      });
+
+                      $('#progress').append('<br/>mapping through filtered census blocks')
+                      censusBlocksFiltered.map((k) => { // Search ACS rows by block group
+
+                        totalPop += parseInt(k[1]) // Append/fill census attributes by column index
+
+                        // Income
+                        totalLess10k += parseInt(k[2])
+                        totalTen14 += parseInt(k[3])
+                        totalFif19 += parseInt(k[4])
+                        totalTwenty24 += parseInt(k[5])
+                        totalTwentyFive29 += parseInt(k[6])
+                        totalThirty34 += parseInt(k[7])
+                        totalThirtyFive39 += parseInt(k[8])
+                        totalFourty44 += parseInt(k[9])
+                        totalFourtyFive49 += parseInt(k[10])
+                        totalFifty59 += parseInt(k[11])
+                        totalSixty74 += parseInt(k[12])
+                        totalSeventyFive99 += parseInt(k[13])
+                        totalHundred124 += parseInt(k[14])
+                        totalHundredTwentyFive149 += parseInt(k[15])
+                        totalHundredFifty199 += parseInt(k[16])
+                        totalTwoHundredPlus += parseInt(k[17])
+
+                        // Employment
+                        totalCivilLabor += parseInt(k[18])
+                        totalUnemp += parseInt(k[19])
+
+                        // Education
+                        totalEdu += parseInt(k[20])
+                        totalNoSchool += parseInt(k[21])
+                        totalNursery += parseInt(k[22])
+                        totalKindergarten += parseInt(k[23])
+                        totalG1 += parseInt(k[24])
+                        totalG2 += parseInt(k[25])
+                        totalG3 += parseInt(k[26])
+                        totalG4 += parseInt(k[27])
+                        totalG5 += parseInt(k[28])
+                        totalG6 += parseInt(k[29])
+                        totalG7 += parseInt(k[30])
+                        totalG8 += parseInt(k[31])
+                        totalG9 += parseInt(k[32])
+                        totalG10 += parseInt(k[33])
+                        totalG11 += parseInt(k[34])
+                        totalG12 += parseInt(k[35])
+                        totalHS += parseInt(k[36])
+                        totalGED += parseInt(k[37])
+                        totalSCLess1 += parseInt(k[38])
+                        totalSCMore1 += parseInt(k[39])
+                        totalAss += parseInt(k[40])
+                        totalBac += parseInt(k[41])
+                        totalMas += parseInt(k[42])
+                        totalPro += parseInt(k[43])
+                        totalDoc += parseInt(k[44])
+                      })
+
+                      $('#progress').append('<br/>mapping through filtered census tracts')
+                      censusTractsFiltered.map((k) => { // Search ACS by tract
+
+                        // Income by education
+                        totalIncLength++
+
+                        // Replace negative values with 1
+                        if (parseInt(k[18]) < 0) {
+
+                          totalIncLessHS += 1
+                        } else {
+
+                          totalIncLessHS += parseInt(k[18])
+                        }
+
+                        if (parseInt(k[19]) < 0) {
+
+                          totalIncHSG += 1
+                        } else {
+
+                          totalIncHSG += parseInt(k[19])
+                        }
+
+                        if (parseInt(k[20]) < 0) {
+
+                          totalIncSCA += 1
+                        } else {
+
+                          totalIncSCA += parseInt(k[20])
+                        }
+
+                        if (parseInt(k[21]) < 0) {
+
+                          totalIncBac += 1
+                        } else {
+
+                          totalIncBac += parseInt(k[21])
+                        }
+
+                        if (parseInt(k[22]) < 0) {
+
+                          totalIncGrad += 1
+                        } else {
+
+                          totalIncGrad += parseInt(k[22])
+                        }
+                      })
+
+                      resultLayer3.addMany(features3) // Add queried features to results layer
+
+                      // Average income categories
+                      avgIncLessHS = totalIncLessHS / totalIncLength
+                      avgIncHSG = totalIncHSG / totalIncLength
+                      avgIncSCA = totalIncSCA / totalIncLength
+                      avgIncBac = totalIncBac / totalIncLength
+                      avgIncGrad = totalIncGrad / totalIncLength
+
+                      totalHSG = totalHS + totalGED
+                      totalSCA = totalSCLess1 + totalSCMore1 + totalAss
+                      totalGradPro = totalMas + totalPro + totalDoc
+                      totalLessHS = totalNoSchool + totalNursery + totalKindergarten + totalG1 + totalG2 + totalG3 + totalG4 + totalG5 + totalG6 + totalG7 + totalG8 + totalG9 + totalG10 + totalG11 + totalG12
+
+                      percUnemp = totalUnemp / totalCivilLabor
+
+                      totals.percUnempCont = parseFloat(percUnemp).toFixed(2)
+                      totals.lessHSCont = totalLessHS
+                      totals.hsgCont = totalHSG
+                      totals.scaCont = totalSCA
+                      totals.bacCont = totalBac
+                      totals.gradProCont = totalGradPro
+                      totals.totalEduCont = totalEdu
+                      totals.incLessHSCont = avgIncLessHS
+                      totals.incHSGCont = avgIncHSG
+                      totals.incSCACont = avgIncSCA
+                      totals.incBacCont = avgIncBac
+                      totals.incGradCont = avgIncGrad
+
+                      $('#progress').append('<br/>store totals filled by blockgroups/tracts')
+
+                      // Sum total household population
+                      var totalHousehold = totalLess10k + totalTen14 + totalFif19 + totalTwenty24 + totalTwentyFive29 + totalThirty34 + totalThirtyFive39 + totalFourty44 + totalFourtyFive49 + totalFifty59 + totalSixty74 + totalSeventyFive99 + totalHundred124 + totalHundredTwentyFive149 + totalHundredFifty199 + totalTwoHundredPlus
+         
+                      // Create array to be passed to calc_Median function
+                      var totalsArr = [
+                        totalHousehold,
+                        totalLess10k,
+                        totalTen14,
+                        totalFif19,
+                        totalTwenty24,
+                        totalTwentyFive29,
+                        totalThirty34,
+                        totalThirtyFive39,
+                        totalFourty44,
+                        totalFourtyFive49,
+                        totalFifty59,
+                        totalSixty74,
+                        totalSeventyFive99,
+                        totalHundred124,
+                        totalHundredTwentyFive149,
+                        totalHundredFifty199,
+                        totalTwoHundredPlus
+                      ]
+
+                      totals.paretoMedianCont = calc_Median(totalsArr) // Pass sample median to state property
+
+
+                      console.log('town tract income averages saved to state')
+                      $('#progress').append('<br/>town tract income averages saved to state')
+
+                      totals.Toggle = true // Show results pane
+                      document.getElementById('loading').style.display = false ? 'block' : 'none';
+                    })
+                  })
                 })
               })
             })
-          })
-        })
-      }
-
-      function queryAC() {
-
-        var query = 0
-        var features = 0
-
-        parcelLayer.definitionExpression = ""
-
-        acBoundaries.queryFeatures().then((i) => {
-
-          acBoundaries.visible = true
-
-          query = parcelLayer.createQuery()
-          query.geometry = i.features[0].geometry
-          // query.distance = 1
-          // query.units = 'miles'
-          query.spatialRelationship = 'intersects'
-          query.returnGeometry = true
-        })
-        .then((i) => {
-
-          parcelLayer.queryFeatures(query).then((i) => {
-
-            features = i.features.map((j) => {
-
-              j.symbol = { // Set empty block group symbology
-
-                type: 'simple-fill',
-                outline: { 
-                  color: [255,255,255],
-                  width: 2
-                }
-              }
-
-              return j
-            })
-
-            resultLayer.addMany(features)
-
-            console.log(resultLayer)
           })
         })
       }
