@@ -863,13 +863,15 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
                   // Estimate k (Lowest allowable income in population)
                   thetaHat = (Math.log(1.0 - lowerPerc) - Math.log(1.0 - upperPerc)) / (Math.log(upperIncome) - Math.log(lowerIncome))
                   kHat = Math.pow( (upperPerc - lowerPerc) / ( (1/Math.pow(lowerIncome,thetaHat)) - (1/Math.pow(upperIncome,thetaHat)) ), (1/thetaHat) )
-                  sampleMedian = (kHat * Math.pow(2,(1/thetaHat))).toFixed(0)
+                  sampleMedian = (kHat * Math.pow(2,(1/thetaHat)))
 
                   console.log('stats calculated')
                   $('#progress').append('<br/>stats calculated')
                 }
 
-                return sampleMedian.toLocaleString() // Add thousands separator
+                var output = parseInt(sampleMedian.toFixed())
+
+                return output.toLocaleString() // Add thousands separator
               }
 
               totals.paretoMedian = calc_Median(totalsArr) // Pass sample median to state property

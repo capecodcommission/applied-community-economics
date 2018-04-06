@@ -76,7 +76,7 @@
       </div>
       <div class = 'col-md-12 vizCol text-center'>
         <h4>Business</h4>
-        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows1" :options="options1"></vue-chart>
+        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows1" :options="options5"></vue-chart>
       </div>
       <div class = 'col-md-12 vizCol text-center'>
         <h4>Employment</h4>
@@ -87,7 +87,7 @@
         <p><b>Median Household Income</b></p>
       </div>
       <div class = 'col-md-12 vizCol text-center'>
-        <h1>{{(totals.percUnemp * 100).toFixed(0)}}%</h1>
+        <h1>{{(totals.percUnemp * 100).toFixed(1)}}%</h1>
         <p><b>Unemployment</b></p>
       </div>
       <div class = 'col-md-12 vizCol text-center'>
@@ -102,7 +102,7 @@
       <div class = 'col-md-12 vizCol text-center'>
         <h4>Educational Attainment</h4>
         <vue-chart class = 'chart' :chart-type="chartType3" :columns="columns3" :rows="rows3" :options="options3"></vue-chart>
-        <p class = 'housing-stats'>Population > 25 years: {{totals.totalEdu}}</p>
+        <p class = 'housing-stats'>Population > 25 years: {{totals.totalEdu.toLocaleString()}}</p>
       </div>
       <div class = 'col-md-12 vizCol text-center'>
         <h4>Median Earnings</h4>
@@ -122,7 +122,7 @@
       </div>
       <div class = 'col-md-12 vizCol text-center'>
         <h4>Business</h4>
-        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows5" :options="options1"></vue-chart>
+        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows5" :options="options5"></vue-chart>
       </div>
       <div class = 'col-md-12 vizCol text-center'>
         <h4>Employment</h4>
@@ -133,7 +133,7 @@
         <p><b>Median Household Income</b></p>
       </div>
       <div class = 'col-md-12 vizCol text-center'>
-        <h1>{{(totals.townPercUnemp * 100).toFixed(0)}}%</h1>
+        <h1>{{(totals.townPercUnemp * 100).toFixed(1)}}%</h1>
         <p><b>Unemployment</b></p>
       </div>
       <div class = 'col-md-12 vizCol text-center'>
@@ -148,7 +148,7 @@
       <div class = 'col-md-12 vizCol text-center'>
         <h4>Educational Attainment</h4>
         <vue-chart class = 'chart' :chart-type="chartType3" :columns="columns3" :rows="rows7" :options="options3"></vue-chart>
-        <p class = 'housing-stats'>Population > 25 years: {{totals.townEdu}}</p>
+        <p class = 'housing-stats'>Population > 25 years: {{totals.townEdu.toLocaleString()}}</p>
       </div>
       <div style = '' class = 'col-md-12 vizCol text-center'>
         <h4>Median Earnings</h4>
@@ -313,7 +313,12 @@ export default {
       options1: {
         pieHole: 0.5, // Define donut hole width
         backgroundColor: '#d0d5dd',
-        legend: 'none',
+        legend: {
+          position: 'left',
+          textStyle: {
+            fontSize: 9
+          }
+        },
         chartArea: {
           width: '100%',
           height: '100%',
@@ -371,6 +376,22 @@ export default {
           }
         },
         colors: ['grey']
+      },
+      options5: {
+        pieHole: 0.5, // Define donut hole width
+        backgroundColor: '#d0d5dd',
+        legend: 'none',
+        chartArea: {
+          width: '100%',
+          height: '100%',
+          left: 0,
+          top: 0
+        },
+        slices: {
+          2: {textStyle: {color: '#000000'}},
+          3: {textStyle: {color: '#000000'}}
+        },
+        colors: ['#c00000','#ed7d31','#92d050','#ffc000','#5b9bd5', '#bfbfbf']
       }
     }
   },

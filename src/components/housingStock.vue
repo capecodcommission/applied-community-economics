@@ -2,40 +2,36 @@
 
   <div class = 'row'>
     <div class = 'col-md-12 col-heading'>
-      <h2 class = 'pull-left'>ECONOMY</h2>
+      <h2 class = 'pull-left'>HOUSING</h2>
     </div>
   </div>
     
   <div class = 'row'>
     <div class = 'col-md-5'>
       <div class = 'col-md-12 col-heading'>
-        <h3 class = 'pull-left'>COMMERCIAL</h3>
+        <h3 class = 'pull-left'>STOCK</h3>
       </div>
     </div>
     <div style = 'padding-left: 0 !important; padding-right: 0 !important' class = 'col-md-7'>
       <div class = 'col-md-12 col-heading'>
-        <h3 class = 'pull-left'>RESIDENTIAL</h3>
+        <h3 class = 'pull-left'>AFFORDABILITY</h3>
       </div>
     </div>
   </div>
 
   <div class = 'row'>
     <div class = 'col-md-5'>
-      <div class = 'col-md-6 vizCol'>
-        <h4>Business</h4>
-        <div style = 'padding-bottom: 0' class = 'row'>
-          <ul class="legend">
-            <li><span class="superawesome1"></span> Retail/Rest./Entertainment</li>
-            <li><span class="awesome1"></span> Industrial</li>
-            <li><span class="kindaawesome1"></span> Professional Services</li>
-            <li><span class="notawesome1"></span> Health Care</li>
-            <li><span class="neato1"></span> Public/Educ.</li>
-            <li><span class="great"></span> Other</li>
+      <div class = 'col-md-6 vizCol text-center'>
+        <h4>Seasonality</h4>
+        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows1" :options="options5"></vue-chart>
+        <div class = 'row text-center'>
+          <ul class="legend text-center">
+            <li><span class="superawesome1"></span> Year-round</li>
+            <li><span class="awesome1"></span> Seasonal</li>
           </ul>
         </div>
-        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows1" :options="options5"></vue-chart>
       </div>
-      <div style = 'padding-bottom: 6.7%' class = 'col-md-6 vizCol'>
+      <!-- <div style = 'padding-bottom: 6.7%' class = 'col-md-6 vizCol'>
         <h4>Employment</h4>
         <div style = 'padding-bottom: 0' class = 'row'>
           <ul class="legend hidden">
@@ -48,9 +44,9 @@
           </ul>
         </div>
         <vue-chart class = 'chart' :chart-type="chartType2" :columns="columns2" :rows="rows2" :options="options2"></vue-chart>
-      </div>
+      </div> -->
     </div>
-    <div style = 'background-color: #d0d5dd' class = 'col-md-7'>
+    <div style = 'background-color: #aeb3ba' class = 'col-md-7'>
       <div class = 'col-md-4 housing-stats vizCol'>
         <div class = 'row'>
           <h1>${{totals.paretoMedianCont}}</h1>
@@ -70,7 +66,7 @@
           </ul>
         </div>
       </div>
-      <div class = 'col-md-4 vizCol'>
+      <!-- <div class = 'col-md-4 vizCol'>
         <h4>Educational Attainment</h4>
         <vue-chart class = 'chart' :chart-type="chartType3" :columns="columns3" :rows="rows9" :options="options3"></vue-chart>
         <p class = 'housing-stats'>Population > 25 years: {{totals.totalEduCont.toLocaleString()}}</p>
@@ -83,22 +79,22 @@
           </ul>
         </div>
         <vue-chart class = 'chart' :chart-type="chartType4" :columns="columns4" :rows="rows10" :options="options4"></vue-chart>
-      </div>
+      </div> -->
     </div>
   </div>
 
   <div class = 'row'>
     <div class = 'col-md-5'>
       <div style = 'padding-bottom: 5%' class = 'col-md-6 vizCol'>
-        <h4>Business</h4>
+        <h4>Seasonality</h4>
         <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows1" :options="options5"></vue-chart>
       </div>
-      <div style = 'padding-bottom: 5%' class = 'col-md-6 vizCol'>
+      <!-- <div style = 'padding-bottom: 5%' class = 'col-md-6 vizCol'>
         <h4>Employment</h4>
         <vue-chart class = 'chart' :chart-type="chartType2" :columns="columns2" :rows="rows2" :options="options2"></vue-chart>
-      </div>
+      </div> -->
     </div>
-    <div style = 'background-color: #d0d5dd' class = 'col-md-7'>
+    <div style = 'background-color: #aeb3ba' class = 'col-md-7'>
       <div class = 'col-md-4 housing-stats vizCol'>
         <div class = 'row'>
           <h1>${{totals.paretoMedian}}</h1>
@@ -109,7 +105,7 @@
           <p><b>Unemployment</b></p>
         </div>
       </div>
-      <div class = 'col-md-4 vizCol'>
+      <!-- <div class = 'col-md-4 vizCol'>
         <h4>Educational Attainment</h4>
         <vue-chart class = 'chart' :chart-type="chartType3" :columns="columns3" :rows="rows3" :options="options3"></vue-chart>
         <p class = 'housing-stats'>Population > 25 years: {{totals.totalEdu.toLocaleString()}}</p>
@@ -122,14 +118,14 @@
           </ul>
         </div>
         <vue-chart class = 'chart' :chart-type="chartType4" :columns="columns4" :rows="rows4" :options="options4"></vue-chart>
-      </div>
+      </div> -->
     </div>
   </div>
 
   <div class = 'row'>
     <div class = 'col-md-5'>
       <div style = 'padding-bottom: 5%' class = 'col-md-6 vizCol'>
-        <h4>Business</h4>
+        <h4>Seasonality</h4>
         <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows5" :options="options5"></vue-chart>
       </div>
       <div style = 'padding-bottom: 5%' class = 'col-md-6 vizCol'>
@@ -137,7 +133,7 @@
         <vue-chart class = 'chart' :chart-type="chartType2" :columns="columns2" :rows="rows6" :options="options2"></vue-chart>
       </div>
     </div>
-    <div style = 'background-color: #d0d5dd' class = 'col-md-7'>
+    <div style = 'background-color: #aeb3ba' class = 'col-md-7'>
       <div class = 'col-md-4 housing-stats vizCol'>
         <div class = 'row'>
           <h1>${{totals.townParetoMedian}}</h1>
@@ -148,7 +144,7 @@
           <p><b>Unemployment</b></p>
         </div>
       </div>
-      <div class = 'col-md-4 vizCol'>
+      <!-- <div class = 'col-md-4 vizCol'>
         <h4>Educational Attainment</h4>
         <vue-chart class = 'chart' :chart-type="chartType3" :columns="columns3" :rows="rows7" :options="options3"></vue-chart>
         <p class = 'housing-stats'>Population > 25 years: {{totals.townEdu.toLocaleString()}}</p>
@@ -161,7 +157,7 @@
           </ul>
         </div>
         <vue-chart class = 'chart' :chart-type="chartType4" :columns="columns4" :rows="rows8" :options="options4"></vue-chart>
-      </div>
+      </div> -->
     </div>
   </div>
 
@@ -241,12 +237,8 @@ export default {
         }
       ],
       rows1: [
-        ['Retail/Rest./Entertainment',33],
-        ['Industrial',13],
-        ['Professional Services',18],
-        ['Health Care',14],
-        ['Public/Educ.',8],
-        ['Other',14]
+        ['Year-round',85],
+        ['Seasonal',15]
       ],
       rows2: [
         ['Retail/Rest./Entertainment',20],
@@ -316,7 +308,7 @@ export default {
       ],
       options1: {
         pieHole: 0.5, // Define donut hole width
-        backgroundColor: '#d0d5dd',
+        backgroundColor: '#aeb3ba',
         legend: {
           position: 'left',
           textStyle: {
@@ -337,7 +329,7 @@ export default {
       },
       options2: {
         pieHole: 0.5,
-        backgroundColor: '#d0d5dd',
+        backgroundColor: '#aeb3ba',
         legend: 'none',
         chartArea: {
           width: '100%',
@@ -351,7 +343,7 @@ export default {
       },
       options3: {
         pieHole: 0.5,
-        backgroundColor: '#d0d5dd',
+        backgroundColor: '#aeb3ba',
         legend: 'none',
         chartArea: {
           width: '100%',
@@ -363,7 +355,7 @@ export default {
         colors: ['#dae3f3','#adb9ca','#849bb0','#333f50','#222a35']
       },
       options4: {
-        backgroundColor: '#d0d5dd',
+        backgroundColor: '#aeb3ba',
         legend: 'none',
         chartArea: {
           width: '100%',
@@ -379,7 +371,7 @@ export default {
       },
       options5: {
         pieHole: 0.5, // Define donut hole width
-        backgroundColor: '#d0d5dd',
+        backgroundColor: '#aeb3ba',
         legend: 'none',
         chartArea: {
           width: '100%',
@@ -388,10 +380,9 @@ export default {
           top: 0
         },
         slices: {
-          2: {textStyle: {color: '#000000'}},
-          3: {textStyle: {color: '#000000'}}
+          0: {textStyle: {color: '#000000'}}
         },
-        colors: ['#c00000','#ed7d31','#92d050','#ffc000','#5b9bd5', '#bfbfbf']
+        colors: ['white','orange']
       }
     }
   },
@@ -411,277 +402,6 @@ export default {
 
   ready() {
 
-    // Chartsjs version. Commented out for now
-
-    // // row 1
-    // var ctx1 = $("#donutChart1");
-    // var ctx2 = $("#donutChart2");
-    // var ctx3 = $("#donutChart3");
-    // var ctx4 = $("#barChart1");
-
-    // // row 2
-    // var ctx5 = $("#donutChart4");
-    // var ctx6 = $("#donutChart5");
-    // var ctx7 = $("#donutChart6");
-    // var ctx8 = $("#barChart2");
-
-    // var myChart1 = new Chart(ctx1, {
-    //   type: 'doughnut',
-    //   data: {
-    //     datasets: [
-    //       {
-    //         label: 'data1',
-    //         data: [10,20,30,40,50,60],
-    //         backgroundColor: ['orange','yellow','blue','green','grey', 'red']
-    //       }
-    //     ],
-
-    //     // These labels appear in the legend and in the tooltips when hovering different arcs
-    //     labels: [
-    //       'Retail/Rest./Entertainment',
-    //       'Industrial',
-    //       'Professional Services',
-    //       'Health Care',
-    //       'Public/Educ.',
-    //       'Other'
-    //     ]
-    //   },
-    //   options: {
-    //     cutoutPercentage: 60,
-    //     legend: {
-    //       display: true,
-    //       position: 'left',
-    //       labels: {
-    //         fontSize: 10,
-    //         boxWidth: 10
-    //       }
-    //     }
-    //   }
-    // })
-
-    // var myChart2 = new Chart(ctx2, {
-    //   type: 'doughnut',
-    //   data: {
-    //     datasets: [
-    //       {
-    //         label: 'data1',
-    //         data: [10,25,40,55,70, 85],
-    //         backgroundColor: ['orange','yellow','blue','green','grey', 'red']
-    //       }
-    //     ],
-
-    //     // These labels appear in the legend and in the tooltips when hovering different arcs
-    //     labels: [
-    //       'Retail/Rest./Entertainment',
-    //       'Industrial',
-    //       'Professional Services',
-    //       'Health Care',
-    //       'Public/Educ.',
-    //       'Other'
-    //     ]
-    //   },
-    //   options: {
-    //     cutoutPercentage: 60,
-    //     legend: {
-    //       display: false
-    //     }
-    //   }
-    // })
-
-    // var myChart3 = new Chart(ctx3, {
-    //   type: 'doughnut',
-    //   data: {
-    //     datasets: [
-    //       {
-    //         label: 'data1',
-    //         data: [10,20,30,40,50],
-    //         backgroundColor: ['#d2d7dd','#a8bfdb','#689ad6','#3f7fcc','#1365c6']
-    //       }
-    //     ],
-
-    //     // These labels appear in the legend and in the tooltips when hovering different arcs
-    //     labels: [
-    //       'Less than high school graduate',
-    //       'High school graduate',
-    //       'Some college or associates degree',
-    //       'Bachelors degree',
-    //       'Grduate or professional degree'
-    //     ]
-    //   },
-    //   options: {
-    //     legend: {
-    //       display: false
-    //     }
-    //   }
-    // })
-
-    // var myChart4 = new Chart(ctx4, {
-    //   type: 'horizontalBar',
-    //   data: {
-    //     datasets: [
-    //       {
-    //         label: 'data1',
-    //         data: [10,20,30,40,50],
-    //         backgroundColor: ['#d2d7dd','#a8bfdb','#689ad6','#3f7fcc','#1365c6']
-    //       }
-    //     ],
-
-    //     // These labels appear in the legend and in the tooltips when hovering different arcs
-    //     labels: [
-    //       'Less than high school graduate',
-    //       'High school graduate',
-    //       'Some college or associates degree',
-    //       'Bachelors degree',
-    //       'Grduate or professional degree'
-    //     ]
-    //   },
-    //   options: {
-    //     legend: {
-    //       display: false
-    //     },
-    //     scales: {
-    //       yAxes: [{
-    //         ticks: {
-    //           fontSize: 8
-    //         }
-    //       }],
-    //       xAxes: [{
-    //         ticks: {
-    //           beginAtZero: true
-    //         }
-    //       }]
-    //     }
-    //   }
-    // })
-
-    // var myChart5 = new Chart(ctx5, {
-    //   type: 'doughnut',
-    //   data: {
-    //     datasets: [
-    //       {
-    //         label: 'data1',
-    //         data: [10,20,30,40,50,60],
-    //         backgroundColor: ['orange','yellow','blue','green','grey', 'red']
-    //       }
-    //     ],
-
-    //     // These labels appear in the legend and in the tooltips when hovering different arcs
-    //     labels: [
-    //       'Retail/Rest./Entertainment',
-    //       'Industrial',
-    //       'Professional Services',
-    //       'Health Care',
-    //       'Public/Educ.',
-    //       'Other'
-    //     ]
-    //   },
-    //   options: {
-    //     cutoutPercentage: 60,
-    //     legend: {
-    //       display: true,
-    //       position: 'left',
-    //       labels: {
-    //         fontSize: 10,
-    //         boxWidth: 10
-    //       }
-    //     }
-    //   }
-    // })
-
-    // var myChart6 = new Chart(ctx6, {
-    //   type: 'doughnut',
-    //   data: {
-    //     datasets: [
-    //       {
-    //         label: 'data1',
-    //         data: [10,20,30,40,50,60],
-    //         backgroundColor: ['orange','yellow','blue','green','grey', 'red']
-    //       }
-    //     ],
-
-    //     // These labels appear in the legend and in the tooltips when hovering different arcs
-    //     labels: [
-    //       'Retail/Rest./Entertainment',
-    //       'Industrial',
-    //       'Professional Services',
-    //       'Health Care',
-    //       'Public/Educ.',
-    //       'Other'
-    //     ]
-    //   },
-    //   options: {
-    //     cutoutPercentage: 60,
-    //     legend: {
-    //       display: false
-    //     }
-    //   }
-    // })
-
-    // var myChart7 = new Chart(ctx7, {
-    //   type: 'doughnut',
-    //   data: {
-    //     datasets: [
-    //       {
-    //         label: 'data1',
-    //         data: [10,20,30,40,50],
-    //         backgroundColor: ['#d2d7dd','#a8bfdb','#689ad6','#3f7fcc','#1365c6']
-    //       }
-    //     ],
-
-    //     // These labels appear in the legend and in the tooltips when hovering different arcs
-    //     labels: [
-    //       'January',
-    //       'February',
-    //       'March',
-    //       'April',
-    //       'May'
-    //     ]
-    //   },
-    //   options: {
-    //     legend: {
-    //       display: false
-    //     }
-    //   }
-    // })
-
-    // var myChart8 = new Chart(ctx8, {
-    //   type: 'horizontalBar',
-    //   data: {
-    //     datasets: [
-    //       {
-    //         label: 'data1',
-    //         data: [10,20,30,40,50],
-    //         backgroundColor: ['#d2d7dd','#a8bfdb','#689ad6','#3f7fcc','#1365c6']
-    //       }
-    //     ],
-
-    //     // These labels appear in the legend and in the tooltips when hovering different arcs
-    //     labels: [
-    //       'Less than high school graduate',
-    //       'High school graduate',
-    //       'Some college or associates degree',
-    //       'Bachelors degree',
-    //       'Grduate or professional degree'
-    //     ]
-    //   },
-    //   options: {
-    //     legend: {
-    //       display: false
-    //     },
-    //     scales: {
-    //       yAxes: [{
-    //         ticks: {
-    //           fontSize: 8
-    //         }
-    //       }],
-    //       xAxes: [{
-    //         ticks: {
-    //           beginAtZero: true
-    //         }
-    //       }]
-    //     }
-    //   }
-    // })
   },
 
   methods: {
@@ -695,7 +415,7 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 
 vue-chart { width: 100% !important }
 
@@ -709,8 +429,8 @@ vue-chart { width: 100% !important }
 .legend .notawesome { background-color: #333f50; }
 .legend .neato { background-color: #222a35; }
 
-.legend .superawesome1 { background-color: #c00000;}
-.legend .awesome1 { background-color: #ed7d31; }
+.legend .superawesome1 { background-color: white;}
+.legend .awesome1 { background-color: orange; }
 .legend .kindaawesome1 { background-color: #92d050; }
 .legend .notawesome1 { background-color: #ffc000; }
 .legend .neato1 { background-color: #5b9bd5; }
@@ -719,7 +439,7 @@ vue-chart { width: 100% !important }
 .legend .awesome2 { background-color: #686868; }
 
 .vizCol { 
-  background-color: #d0d5dd; 
+  background-color: #aeb3ba; 
   padding-left: 3px !important; 
   padding-right:0 !important;
 }

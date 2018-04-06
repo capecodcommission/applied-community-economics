@@ -112,6 +112,10 @@ export default function (router) {
         '/economyVertical': {
           name: 'economyVertical',
           component: require('./components/economyVertical.vue')
+        },
+        '/housingStock': {
+          name: 'housingStock',
+          component: require('./components/housingStock.vue')
         }
       }
     }

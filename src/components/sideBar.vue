@@ -210,7 +210,7 @@ export default {
         y = 'twn'
       } 
 
-      if (this.townName === 'Hyannis') {
+      if (this.townThing === 'Hyannis') {
 
         y = 'ac'
       }
