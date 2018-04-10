@@ -56,7 +56,7 @@
           <h1>{{(totals.percUnempCont * 100).toFixed(1)}}%</h1>
           <p><b>Unemployment</b></p>
         </div>
-        <div class = 'row'>
+        <!-- <div class = 'row'>
           <ul class="legend">
             <li><span class="superawesome"></span> Less than high school graduate</li>
             <li><span class="awesome"></span> High school graduate (includes equivalency)</li>
@@ -64,7 +64,7 @@
             <li><span class="notawesome"></span> Bachelor's degree</li>
             <li><span class="neato"></span> Graduate or professional degree</li>
           </ul>
-        </div>
+        </div> -->
       </div>
       <!-- <div class = 'col-md-4 vizCol'>
         <h4>Educational Attainment</h4>
@@ -126,12 +126,12 @@
     <div class = 'col-md-5'>
       <div style = 'padding-bottom: 5%' class = 'col-md-6 vizCol'>
         <h4>Seasonality</h4>
-        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows5" :options="options5"></vue-chart>
+        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows1" :options="options5"></vue-chart>
       </div>
-      <div style = 'padding-bottom: 5%' class = 'col-md-6 vizCol'>
+      <!-- <div style = 'padding-bottom: 5%' class = 'col-md-6 vizCol'>
         <h4>Employment</h4>
         <vue-chart class = 'chart' :chart-type="chartType2" :columns="columns2" :rows="rows6" :options="options2"></vue-chart>
-      </div>
+      </div> -->
     </div>
     <div style = 'background-color: #aeb3ba' class = 'col-md-7'>
       <div class = 'col-md-4 housing-stats vizCol'>

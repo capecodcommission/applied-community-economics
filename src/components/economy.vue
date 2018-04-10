@@ -21,9 +21,9 @@
 
   <div class = 'row'>
     <div class = 'col-md-5'>
-      <div class = 'col-md-6 vizCol'>
+      <div style = 'padding-bottom: 5%' class = 'col-md-6 vizCol'>
         <h4>Business</h4>
-        <div style = 'padding-bottom: 0' class = 'row'>
+        <!-- <div style = 'padding-bottom: 0' class = 'row'>
           <ul class="legend">
             <li><span class="superawesome1"></span> Retail/Rest./Entertainment</li>
             <li><span class="awesome1"></span> Industrial</li>
@@ -32,10 +32,10 @@
             <li><span class="neato1"></span> Public/Educ.</li>
             <li><span class="great"></span> Other</li>
           </ul>
-        </div>
-        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows1" :options="options5"></vue-chart>
+        </div> -->
+        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows1" :options="options1"></vue-chart>
       </div>
-      <div style = 'padding-bottom: 6.7%' class = 'col-md-6 vizCol'>
+      <div style = 'padding-bottom: 5%' class = 'col-md-6 vizCol'>
         <h4>Employment</h4>
         <div style = 'padding-bottom: 0' class = 'row'>
           <ul class="legend hidden">
@@ -60,7 +60,7 @@
           <h1>{{(totals.percUnempCont * 100).toFixed(1)}}%</h1>
           <p><b>Unemployment</b></p>
         </div>
-        <div class = 'row'>
+        <!-- <div class = 'row'>
           <ul class="legend">
             <li><span class="superawesome"></span> Less than high school graduate</li>
             <li><span class="awesome"></span> High school graduate (includes equivalency)</li>
@@ -68,7 +68,7 @@
             <li><span class="notawesome"></span> Bachelor's degree</li>
             <li><span class="neato"></span> Graduate or professional degree</li>
           </ul>
-        </div>
+        </div> -->
       </div>
       <div class = 'col-md-4 vizCol'>
         <h4>Educational Attainment</h4>
@@ -111,7 +111,7 @@
       </div>
       <div class = 'col-md-4 vizCol'>
         <h4>Educational Attainment</h4>
-        <vue-chart class = 'chart' :chart-type="chartType3" :columns="columns3" :rows="rows3" :options="options3"></vue-chart>
+        <vue-chart class = 'chart' :chart-type="chartType3" :columns="columns3" :rows="rows3" :options="options6"></vue-chart>
         <p class = 'housing-stats'>Population > 25 years: {{totals.totalEdu.toLocaleString()}}</p>
       </div>
       <div class = 'col-md-4 vizCol'>
@@ -150,7 +150,7 @@
       </div>
       <div class = 'col-md-4 vizCol'>
         <h4>Educational Attainment</h4>
-        <vue-chart class = 'chart' :chart-type="chartType3" :columns="columns3" :rows="rows7" :options="options3"></vue-chart>
+        <vue-chart class = 'chart' :chart-type="chartType3" :columns="columns3" :rows="rows7" :options="options6"></vue-chart>
         <p class = 'housing-stats'>Population > 25 years: {{totals.townEdu.toLocaleString()}}</p>
       </div>
       <div class = 'col-md-4 vizCol'>
@@ -232,10 +232,6 @@ export default {
           'role': 'style' // Define bar color using hex value
         },
         {
-          'type': 'string',
-          'role': 'annotation' // Define bar label with string 
-        },
-        {
           'type': 'number',
           'label': 'IncomeTown'
         }
@@ -261,14 +257,14 @@ export default {
         ['High school graduate',this.totals.hsg],
         ['Some college or associates degree',this.totals.sca],
         ['Bachelors degree',this.totals.bac],
-        ['Grduate or professional degree',this.totals.gradPro]
+        ['Graduate or professional degree',this.totals.gradPro]
       ],
       rows4: [
-        ['Grduate or professional degree', this.totals.incGrad, '#222a35', 'Graduate or professional degree', this.totals.townIncGrad],
-        ['Bachelors degree', this.totals.incBac, '#333f50', 'Bachelors degree', this.totals.townIncBac],
-        ['Some college or associates degree', this.totals.incSCA, '#849bb0', 'Some college or associates degree', this.totals.townIncSCA],
-        ['High school graduate', this.totals.incHSG, '#adb9ca', 'High school graduate', this.totals.townIncHSG],
-        ['Less than high school graduate', this.totals.incLessHS, '#dae3f3', 'Less than high school graduate', this.totals.townIncLessHS]
+        ['Graduate or professional degree', this.totals.incGrad, '#222a35', this.totals.townIncGrad],
+        ['Bachelors degree', this.totals.incBac, '#333f50', this.totals.townIncBac],
+        ['Some college or associates degree', this.totals.incSCA, '#849bb0', this.totals.townIncSCA],
+        ['High school graduate', this.totals.incHSG, '#adb9ca', this.totals.townIncHSG],
+        ['Less than high school graduate', this.totals.incLessHS, '#dae3f3', this.totals.townIncLessHS]
       ],
       rows5: [
         ['Retail/Rest./Entertainment',26],
@@ -291,28 +287,28 @@ export default {
         ['High school graduate',this.totals.townHSG],
         ['Some college or associates degree',this.totals.townSCA],
         ['Bachelors degree',this.totals.townBac],
-        ['Grduate or professional degree',this.totals.townGradPro]
+        ['Graduate or professional degree',this.totals.townGradPro]
       ],
       rows8: [
-        ['Grduate or professional degree', this.totals.townIncGradROT, '#222a35', 'Graduate or professional degree', this.totals.townIncGrad],
-        ['Bachelors degree', this.totals.townIncBacROT, '#333f50', 'Bachelors degree', this.totals.townIncBac],
-        ['Some college or associates degree', this.totals.townIncSCAROT, '#849bb0', 'Some college or associates degree', this.totals.townIncSCA],
-        ['High school graduate', this.totals.townIncHSGROT, '#adb9ca', 'High school graduate', this.totals.townIncHSG],
-        ['Less than high school graduate', this.totals.townIncLessHSROT, '#dae3f3', 'Less than high school graduate', this.totals.townIncLessHS]
+        ['Graduate or professional degree', this.totals.townIncGradROT, '#222a35', this.totals.townIncGrad],
+        ['Bachelors degree', this.totals.townIncBacROT, '#333f50', this.totals.townIncBac],
+        ['Some college or associates degree', this.totals.townIncSCAROT, '#849bb0', this.totals.townIncSCA],
+        ['High school graduate', this.totals.townIncHSGROT, '#adb9ca', this.totals.townIncHSG],
+        ['Less than high school graduate', this.totals.townIncLessHSROT, '#dae3f3', this.totals.townIncLessHS]
       ],
       rows9: [
         ['Less than high school graduate',this.totals.lessHSCont],
         ['High school graduate',this.totals.hsgCont],
         ['Some college or associates degree',this.totals.scaCont],
         ['Bachelors degree',this.totals.bacCont],
-        ['Grduate or professional degree',this.totals.gradProCont]
+        ['Graduate or professional degree',this.totals.gradProCont]
       ],
       rows10: [
-        ['Grduate or professional degree', this.totals.incGradCont, '#222a35', 'Graduate or professional degree', this.totals.townIncGrad],
-        ['Bachelors degree', this.totals.incBacCont, '#333f50', 'Bachelors degree', this.totals.townIncBac],
-        ['Some college or associates degree', this.totals.incSCACont, '#849bb0', 'Some college or associates degree', this.totals.townIncSCA],
-        ['High school graduate', this.totals.incHSGCont, '#adb9ca', 'High school graduate', this.totals.townIncHSG],
-        ['Less than high school graduate', this.totals.incLessHSCont, '#dae3f3', 'Less than high school graduate', this.totals.townIncLessHS]
+        ['Graduate or professional degree', this.totals.incGradCont, '#222a35', this.totals.townIncGrad],
+        ['Bachelors degree', this.totals.incBacCont, '#333f50', this.totals.townIncBac],
+        ['Some college or associates degree', this.totals.incSCACont, '#849bb0', this.totals.townIncSCA],
+        ['High school graduate', this.totals.incHSGCont, '#adb9ca', this.totals.townIncHSG],
+        ['Less than high school graduate', this.totals.incLessHSCont, '#dae3f3', this.totals.townIncLessHS]
       ],
       options1: {
         pieHole: 0.5, // Define donut hole width
@@ -352,7 +348,12 @@ export default {
       options3: {
         pieHole: 0.5,
         backgroundColor: '#d0d5dd',
-        legend: 'none',
+        legend: {
+          position: 'left',
+          textStyle: {
+            fontSize: 9
+          }
+        },
         chartArea: {
           width: '100%',
           height: '100%'
@@ -368,7 +369,7 @@ export default {
         chartArea: {
           width: '100%',
           height: '80%',
-          left: 0,
+          left: 75,
           top: 0
         },
         hAxis: {
@@ -392,7 +393,20 @@ export default {
           3: {textStyle: {color: '#000000'}}
         },
         colors: ['#c00000','#ed7d31','#92d050','#ffc000','#5b9bd5', '#bfbfbf']
-      }
+      },
+      options6: {
+        pieHole: 0.5,
+        backgroundColor: '#d0d5dd',
+        legend: 'none',
+        chartArea: {
+          width: '100%',
+          height: '100%'
+        },
+        slices: {
+          0: {textStyle: {color: '#000000'}}
+        },
+        colors: ['#dae3f3','#adb9ca','#849bb0','#333f50','#222a35']
+      },
     }
   },
 

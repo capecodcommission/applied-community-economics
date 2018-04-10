@@ -106,6 +106,11 @@
       </div>
       <div class = 'col-md-12 vizCol text-center'>
         <h4>Median Earnings</h4>
+        <div style = 'padding-bottom: 0' class = 'row'>
+          <ul class="legend pull-right">
+            <li><span class="awesome2"></span> Town of Barnstable</li>
+          </ul>
+        </div>
         <vue-chart class = 'chart' :chart-type="chartType4" :columns="columns4" :rows="rows4" :options="options4"></vue-chart>
       </div>
     </div>
@@ -152,6 +157,11 @@
       </div>
       <div style = '' class = 'col-md-12 vizCol text-center'>
         <h4>Median Earnings</h4>
+        <div style = 'padding-bottom: 0' class = 'row'>
+          <ul class="legend pull-right">
+            <li><span class="awesome2"></span> Town of Barnstable</li>
+          </ul>
+        </div>
         <vue-chart class = 'chart' :chart-type="chartType4" :columns="columns4" :rows="rows8" :options="options4"></vue-chart>
       </div>
     </div>
@@ -224,16 +234,8 @@ export default {
           'role': 'style' // Define bar color using hex value
         },
         {
-          'type': 'string',
-          'role': 'annotation' // Define bar label with string 
-        },
-        {
           'type': 'number',
           'label': 'IncomeTown'
-        },
-        {
-          'type': 'string',
-          'role': 'annotation'
         }
       ],
       rows1: [
@@ -257,14 +259,14 @@ export default {
         ['High school graduate',this.totals.hsg],
         ['Some college or associates degree',this.totals.sca],
         ['Bachelors degree',this.totals.bac],
-        ['Grduate or professional degree',this.totals.gradPro]
+        ['Graduate or professional degree',this.totals.gradPro]
       ],
       rows4: [
-        ['Grduate or professional degree', this.totals.incGrad, '#222a35', 'Graduate or professional degree', this.totals.townIncGrad, 'Town of Barnstable'],
-        ['Bachelors degree', this.totals.incBac, '#333f50', 'Bachelors degree', this.totals.townIncBac, 'Town of Barnstable'],
-        ['Some college or associates degree', this.totals.incSCA, '#849bb0', 'Some college or associates degree', this.totals.townIncSCA, 'Town of Barnstable'],
-        ['High school graduate', this.totals.incHSG, '#adb9ca', 'High school graduate', this.totals.townIncHSG, 'Town of Barnstable'],
-        ['Less than high school graduate', this.totals.incLessHS, '#dae3f3', 'Less than high school graduate', this.totals.townIncLessHS, 'Town of Barnstable']
+        ['Graduate or professional degree', this.totals.incGrad, '#222a35', this.totals.townIncGrad],
+        ['Bachelors degree', this.totals.incBac, '#333f50', this.totals.townIncBac],
+        ['Some college or associates degree', this.totals.incSCA, '#849bb0', this.totals.townIncSCA],
+        ['High school graduate', this.totals.incHSG, '#adb9ca', this.totals.townIncHSG],
+        ['Less than high school graduate', this.totals.incLessHS, '#dae3f3', this.totals.townIncLessHS]
       ],
       rows5: [
         ['Retail/Rest./Entertainment',26],
@@ -287,28 +289,28 @@ export default {
         ['High school graduate',this.totals.townHSG],
         ['Some college or associates degree',this.totals.townSCA],
         ['Bachelors degree',this.totals.townBac],
-        ['Grduate or professional degree',this.totals.townGradPro]
+        ['Graduate or professional degree',this.totals.townGradPro]
       ],
       rows8: [
-        ['Grduate or professional degree', this.totals.townIncGradROT, '#222a35', 'Graduate or professional degree', this.totals.townIncGrad, 'Town of Barnstable'],
-        ['Bachelors degree', this.totals.townIncBacROT, '#333f50', 'Bachelors degree', this.totals.townIncBac, 'Town of Barnstable'],
-        ['Some college or associates degree', this.totals.townIncSCAROT, '#849bb0', 'Some college or associates degree', this.totals.townIncSCA, 'Town of Barnstable'],
-        ['High school graduate', this.totals.townIncHSGROT, '#adb9ca', 'High school graduate', this.totals.townIncHSG, 'Town of Barnstable'],
-        ['Less than high school graduate', this.totals.townIncLessHSROT, '#dae3f3', 'Less than high school graduate', this.totals.townIncLessHS, 'Town of Barnstable']
+        ['Graduate or professional degree', this.totals.townIncGradROT, '#222a35', this.totals.townIncGrad],
+        ['Bachelors degree', this.totals.townIncBacROT, '#333f50', this.totals.townIncBac],
+        ['Some college or associates degree', this.totals.townIncSCAROT, '#849bb0', this.totals.townIncSCA],
+        ['High school graduate', this.totals.townIncHSGROT, '#adb9ca', this.totals.townIncHSG],
+        ['Less than high school graduate', this.totals.townIncLessHSROT, '#dae3f3', this.totals.townIncLessHS]
       ],
       rows9: [
         ['Less than high school graduate',this.totals.lessHSCont],
         ['High school graduate',this.totals.hsgCont],
         ['Some college or associates degree',this.totals.scaCont],
         ['Bachelors degree',this.totals.bacCont],
-        ['Grduate or professional degree',this.totals.gradProCont]
+        ['Graduate or professional degree',this.totals.gradProCont]
       ],
       rows10: [
-        ['Grduate or professional degree', this.totals.incGradCont, '#222a35', 'Graduate or professional degree', this.totals.townIncGrad, 'Town of Barnstable'],
-        ['Bachelors degree', this.totals.incBacCont, '#333f50', 'Bachelors degree', this.totals.townIncBac, 'Town of Barnstable'],
-        ['Some college or associates degree', this.totals.incSCACont, '#849bb0', 'Some college or associates degree', this.totals.townIncSCA, 'Town of Barnstable'],
-        ['High school graduate', this.totals.incHSGCont, '#adb9ca', 'High school graduate', this.totals.townIncHSG, 'Town of Barnstable'],
-        ['Less than high school graduate', this.totals.incLessHSCont, '#dae3f3', 'Less than high school graduate', this.totals.townIncLessHS, 'Town of Barnstable']
+        ['Graduate or professional degree', this.totals.incGradCont, '#222a35', this.totals.townIncGrad],
+        ['Bachelors degree', this.totals.incBacCont, '#333f50', this.totals.townIncBac],
+        ['Some college or associates degree', this.totals.incSCACont, '#849bb0', this.totals.townIncSCA],
+        ['High school graduate', this.totals.incHSGCont, '#adb9ca', this.totals.townIncHSG],
+        ['Less than high school graduate', this.totals.incLessHSCont, '#dae3f3', this.totals.townIncLessHS]
       ],
       options1: {
         pieHole: 0.5, // Define donut hole width
@@ -364,16 +366,12 @@ export default {
         chartArea: {
           width: '100%',
           height: '80%',
-          left: 0,
+          left: 100,
           top: 0
         },
         hAxis: {
           title: "Thousands",
-          format: 'currency',
-          viewWindow: {
-            min: 0,
-            max: 110000
-          }
+          format: 'currency'
         },
         colors: ['grey']
       },
@@ -446,6 +444,8 @@ vue-chart { width: 100% !important }
 .legend .notawesome1 { background-color: #ffc000; }
 .legend .neato1 { background-color: #5b9bd5; }
 .legend .great { background-color: #bfbfbf; }
+
+.legend .awesome2 { background-color: #686868; }
 
 .vizCol { 
   background-color: #d0d5dd; 

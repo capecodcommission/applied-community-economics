@@ -1,4 +1,4 @@
-export const createMap = function (loader, totals, censusBlocks, censusTracts) {
+export const createMap = function (loader, totals, censusBlocks, censusTracts, censusTowns) {
 
   loader.dojoRequire(
     [
@@ -398,6 +398,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
 
         var selection = []
 
+        // use GIZ or other boundary based on x parameter
         if (x === 'GIZ') {
 
           selection = gizBoundaries
@@ -408,12 +409,12 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
 
         document.getElementById('loading').style.display = true ? 'block' : 'none';
 
-        selection.queryFeatures().then((h) => { // Obtain GIZ extent
+        selection.queryFeatures().then((h) => { // Query selection geometry
 
           $('#progress').text('queried parcel layer extent')
           console.log('queried parcel layer extent')
 
-          var buff = h.features[0].geometry
+          var buff = h.features[0].geometry // use boundary geometry for query
 
           selection.visible = true
           parcelLayer.definitionExpression = ""
@@ -427,7 +428,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
 
           var query1 = parcelLayer.createQuery() // Initialize parcel query using unbuffered extent
           query1.geometry = buff
-          query1.spatialRelationship = 'intersects'
+          query1.spatialRelationship = 'contains'
           query1.returnGeometry = true
           query1.distance = 1
           query1.units = 'miles'
@@ -551,8 +552,12 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
                 if (j.attributes.TRACT != "990000") { // If census tract isn't cape cod water body
 
                   var popPrcl = 0 // Initialize population rolling sum by parcel field
-                  var blockRow = censusBlocks.find((i) => { return i[53] === j.attributes.BLKGRP && i[52] === j.attributes.TRACT}) 
+                  var blockRow = censusBlocks.find((i) => { return i[53] === j.attributes.BLKGRP && i[52] === j.attributes.TRACT})
                   var blockPop = parseInt(blockRow[1])
+
+                  // var popPrcl1 = 0 // Initialize population rolling sum by parcel field
+                  // var tractRow = censusTracts.find((i) => { return i[52] === j.attributes.TRACT})
+                  // var tractPop = parseInt(tractRow[1])
 
                   resultLayer1.graphics.items.map((k) => { // Look through parcels from queried results
 
@@ -941,6 +946,11 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
                     return tractsTown.includes(el[52])
                   })
 
+                  var censusTownsFiltered = censusTowns.filter((el) => {
+
+                    return el[0] === town
+                  })
+
                   // Initialize rolling sums and avgs of income by education
                   var townTotalIncLessHS = 0
                   var townTotalIncHSG = 0
@@ -1022,7 +1032,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
                   var townTotalGradPro = 0
 
                   $('#progress').append('<br/>map all town')
-                  censusTractsAllTown.map((k) => {
+                  censusTownsFiltered.map((k) => {
 
                     // Replace negative values with 1
                     if (parseInt(k[18]) < 0) {
@@ -1415,7 +1425,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts) {
 
                       $('#contSel').css('visibility','visible')
 
-                      $("#tractSel").html(tractIDUnique.map(function(value) {
+                      $("#tractSel").html(blockIDArr.map(function(value) {
 
                         return('<p>' + value + '</p>');
                       }))

@@ -68,3 +68,8 @@ export function getTracts (state) {
 
   return state.tracts
 }
+
+export function getCensusTowns (state) {
+
+  return state.censusTowns
+}

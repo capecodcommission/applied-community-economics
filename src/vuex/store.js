@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 // Create state object that all Vues share, JSON from API is loaded here
 const state = {
+  censusTowns: [],
   tracts: [],
   blockGroups: [],
   attributes: {
@@ -190,6 +191,20 @@ const state = {
 // Create mutations; functions to change data in the state
 const mutations = {
 
+  LOAD_CENSUSTOWNS (state, towns) {
+
+    towns.map((i) => {
+
+      // Reduce subdivision string to town name, then uppercase to match with parcel layer town name
+      i[0] = i[0].substr(0,i[0].indexOf(' ')).toUpperCase()
+
+      return i
+    })
+
+    state.censusTowns = towns
+    console.log('Census Towns Loaded')
+  },
+
   LOAD_TRACTS (state, tracts) {
 
     state.tracts = tracts
@@ -203,7 +218,6 @@ const mutations = {
     state.blockGroups = blks
 
     console.log('Census BlockGroups Loaded')
-    // console.log(state.blockGroups[1])
   },
 
   TOGGLE_ATTRIB (state, land, water) {

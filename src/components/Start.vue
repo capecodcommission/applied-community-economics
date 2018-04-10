@@ -24,7 +24,7 @@
           <p>Selected HSG: ${{totals.incHSGCont.toFixed(0)}}</p>
           <p>Selected SCA: ${{totals.incSCACont.toFixed(0)}}</p>
           <p>Selected Bac: ${{totals.incBacCont.toFixed(0)}}</p>
-          <p>Selected Grad: ${{totals.townIncGradCont.toFixed(0)}}</p>
+          <p>Selected Grad: ${{totals.incGradCont.toFixed(0)}}</p>
           <p>1mi Pareto Median: ${{totals.paretoMedian}}</p>
           <p>1mi Unemployment: {{(totals.percUnemp * 100).toFixed(0)}}%</p>
           <p>1mi LessHS: ${{totals.incLessHS.toFixed(0)}}</p>
@@ -51,9 +51,9 @@
 </template>
 
 <script>
-import { getComparison, getTownName, getAttrib, getBlks, getTracts } from '../vuex/getters'
+import { getComparison, getTownName, getAttrib, getBlks, getTracts, getCensusTowns } from '../vuex/getters'
 
-import {updateAttrib, loadBlks, loadTracts} from '../vuex/actions'
+import {updateAttrib, loadBlks, loadTracts, loadCensusTowns} from '../vuex/actions'
 import treatmentDetail from './TreatmentDetail'
 import Header from './Header'
 import sidething from './sideBar'
@@ -83,7 +83,8 @@ export default {
 
       updateAttrib,
       loadBlks,
-      loadTracts
+      loadTracts,
+      loadCensusTowns
     },
 
     getters: {
@@ -92,7 +93,8 @@ export default {
       townName: getTownName,
       totals: getAttrib,
       blockGroups: getBlks,
-      tracts: getTracts
+      tracts: getTracts,
+      censusTowns: getCensusTowns
     }
   },
 
@@ -115,7 +117,11 @@ export default {
 
     'tracts': function(x) {
 
-      esriLoader.bootstrap((err) => { createMap(esriLoader, this.totals, this.blockGroups, this.tracts, this.updateProg)}, { url: 'https://js.arcgis.com/4.5/'})
+      this.loadCensusTowns()
+    },
+    'censusTowns': function(x) {
+
+      esriLoader.bootstrap((err) => { createMap(esriLoader, this.totals, this.blockGroups, this.tracts, this.censusTowns)}, { url: 'https://js.arcgis.com/4.5/'})
     }
   }
 }
