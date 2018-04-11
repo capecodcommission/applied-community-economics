@@ -87,7 +87,7 @@
     <div class = 'col-md-5'>
       <div style = 'padding-bottom: 5%' class = 'col-md-6 vizCol'>
         <h4>Seasonality</h4>
-        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows1" :options="options5"></vue-chart>
+        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows11" :options="options5"></vue-chart>
       </div>
       <!-- <div style = 'padding-bottom: 5%' class = 'col-md-6 vizCol'>
         <h4>Employment</h4>
@@ -126,7 +126,7 @@
     <div class = 'col-md-5'>
       <div style = 'padding-bottom: 5%' class = 'col-md-6 vizCol'>
         <h4>Seasonality</h4>
-        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows1" :options="options5"></vue-chart>
+        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows12" :options="options5"></vue-chart>
       </div>
       <!-- <div style = 'padding-bottom: 5%' class = 'col-md-6 vizCol'>
         <h4>Employment</h4>
@@ -237,8 +237,8 @@ export default {
         }
       ],
       rows1: [
-        ['Year-round',85],
-        ['Seasonal',15]
+        ['Year-round',this.totals.totalYearRoundSelected],
+        ['Seasonal',this.totals.totalSeasonalSelected]
       ],
       rows2: [
         ['Retail/Rest./Entertainment',20],
@@ -305,6 +305,14 @@ export default {
         ['Some college or associates degree', this.totals.incSCACont, '#849bb0', 'Some college or associates degree', this.totals.townIncSCA],
         ['High school graduate', this.totals.incHSGCont, '#adb9ca', 'High school graduate', this.totals.townIncHSG],
         ['Less than high school graduate', this.totals.incLessHSCont, '#dae3f3', 'Less than high school graduate', this.totals.townIncLessHS]
+      ],
+      rows11: [
+        ['Year-round',this.totals.totalYearRound1MI],
+        ['Seasonal',this.totals.totalSeasonal1MI]
+      ],
+      rows12: [
+        ['Year-round',this.totals.totalYearRoundROT],
+        ['Seasonal',this.totals.totalSeasonalROT]
       ],
       options1: {
         pieHole: 0.5, // Define donut hole width

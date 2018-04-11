@@ -21,7 +21,7 @@
 
   <div class = 'row'>
     <div class = 'col-md-5'>
-      <div style = 'padding-bottom: 5%' class = 'col-md-6 vizCol'>
+      <div style = 'padding-bottom: 5%' class = 'col-md-6 vizColDark'>
         <h4>Business</h4>
         <!-- <div style = 'padding-bottom: 0' class = 'row'>
           <ul class="legend">
@@ -35,7 +35,7 @@
         </div> -->
         <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows1" :options="options1"></vue-chart>
       </div>
-      <div style = 'padding-bottom: 5%' class = 'col-md-6 vizCol'>
+      <div style = 'padding-bottom: 5%' class = 'col-md-6 vizColDark'>
         <h4>Employment</h4>
         <div style = 'padding-bottom: 0' class = 'row'>
           <ul class="legend hidden">
@@ -50,8 +50,8 @@
         <vue-chart class = 'chart' :chart-type="chartType2" :columns="columns2" :rows="rows2" :options="options2"></vue-chart>
       </div>
     </div>
-    <div style = 'background-color: #d0d5dd' class = 'col-md-7'>
-      <div class = 'col-md-4 housing-stats vizCol'>
+    <div style = 'background-color: #a5a9af' class = 'col-md-7'>
+      <div class = 'col-md-4 housing-stats vizColDark'>
         <div class = 'row'>
           <h1>${{totals.paretoMedianCont}}</h1>
           <p><b>Median Household Income</b></p>
@@ -70,12 +70,12 @@
           </ul>
         </div> -->
       </div>
-      <div class = 'col-md-4 vizCol'>
+      <div class = 'col-md-4 vizColDark'>
         <h4>Educational Attainment</h4>
         <vue-chart class = 'chart' :chart-type="chartType3" :columns="columns3" :rows="rows9" :options="options3"></vue-chart>
         <p class = 'housing-stats'>Population > 25 years: {{totals.totalEduCont.toLocaleString()}}</p>
       </div>
-      <div class = 'col-md-4 vizCol'>
+      <div class = 'col-md-4 vizColDark'>
         <h4>Median Earnings</h4>
         <div style = 'padding-bottom: 0' class = 'row'>
           <ul class="legend pull-right">
@@ -89,17 +89,17 @@
 
   <div class = 'row'>
     <div class = 'col-md-5'>
-      <div style = 'padding-bottom: 5%' class = 'col-md-6 vizCol'>
+      <div style = 'padding-bottom: 5%' class = 'col-md-6 vizColDark'>
         <h4>Business</h4>
-        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows1" :options="options5"></vue-chart>
+        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows1" :options="options2"></vue-chart>
       </div>
-      <div style = 'padding-bottom: 5%' class = 'col-md-6 vizCol'>
+      <div style = 'padding-bottom: 5%' class = 'col-md-6 vizColDark'>
         <h4>Employment</h4>
         <vue-chart class = 'chart' :chart-type="chartType2" :columns="columns2" :rows="rows2" :options="options2"></vue-chart>
       </div>
     </div>
-    <div style = 'background-color: #d0d5dd' class = 'col-md-7'>
-      <div class = 'col-md-4 housing-stats vizCol'>
+    <div style = 'background-color: #a5a9af' class = 'col-md-7'>
+      <div class = 'col-md-4 housing-stats vizColDark'>
         <div class = 'row'>
           <h1>${{totals.paretoMedian}}</h1>
           <p><b>Median Household Income</b></p>
@@ -109,12 +109,12 @@
           <p><b>Unemployment</b></p>
         </div>
       </div>
-      <div class = 'col-md-4 vizCol'>
+      <div class = 'col-md-4 vizColDark'>
         <h4>Educational Attainment</h4>
-        <vue-chart class = 'chart' :chart-type="chartType3" :columns="columns3" :rows="rows3" :options="options6"></vue-chart>
+        <vue-chart class = 'chart' :chart-type="chartType3" :columns="columns3" :rows="rows3" :options="options8"></vue-chart>
         <p class = 'housing-stats'>Population > 25 years: {{totals.totalEdu.toLocaleString()}}</p>
       </div>
-      <div class = 'col-md-4 vizCol'>
+      <div class = 'col-md-4 vizColDark'>
         <h4>Median Earnings</h4>
         <div style = 'padding-bottom: 0' class = 'row'>
           <ul class="legend pull-right">
@@ -134,7 +134,7 @@
       </div>
       <div style = 'padding-bottom: 5%' class = 'col-md-6 vizCol'>
         <h4>Employment</h4>
-        <vue-chart class = 'chart' :chart-type="chartType2" :columns="columns2" :rows="rows6" :options="options2"></vue-chart>
+        <vue-chart class = 'chart' :chart-type="chartType2" :columns="columns2" :rows="rows6" :options="options9"></vue-chart>
       </div>
     </div>
     <div style = 'background-color: #d0d5dd' class = 'col-md-7'>
@@ -160,7 +160,7 @@
             <li><span class="awesome2"></span> Town of Barnstable</li>
           </ul>
         </div>
-        <vue-chart class = 'chart' :chart-type="chartType4" :columns="columns4" :rows="rows8" :options="options4"></vue-chart>
+        <vue-chart class = 'chart' :chart-type="chartType4" :columns="columns4" :rows="rows8" :options="options10"></vue-chart>
       </div>
     </div>
   </div>
@@ -312,7 +312,7 @@ export default {
       ],
       options1: {
         pieHole: 0.5, // Define donut hole width
-        backgroundColor: '#d0d5dd',
+        backgroundColor: '#a5a9af',
         legend: {
           position: 'left',
           textStyle: {
@@ -333,7 +333,7 @@ export default {
       },
       options2: {
         pieHole: 0.5,
-        backgroundColor: '#d0d5dd',
+        backgroundColor: '#a5a9af',
         legend: 'none',
         chartArea: {
           width: '100%',
@@ -347,7 +347,7 @@ export default {
       },
       options3: {
         pieHole: 0.5,
-        backgroundColor: '#d0d5dd',
+        backgroundColor: '#a5a9af',
         legend: {
           position: 'left',
           textStyle: {
@@ -364,7 +364,7 @@ export default {
         colors: ['#dae3f3','#adb9ca','#849bb0','#333f50','#222a35']
       },
       options4: {
-        backgroundColor: '#d0d5dd',
+        backgroundColor: '#a5a9af',
         legend: 'none',
         chartArea: {
           width: '100%',
@@ -406,6 +406,69 @@ export default {
           0: {textStyle: {color: '#000000'}}
         },
         colors: ['#dae3f3','#adb9ca','#849bb0','#333f50','#222a35']
+      },
+      options7: {
+        pieHole: 0.5, // Define donut hole width
+        backgroundColor: '#d0d5dd',
+        legend: {
+          position: 'left',
+          textStyle: {
+            fontSize: 9
+          }
+        },
+        slices: {
+          2: {textStyle: {color: '#000000'}},
+          3: {textStyle: {color: '#000000'}}
+        },
+        chartArea: {
+          width: '100%',
+          height: '100%',
+          left: 0,
+          top: 0
+        },
+        colors: ['#c00000','#ed7d31','#92d050','#ffc000','5b9bd5', '#bfbfbf']
+      },
+      options8: {
+        pieHole: 0.5,
+        backgroundColor: '#a5a9af',
+        legend: 'none',
+        chartArea: {
+          width: '100%',
+          height: '100%'
+        },
+        slices: {
+          0: {textStyle: {color: '#000000'}}
+        },
+        colors: ['#dae3f3','#adb9ca','#849bb0','#333f50','#222a35']
+      },
+      options9: {
+        pieHole: 0.5,
+        backgroundColor: '#d0d5dd',
+        legend: 'none',
+        chartArea: {
+          width: '100%',
+          height: '100%'
+        },
+        slices: {
+          2: {textStyle: {color: '#000000'}},
+          3: {textStyle: {color: '#000000'}}
+        },
+        colors: ['#c00000','#ed7d31','#92d050','#ffc000','5b9bd5', '#bfbfbf']
+      },
+      options10: {
+        backgroundColor: '#d0d5dd',
+        legend: 'none',
+        chartArea: {
+          width: '100%',
+          height: '80%',
+          left: 75,
+          top: 0
+        },
+        hAxis: {
+          title: "Thousands",
+          format: 'currency'
+        },
+        colors: ['grey']
       },
     }
   },
@@ -734,6 +797,12 @@ vue-chart { width: 100% !important }
 
 .vizCol { 
   background-color: #d0d5dd; 
+  padding-left: 3px !important; 
+  padding-right:0 !important;
+}
+
+.vizColDark { 
+  background-color: #a5a9af; 
   padding-left: 3px !important; 
   padding-right:0 !important;
 }

@@ -71,7 +71,13 @@ const state = {
     incSCACont: false,
     incBacCont: false,
     incGradCont: false,
-    paretoMedianCont: false
+    paretoMedianCont: false,
+    totalSeasonal1MI: false,
+    totalYearRound1MI: false,
+    totalYearRoundROT: false,
+    totalSeasonalROT: false,
+    totalYearRoundSelected: false,
+    totalSeasonalSelected: false
   },
   townselected: false,
   nbhselected: false,

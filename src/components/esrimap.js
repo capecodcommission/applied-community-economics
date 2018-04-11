@@ -433,6 +433,13 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
           query1.distance = 1
           query1.units = 'miles'
 
+          var query5 = tracts.createQuery()
+          query5.geometry = buff
+          query5.spatialRelationship = 'intersects'
+          query5.returnGeometry = true
+          query5.distance = 1
+          query5.units = 'miles'
+
           // Initialize running totals
           var features = ''
           var features1 = ''
@@ -440,7 +447,8 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
           var totalWater = 0
 
           // Household income
-          var totalPop = 0
+          var totalHousing = 0
+          var totalSeasonal = 0
           var totalLess10k = 0
           var totalTen14 = 0
           var totalFif19 = 0
@@ -613,6 +621,31 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
 
               $('#progress').append('<br/>block group feature mapping done')
 
+              // tracts.queryFeatures(query5).then((i) => {
+
+              //   var popPrcl1 = 0
+              //   var tractRow = censusTracts.find((i) => { return i[52] === j.attributes.TRACT})
+              //   var tractPop = parseInt(tractRow[1])
+
+              //   i.features.map((j) => {
+
+              //     resultLayer1.graphics.items.map((k) => { // Look through parcels from queried results
+
+              //       if (geometryEngine.intersects(k.geometry, j.geometry)) { // If block group geometry intersects parcels
+
+              //         k.attributes.TRACT = j.attributes.TRACT // Assign block group to individual parcel
+
+              //         popPrcl1 += parseInt(k.attributes.POP_10) // Sum population field in block group layer using POP_10 from individual parcels
+              //       }
+              //     })
+
+              //     if ( (popPrcl1 / tractPop) >= .5) {
+                    
+              //       tractIDArr.push(j.attributes.TRACT)
+              //     }
+              //   })
+              // })
+
               // Obtain unique tract id's
               var tractIDUnique = tractIDArr.filter((item, pos) => { return tractIDArr.indexOf(item) == pos})
 
@@ -631,7 +664,8 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
               $('#progress').append('<br/>mapping through filtered census blocks')
               censusBlocksFiltered.map((k) => { // Search ACS rows by block group
 
-                totalPop += parseInt(k[1]) // Append/fill census attributes by column index
+                totalHousing += parseInt(k[0])
+                totalSeasonal += parseInt(k[1]) // Append/fill census attributes by column index
 
                 // Income
                 totalLess10k += parseInt(k[2])
@@ -749,6 +783,10 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
 
               percUnemp = totalUnemp / totalCivilLabor
 
+              var totalYearRound = totalHousing - totalSeasonal
+
+              totals.totalYearRound1MI = totalYearRound
+              totals.totalSeasonal1MI = totalSeasonal
               totals.percUnemp = parseFloat(percUnemp).toFixed(2)
               totals.lessHS = totalLessHS
               totals.hsg = totalHSG
@@ -951,6 +989,10 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                     return el[0] === town
                   })
 
+
+                  var townTotalHousing = 0
+                  var townTotalSeasonal = 0
+
                   // Initialize rolling sums and avgs of income by education
                   var townTotalIncLessHS = 0
                   var townTotalIncHSG = 0
@@ -1081,6 +1123,9 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                   $('#progress').append('<br/>map remainder')
                   censusTractsTownFiltered.map((k) => { // Iterate through census API by tract
 
+                    townTotalHousing += parseInt(k[0])
+                    townTotalSeasonal += parseInt(k[1])
+
                     // Income
                     townTotalLess10k += parseInt(k[2]) 
                     townTotalTen14 += parseInt(k[3])
@@ -1200,6 +1245,11 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                   townTotalGradPro = townTotalMas + townTotalPro + townTotalDoc
                   townTotalLessHS = townTotalNoSchool + townTotalNursery + townTotalKindergarten + townTotalG1 + townTotalG2 + townTotalG3 + townTotalG4 + townTotalG5 + townTotalG6 + townTotalG7 + townTotalG8 + townTotalG9 + townTotalG10 + townTotalG11 + townTotalG12
 
+                  var townTotalYearRound = townTotalHousing - townTotalSeasonal
+
+                  totals.totalYearRoundROT = townTotalYearRound
+                  totals.totalSeasonalROT = townTotalSeasonal
+
                   $('#progress').append('<br/>Set education totals as state properties')
                   // Set education totals as state properties
                   totals.townHSG = townTotalHSG
@@ -1259,7 +1309,8 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                   query3.returnGeometry = true
 
                   // Household income
-                  var totalPop = 0
+                  var totalHousingSelected = 0
+                  var totalSeasonalSelected = 0
                   var totalLess10k = 0
                   var totalTen14 = 0
                   var totalFif19 = 0
@@ -1445,7 +1496,8 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                       $('#progress').append('<br/>mapping through filtered census blocks')
                       censusBlocksFiltered.map((k) => { // Search ACS rows by block group
 
-                        totalPop += parseInt(k[1]) // Append/fill census attributes by column index
+                        totalHousingSelected += parseInt(k[0])
+                        totalSeasonalSelected += parseInt(k[1]) // Append/fill census attributes by column index
 
                         // Income
                         totalLess10k += parseInt(k[2])
@@ -1560,6 +1612,11 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                       totalLessHS = totalNoSchool + totalNursery + totalKindergarten + totalG1 + totalG2 + totalG3 + totalG4 + totalG5 + totalG6 + totalG7 + totalG8 + totalG9 + totalG10 + totalG11 + totalG12
 
                       percUnemp = totalUnemp / totalCivilLabor
+
+                      var totalYearRoundSelected = totalHousingSelected - totalSeasonalSelected
+
+                      totals.totalYearRoundSelected = totalYearRoundSelected
+                      totals.totalSeasonalSelected = totalSeasonalSelected
 
                       totals.percUnempCont = parseFloat(percUnemp).toFixed(2)
                       totals.lessHSCont = totalLessHS
