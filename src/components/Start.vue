@@ -101,6 +101,8 @@ export default {
   ready() {
     document.getElementById('loading').style.display = false ? 'block' : 'none';
 
+    $('#tractsROT').css('visibility','hidden')
+
     this.loadBlks()
   },
 

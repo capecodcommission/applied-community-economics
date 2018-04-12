@@ -124,7 +124,7 @@ export default {
       $('#contSel').css('visibility','hidden')
       $('#tracts1MI').css('visibility','hidden')
       $('#tractsROT').css('visibility','hidden')
-      $('#tractsSel').css('visibility','hidden')
+      $('#tractSel').css('visibility','hidden')
 
       this.loadTownName(x)
       router.go({name: 'Start'})

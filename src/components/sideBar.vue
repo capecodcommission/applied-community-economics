@@ -40,9 +40,19 @@
   <button @click = "townName = 'Hyannis GIZ' " v-show = "townThing == 'APPLIED COMMUNITY ECONOMICS'" id = 'computeGIZ' class = 'btn btn-primary pull-right'>Compute GIZ</button>
   <button style = 'float: left; margin-left: 3%' v-show = "townThing != 'APPLIED COMMUNITY ECONOMICS'" @click = "toggleComparison()" class = "btn btn-primary compareButton">Compare to Other {{selectType}}s</button>
 
-  <p id = 'contSel' style = 'visibility: hidden; margin-top: 30%;'>Tracts/Blockgroups intersecting core selection: <div id = 'tractSel'></div></p>
-  <!-- <p id = 'cont1MI' style = 'visibility: hidden;'>Tracts within 1mi: <div id = 'tracts1MI'></div></p>
-  <p id = 'contROT' style = 'visibility: hidden; overflow: auto;'>Tracts within rest of town: <div style = 'overflow: auto' id = 'tractsROT'></div></p> -->
+  <div style = 'padding-top: 5%' class = 'row'>
+    <div style = 'padding-left: 0; padding-right: 0; word-wrap: break-word' class = 'col-md-12'>
+      <div class = 'col-md-4'>
+        <p id = 'contSel' style = 'visibility: hidden;'>Tracts/Blockgroups intersecting core selection: <div id = 'tractSel'></div></p>
+      </div>
+      <div class = 'col-md-4'>
+        <p id = 'cont1MI' style = 'visibility: hidden;'>Tracts/Blockgroups within 1mi: <div id = 'tracts1MI'></div></p>
+      </div>
+      <div style = 'padding-right: 0' class = 'col-md-4'>
+        <p id = 'contROT' style = 'visibility: hidden;'>Tracts/BlockGroups within rest of town: <div style = 'overflow: scroll' id = 'tractsROT'></div></p>
+      </div>
+    </div>
+  </div>
 
 </template>
 

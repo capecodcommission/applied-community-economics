@@ -440,6 +440,11 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
           query5.distance = 1
           query5.units = 'miles'
 
+          var query6 = tracts.createQuery()
+          query6.geometry = buff
+          query6.spatialRelationship = 'intersects'
+          query6.returnGeometry = true
+
           // Initialize running totals
           var features = ''
           var features1 = ''
@@ -549,7 +554,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
 
               $('#progress').append('<br/>querying blockgroup feature layer')
 
-              var blockIDArr = []
+              var blockIDArr1MI = []
               var tractIDArr = []
 
               // Obtain totals from queried blockgroup attributes
@@ -563,15 +568,9 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                   var blockRow = censusBlocks.find((i) => { return i[53] === j.attributes.BLKGRP && i[52] === j.attributes.TRACT})
                   var blockPop = parseInt(blockRow[1])
 
-                  // var popPrcl1 = 0 // Initialize population rolling sum by parcel field
-                  // var tractRow = censusTracts.find((i) => { return i[52] === j.attributes.TRACT})
-                  // var tractPop = parseInt(tractRow[1])
-
                   resultLayer1.graphics.items.map((k) => { // Look through parcels from queried results
 
                     if (geometryEngine.intersects(k.geometry, j.geometry)) { // If block group geometry intersects parcels
-
-                      k.attributes.BLKGRP = j.attributes.BLKGRP // Assign block group to individual parcel
 
                       popPrcl += parseInt(k.attributes.POP_10) // Sum population field in block group layer using POP_10 from individual parcels
                     }
@@ -579,8 +578,8 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
 
                   if ((popPrcl / blockPop) >= .5) { // If queried parcel population is greater than 50% of block group population
 
-                    blockIDArr.push(j.attributes.TRACT + j.attributes.BLKGRP)
-                    tractIDArr.push(j.attributes.TRACT)
+                    blockIDArr1MI.push(j.attributes.TRACT + j.attributes.BLKGRP)
+                    // tractIDArr.push(j.attributes.TRACT)
 
                     j.symbol = { // Set normal block group symbology
 
@@ -621,32 +620,42 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
 
               $('#progress').append('<br/>block group feature mapping done')
 
-              // tracts.queryFeatures(query5).then((i) => {
+              tracts.queryFeatures(query5).then((i) => {
 
-              //   var popPrcl1 = 0
-              //   var tractRow = censusTracts.find((i) => { return i[52] === j.attributes.TRACT})
-              //   var tractPop = parseInt(tractRow[1])
+                $('#progress').append('<br/>begin tract/population calculations')
 
-              //   i.features.map((j) => {
+                i.features.map((j) => {
 
-              //     resultLayer1.graphics.items.map((k) => { // Look through parcels from queried results
+                  if (j.attributes.TRACT != '990000') {
 
-              //       if (geometryEngine.intersects(k.geometry, j.geometry)) { // If block group geometry intersects parcels
+                    var popPrcl1 = 0
+                    var tractRow = censusTracts.find((i) => { return i[52] === j.attributes.TRACT})
+                    var tractPop = parseInt(tractRow[1])
 
-              //         k.attributes.TRACT = j.attributes.TRACT // Assign block group to individual parcel
+                    resultLayer1.graphics.items.map((k) => { // Look through parcels from queried results
 
-              //         popPrcl1 += parseInt(k.attributes.POP_10) // Sum population field in block group layer using POP_10 from individual parcels
-              //       }
-              //     })
+                      if (geometryEngine.intersects(k.geometry, j.geometry)) { // If block group geometry intersects parcels
 
-              //     if ( (popPrcl1 / tractPop) >= .5) {
+                        k.attributes.TRACT = j.attributes.TRACT // Assign block group to individual parcel
+
+                        popPrcl1 += parseInt(k.attributes.POP_10) // Sum population field in block group layer using POP_10 from individual parcels
+                      }
+                    })
+
                     
-              //       tractIDArr.push(j.attributes.TRACT)
-              //     }
-              //   })
-              // })
+                    if ( (popPrcl1 / tractPop) >= .5) {
 
-              // Obtain unique tract id's
+                      console.log(tractRow[52])
+                      console.log(popPrcl1 / tractPop)
+
+                      
+                      tractIDArr.push(j.attributes.TRACT)
+                    }
+                  }
+                })
+
+                $('#progress').append('<br/>calcs done')
+
               var tractIDUnique = tractIDArr.filter((item, pos) => { return tractIDArr.indexOf(item) == pos})
 
               // Subset census API data by unique tract id's within GIZ
@@ -658,8 +667,17 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
               // Use tractblock key to subset API by block group
               var censusBlocksFiltered = censusBlocks.filter(el => {
 
-                return blockIDArr.includes(el[52] + el[53])
+                return blockIDArr1MI.includes(el[52] + el[53]) && tractIDUnique.includes(el[52])
               });
+
+              $('#cont1MI').css('visibility','visible')
+
+              $("#tracts1MI").html(censusBlocksFiltered.map(function(value) {
+
+                return('<p>' + value[52] + ' ' + value[53] + '</p>');
+              }))
+
+              $('#tracts1MI').css('visibility','visible')
 
               $('#progress').append('<br/>mapping through filtered census blocks')
               censusBlocksFiltered.map((k) => { // Search ACS rows by block group
@@ -921,10 +939,10 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
 
               townBoundaries.definitionExpression = "TOWN = " + "'" + town + "'"
 
-              townBoundaries.queryExtent().then((i) => {
+              townBoundaries.queryFeatures().then((i) => {
 
                 var query2 = tracts.createQuery() // Initialize block group query using town boundary geometry
-                query2.geometry = i.extent
+                query2.geometry = i.features[0].geometry
                 query2.spatialRelationship = 'contains'
 
                 console.log('begin querying tracts within Barnstable')
@@ -949,24 +967,6 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                       tractsTown.push(j.attributes.TRACT)
                     }
                   })
-
-                  $('#cont1MI').css('visibility','visible')
-
-                  $("#tracts1MI").html(tractIDUnique.map(function(value) {
-
-                    return('<p>' + value + '</p>');
-                  }))
-
-                  $('#tracts1MI').css('visibility','visible')
-
-                  $('#contROT').css('visibility','visible')
-
-                  $("#tractsROT").html(tractsROT.map(function(value) {
-
-                    return('<p>' + value + '</p>');
-                  }))
-
-                  $('#tractsROT').css('visibility','visible')
 
                   $('#progress').append('<br/>iterate through remainder town tract features for IDs')
 
@@ -1433,7 +1433,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                           if ((popPrcl / blockPop) >= .5) { // If queried parcel population is greater than 50% of block group population
 
                             blockIDArr.push(j.attributes.TRACT + j.attributes.BLKGRP)
-                            tractIDArr.push(j.attributes.TRACT)
+                            // tractIDArr.push(j.attributes.TRACT)
 
                             j.symbol = { // Set normal block group symbology
 
@@ -1472,14 +1472,41 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                         return j 
                       }) // End of feature map
 
+
+
+                      tracts.queryFeatures(query6).then((i) => {
+
+                        i.features.map((j) => {
+
+                          if (j.attributes.TRACT != '990000') {
+
+                            var popPrcl1 = 0
+                            var tractRow = censusTracts.find((i) => { return i[52] === j.attributes.TRACT})
+                            var tractPop = parseInt(tractRow[1])
+
+                            resultLayer2.graphics.items.map((k) => { // Look through parcels from queried results
+
+                              if (geometryEngine.intersects(k.geometry, j.geometry)) { // If block group geometry intersects parcels
+
+                                k.attributes.TRACT = j.attributes.TRACT // Assign block group to individual parcel
+
+                                popPrcl1 += parseInt(k.attributes.POP_10) // Sum population field in block group layer using POP_10 from individual parcels
+                              }
+                            })
+
+                            
+                            if ( (popPrcl1 / tractPop) >= .5) {
+
+                              console.log(tractRow[52])
+                              console.log(popPrcl1 / tractPop)
+
+                              
+                              tractIDArr.push(j.attributes.TRACT)
+                            }
+                          }
+                        })
+
                       var tractIDUnique = tractIDArr.filter((item, pos) => { return tractIDArr.indexOf(item) == pos})
-
-                      $('#contSel').css('visibility','visible')
-
-                      $("#tractSel").html(blockIDArr.map(function(value) {
-
-                        return('<p>' + value + '</p>');
-                      }))
 
                       // Subset census API data by unique tract id's within GIZ
                       var censusTractsFiltered = censusTracts.filter(el => {
@@ -1490,8 +1517,17 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                       // Use tractblock key to subset API by block group
                       var censusBlocksFiltered = censusBlocks.filter(el => {
 
-                        return blockIDArr.includes(el[52] + el[53])
+                        return blockIDArr.includes(el[52] + el[53]) && tractIDUnique.includes(el[52])
                       });
+
+                      $('#contSel').css('visibility','visible')
+
+                      $("#tractSel").html(censusBlocksFiltered.map(function(value) {
+
+                        return('<p>' + value[52] + ' ' + value[53] + '</p>');
+                      }))
+
+                      $('#tractSel').css('visibility','visible')
 
                       $('#progress').append('<br/>mapping through filtered census blocks')
                       censusBlocksFiltered.map((k) => { // Search ACS rows by block group
@@ -1659,15 +1695,45 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
 
                       totals.paretoMedianCont = calc_Median(totalsArr) // Pass sample median to state property
 
+                      townBoundaries.queryFeatures().then((i) => {
 
-                      console.log('town tract income averages saved to state')
-                      $('#progress').append('<br/>town tract income averages saved to state')
+                        var query7 = blockGroups.createQuery() // Initialize block group query using town boundary geometry
+                            query7.geometry = i.features[0].geometry
+                            query7.spatialRelationship = 'contains'
 
-                      totals.Toggle = true // Show results pane
-                      document.getElementById('loading').style.display = false ? 'block' : 'none';
+                        var tractsROT = []
+
+                        blockGroups.queryFeatures(query7).then((i) => {
+
+                          i.features.map((j) => {
+
+                            if (j.attributes.TRACT != "990000" & !blockIDArr1MI.includes(j.attributes.TRACT + j.attributes.BLKGRP)) { // Omit GIZ tracts
+
+                              tractsROT.push(j.attributes.TRACT + ' ' + j.attributes.BLKGRP)
+                            }
+                          })
+
+                          $('#contROT').css('visibility','visible')
+
+                          $("#tractsROT").html(tractsROT.map(function(value) {
+
+                            return('<p>' + value + '</p>');
+                          }))
+
+                          $('#tractsROT').css('visibility','visible')
+
+                          console.log('town tract income averages saved to state')
+                          $('#progress').append('<br/>town tract income averages saved to state')
+
+                          totals.Toggle = true // Show results pane
+                          document.getElementById('loading').style.display = false ? 'block' : 'none';
+                        })
+                      })
+                      })
                     })
                   })
                 })
+              })
               })
             })
           })
@@ -1701,6 +1767,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
 
         resultLayer.removeAll(); // Reset graphics layers 
         resultLayer1.removeAll();
+        resultLayer2.removeAll();
         view.graphics.removeAll();
 
         var x = $(this).val().toString()
@@ -1728,6 +1795,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
 
         resultLayer.removeAll(); // Reset graphics layers 
         resultLayer1.removeAll();
+        resultLayer2.removeAll();
         view.graphics.removeAll();
 
         acBoundaries.visible = false

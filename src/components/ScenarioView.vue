@@ -65,6 +65,8 @@ export default {
 
   ready() {
 
+    $('#tractsROT').css('visibility','hidden')
+
   },
 
   methods: {
