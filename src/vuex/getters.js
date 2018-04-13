@@ -73,3 +73,13 @@ export function getCensusTowns (state) {
 
   return state.censusTowns
 }
+
+export function getBlks2 (state) {
+
+  return state.blockGroups2
+}
+
+export function getTracts2 (state) {
+
+  return state.tracts2
+}

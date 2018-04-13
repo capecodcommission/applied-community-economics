@@ -51,9 +51,9 @@
 </template>
 
 <script>
-import { getComparison, getTownName, getAttrib, getBlks, getTracts, getCensusTowns } from '../vuex/getters'
+import { getComparison, getTownName, getAttrib, getBlks, getTracts, getCensusTowns, getBlks2, getTracts2 } from '../vuex/getters'
 
-import {updateAttrib, loadBlks, loadTracts, loadCensusTowns} from '../vuex/actions'
+import {updateAttrib, loadBlks, loadTracts, loadCensusTowns, loadBlks2, loadTracts2} from '../vuex/actions'
 import treatmentDetail from './TreatmentDetail'
 import Header from './Header'
 import sidething from './sideBar'
@@ -84,7 +84,9 @@ export default {
       updateAttrib,
       loadBlks,
       loadTracts,
-      loadCensusTowns
+      loadCensusTowns,
+      loadBlks2,
+      loadTracts2
     },
 
     getters: {
@@ -94,7 +96,9 @@ export default {
       totals: getAttrib,
       blockGroups: getBlks,
       tracts: getTracts,
-      censusTowns: getCensusTowns
+      censusTowns: getCensusTowns,
+      blockGroups2: getBlks2,
+      tracts2: getTracts2
     }
   },
 
@@ -104,6 +108,7 @@ export default {
     $('#tractsROT').css('visibility','hidden')
 
     this.loadBlks()
+    this.loadBlks2()
   },
 
   methods: {
@@ -115,6 +120,7 @@ export default {
     'blockGroups': function(x) {
 
       this.loadTracts()
+      this.loadTracts2()
     },
 
     'tracts': function(x) {
@@ -123,7 +129,7 @@ export default {
     },
     'censusTowns': function(x) {
 
-      esriLoader.bootstrap((err) => { createMap(esriLoader, this.totals, this.blockGroups, this.tracts, this.censusTowns)}, { url: 'https://js.arcgis.com/4.5/'})
+      esriLoader.bootstrap((err) => { createMap(esriLoader, this.totals, this.blockGroups, this.tracts, this.censusTowns, this.blockGroups2, this.tracts2)}, { url: 'https://js.arcgis.com/4.5/'})
     }
   }
 }

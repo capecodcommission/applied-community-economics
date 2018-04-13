@@ -23,7 +23,8 @@
     <div class = 'col-md-5'>
       <div class = 'col-md-6 vizCol text-center'>
         <h4>Seasonality</h4>
-        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows1" :options="options5"></vue-chart>
+        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows1" :options="options6"></vue-chart>
+        <p class = 'housing-stats'>Total Units: {{totals.totalHousingSelected.toLocaleString()}}</p>
         <div class = 'row text-center'>
           <ul class="legend text-center">
             <li><span class="superawesome1"></span> Year-round</li>
@@ -52,10 +53,10 @@
           <h1>${{totals.paretoMedianCont}}</h1>
           <p><b>Median Household Income</b></p>
         </div>
-        <div class = 'row'>
+        <!-- <div class = 'row'>
           <h1>{{(totals.percUnempCont * 100).toFixed(1)}}%</h1>
           <p><b>Unemployment</b></p>
-        </div>
+        </div> -->
         <!-- <div class = 'row'>
           <ul class="legend">
             <li><span class="superawesome"></span> Less than high school graduate</li>
@@ -85,9 +86,10 @@
 
   <div class = 'row'>
     <div class = 'col-md-5'>
-      <div style = 'padding-bottom: 5%' class = 'col-md-6 vizCol'>
+      <div style = 'padding-bottom: 2%' class = 'col-md-6 vizCol'>
         <h4>Seasonality</h4>
-        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows11" :options="options5"></vue-chart>
+        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows11" :options="options6"></vue-chart>
+        <p class = 'housing-stats'>Total Units: {{totals.totalHousing1MI.toLocaleString()}}</p>
       </div>
       <!-- <div style = 'padding-bottom: 5%' class = 'col-md-6 vizCol'>
         <h4>Employment</h4>
@@ -100,10 +102,10 @@
           <h1>${{totals.paretoMedian}}</h1>
           <p><b>Median Household Income</b></p>
         </div>
-        <div class = 'row'>
+        <!-- <div class = 'row'>
           <h1>{{(totals.percUnemp * 100).toFixed(1)}}%</h1>
           <p><b>Unemployment</b></p>
-        </div>
+        </div> -->
       </div>
       <!-- <div class = 'col-md-4 vizCol'>
         <h4>Educational Attainment</h4>
@@ -124,25 +126,26 @@
 
   <div class = 'row'>
     <div class = 'col-md-5'>
-      <div style = 'padding-bottom: 5%' class = 'col-md-6 vizCol'>
+      <div style = 'padding-bottom: 2%' class = 'col-md-6 vizCol2'>
         <h4>Seasonality</h4>
         <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows12" :options="options5"></vue-chart>
+        <p class = 'housing-stats'>Total Units: {{totals.totalHousingROT.toLocaleString()}}</p>
       </div>
       <!-- <div style = 'padding-bottom: 5%' class = 'col-md-6 vizCol'>
         <h4>Employment</h4>
         <vue-chart class = 'chart' :chart-type="chartType2" :columns="columns2" :rows="rows6" :options="options2"></vue-chart>
       </div> -->
     </div>
-    <div style = 'background-color: #aeb3ba' class = 'col-md-7'>
-      <div class = 'col-md-4 housing-stats vizCol'>
+    <div style = 'background-color: #d0d5dd' class = 'col-md-7'>
+      <div class = 'col-md-4 housing-stats vizCol2'>
         <div class = 'row'>
           <h1>${{totals.townParetoMedian}}</h1>
           <p><b>Median Household Income</b></p>
         </div>
-        <div class = 'row'>
+        <!-- <div class = 'row'>
           <h1>{{(totals.townPercUnemp * 100).toFixed(1)}}%</h1>
           <p><b>Unemployment</b></p>
-        </div>
+        </div> -->
       </div>
       <!-- <div class = 'col-md-4 vizCol'>
         <h4>Educational Attainment</h4>
@@ -379,6 +382,21 @@ export default {
       },
       options5: {
         pieHole: 0.5, // Define donut hole width
+        backgroundColor: '#d0d5dd',
+        legend: 'none',
+        chartArea: {
+          width: '100%',
+          height: '100%',
+          left: 0,
+          top: 0
+        },
+        slices: {
+          0: {textStyle: {color: '#000000'}}
+        },
+        colors: ['white','orange']
+      },
+      options6: {
+        pieHole: 0.5, // Define donut hole width
         backgroundColor: '#aeb3ba',
         legend: 'none',
         chartArea: {
@@ -448,6 +466,12 @@ vue-chart { width: 100% !important }
 
 .vizCol { 
   background-color: #aeb3ba; 
+  padding-left: 3px !important; 
+  padding-right:0 !important;
+}
+
+.vizCol2 { 
+  background-color: #d0d5dd; 
   padding-left: 3px !important; 
   padding-right:0 !important;
 }

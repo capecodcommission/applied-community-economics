@@ -1,4 +1,4 @@
-export const createMap = function (loader, totals, censusBlocks, censusTracts, censusTowns) {
+export const createMap = function (loader, totals, censusBlocks, censusTracts, censusTowns, censusBlocks2, censusTracts2) {
 
   loader.dojoRequire(
     [
@@ -670,6 +670,12 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                 return blockIDArr1MI.includes(el[52] + el[53]) && tractIDUnique.includes(el[52])
               });
 
+              // Use tractblock key to subset API by block group
+              var censusBlocksFiltered2 = censusBlocks2.filter(el => {
+
+                return blockIDArr1MI.includes(el[4] + el[5]) && tractIDUnique.includes(el[4])
+              });
+
               $('#cont1MI').css('visibility','visible')
 
               $("#tracts1MI").html(censusBlocksFiltered.map(function(value) {
@@ -679,11 +685,14 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
 
               $('#tracts1MI').css('visibility','visible')
 
-              $('#progress').append('<br/>mapping through filtered census blocks')
-              censusBlocksFiltered.map((k) => { // Search ACS rows by block group
+              censusBlocksFiltered2.map((k) => {
 
                 totalHousing += parseInt(k[0])
                 totalSeasonal += parseInt(k[1]) // Append/fill census attributes by column index
+              })
+
+              $('#progress').append('<br/>mapping through filtered census blocks')
+              censusBlocksFiltered.map((k) => { // Search ACS rows by block group
 
                 // Income
                 totalLess10k += parseInt(k[2])
@@ -803,6 +812,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
 
               var totalYearRound = totalHousing - totalSeasonal
 
+              totals.totalHousing1MI = totalHousing
               totals.totalYearRound1MI = totalYearRound
               totals.totalSeasonal1MI = totalSeasonal
               totals.percUnemp = parseFloat(percUnemp).toFixed(2)
@@ -976,6 +986,12 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                     return tractsROT.includes(el[52])
                   });
 
+                  // Filter census tracts from state using ids from array
+                  var censusTractsTownFiltered2 = censusBlocks2.filter(el => {
+
+                    return tractsROT.includes(el[4])
+                  });
+
                   $('#progress').append('<br/>iterate through all town tract features for IDs')
 
                   // Filter tracts for entire town
@@ -1120,11 +1136,15 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                     townTotalIncLength++
                   })
 
-                  $('#progress').append('<br/>map remainder')
-                  censusTractsTownFiltered.map((k) => { // Iterate through census API by tract
+
+                  censusTractsTownFiltered2.map((k) => {
 
                     townTotalHousing += parseInt(k[0])
                     townTotalSeasonal += parseInt(k[1])
+                  })
+
+                  $('#progress').append('<br/>map remainder')
+                  censusTractsTownFiltered.map((k) => { // Iterate through census API by tract
 
                     // Income
                     townTotalLess10k += parseInt(k[2]) 
@@ -1247,6 +1267,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
 
                   var townTotalYearRound = townTotalHousing - townTotalSeasonal
 
+                  totals.totalHousingROT = townTotalHousing
                   totals.totalYearRoundROT = townTotalYearRound
                   totals.totalSeasonalROT = townTotalSeasonal
 
@@ -1514,10 +1535,18 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                         return tractIDUnique.includes(el[52])
                       });
 
+                      
+
                       // Use tractblock key to subset API by block group
                       var censusBlocksFiltered = censusBlocks.filter(el => {
 
                         return blockIDArr.includes(el[52] + el[53]) && tractIDUnique.includes(el[52])
+                      });
+
+                      // Use tractblock key to subset API by block group
+                      var censusBlocksFiltered2 = censusBlocks2.filter(el => {
+
+                        return blockIDArr.includes(el[4] + el[5]) && tractIDUnique.includes(el[4])
                       });
 
                       $('#contSel').css('visibility','visible')
@@ -1529,11 +1558,14 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
 
                       $('#tractSel').css('visibility','visible')
 
-                      $('#progress').append('<br/>mapping through filtered census blocks')
-                      censusBlocksFiltered.map((k) => { // Search ACS rows by block group
+                      censusBlocksFiltered2.map((k) => {
 
                         totalHousingSelected += parseInt(k[0])
                         totalSeasonalSelected += parseInt(k[1]) // Append/fill census attributes by column index
+                      })
+
+                      $('#progress').append('<br/>mapping through filtered census blocks')
+                      censusBlocksFiltered.map((k) => { // Search ACS rows by block group
 
                         // Income
                         totalLess10k += parseInt(k[2])
@@ -1651,6 +1683,8 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
 
                       var totalYearRoundSelected = totalHousingSelected - totalSeasonalSelected
 
+
+                      totals.totalHousingSelected = totalHousingSelected
                       totals.totalYearRoundSelected = totalYearRoundSelected
                       totals.totalSeasonalSelected = totalSeasonalSelected
 
