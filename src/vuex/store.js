@@ -82,7 +82,10 @@ const state = {
     totalYearRoundSelected: false,
     totalSeasonalSelected: false,
     totalHousingROT: false,
-    totalHousingSelected: false
+    totalHousingSelected: false,
+    totalResidential1MI: false,
+    totalResidentialSelected: false,
+    totalResidentialROT: false
   },
   townselected: false,
   nbhselected: false,

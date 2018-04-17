@@ -25,6 +25,7 @@
         <h4>Seasonality</h4>
         <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows1" :options="options6"></vue-chart>
         <p class = 'housing-stats'>Total Units: {{totals.totalHousingSelected.toLocaleString()}}</p>
+        <p class = 'housing-stats'>Built Residential Parcels: {{totals.totalResidentialSelected.toLocaleString()}}</p>
         <div class = 'row text-center'>
           <ul class="legend text-center">
             <li><span class="superawesome1"></span> Year-round</li>
@@ -90,6 +91,7 @@
         <h4>Seasonality</h4>
         <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows11" :options="options6"></vue-chart>
         <p class = 'housing-stats'>Total Units: {{totals.totalHousing1MI.toLocaleString()}}</p>
+        <p class = 'housing-stats'>Built Residential Parcels: {{totals.totalResidential1MI.toLocaleString()}}</p>
       </div>
       <!-- <div style = 'padding-bottom: 5%' class = 'col-md-6 vizCol'>
         <h4>Employment</h4>
@@ -130,6 +132,7 @@
         <h4>Seasonality</h4>
         <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows12" :options="options5"></vue-chart>
         <p class = 'housing-stats'>Total Units: {{totals.totalHousingROT.toLocaleString()}}</p>
+        <p class = 'housing-stats'>Built Residential Parcels: {{totals.totalResidentialROT.toLocaleString()}}</p>
       </div>
       <!-- <div style = 'padding-bottom: 5%' class = 'col-md-6 vizCol'>
         <h4>Employment</h4>

@@ -64,7 +64,7 @@
 
   <div class = 'row'>
     <div id = '1miSelection' class = 'col-md-6'>
-      <div class = 'col-md-12 vizCol text-center'>
+      <!-- <div class = 'col-md-12 vizCol text-center'>
         <ul class="legend">
           <li><span class="superawesome1"></span> Retail/Rest./Entertainment</li>
           <li><span class="awesome1"></span> Industrial</li>
@@ -73,10 +73,10 @@
           <li><span class="neato1"></span> Public/Educ.</li>
           <li><span class="great"></span> Other</li>
         </ul>
-      </div>
+      </div> -->
       <div class = 'col-md-12 vizCol text-center'>
         <h4>Business</h4>
-        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows1" :options="options5"></vue-chart>
+        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows1" :options="options1"></vue-chart>
       </div>
       <div class = 'col-md-12 vizCol text-center'>
         <h4>Employment</h4>
@@ -115,7 +115,7 @@
       </div>
     </div>
     <div style = 'background-color: #d0d5dd; padding-left: 0' class = 'col-md-6'>
-      <div class = 'col-md-12 vizCol text-center'>
+      <!-- <div class = 'col-md-12 vizCol text-center'>
         <ul class="legend">
           <li><span class="superawesome1"></span> Retail/Rest./Entertainment</li>
           <li><span class="awesome1"></span> Industrial</li>
@@ -124,7 +124,7 @@
           <li><span class="neato1"></span> Public/Educ.</li>
           <li><span class="great"></span> Other</li>
         </ul>
-      </div>
+      </div> -->
       <div class = 'col-md-12 vizCol text-center'>
         <h4>Business</h4>
         <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows5" :options="options5"></vue-chart>
@@ -141,7 +141,7 @@
         <h1>{{(totals.townPercUnemp * 100).toFixed(1)}}%</h1>
         <p><b>Unemployment</b></p>
       </div>
-      <div class = 'col-md-12 vizCol text-center'>
+      <!-- <div class = 'col-md-12 vizCol text-center'>
         <ul class="legend">
           <li><span class="superawesome"></span> Less than high school graduate</li>
           <li><span class="awesome"></span> High school graduate (includes equivalency)</li>
@@ -149,7 +149,7 @@
           <li><span class="notawesome"></span> Bachelor's degree</li>
           <li><span class="neato"></span> Graduate or professional degree</li>
         </ul>
-      </div>
+      </div> -->
       <div class = 'col-md-12 vizCol text-center'>
         <h4>Educational Attainment</h4>
         <vue-chart class = 'chart' :chart-type="chartType3" :columns="columns3" :rows="rows7" :options="options3"></vue-chart>
