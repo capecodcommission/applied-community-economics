@@ -90,7 +90,7 @@
         <h1>{{(totals.percUnemp * 100).toFixed(1)}}%</h1>
         <p><b>Unemployment</b></p>
       </div>
-      <div class = 'col-md-12 vizCol text-center'>
+      <!-- <div class = 'col-md-12 vizCol text-center'>
         <ul class="legend">
           <li><span class="superawesome"></span> Less than high school graduate</li>
           <li><span class="awesome"></span> High school graduate (includes equivalency)</li>
@@ -98,10 +98,10 @@
           <li><span class="notawesome"></span> Bachelor's degree</li>
           <li><span class="neato"></span> Graduate or professional degree</li>
         </ul>
-      </div>
+      </div> -->
       <div class = 'col-md-12 vizCol text-center'>
         <h4>Educational Attainment</h4>
-        <vue-chart class = 'chart' :chart-type="chartType3" :columns="columns3" :rows="rows3" :options="options3"></vue-chart>
+        <vue-chart class = 'chart' :chart-type="chartType3" :columns="columns3" :rows="rows3" :options="options6"></vue-chart>
         <p class = 'housing-stats'>Population > 25 years: {{totals.totalEdu.toLocaleString()}}</p>
       </div>
       <div class = 'col-md-12 vizCol text-center'>
@@ -322,7 +322,7 @@ export default {
           }
         },
         chartArea: {
-          width: '100%',
+          width: '73%',
           height: '100%',
           left: 0,
           top: 0
@@ -390,6 +390,26 @@ export default {
           3: {textStyle: {color: '#000000'}}
         },
         colors: ['#c00000','#ed7d31','#92d050','#ffc000','#5b9bd5', '#bfbfbf']
+      },
+      options6: {
+        pieHole: 0.5,
+        backgroundColor: '#d0d5dd',
+        legend: {
+          position: 'left',
+          textStyle: {
+            fontSize: 9
+          }
+        },
+        chartArea: {
+          width: '73%',
+          height: '100%',
+          left: 0,
+          top: 0
+        },
+        slices: {
+          0: {textStyle: {color: '#000000'}}
+        },
+        colors: ['#dae3f3','#adb9ca','#849bb0','#333f50','#222a35']
       }
     }
   },

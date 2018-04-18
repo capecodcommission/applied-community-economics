@@ -33,20 +33,18 @@
           </ul>
         </div>
       </div>
-      <!-- <div style = 'padding-bottom: 6.7%' class = 'col-md-6 vizCol'>
-        <h4>Employment</h4>
-        <div style = 'padding-bottom: 0' class = 'row'>
-          <ul class="legend hidden">
-            <li><span class="superawesome1"></span> Retail/Rest./Entertainment</li>
-            <li><span class="awesome1"></span> Industrial</li>
-            <li><span class="kindaawesome1"></span> Professional Services</li>
-            <li><span class="notawesome1"></span> Health Care</li>
-            <li><span class="neato1"></span> Public/Educ.</li>
-            <li><span class="great"></span> Other</li>
+      <div class = 'col-md-6 vizCol text-center'>
+        <h4>Tenure</h4>
+        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows1" :options="options6"></vue-chart>
+        <p class = 'housing-stats'>Subsidized Rentals: {{totals.totalHousingSelected.toLocaleString()}}</p>
+        <p class = 'housing-stats'>Subsidized Owned: {{totals.totalResidentialSelected.toLocaleString()}}</p>
+        <div class = 'row text-center'>
+          <ul class="legend text-center">
+            <li><span class="superawesome1"></span> Owned</li>
+            <li><span class="awesome2"></span> Rental</li>
           </ul>
         </div>
-        <vue-chart class = 'chart' :chart-type="chartType2" :columns="columns2" :rows="rows2" :options="options2"></vue-chart>
-      </div> -->
+      </div>
     </div>
     <div style = 'background-color: #aeb3ba' class = 'col-md-7'>
       <div class = 'col-md-4 housing-stats vizCol'>
@@ -89,7 +87,7 @@
     <div class = 'col-md-5'>
       <div style = 'padding-bottom: 2%' class = 'col-md-6 vizCol'>
         <h4>Seasonality</h4>
-        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows11" :options="options6"></vue-chart>
+        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns2" :rows="rows11" :options="options6"></vue-chart>
         <p class = 'housing-stats'>Total Units: {{totals.totalHousing1MI.toLocaleString()}}</p>
         <p class = 'housing-stats'>Built Residential Parcels: {{totals.totalResidential1MI.toLocaleString()}}</p>
       </div>
@@ -396,7 +394,7 @@ export default {
         slices: {
           0: {textStyle: {color: '#000000'}}
         },
-        colors: ['white','orange']
+        colors: ['#FFFFFF','#FF5500']
       },
       options6: {
         pieHole: 0.5, // Define donut hole width
@@ -411,7 +409,22 @@ export default {
         slices: {
           0: {textStyle: {color: '#000000'}}
         },
-        colors: ['white','orange']
+        colors: ['#FFFFFF','#FF5500']
+      },
+      options7: {
+        pieHole: 0.5, // Define donut hole width
+        backgroundColor: '#aeb3ba',
+        legend: 'none',
+        chartArea: {
+          width: '100%',
+          height: '100%',
+          left: 0,
+          top: 0
+        },
+        slices: {
+          0: {textStyle: {color: '#000000'}}
+        },
+        colors: ['#FFFFFF','#6677CD']
       }
     }
   },
@@ -459,13 +472,13 @@ vue-chart { width: 100% !important }
 .legend .neato { background-color: #222a35; }
 
 .legend .superawesome1 { background-color: white;}
-.legend .awesome1 { background-color: orange; }
+.legend .awesome1 { background-color: #FF5500;}
 .legend .kindaawesome1 { background-color: #92d050; }
 .legend .notawesome1 { background-color: #ffc000; }
 .legend .neato1 { background-color: #5b9bd5; }
 .legend .great { background-color: #bfbfbf; }
 
-.legend .awesome2 { background-color: #686868; }
+.legend .awesome2 { background-color: #6677CD; }
 
 .vizCol { 
   background-color: #aeb3ba; 

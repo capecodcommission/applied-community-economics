@@ -85,7 +85,7 @@ const state = {
     totalHousingSelected: false,
     totalResidential1MI: false,
     totalResidentialSelected: false,
-    totalResidentialROT: false
+    totalResidentialROT: 26809
   },
   townselected: false,
   nbhselected: false,
