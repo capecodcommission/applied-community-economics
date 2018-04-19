@@ -85,7 +85,17 @@ const state = {
     totalHousingSelected: false,
     totalResidential1MI: false,
     totalResidentialSelected: false,
-    totalResidentialROT: 26809
+    totalResidentialROT: 26809,
+    totalOwned1MI: false,
+    totalRental1MI: false,
+    totalOwnedROT: false,
+    totalRentalROT: false,
+    totalOwnedSelected: false,
+    totalRentalSelected: false,
+    avgUnitsPP1MI: false,
+    avgUnitsPA1MI: false,
+    avgUnitsPPSelected: false,
+    avgUnitsPASelected: false
   },
   townselected: false,
   nbhselected: false,

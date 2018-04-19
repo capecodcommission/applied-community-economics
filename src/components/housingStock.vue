@@ -7,12 +7,12 @@
   </div>
     
   <div class = 'row'>
-    <div class = 'col-md-5'>
+    <div class = 'col-md-6'>
       <div class = 'col-md-12 col-heading'>
         <h3 class = 'pull-left'>STOCK</h3>
       </div>
     </div>
-    <div style = 'padding-left: 0 !important; padding-right: 0 !important' class = 'col-md-7'>
+    <div style = 'padding-left: 0 !important; padding-right: 0 !important' class = 'col-md-6'>
       <div class = 'col-md-12 col-heading'>
         <h3 class = 'pull-left'>AFFORDABILITY</h3>
       </div>
@@ -20,10 +20,10 @@
   </div>
 
   <div class = 'row'>
-    <div class = 'col-md-5'>
-      <div class = 'col-md-6 vizCol text-center'>
+    <div class = 'col-md-6'>
+      <div class = 'col-md-4 vizCol text-center'>
         <h4>Seasonality</h4>
-        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows1" :options="options6"></vue-chart>
+        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows14" :options="options6"></vue-chart>
         <p class = 'housing-stats'>Total Units: {{totals.totalHousingSelected.toLocaleString()}}</p>
         <p class = 'housing-stats'>Built Residential Parcels: {{totals.totalResidentialSelected.toLocaleString()}}</p>
         <div class = 'row text-center'>
@@ -33,11 +33,10 @@
           </ul>
         </div>
       </div>
-      <div class = 'col-md-6 vizCol text-center'>
+      <div class = 'col-md-4 vizCol text-center'>
         <h4>Tenure</h4>
-        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows1" :options="options6"></vue-chart>
-        <p class = 'housing-stats'>Subsidized Rentals: {{totals.totalHousingSelected.toLocaleString()}}</p>
-        <p class = 'housing-stats'>Subsidized Owned: {{totals.totalResidentialSelected.toLocaleString()}}</p>
+        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows1" :options="options7"></vue-chart>
+        <p class = 'housing-stats'>** Subsidized Units Not Available Within Selection **</p>
         <div class = 'row text-center'>
           <ul class="legend text-center">
             <li><span class="superawesome1"></span> Owned</li>
@@ -45,8 +44,18 @@
           </ul>
         </div>
       </div>
+      <div class = 'col-md-4 vizCol text-center'>
+        <div class = 'row'>
+          <div class = 'col-md-6 vizCol text-center'>
+            <p class = 'housing-stats'>Average Units Per Parcel: {{totals.avgUnitsPPSelected.toFixed(1)}}</p>
+          </div>
+          <div class = 'col-md-6 vizCol text-center'>
+            <p class = 'housing-stats'>Average Units Per Acre: {{totals.avgUnitsPASelected.toFixed(1)}}</p>
+          </div>
+        </div>
+      </div>
     </div>
-    <div style = 'background-color: #aeb3ba' class = 'col-md-7'>
+    <div style = 'background-color: #aeb3ba' class = 'col-md-6'>
       <div class = 'col-md-4 housing-stats vizCol'>
         <div class = 'row'>
           <h1>${{totals.paretoMedianCont}}</h1>
@@ -84,19 +93,32 @@
   </div>
 
   <div class = 'row'>
-    <div class = 'col-md-5'>
-      <div style = 'padding-bottom: 2%' class = 'col-md-6 vizCol'>
+    <div class = 'col-md-6'>
+      <div style = 'padding-bottom: 2%' class = 'col-md-4 vizCol'>
         <h4>Seasonality</h4>
         <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns2" :rows="rows11" :options="options6"></vue-chart>
         <p class = 'housing-stats'>Total Units: {{totals.totalHousing1MI.toLocaleString()}}</p>
         <p class = 'housing-stats'>Built Residential Parcels: {{totals.totalResidential1MI.toLocaleString()}}</p>
       </div>
-      <!-- <div style = 'padding-bottom: 5%' class = 'col-md-6 vizCol'>
-        <h4>Employment</h4>
-        <vue-chart class = 'chart' :chart-type="chartType2" :columns="columns2" :rows="rows2" :options="options2"></vue-chart>
-      </div> -->
+      <div class = 'col-md-4 vizCol text-center'>
+        <h4>Tenure</h4>
+        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows2" :options="options7"></vue-chart>
+        <p class = 'housing-stats'>Subsidized Rentals: 672*</p>
+        <p class = 'housing-stats'>Subsidized Owned: 50*</p>
+        <p class = 'housing-stats'>* Hyannis (Zip code 02601) Source Growth Management Department</p>
+      </div>
+      <div class = 'col-md-4 vizCol text-center'>
+        <div class = 'row'>
+          <div class = 'col-md-6 vizCol text-center'>
+            <p class = 'housing-stats'>Average Units Per Parcel: {{totals.avgUnitsPP1MI.toFixed(1)}}</p>
+          </div>
+          <div class = 'col-md-6 vizCol text-center'>
+            <p class = 'housing-stats'>Average Units Per Acre: {{totals.avgUnitsPA1MI.toFixed(1)}}</p>
+          </div>
+        </div>
+      </div>
     </div>
-    <div style = 'background-color: #aeb3ba' class = 'col-md-7'>
+    <div style = 'background-color: #aeb3ba' class = 'col-md-6'>
       <div class = 'col-md-4 housing-stats vizCol'>
         <div class = 'row'>
           <h1>${{totals.paretoMedian}}</h1>
@@ -125,19 +147,21 @@
   </div>
 
   <div class = 'row'>
-    <div class = 'col-md-5'>
+    <div class = 'col-md-6'>
       <div style = 'padding-bottom: 2%' class = 'col-md-6 vizCol2'>
         <h4>Seasonality</h4>
         <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows12" :options="options5"></vue-chart>
         <p class = 'housing-stats'>Total Units: {{totals.totalHousingROT.toLocaleString()}}</p>
         <p class = 'housing-stats'>Built Residential Parcels: {{totals.totalResidentialROT.toLocaleString()}}</p>
       </div>
-      <!-- <div style = 'padding-bottom: 5%' class = 'col-md-6 vizCol'>
-        <h4>Employment</h4>
-        <vue-chart class = 'chart' :chart-type="chartType2" :columns="columns2" :rows="rows6" :options="options2"></vue-chart>
-      </div> -->
+      <div class = 'col-md-6 vizCol2 text-center'>
+        <h4>Tenure</h4>
+        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows13" :options="options8"></vue-chart>
+        <p class = 'housing-stats'>Subsidized Rentals: 197</p>
+        <p class = 'housing-stats'>Subsidized Owned: 80</p>
+      </div>
     </div>
-    <div style = 'background-color: #d0d5dd' class = 'col-md-7'>
+    <div style = 'background-color: #d0d5dd' class = 'col-md-6'>
       <div class = 'col-md-4 housing-stats vizCol2'>
         <div class = 'row'>
           <h1>${{totals.townParetoMedian}}</h1>
@@ -241,16 +265,12 @@ export default {
         }
       ],
       rows1: [
-        ['Year-round',this.totals.totalYearRoundSelected],
-        ['Seasonal',this.totals.totalSeasonalSelected]
+        ['Year-round',this.totals.totalOwnedSelected],
+        ['Seasonal',this.totals.totalRentalSelected]
       ],
       rows2: [
-        ['Retail/Rest./Entertainment',20],
-        ['Industrial',7],
-        ['Professional Services',4],
-        ['Health Care',53],
-        ['Public/Educ.',9],
-        ['Other',7]
+        ['Owned',this.totals.totalOwned1MI],
+        ['Rental',this.totals.totalRental1MI]
       ],
       rows3: [
         ['Less than high school graduate',this.totals.lessHS],
@@ -317,6 +337,14 @@ export default {
       rows12: [
         ['Year-round',this.totals.totalYearRoundROT],
         ['Seasonal',this.totals.totalSeasonalROT]
+      ],
+      rows13: [
+        ['Owned',this.totals.totalOwnedROT],
+        ['Rented',this.totals.totalRentalROT]
+      ],
+      rows14: [
+        ['Year-round',this.totals.totalYearRoundSelected],
+        ['Seasonal',this.totals.totalSeasonalSelected]
       ],
       options1: {
         pieHole: 0.5, // Define donut hole width
@@ -414,6 +442,21 @@ export default {
       options7: {
         pieHole: 0.5, // Define donut hole width
         backgroundColor: '#aeb3ba',
+        legend: 'none',
+        chartArea: {
+          width: '100%',
+          height: '100%',
+          left: 0,
+          top: 0
+        },
+        slices: {
+          0: {textStyle: {color: '#000000'}}
+        },
+        colors: ['#FFFFFF','#6677CD']
+      },
+      options8: {
+        pieHole: 0.5, // Define donut hole width
+        backgroundColor: '#d0d5dd',
         legend: 'none',
         chartArea: {
           width: '100%',

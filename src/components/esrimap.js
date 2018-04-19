@@ -522,6 +522,23 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
 
           var totalResidential1MI = 0
 
+          var totalHSG_BLDOUT1MI = 0
+          var avgUnitsPP1MI = 0
+
+          var totalParcelAcres1MI = 0
+          var avgUnitsPA1MI = 0
+
+          // Housing Occupancy
+          var totalOwnOccp = 0
+          var totalRntOccp = 0
+          var totalForRent = 0
+          var totalRntNotOcc = 0
+          var totalForSale = 0
+          var totalSoldNotOcc = 0
+          var totalSeaRecOcc = 0
+          var totalMigrant = 0
+          var totalOtherVac = 0
+
           $('#progress').text('querying parcels 1mi from GIZ')
           parcelLayer.queryFeatures(query1).then((i) => { // Query parcels using extent of defined embayment layer
 
@@ -534,6 +551,10 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
             features1 = i.features.map((j) => {
 
               if (j.attributes.LUSE1 === 'Residential') { // Count residential parcels
+
+                totalHSG_BLDOUT1MI += parseInt(j.attributes.HSG_BLDOUT)
+
+                totalParcelAcres1MI += parseInt(j.attributes.PARCEL_ACRES)
 
                 totalResidential1MI++
               }
@@ -550,6 +571,12 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
 
               return j
             })
+
+            avgUnitsPP1MI = totalHSG_BLDOUT1MI / totalResidential1MI
+            avgUnitsPA1MI = totalHSG_BLDOUT1MI / totalParcelAcres1MI
+
+            totals.avgUnitsPP1MI = avgUnitsPP1MI
+            totals.avgUnitsPA1MI = avgUnitsPA1MI
 
             totals.totalResidential1MI = totalResidential1MI // Set total residential state property
 
@@ -687,7 +714,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                 // Use tractblock key to subset API by block group
                 var censusBlocksFiltered2 = censusBlocks2.filter(el => {
 
-                  return blockIDArr1MI.includes(el[4] + el[5]) && tractIDUnique.includes(el[4])
+                  return blockIDArr1MI.includes(el[13] + el[14]) && tractIDUnique.includes(el[13])
                 });
 
                 $('#cont1MI').css('visibility','visible')
@@ -704,6 +731,15 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
 
                   totalHousing += parseInt(k[0])
                   totalSeasonal += parseInt(k[1]) // Append/fill census attributes by column index
+                  totalOwnOccp += parseInt(k[2])
+                  totalRntOccp += parseInt(k[3])
+                  totalForRent += parseInt(k[4])
+                  totalRntNotOcc += parseInt(k[5])
+                  totalForSale += parseInt(k[6])
+                  totalSoldNotOcc += parseInt(k[7])
+                  totalSeaRecOcc += parseInt(k[8])
+                  totalMigrant += parseInt(k[9])
+                  totalOtherVac += parseInt(k[10])
                 })
 
                 $('#progress').append('<br/>mapping through filtered census blocks')
@@ -827,6 +863,13 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                 percUnemp = totalUnemp / totalCivilLabor
 
                 var totalYearRound = totalHousing - totalSeasonal
+
+                var totalOwned = totalOwnOccp + totalForSale + totalSoldNotOcc + totalSeaRecOcc + totalMigrant + totalOtherVac
+
+                var totalRental = totalRntOccp + totalForRent + totalRntNotOcc
+
+                totals.totalOwned1MI = totalOwned
+                totals.totalRental1MI = totalRental
 
                 totals.totalHousing1MI = totalHousing
                 totals.totalYearRound1MI = totalYearRound
@@ -1006,7 +1049,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                     // Filter census tracts from state using ids from array
                     var censusTractsTownFiltered2 = censusBlocks2.filter(el => {
 
-                      return tractsROT.includes(el[4])
+                      return tractsROT.includes(el[13])
                     });
 
                     $('#progress').append('<br/>iterate through all town tract features for IDs')
@@ -1106,6 +1149,17 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                     var townTotalDoc = 0
                     var townTotalGradPro = 0
 
+                    // Housing Occupancy
+                    var townTotalOwnOccp = 0
+                    var townTotalRntOccp = 0
+                    var townTotalForRent = 0
+                    var townTotalRntNotOcc = 0
+                    var townTotalForSale = 0
+                    var townTotalSoldNotOcc = 0
+                    var townTotalSeaRecOcc = 0
+                    var townTotalMigrant = 0
+                    var townTotalOtherVac = 0
+
                     $('#progress').append('<br/>map all town')
                     censusTownsFiltered.map((k) => {
 
@@ -1158,6 +1212,15 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
 
                       townTotalHousing += parseInt(k[0])
                       townTotalSeasonal += parseInt(k[1])
+                      townTotalOwnOccp += parseInt(k[2])
+                      townTotalRntOccp += parseInt(k[3])
+                      townTotalForRent += parseInt(k[4])
+                      townTotalRntNotOcc += parseInt(k[5])
+                      townTotalForSale += parseInt(k[6])
+                      townTotalSoldNotOcc += parseInt(k[7])
+                      townTotalSeaRecOcc += parseInt(k[8])
+                      townTotalMigrant += parseInt(k[9])
+                      townTotalOtherVac += parseInt(k[10])
                     })
 
                     $('#progress').append('<br/>map remainder')
@@ -1283,6 +1346,13 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                     townTotalLessHS = townTotalNoSchool + townTotalNursery + townTotalKindergarten + townTotalG1 + townTotalG2 + townTotalG3 + townTotalG4 + townTotalG5 + townTotalG6 + townTotalG7 + townTotalG8 + townTotalG9 + townTotalG10 + townTotalG11 + townTotalG12
 
                     var townTotalYearRound = townTotalHousing - townTotalSeasonal
+
+                    var townTotalOwned = townTotalOwnOccp + townTotalForSale + townTotalSoldNotOcc + townTotalSeaRecOcc + townTotalMigrant + townTotalOtherVac
+
+                    var townTotalRental = townTotalRntOccp + townTotalForRent + townTotalRntNotOcc
+
+                    totals.totalOwnedROT = townTotalOwned
+                    totals.totalRentalROT = townTotalRental
 
                     totals.totalHousingROT = townTotalHousing
                     totals.totalYearRoundROT = townTotalYearRound
@@ -1417,6 +1487,23 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
 
                     var totalResidentialSelected = 0
 
+                    var totalHSG_BLDOUTSelected = 0
+                    var avgUnitsPPSelected = 0
+
+                    var totalParcelAcresSelected = 0
+                    var avgUnitsPASelected = 0
+
+                    // Housing Occupancy
+                    var totalOwnOccpSelected = 0
+                    var totalRntOccpSelected = 0
+                    var totalForRentSelected = 0
+                    var totalRntNotOccSelected = 0
+                    var totalForSaleSelected = 0
+                    var totalSoldNotOccSelected = 0
+                    var totalSeaRecOccSelected = 0
+                    var totalMigrantSelected = 0
+                    var totalOtherVacSelected = 0
+
                     $('#progress').text('querying parcels within selection')
 
                     // Query by selection
@@ -1425,6 +1512,9 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                       var features2 = i.features.map((j) => {
 
                         if (j.attributes.LUSE1 === 'Residential') { // Sum residential parcels
+
+                          totalHSG_BLDOUTSelected += parseInt(j.attributes.HSG_BLDOUT)
+                          totalParcelAcresSelected += parseInt(j.attributes.PARCEL_ACRES)
 
                           totalResidentialSelected++
                         }
@@ -1441,6 +1531,12 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
 
                         return j
                       })
+
+                      avgUnitsPPSelected = totalHSG_BLDOUTSelected / totalResidentialSelected
+                      avgUnitsPASelected = totalHSG_BLDOUTSelected / totalParcelAcresSelected
+
+                      totals.avgUnitsPPSelected = avgUnitsPPSelected
+                      totals.avgUnitsPASelected = avgUnitsPASelected
 
                       totals.totalResidentialSelected = totalResidentialSelected
 
@@ -1577,7 +1673,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                           // Use tractblock key to subset API by block group
                           var censusBlocksFiltered2 = censusBlocks2.filter(el => {
 
-                            return blockIDArr.includes(el[4] + el[5]) && tractIDUnique.includes(el[4])
+                            return blockIDArr.includes(el[13] + el[14]) && tractIDUnique.includes(el[13])
                           });
 
                           $('#contSel').css('visibility','visible')
@@ -1595,6 +1691,15 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
 
                             totalHousingSelected += parseInt(k[0])
                             totalSeasonalSelected += parseInt(k[1]) // Append/fill census attributes by column index
+                            totalOwnOccpSelected += parseInt(k[2])
+                            totalRntOccpSelected += parseInt(k[3])
+                            totalForRentSelected += parseInt(k[4])
+                            totalRntNotOccSelected += parseInt(k[5])
+                            totalForSaleSelected += parseInt(k[6])
+                            totalSoldNotOccSelected += parseInt(k[7])
+                            totalSeaRecOccSelected += parseInt(k[8])
+                            totalMigrantSelected += parseInt(k[9])
+                            totalOtherVacSelected += parseInt(k[10])
                           })
 
                           $('#progress').append('<br/>mapping through filtered census blocks')
@@ -1716,6 +1821,12 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
 
                           var totalYearRoundSelected = totalHousingSelected - totalSeasonalSelected
 
+                          var totalOwnedSelected = totalOwnOccpSelected + totalForSaleSelected + totalSoldNotOccSelected + totalSeaRecOccSelected + totalMigrantSelected + totalOtherVacSelected
+
+                          var totalRentalSelected = totalRntOccpSelected + totalForRentSelected + totalRntNotOccSelected
+
+                          totals.totalOwnedSelected = totalOwnedSelected
+                          totals.totalRentalSelected = totalRentalSelected
 
                           totals.totalHousingSelected = totalHousingSelected
                           totals.totalYearRoundSelected = totalYearRoundSelected
