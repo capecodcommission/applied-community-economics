@@ -53,6 +53,15 @@
             <p class = 'housing-stats'>Average Units Per Acre: {{totals.avgUnitsPASelected.toFixed(1)}}</p>
           </div>
         </div>
+        <div class = 'row'>
+          <vue-chart class = 'chart' :chart-type="chartType4" :columns="columns4" :rows="rows15" :options="options4"></vue-chart>
+        </div>
+        <div class = 'row text-center'>
+          <ul class="legend text-center">
+            <li><span class="superawesome2"></span> Units</li>
+            <li><span class="awesome3"></span> Acres</li>
+          </ul>
+        </div>
       </div>
     </div>
     <div style = 'background-color: #aeb3ba' class = 'col-md-6'>
@@ -115,6 +124,9 @@
           <div class = 'col-md-6 vizCol text-center'>
             <p class = 'housing-stats'>Average Units Per Acre: {{totals.avgUnitsPA1MI.toFixed(1)}}</p>
           </div>
+        </div>
+        <div class = 'row'>
+          <vue-chart class = 'chart' :chart-type="chartType4" :columns="columns4" :rows="rows10" :options="options4"></vue-chart>
         </div>
       </div>
     </div>
@@ -245,23 +257,19 @@ export default {
       columns4: [
         {
           'type': 'string',
-          'label': 'Education'
+          'label': 'Housing Type'
         },
         {
           'type': 'number',
-          'label': 'IncomeGiz'
+          'label': 'Units'
         },
         {
           'type': 'string',
           'role': 'style' // Define bar color using hex value
         },
         {
-          'type': 'string',
-          'role': 'annotation' // Define bar label with string 
-        },
-        {
           'type': 'number',
-          'label': 'IncomeTown'
+          'label': 'Acres'
         }
       ],
       rows1: [
@@ -324,11 +332,12 @@ export default {
         ['Grduate or professional degree',this.totals.gradProCont]
       ],
       rows10: [
-        ['Grduate or professional degree', this.totals.incGradCont, '#222a35', 'Graduate or professional degree', this.totals.townIncGrad],
-        ['Bachelors degree', this.totals.incBacCont, '#333f50', 'Bachelors degree', this.totals.townIncBac],
-        ['Some college or associates degree', this.totals.incSCACont, '#849bb0', 'Some college or associates degree', this.totals.townIncSCA],
-        ['High school graduate', this.totals.incHSGCont, '#adb9ca', 'High school graduate', this.totals.townIncHSG],
-        ['Less than high school graduate', this.totals.incLessHSCont, '#dae3f3', 'Less than high school graduate', this.totals.townIncLessHS]
+        ['Residential Condo', this.totals.totalResCondo1MIHSG, '#333f50', this.totals.totalResCondo1MIAcres],
+        ['Apartments (4+)', this.totals.totalApt1MIHSG, '#333f50', this.totals.totalApt1MIAcres],
+        ['Shared or Temporary Housing', this.totals.totalShrdTmp1MIHSG, '#333f50', this.totals.totalShrdTmp1MIAcres],
+        ['Multifamily or Mixed Use', this.totals.totalMixed1MIHSG, '#333f50', this.totals.totalMixed1MIAcres],
+        ['Multiple Houses/Parcel', this.totals.totalMultiOne1MIHSG, '#333f50', this.totals.totalMultiOne1MIAcres],
+        ['Single Family', this.totals.totalSingleFam1MIHSG, '#333f50', this.totals.totalSingleFam1MIAcres]
       ],
       rows11: [
         ['Year-round',this.totals.totalYearRound1MI],
@@ -345,6 +354,14 @@ export default {
       rows14: [
         ['Year-round',this.totals.totalYearRoundSelected],
         ['Seasonal',this.totals.totalSeasonalSelected]
+      ],
+      rows15: [
+        ['Residential Condo', this.totals.totalResCondoSelectedHSG, '#333f50', this.totals.totalResCondoSelectedAcres],
+        ['Apartments (4+)', this.totals.totalAptSelectedHSG, '#333f50', this.totals.totalAptSelectedAcres],
+        ['Shared or Temporary Housing', this.totals.totalShrdTmpSelectedHSG, '#333f50', this.totals.totalShrdTmpSelectedAcres],
+        ['Multifamily or Mixed Use', this.totals.totalMixedSelectedHSG, '#333f50', this.totals.totalMixedSelectedAcres],
+        ['Multiple Houses/Parcel', this.totals.totalMultiOneSelectedHSG, '#333f50', this.totals.totalMultiOneSelectedAcres],
+        ['Single Family', this.totals.totalSingleFamSelectedHSG, '#333f50', this.totals.totalSingleFamSelectedAcres]
       ],
       options1: {
         pieHole: 0.5, // Define donut hole width
@@ -400,14 +417,15 @@ export default {
         chartArea: {
           width: '100%',
           height: '80%',
-          left: 0,
+          left: 75,
           top: 0
         },
+        colors: ['#FFFFFF'],
         hAxis: {
-          title: "Thousands",
-          format: 'currency'
-        },
-        colors: ['grey']
+          textStyle:{
+            color: '#FFF'
+          }
+        }
       },
       options5: {
         pieHole: 0.5, // Define donut hole width
@@ -522,6 +540,9 @@ vue-chart { width: 100% !important }
 .legend .great { background-color: #bfbfbf; }
 
 .legend .awesome2 { background-color: #6677CD; }
+
+.legend .superawesome2 { background-color: #333F50;}
+.legend .awesome3 { background-color: #FFFFFF; }
 
 .vizCol { 
   background-color: #aeb3ba; 

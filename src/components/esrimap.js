@@ -539,6 +539,27 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
           var totalMigrant = 0
           var totalOtherVac = 0
 
+
+          // Housing Types
+
+          // HSG_BLDOUT count
+          var totalApt1MIHSG = 0
+          var totalMixed1MIHSG = 0
+          var totalMultiOne1MIHSG = 0
+          var totalOther1MIHSG = 0
+          var totalResCondo1MIHSG = 0
+          var totalShrdTmp1MIHSG = 0
+          var totalSingleFam1MIHSG = 0
+
+          // Acres count
+          var totalApt1MIAcres = 0
+          var totalMixed1MIAcres = 0
+          var totalMultiOne1MIAcres = 0
+          var totalOther1MIAcres = 0
+          var totalResCondo1MIAcres = 0
+          var totalShrdTmp1MIAcres = 0
+          var totalSingleFam1MIAcres = 0
+
           $('#progress').text('querying parcels 1mi from GIZ')
           parcelLayer.queryFeatures(query1).then((i) => { // Query parcels using extent of defined embayment layer
 
@@ -551,6 +572,126 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
             features1 = i.features.map((j) => {
 
               if (j.attributes.LUSE1 === 'Residential') { // Count residential parcels
+
+                switch(j.attributes.USE_CODE) { // Use switch to sum parcel counts by USE_CODE
+
+                  // Apartments (4+ Units)
+                  case '111':
+                    totalApt1MIHSG += parseInt(j.attributes.HSG_BLDOUT)
+                    totalApt1MIAcres += parseInt(j.attributes.PARCEL_ACRES)
+                    break;
+
+                  case '112':
+                    totalApt1MIHSG += parseInt(j.attributes.HSG_BLDOUT)
+                    totalApt1MIAcres += parseInt(j.attributes.PARCEL_ACRES)
+                    break;
+
+                  case '1110':
+                    totalApt1MIHSG += parseInt(j.attributes.HSG_BLDOUT)
+                    totalApt1MIAcres += parseInt(j.attributes.PARCEL_ACRES)
+                    break;
+
+                  case '1120':
+                    totalApt1MIHSG += parseInt(j.attributes.HSG_BLDOUT)
+                    totalApt1MIAcres += parseInt(j.attributes.PARCEL_ACRES)
+                    break;
+
+                  // Multi-Family / Mixed Use
+                  case '105':
+                    totalMixed1MIHSG += parseInt(j.attributes.HSG_BLDOUT)
+                    totalMixed1MIAcres += parseInt(j.attributes.PARCEL_ACRES)
+                    break;
+
+                  case '134':
+                    totalMixed1MIHSG += parseInt(j.attributes.HSG_BLDOUT)
+                    totalMixed1MIAcres += parseInt(j.attributes.PARCEL_ACRES)
+                    break;
+
+                  case '1040':
+                    totalMixed1MIHSG += parseInt(j.attributes.HSG_BLDOUT)
+                    totalMixed1MIAcres += parseInt(j.attributes.PARCEL_ACRES)
+                    break;
+
+                  case '1050':
+                    totalMixed1MIHSG += parseInt(j.attributes.HSG_BLDOUT)
+                    totalMixed1MIAcres += parseInt(j.attributes.PARCEL_ACRES)
+                    break;
+
+                  // Multiple Houses on one parcel
+                  case '109':
+                    totalMultiOne1MIHSG += parseInt(j.attributes.HSG_BLDOUT)
+                    totalMultiOne1MIAcres += parseInt(j.attributes.PARCEL_ACRES)
+                    break;
+
+                  // Other
+                  case '130':
+                    totalOther1MIHSG += parseInt(j.attributes.HSG_BLDOUT)
+                    totalOther1MIAcres += parseInt(j.attributes.PARCEL_ACRES)
+                    break;
+
+                  case '131':
+                    totalOther1MIHSG += parseInt(j.attributes.HSG_BLDOUT)
+                    totalOther1MIAcres += parseInt(j.attributes.PARCEL_ACRES)
+                    break;
+
+                  case '1060':
+                    totalOther1MIHSG += parseInt(j.attributes.HSG_BLDOUT)
+                    totalOther1MIAcres += parseInt(j.attributes.PARCEL_ACRES)
+                    break;
+
+                  case '1300':
+                    totalOther1MIHSG += parseInt(j.attributes.HSG_BLDOUT)
+                    totalOther1MIAcres += parseInt(j.attributes.PARCEL_ACRES)
+                    break;
+
+                  case '1310':
+                    totalOther1MIHSG += parseInt(j.attributes.HSG_BLDOUT)
+                    totalOther1MIAcres += parseInt(j.attributes.PARCEL_ACRES)
+                    break;
+
+                  case '1320':
+                    totalOther1MIHSG += parseInt(j.attributes.HSG_BLDOUT)
+                    totalOther1MIAcres += parseInt(j.attributes.PARCEL_ACRES)
+                    break;
+
+                  // Residential Condominium
+                  case '1020':
+                    totalResCondo1MIHSG += parseInt(j.attributes.HSG_BLDOUT)
+                    totalResCondo1MIAcres += parseInt(j.attributes.PARCEL_ACRES)
+                    break;
+
+                  // Shared or Temporary Housing
+                  case '1210':
+                    totalShrdTmp1MIHSG += parseInt(j.attributes.HSG_BLDOUT)
+                    totalShrdTmp1MIAcres += parseInt(j.attributes.PARCEL_ACRES)
+                    break;
+
+                  case '1230':
+                    totalShrdTmp1MIHSG += parseInt(j.attributes.HSG_BLDOUT)
+                    totalShrdTmp1MIAcres += parseInt(j.attributes.PARCEL_ACRES)
+                    break;
+
+                  case '1250':
+                    totalShrdTmp1MIHSG += parseInt(j.attributes.HSG_BLDOUT)
+                    totalShrdTmp1MIAcres += parseInt(j.attributes.PARCEL_ACRES)
+                    break;
+
+                  case '1259':
+                    totalShrdTmp1MIHSG += parseInt(j.attributes.HSG_BLDOUT)
+                    totalShrdTmp1MIAcres += parseInt(j.attributes.PARCEL_ACRES)
+                    break;
+
+                  // Single Family Residential
+                  case '101':
+                    totalSingleFam1MIHSG += parseInt(j.attributes.HSG_BLDOUT)
+                    totalSingleFam1MIAcres += parseInt(j.attributes.PARCEL_ACRES)
+                    break;
+
+                  case '1010':
+                    totalSingleFam1MIHSG += parseInt(j.attributes.HSG_BLDOUT)
+                    totalSingleFam1MIAcres += parseInt(j.attributes.PARCEL_ACRES)
+                    break;
+                }
 
                 totalHSG_BLDOUT1MI += parseInt(j.attributes.HSG_BLDOUT)
 
@@ -579,6 +720,22 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
             totals.avgUnitsPA1MI = avgUnitsPA1MI
 
             totals.totalResidential1MI = totalResidential1MI // Set total residential state property
+
+            totals.totalApt1MIHSG = totalApt1MIHSG
+            totals.totalMixed1MIHSG = totalMixed1MIHSG
+            totals.totalMultiOne1MIHSG = totalMultiOne1MIHSG
+            totals.totalOther1MIHSG = totalOther1MIHSG
+            totals.totalResCondo1MIHSG = totalResCondo1MIHSG
+            totals.totalShrdTmp1MIHSG = totalShrdTmp1MIHSG
+            totals.totalSingleFam1MIHSG = totalSingleFam1MIHSG
+
+            totals.totalApt1MIAcres = totalApt1MIAcres
+            totals.totalMixed1MIAcres = totalMixed1MIAcres
+            totals.totalMultiOne1MIAcres = totalMultiOne1MIAcres
+            totals.totalOther1MIAcres = totalOther1MIAcres
+            totals.totalResCondo1MIAcres = totalResCondo1MIAcres
+            totals.totalShrdTmp1MIAcres = totalShrdTmp1MIAcres
+            totals.totalSingleFam1MIAcres = totalSingleFam1MIAcres
 
             resultLayer1.addMany(features1) // Push queried parcels to new graphics layer
 
@@ -1504,6 +1661,26 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                     var totalMigrantSelected = 0
                     var totalOtherVacSelected = 0
 
+                    // Housing Types
+
+                    // HSG_BLDOUT count
+                    var totalAptSelectedHSG = 0
+                    var totalMixedSelectedHSG = 0
+                    var totalMultiOneSelectedHSG = 0
+                    var totalOtherSelectedHSG = 0
+                    var totalResCondoSelectedHSG = 0
+                    var totalShrdTmpSelectedHSG = 0
+                    var totalSingleFamSelectedHSG = 0
+
+                    // Acres count
+                    var totalAptSelectedAcres = 0
+                    var totalMixedSelectedAcres = 0
+                    var totalMultiOneSelectedAcres = 0
+                    var totalOtherSelectedAcres = 0
+                    var totalResCondoSelectedAcres = 0
+                    var totalShrdTmpSelectedAcres = 0
+                    var totalSingleFamSelectedAcres = 0
+
                     $('#progress').text('querying parcels within selection')
 
                     // Query by selection
@@ -1512,6 +1689,126 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                       var features2 = i.features.map((j) => {
 
                         if (j.attributes.LUSE1 === 'Residential') { // Sum residential parcels
+
+                          switch(j.attributes.USE_CODE) { // Use switch to sum parcel counts by USE_CODE
+
+                            // Apartments (4+ Units)
+                            case '111':
+                              totalAptSelectedHSG += parseInt(j.attributes.HSG_BLDOUT)
+                              totalAptSelectedAcres += parseInt(j.attributes.PARCEL_ACRES)
+                              break;
+
+                            case '112':
+                              totalAptSelectedHSG += parseInt(j.attributes.HSG_BLDOUT)
+                              totalAptSelectedAcres += parseInt(j.attributes.PARCEL_ACRES)
+                              break;
+
+                            case '1110':
+                              totalAptSelectedHSG += parseInt(j.attributes.HSG_BLDOUT)
+                              totalAptSelectedAcres += parseInt(j.attributes.PARCEL_ACRES)
+                              break;
+
+                            case '1120':
+                              totalAptSelectedHSG += parseInt(j.attributes.HSG_BLDOUT)
+                              totalAptSelectedAcres += parseInt(j.attributes.PARCEL_ACRES)
+                              break;
+
+                            // Multi-Family / Mixed Use
+                            case '105':
+                              totalMixedSelectedHSG += parseInt(j.attributes.HSG_BLDOUT)
+                              totalMixedSelectedAcres += parseInt(j.attributes.PARCEL_ACRES)
+                              break;
+
+                            case '134':
+                              totalMixedSelectedHSG += parseInt(j.attributes.HSG_BLDOUT)
+                              totalMixedSelectedAcres += parseInt(j.attributes.PARCEL_ACRES)
+                              break;
+
+                            case '1040':
+                              totalMixedSelectedHSG += parseInt(j.attributes.HSG_BLDOUT)
+                              totalMixedSelectedAcres += parseInt(j.attributes.PARCEL_ACRES)
+                              break;
+
+                            case '1050':
+                              totalMixedSelectedHSG += parseInt(j.attributes.HSG_BLDOUT)
+                              totalMixedSelectedAcres += parseInt(j.attributes.PARCEL_ACRES)
+                              break;
+
+                            // Multiple Houses on one parcel
+                            case '109':
+                              totalMultiOneSelectedHSG += parseInt(j.attributes.HSG_BLDOUT)
+                              totalMultiOneSelectedAcres += parseInt(j.attributes.PARCEL_ACRES)
+                              break;
+
+                            // Other
+                            case '130':
+                              totalOtherSelectedHSG += parseInt(j.attributes.HSG_BLDOUT)
+                              totalOtherSelectedAcres += parseInt(j.attributes.PARCEL_ACRES)
+                              break;
+
+                            case '131':
+                              totalOtherSelectedHSG += parseInt(j.attributes.HSG_BLDOUT)
+                              totalOtherSelectedAcres += parseInt(j.attributes.PARCEL_ACRES)
+                              break;
+
+                            case '1060':
+                              totalOtherSelectedHSG += parseInt(j.attributes.HSG_BLDOUT)
+                              totalOtherSelectedAcres += parseInt(j.attributes.PARCEL_ACRES)
+                              break;
+
+                            case '1300':
+                              totalOtherSelectedHSG += parseInt(j.attributes.HSG_BLDOUT)
+                              totalOtherSelectedAcres += parseInt(j.attributes.PARCEL_ACRES)
+                              break;
+
+                            case '1310':
+                              totalOtherSelectedHSG += parseInt(j.attributes.HSG_BLDOUT)
+                              totalOtherSelectedAcres += parseInt(j.attributes.PARCEL_ACRES)
+                              break;
+
+                            case '1320':
+                              totalOtherSelectedHSG += parseInt(j.attributes.HSG_BLDOUT)
+                              totalOtherSelectedAcres += parseInt(j.attributes.PARCEL_ACRES)
+                              break;
+
+                            // Residential Condominium
+                            case '1020':
+                              totalResCondoSelectedHSG += parseInt(j.attributes.HSG_BLDOUT)
+                              totalResCondoSelectedAcres += parseInt(j.attributes.PARCEL_ACRES)
+                              break;
+
+                            // Shared or Temporary Housing
+                            case '1210':
+                              totalShrdTmpSelectedHSG += parseInt(j.attributes.HSG_BLDOUT)
+                              totalShrdTmpSelectedAcres += parseInt(j.attributes.PARCEL_ACRES)
+                              break;
+
+                            case '1230':
+                              totalShrdTmpSelectedHSG += parseInt(j.attributes.HSG_BLDOUT)
+                              totalShrdTmpSelectedAcres += parseInt(j.attributes.PARCEL_ACRES)
+                              break;
+
+                            case '1250':
+                              totalShrdTmpSelectedHSG += parseInt(j.attributes.HSG_BLDOUT)
+                              totalShrdTmpSelectedAcres += parseInt(j.attributes.PARCEL_ACRES)
+                              break;
+
+                            case '1259':
+                              totalShrdTmpSelectedHSG += parseInt(j.attributes.HSG_BLDOUT)
+                              totalShrdTmpSelectedAcres += parseInt(j.attributes.PARCEL_ACRES)
+                              break;
+
+                            // Single Family Residential
+                            case '101':
+                              totalSingleFamSelectedHSG += parseInt(j.attributes.HSG_BLDOUT)
+                              totalSingleFamSelectedAcres += parseInt(j.attributes.PARCEL_ACRES)
+                              break;
+
+                            case '1010':
+                              totalSingleFamSelectedHSG += parseInt(j.attributes.HSG_BLDOUT)
+                              totalSingleFamSelectedAcres += parseInt(j.attributes.PARCEL_ACRES)
+                              break;
+                          }
 
                           totalHSG_BLDOUTSelected += parseInt(j.attributes.HSG_BLDOUT)
                           totalParcelAcresSelected += parseInt(j.attributes.PARCEL_ACRES)
@@ -1539,6 +1836,22 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                       totals.avgUnitsPASelected = avgUnitsPASelected
 
                       totals.totalResidentialSelected = totalResidentialSelected
+
+                      totals.totalAptSelectedHSG = totalAptSelectedHSG
+                      totals.totalMixedSelectedHSG = totalMixedSelectedHSG
+                      totals.totalMultiOneSelectedHSG = totalMultiOneSelectedHSG
+                      totals.totalOtherSelectedHSG = totalOtherSelectedHSG
+                      totals.totalResCondoSelectedHSG = totalResCondoSelectedHSG
+                      totals.totalShrdTmpSelectedHSG = totalShrdTmpSelectedHSG
+                      totals.totalSingleFamSelectedHSG = totalSingleFamSelectedHSG
+
+                      totals.totalAptSelectedAcres = totalAptSelectedAcres
+                      totals.totalMixedSelectedAcres = totalMixedSelectedAcres
+                      totals.totalMultiOneSelectedAcres = totalMultiOneSelectedAcres
+                      totals.totalOtherSelectedAcres = totalOtherSelectedAcres
+                      totals.totalResCondoSelectedAcres = totalResCondoSelectedAcres
+                      totals.totalShrdTmpSelectedAcres = totalShrdTmpSelectedAcres
+                      totals.totalSingleFamSelectedAcres = totalSingleFamSelectedAcres
 
                       resultLayer2.addMany(features2) // Push queried parcels to new graphics layer
 
