@@ -401,9 +401,16 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
         // use GIZ or other boundary based on x parameter
         if (x === 'GIZ') {
 
+          totals.totalHousingROT = 21626
+          totals.avgUnitsPPROT = .96
+          totals.avgUnitsPAROT = 1.09
+          totals.totalResidentialROT = 19823
           selection = gizBoundaries
         } else {
-
+          totals.totalHousingROT = 19923
+          totals.avgUnitsPPROT = .96
+          totals.avgUnitsPAROT = 1.06
+          totals.totalResidentialROT = 18381
           selection = acBoundaries
         }
 
@@ -415,6 +422,37 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
           console.log('queried parcel layer extent')
 
           var buff = h.features[0].geometry // use boundary geometry for query
+
+          // var polystring = ''
+
+          // buff.rings[0].map((i) => {
+
+          //   polystring += i[0] + ' ';
+          //   polystring += i[1] + ', ';
+          // })
+
+          // var finished = "POLYGON((" + polystring + "))"
+
+          // console.log(finished)
+
+          // var url = ''
+
+          // $.ajax({
+          //   method: 'POST',
+          //   data: data,
+          //   url: url
+          // })
+          // .done(function(msg) {
+          //   // console.log(msg);
+          //   $('#total_nitrogen_polygon').text(msg);
+          //   $('#popdown-opacity').show();
+          //             $('div.fa.fa-spinner.fa-spin').remove()
+            
+          // }).fail(function(msg){
+          //   // console.log(msg);
+          //   alert('There was a problem saving the polygon. Please send this error message to mario.carloni@capecodcommission.org: <br />Response: ' + msg.status + ' ' + msg.statusText );
+          // });
+
 
           selection.visible = true
           parcelLayer.definitionExpression = ""
@@ -712,6 +750,14 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
 
               return j
             })
+
+            // console.log('totalApt1MIAcres',totalApt1MIAcres)
+            // console.log('totalMixed1MIAcres',totalMixed1MIAcres)
+            // console.log('totalMultiOne1MIAcres',totalMultiOne1MIAcres)
+            // console.log('totalOther1MIAcres',totalOther1MIAcres)
+            // console.log('totalResCondo1MIAcres',totalResCondo1MIAcres)
+            // console.log('totalShrdTmp1MIAcres',totalShrdTmp1MIAcres)
+            // console.log('totalSingleFam1MIAcres',totalSingleFam1MIAcres)
 
             avgUnitsPP1MI = totalHSG_BLDOUT1MI / totalResidential1MI
             avgUnitsPA1MI = totalHSG_BLDOUT1MI / totalParcelAcres1MI
@@ -1511,7 +1557,16 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                     totals.totalOwnedROT = townTotalOwned
                     totals.totalRentalROT = townTotalRental
 
-                    totals.totalHousingROT = townTotalHousing
+                    // totals.totalHousingROT = townTotalHousing
+
+                    // if (x === 'GIZ') {
+                    //   totals.totalHousingROT = 21626
+                    // } else {
+                    //   totals.totalHousingROT = 19923
+                    // }
+                    
+
+
                     totals.totalYearRoundROT = townTotalYearRound
                     totals.totalSeasonalROT = townTotalSeasonal
 
@@ -1828,6 +1883,14 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
 
                         return j
                       })
+
+                      // console.log('totalAptSelectedAcres',totalAptSelectedAcres)
+                      // console.log('totalMixedSelectedAcres',totalMixedSelectedAcres)
+                      // console.log('totalMultiOneSelectedAcres',totalMultiOneSelectedAcres)
+                      // console.log('totalOtherSelectedAcres',totalOtherSelectedAcres)
+                      // console.log('totalResCondoSelectedAcres',totalResCondoSelectedAcres)
+                      // console.log('totalShrdTmpSelectedAcres',totalShrdTmpSelectedAcres)
+                      // console.log('totalSingleFamSelectedAcres',totalSingleFamSelectedAcres)
 
                       avgUnitsPPSelected = totalHSG_BLDOUTSelected / totalResidentialSelected
                       avgUnitsPASelected = totalHSG_BLDOUTSelected / totalParcelAcresSelected

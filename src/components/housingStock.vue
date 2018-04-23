@@ -33,7 +33,7 @@
           </ul>
         </div>
       </div>
-      <div class = 'col-md-4 vizCol text-center'>
+      <div style="padding-bottom: 1.5%" class = 'col-md-4 vizCol text-center'>
         <h4>Tenure</h4>
         <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows1" :options="options7"></vue-chart>
         <p class = 'housing-stats'>** Subsidized Units Not Available Within Selection **</p>
@@ -44,7 +44,7 @@
           </ul>
         </div>
       </div>
-      <div class = 'col-md-4 vizCol text-center'>
+      <div style="padding-bottom: 4%" class = 'col-md-4 vizCol text-center'>
         <div class = 'row'>
           <div class = 'col-md-6 vizCol text-center'>
             <p class = 'housing-stats'>Average Units Per Parcel: {{totals.avgUnitsPPSelected.toFixed(1)}}</p>
@@ -103,7 +103,7 @@
 
   <div class = 'row'>
     <div class = 'col-md-6'>
-      <div style = 'padding-bottom: 2%' class = 'col-md-4 vizCol'>
+      <div style = 'padding-bottom: 7%' class = 'col-md-4 vizCol'>
         <h4>Seasonality</h4>
         <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns2" :rows="rows11" :options="options6"></vue-chart>
         <p class = 'housing-stats'>Total Units: {{totals.totalHousing1MI.toLocaleString()}}</p>
@@ -116,7 +116,7 @@
         <p class = 'housing-stats'>Subsidized Owned: 50*</p>
         <p class = 'housing-stats'>* Hyannis (Zip code 02601) Source Growth Management Department</p>
       </div>
-      <div class = 'col-md-4 vizCol text-center'>
+      <div style = 'padding-bottom: 10.5%' class = 'col-md-4 vizCol text-center'>
         <div class = 'row'>
           <div class = 'col-md-6 vizCol text-center'>
             <p class = 'housing-stats'>Average Units Per Parcel: {{totals.avgUnitsPP1MI.toFixed(1)}}</p>
@@ -160,17 +160,30 @@
 
   <div class = 'row'>
     <div class = 'col-md-6'>
-      <div style = 'padding-bottom: 2%' class = 'col-md-6 vizCol2'>
+      <div style = 'padding-bottom: 2%' class = 'col-md-4 vizCol2'>
         <h4>Seasonality</h4>
         <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows12" :options="options5"></vue-chart>
         <p class = 'housing-stats'>Total Units: {{totals.totalHousingROT.toLocaleString()}}</p>
         <p class = 'housing-stats'>Built Residential Parcels: {{totals.totalResidentialROT.toLocaleString()}}</p>
       </div>
-      <div class = 'col-md-6 vizCol2 text-center'>
+      <div style = 'padding-bottom: 2%' class = 'col-md-4 vizCol2 text-center'>
         <h4>Tenure</h4>
         <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows13" :options="options8"></vue-chart>
         <p class = 'housing-stats'>Subsidized Rentals: 197</p>
         <p class = 'housing-stats'>Subsidized Owned: 80</p>
+      </div>
+      <div style="padding-bottom:6%" class = 'col-md-4 vizCol2 text-center'>
+        <div class = 'row'>
+          <div class = 'col-md-6 vizCol2 text-center'>
+            <p class = 'housing-stats'>Average Units Per Parcel: {{totals.avgUnitsPPROT.toFixed(1)}}</p>
+          </div>
+          <div class = 'col-md-6 vizCol2 text-center'>
+            <p class = 'housing-stats'>Average Units Per Acre: {{totals.avgUnitsPAROT.toFixed(1)}}</p>
+          </div>
+        </div>
+        <div class = 'row'>
+          <vue-chart class = 'chart' :chart-type="chartType4" :columns="columns4" :rows="rows16" :options="options9"></vue-chart>
+        </div>
       </div>
     </div>
     <div style = 'background-color: #d0d5dd' class = 'col-md-6'>
@@ -363,6 +376,14 @@ export default {
         ['Multiple Houses/Parcel', this.totals.totalMultiOneSelectedHSG, '#333f50', this.totals.totalMultiOneSelectedAcres],
         ['Single Family', this.totals.totalSingleFamSelectedHSG, '#333f50', this.totals.totalSingleFamSelectedAcres]
       ],
+      rows16: [
+        ['Residential Condo', this.totals.totalResCondoROTHSG, '#333f50', this.totals.totalResCondoROTAcres],
+        ['Apartments (4+)', this.totals.totalAptROTHSG, '#333f50', this.totals.totalAptROTAcres],
+        ['Shared or Temporary Housing', this.totals.totalShrdTmpROTHSG, '#333f50', this.totals.totalShrdTmpROTAcres],
+        ['Multifamily or Mixed Use', this.totals.totalMixedROTHSG, '#333f50', this.totals.totalMixedROTAcres],
+        ['Multiple Houses/Parcel', this.totals.totalMultiOneROTHSG, '#333f50', this.totals.totalMultiOneROTAcres],
+        ['Single Family', this.totals.totalSingleFamROTHSG, '#333f50', this.totals.totalSingleFamROTAcres]
+      ],
       options1: {
         pieHole: 0.5, // Define donut hole width
         backgroundColor: '#aeb3ba',
@@ -486,7 +507,23 @@ export default {
           0: {textStyle: {color: '#000000'}}
         },
         colors: ['#FFFFFF','#6677CD']
-      }
+      },
+      options9: {
+        backgroundColor: '#d0d5dd',
+        legend: 'none',
+        chartArea: {
+          width: '100%',
+          height: '80%',
+          left: 75,
+          top: 0
+        },
+        colors: ['#FFFFFF'],
+        hAxis: {
+          textStyle:{
+            color: '#FFF'
+          }
+        }
+      },
     }
   },
 
