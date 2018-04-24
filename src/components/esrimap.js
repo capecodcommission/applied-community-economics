@@ -405,12 +405,16 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
           totals.avgUnitsPPROT = .96
           totals.avgUnitsPAROT = 1.09
           totals.totalResidentialROT = 19823
+          totals.avgUnitsPA1MI = 4.1
+          totals.avgUnitsPASelected = 8.2
           selection = gizBoundaries
         } else {
           totals.totalHousingROT = 19923
           totals.avgUnitsPPROT = .96
           totals.avgUnitsPAROT = 1.06
           totals.totalResidentialROT = 18381
+          totals.avgUnitsPASelected = 7.1
+          totals.avgUnitsPA1MI = 3.3
           selection = acBoundaries
         }
 
@@ -598,6 +602,58 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
           var totalShrdTmp1MIAcres = 0
           var totalSingleFam1MIAcres = 0
 
+          // Home Price
+          var totalHomeLess10k1MI = 0
+          var totalHomeTen141MI = 0
+          var totalHomeFif191MI = 0
+          var totalHomeTwenty241MI = 0
+          var totalHomeTwentyFive291MI = 0
+          var totalHomeThirty341MI = 0
+          var totalHomeThirtyFive391MI = 0
+          var totalHomeFourty441MI = 0
+          var totalHomeFourtyFive491MI = 0
+          var totalHomeFifty591MI = 0
+          var totalHomeSixty741MI = 0
+          var totalHomeSeventyFive991MI = 0
+          var totalHomeHundred1241MI = 0
+          var totalHomeHundredTwentyFive1491MI = 0
+          var totalHomeHundredFifty1991MI = 0
+          var totalHomeTwoHundred2501MI = 0
+          var totalHomeTwoFifty2991MI = 0
+          var totalHomeThreeHundred3991MI = 0
+          var totalHomeFourHundred4991MI = 0
+          var totalHomeFiveHundred7491MI = 0
+          var totalHomeSevenFifty9991MI = 0
+          var totalHomeMil141MI = 0
+          var totalHomeMilHalf191MI = 0
+          var totalHomeTwoMil1MI = 0
+
+          // Gross Rent
+          var totalRentLess1001MI = 0
+          var totalRentHundred1491MI = 0
+          var totalRentHundredFifty1991MI = 0
+          var totalRentTwoHundred2491MI = 0
+          var totalRentTwoFifty2991MI = 0
+          var totalRentThreeHundred3491MI = 0
+          var totalRentThreeFifty3991MI = 0
+          var totalRentFourHundred4491MI = 0 // Finish remainder of gross rent here
+          var totalRentFourtyFive491MI = 0
+          var totalRentFifty591MI = 0
+          var totalRentSixty741MI = 0
+          var totalRentSeventyFive991MI = 0
+          var totalRentHundred1241MI = 0
+          var totalRentHundredTwentyFive1491MI = 0
+          var totalRentHundredFifty1991MI = 0
+          var totalRentTwoHundred2501MI = 0
+          var totalRentTwoFifty2991MI = 0
+          var totalRentThreeHundred3991MI = 0
+          var totalRentFourHundred4991MI = 0
+          var totalRentFiveHundred7491MI = 0
+          var totalRentSevenFifty9991MI = 0
+          var totalRentMil141MI = 0
+          var totalRentMilHalf191MI = 0
+          var totalRentTwoMil1MI = 0
+
           $('#progress').text('querying parcels 1mi from GIZ')
           parcelLayer.queryFeatures(query1).then((i) => { // Query parcels using extent of defined embayment layer
 
@@ -763,7 +819,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
             avgUnitsPA1MI = totalHSG_BLDOUT1MI / totalParcelAcres1MI
 
             totals.avgUnitsPP1MI = avgUnitsPP1MI
-            totals.avgUnitsPA1MI = avgUnitsPA1MI
+            // totals.avgUnitsPA1MI = avgUnitsPA1MI
 
             totals.totalResidential1MI = totalResidential1MI // Set total residential state property
 
@@ -1363,6 +1419,32 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                     var townTotalMigrant = 0
                     var townTotalOtherVac = 0
 
+                    // Home Price
+                    var totalHomeLess10kROT = 0
+                    var totalHomeTen14ROT = 0
+                    var totalHomeFif19ROT = 0
+                    var totalHomeTwenty24ROT = 0
+                    var totalHomeTwentyFive29ROT = 0
+                    var totalHomeThirty34ROT = 0
+                    var totalHomeThirtyFive39ROT = 0
+                    var totalHomeFourty44ROT = 0
+                    var totalHomeFourtyFive49ROT = 0
+                    var totalHomeFifty59ROT = 0
+                    var totalHomeSixty74ROT = 0
+                    var totalHomeSeventyFive99ROT = 0
+                    var totalHomeHundred124ROT = 0
+                    var totalHomeHundredTwentyFive149ROT = 0
+                    var totalHomeHundredFifty199ROT = 0
+                    var totalHomeTwoHundred250ROT = 0
+                    var totalHomeTwoFifty299ROT = 0
+                    var totalHomeThreeHundred399ROT = 0
+                    var totalHomeFourHundred499ROT = 0
+                    var totalHomeFiveHundred749ROT = 0
+                    var totalHomeSevenFifty999ROT = 0
+                    var totalHomeMil14ROT = 0
+                    var totalHomeMilHalf19ROT = 0
+                    var totalHomeTwoMilROT = 0
+
                     $('#progress').append('<br/>map all town')
                     censusTownsFiltered.map((k) => {
 
@@ -1736,6 +1818,32 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                     var totalShrdTmpSelectedAcres = 0
                     var totalSingleFamSelectedAcres = 0
 
+                    // Home Price
+                    var totalHomeLess10kSelected = 0
+                    var totalHomeTen14Selected = 0
+                    var totalHomeFif19Selected = 0
+                    var totalHomeTwenty24Selected = 0
+                    var totalHomeTwentyFive29Selected = 0
+                    var totalHomeThirty34Selected = 0
+                    var totalHomeThirtyFive39Selected = 0
+                    var totalHomeFourty44Selected = 0
+                    var totalHomeFourtyFive49Selected = 0
+                    var totalHomeFifty59Selected = 0
+                    var totalHomeSixty74Selected = 0
+                    var totalHomeSeventyFive99Selected = 0
+                    var totalHomeHundred124Selected = 0
+                    var totalHomeHundredTwentyFive149Selected = 0
+                    var totalHomeHundredFifty199Selected = 0
+                    var totalHomeTwoHundred250Selected = 0
+                    var totalHomeTwoFifty299Selected = 0
+                    var totalHomeThreeHundred399Selected = 0
+                    var totalHomeFourHundred499Selected = 0
+                    var totalHomeFiveHundred749Selected = 0
+                    var totalHomeSevenFifty999Selected = 0
+                    var totalHomeMil14Selected = 0
+                    var totalHomeMilHalf19Selected = 0
+                    var totalHomeTwoMilSelected = 0
+
                     $('#progress').text('querying parcels within selection')
 
                     // Query by selection
@@ -1896,7 +2004,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                       avgUnitsPASelected = totalHSG_BLDOUTSelected / totalParcelAcresSelected
 
                       totals.avgUnitsPPSelected = avgUnitsPPSelected
-                      totals.avgUnitsPASelected = avgUnitsPASelected
+                      // totals.avgUnitsPASelected = avgUnitsPASelected
 
                       totals.totalResidentialSelected = totalResidentialSelected
 

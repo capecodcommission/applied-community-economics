@@ -65,38 +65,11 @@
       </div>
     </div>
     <div style = 'background-color: #aeb3ba' class = 'col-md-6'>
-      <div class = 'col-md-4 housing-stats vizCol'>
+      <!-- <div class = 'col-md-4 housing-stats vizCol'>
         <div class = 'row'>
           <h1>${{totals.paretoMedianCont}}</h1>
           <p><b>Median Household Income</b></p>
         </div>
-        <!-- <div class = 'row'>
-          <h1>{{(totals.percUnempCont * 100).toFixed(1)}}%</h1>
-          <p><b>Unemployment</b></p>
-        </div> -->
-        <!-- <div class = 'row'>
-          <ul class="legend">
-            <li><span class="superawesome"></span> Less than high school graduate</li>
-            <li><span class="awesome"></span> High school graduate (includes equivalency)</li>
-            <li><span class="kindaawesome"></span> Some college or associate's degree</li>
-            <li><span class="notawesome"></span> Bachelor's degree</li>
-            <li><span class="neato"></span> Graduate or professional degree</li>
-          </ul>
-        </div> -->
-      </div>
-      <!-- <div class = 'col-md-4 vizCol'>
-        <h4>Educational Attainment</h4>
-        <vue-chart class = 'chart' :chart-type="chartType3" :columns="columns3" :rows="rows9" :options="options3"></vue-chart>
-        <p class = 'housing-stats'>Population > 25 years: {{totals.totalEduCont.toLocaleString()}}</p>
-      </div>
-      <div class = 'col-md-4 vizCol'>
-        <h4>Median Earnings</h4>
-        <div style = 'padding-bottom: 0' class = 'row'>
-          <ul class="legend pull-right">
-            <li><span class="awesome2"></span> Town of Barnstable</li>
-          </ul>
-        </div>
-        <vue-chart class = 'chart' :chart-type="chartType4" :columns="columns4" :rows="rows10" :options="options4"></vue-chart>
       </div> -->
     </div>
   </div>
@@ -131,29 +104,11 @@
       </div>
     </div>
     <div style = 'background-color: #aeb3ba' class = 'col-md-6'>
-      <div class = 'col-md-4 housing-stats vizCol'>
+      <!-- <div class = 'col-md-4 housing-stats vizCol'>
         <div class = 'row'>
           <h1>${{totals.paretoMedian}}</h1>
           <p><b>Median Household Income</b></p>
         </div>
-        <!-- <div class = 'row'>
-          <h1>{{(totals.percUnemp * 100).toFixed(1)}}%</h1>
-          <p><b>Unemployment</b></p>
-        </div> -->
-      </div>
-      <!-- <div class = 'col-md-4 vizCol'>
-        <h4>Educational Attainment</h4>
-        <vue-chart class = 'chart' :chart-type="chartType3" :columns="columns3" :rows="rows3" :options="options3"></vue-chart>
-        <p class = 'housing-stats'>Population > 25 years: {{totals.totalEdu.toLocaleString()}}</p>
-      </div>
-      <div class = 'col-md-4 vizCol'>
-        <h4>Median Earnings</h4>
-        <div style = 'padding-bottom: 0' class = 'row'>
-          <ul class="legend pull-right">
-            <li><span class="awesome2"></span> Town of Barnstable</li>
-          </ul>
-        </div>
-        <vue-chart class = 'chart' :chart-type="chartType4" :columns="columns4" :rows="rows4" :options="options4"></vue-chart>
       </div> -->
     </div>
   </div>
@@ -187,29 +142,11 @@
       </div>
     </div>
     <div style = 'background-color: #d0d5dd' class = 'col-md-6'>
-      <div class = 'col-md-4 housing-stats vizCol2'>
+      <!-- <div class = 'col-md-4 housing-stats vizCol2'>
         <div class = 'row'>
           <h1>${{totals.townParetoMedian}}</h1>
           <p><b>Median Household Income</b></p>
         </div>
-        <!-- <div class = 'row'>
-          <h1>{{(totals.townPercUnemp * 100).toFixed(1)}}%</h1>
-          <p><b>Unemployment</b></p>
-        </div> -->
-      </div>
-      <!-- <div class = 'col-md-4 vizCol'>
-        <h4>Educational Attainment</h4>
-        <vue-chart class = 'chart' :chart-type="chartType3" :columns="columns3" :rows="rows7" :options="options3"></vue-chart>
-        <p class = 'housing-stats'>Population > 25 years: {{totals.townEdu.toLocaleString()}}</p>
-      </div>
-      <div class = 'col-md-4 vizCol'>
-        <h4>Median Earnings</h4>
-        <div style = 'padding-bottom: 0' class = 'row'>
-          <ul class="legend pull-right">
-            <li><span class="awesome2"></span> Town of Barnstable</li>
-          </ul>
-        </div>
-        <vue-chart class = 'chart' :chart-type="chartType4" :columns="columns4" :rows="rows8" :options="options4"></vue-chart>
       </div> -->
     </div>
   </div>
