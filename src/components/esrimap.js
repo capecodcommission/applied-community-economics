@@ -636,23 +636,54 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
           var totalRentTwoFifty2991MI = 0
           var totalRentThreeHundred3491MI = 0
           var totalRentThreeFifty3991MI = 0
-          var totalRentFourHundred4491MI = 0 // Finish remainder of gross rent here
-          var totalRentFourtyFive491MI = 0
-          var totalRentFifty591MI = 0
-          var totalRentSixty741MI = 0
-          var totalRentSeventyFive991MI = 0
-          var totalRentHundred1241MI = 0
-          var totalRentHundredTwentyFive1491MI = 0
-          var totalRentHundredFifty1991MI = 0
-          var totalRentTwoHundred2501MI = 0
-          var totalRentTwoFifty2991MI = 0
-          var totalRentThreeHundred3991MI = 0
-          var totalRentFourHundred4991MI = 0
-          var totalRentFiveHundred7491MI = 0
-          var totalRentSevenFifty9991MI = 0
-          var totalRentMil141MI = 0
-          var totalRentMilHalf191MI = 0
-          var totalRentTwoMil1MI = 0
+          var totalRentFourHundred4491MI = 0 
+          var totalRentFourFifty4991MI = 0
+          var totalRentFiveHundred5491MI = 0
+          var totalRentFiveFifty5991MI = 0
+          var totalRentSixHundred6491MI = 0
+          var totalRentSixFifty6991MI = 0
+          var totalRentSevenHundred7491MI = 0
+          var totalRentSevenFifty7991MI = 0
+          var totalRentEightHundred8991MI = 0
+          var totalRentNineHundred9991MI = 0
+          var totalRentThousand12491MI = 0
+          var totalRentTwelveFifty14991MI = 0
+          var totalRentFifteenHundred19991MI = 0
+          var totalRentTwoThousand24991MI = 0
+          var totalRentTwentyFiveHundred29991MI = 0
+          var totalRentThreeThousand34991MI = 0
+          var totalRentThirtyFiveHundredPlus1MI = 0
+
+          // Poverty
+          var totalPovertyHousehold1MI = 0
+          var totalPovertyLast121MI = 0
+
+          // Age
+          var totalAgeLess18Household1MI = 0
+          var totalAgeLess18OneOrMore1MI = 0
+
+          // Rent as % of Household Income
+          var totalRentPercHousehold1MI = 0
+          var totalRentPercThirty3491MI = 0
+          var totalRentPercThirtyFive3991MI = 0
+          var totalRentPercForty4991MI = 0
+          var totalRentPercFiftyPlus1MI = 0
+          var totalRentPercNotComp1MI = 0
+
+          // Housing Units with Mortgage
+          var totalMortgageHousehold1MI = 0
+          var totalMortgageThirty3491MI = 0
+          var totalMortgageThirtyFive3991MI = 0
+          var totalMortgageForty4991MI = 0
+          var totalMortgageFiftyPlus1MI = 0
+          var totalMortgageNotComp1MI = 0
+
+          // Housing Units without Mortgage
+          var totalNoMortgageThirty3491MI = 0
+          var totalNoMortgageThirtyFive3991MI = 0
+          var totalNoMortgageForty4991MI = 0
+          var totalNoMortgageFiftyPlus1MI = 0
+          var totalNoMortgageNotComp1MI = 0
 
           $('#progress').text('querying parcels 1mi from GIZ')
           parcelLayer.queryFeatures(query1).then((i) => { // Query parcels using extent of defined embayment layer
@@ -1445,6 +1476,63 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                     var totalHomeMilHalf19ROT = 0
                     var totalHomeTwoMilROT = 0
 
+                    // Gross Rent
+                    var totalRentLess100ROT = 0
+                    var totalRentHundred149ROT = 0
+                    var totalRentHundredFifty199ROT = 0
+                    var totalRentTwoHundred249ROT = 0
+                    var totalRentTwoFifty299ROT = 0
+                    var totalRentThreeHundred349ROT = 0
+                    var totalRentThreeFifty399ROT = 0
+                    var totalRentFourHundred449ROT = 0 
+                    var totalRentFourFifty499ROT = 0
+                    var totalRentFiveHundred549ROT = 0
+                    var totalRentFiveFifty599ROT = 0
+                    var totalRentSixHundred649ROT = 0
+                    var totalRentSixFifty699ROT = 0
+                    var totalRentSevenHundred749ROT = 0
+                    var totalRentSevenFifty799ROT = 0
+                    var totalRentEightHundred899ROT = 0
+                    var totalRentNineHundred999ROT = 0
+                    var totalRentThousand1249ROT = 0
+                    var totalRentTwelveFifty1499ROT = 0
+                    var totalRentFifteenHundred1999ROT = 0
+                    var totalRentTwoThousand2499ROT = 0
+                    var totalRentTwentyFiveHundred2999ROT = 0
+                    var totalRentThreeThousand3499ROT = 0
+                    var totalRentThirtyFiveHundredPlusROT = 0
+
+                    // Poverty
+                    var totalPovertyHouseholdROT = 0
+                    var totalPovertyLast12ROT = 0
+
+                    // Age
+                    var totalAgeLess18HouseholdROT = 0
+                    var totalAgeLess18OneOrMoreROT = 0
+
+                    // Rent as % of Household Income
+                    var totalRentPercHouseholdROT = 0
+                    var totalRentPercThirty349ROT = 0
+                    var totalRentPercThirtyFive399ROT = 0
+                    var totalRentPercForty499ROT = 0
+                    var totalRentPercFiftyPlusROT = 0
+                    var totalRentPercNotCompROT = 0
+
+                    // Housing Units with Mortgage
+                    var totalMortgageHouseholdROT = 0
+                    var totalMortgageThirty349ROT = 0
+                    var totalMortgageThirtyFive399ROT = 0
+                    var totalMortgageForty499ROT = 0
+                    var totalMortgageFiftyPlusROT = 0
+                    var totalMortgageNotCompROT = 0
+
+                    // Housing Units without Mortgage
+                    var totalNoMortgageThirty349ROT = 0
+                    var totalNoMortgageThirtyFive399ROT = 0
+                    var totalNoMortgageForty499ROT = 0
+                    var totalNoMortgageFiftyPlusROT = 0
+                    var totalNoMortgageNotCompROT = 0
+
                     $('#progress').append('<br/>map all town')
                     censusTownsFiltered.map((k) => {
 
@@ -1843,6 +1931,63 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                     var totalHomeMil14Selected = 0
                     var totalHomeMilHalf19Selected = 0
                     var totalHomeTwoMilSelected = 0
+
+                    // Gross Rent
+                    var totalRentLess100Selected = 0
+                    var totalRentHundred149Selected = 0
+                    var totalRentHundredFifty199Selected = 0
+                    var totalRentTwoHundred249Selected = 0
+                    var totalRentTwoFifty299Selected = 0
+                    var totalRentThreeHundred349Selected = 0
+                    var totalRentThreeFifty399Selected = 0
+                    var totalRentFourHundred449Selected = 0 
+                    var totalRentFourFifty499Selected = 0
+                    var totalRentFiveHundred549Selected = 0
+                    var totalRentFiveFifty599Selected = 0
+                    var totalRentSixHundred649Selected = 0
+                    var totalRentSixFifty699Selected = 0
+                    var totalRentSevenHundred749Selected = 0
+                    var totalRentSevenFifty799Selected = 0
+                    var totalRentEightHundred899Selected = 0
+                    var totalRentNineHundred999Selected = 0
+                    var totalRentThousand1249Selected = 0
+                    var totalRentTwelveFifty1499Selected = 0
+                    var totalRentFifteenHundred1999Selected = 0
+                    var totalRentTwoThousand2499Selected = 0
+                    var totalRentTwentyFiveHundred2999Selected = 0
+                    var totalRentThreeThousand3499Selected = 0
+                    var totalRentThirtyFiveHundredPlusSelected = 0
+
+                    // Poverty
+                    var totalPovertyHouseholdSelected = 0
+                    var totalPovertyLast12Selected = 0
+
+                    // Age
+                    var totalAgeLess18HouseholdSelected = 0
+                    var totalAgeLess18OneOrMoreSelected = 0
+
+                    // Rent as % of Household Income
+                    var totalRentPercHouseholdSelected = 0
+                    var totalRentPercThirty349Selected = 0
+                    var totalRentPercThirtyFive399Selected = 0
+                    var totalRentPercForty499Selected = 0
+                    var totalRentPercFiftyPlusSelected = 0
+                    var totalRentPercNotCompSelected = 0
+
+                    // Housing Units with Mortgage
+                    var totalMortgageHouseholdSelected = 0
+                    var totalMortgageThirty349Selected = 0
+                    var totalMortgageThirtyFive399Selected = 0
+                    var totalMortgageForty499Selected = 0
+                    var totalMortgageFiftyPlusSelected = 0
+                    var totalMortgageNotCompSelected = 0
+
+                    // Housing Units without Mortgage
+                    var totalNoMortgageThirty349Selected = 0
+                    var totalNoMortgageThirtyFive399Selected = 0
+                    var totalNoMortgageForty499Selected = 0
+                    var totalNoMortgageFiftyPlusSelected = 0
+                    var totalNoMortgageNotCompSelected = 0
 
                     $('#progress').text('querying parcels within selection')
 

@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 // Create state object that all Vues share, JSON from API is loaded here
 const state = {
+  blockGroups5: [],
   blockGroups4: [],
   blockGroups3: [],
   tracts2: [],
@@ -260,6 +261,11 @@ const state = {
 
 // Create mutations; functions to change data in the state
 const mutations = {
+
+  LOAD_BLKS5 (state, blks) {
+
+    state.blockGroups5 = blks
+  },
 
   LOAD_BLKS4 (state, blks) {
 

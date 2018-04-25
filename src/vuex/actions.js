@@ -96,6 +96,14 @@ export const updateAttrib = function({dispatch, state}, land, water) {
 }
 
 // Load array of block groups, tracts, and population counts from census API
+export const loadBlks5 = function({dispatch, state}) {
+
+  $.getJSON("https://api.census.gov/data/2016/acs/acs5?get=B17017_001E,B17017_002E,B11005_001E,B11005_002E,B25070_001E,B25070_007E,B25070_008E,B25070_009E,B25070_010E,B25070_011E,B25091_001E,B25091_008E,B25091_009E,B25091_010E,B25091_011E,B25091_012E,B25091_019E,B25091_020E,B25091_021E,B25091_022E,B25091_023E&for=block%20group:*&in=state:25%20county:001&key=8c7a3c5bf959c4358f3e0eee9b07cd95d7856f5c", function (result) {
+
+    dispatch("LOAD_BLKS5", result)
+  })
+}
+
 export const loadBlks4 = function({dispatch, state}) {
 
   $.getJSON("https://api.census.gov/data/2016/acs/acs5?get=B25063_003E,B25063_004E,B25063_005E,B25063_006E,B25063_007E,B25063_008E,B25063_009E,B25063_010E,B25063_011E,B25063_012E,B25063_013E,B25063_014E,B25063_015E,B25063_016E,B25063_017E,B25063_018E,B25063_019E,B25063_020E,B25063_021E,B25063_022E,B25063_023E,B25063_024E,B25063_025E,B25063_026E&for=block%20group:*&in=state:25%20county:001&key=8c7a3c5bf959c4358f3e0eee9b07cd95d7856f5c", function (result) {
