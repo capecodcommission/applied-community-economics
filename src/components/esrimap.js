@@ -239,127 +239,161 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
         var vertices = evt.vertices
         var polygon = createPolygon(vertices); // Create polygon 
 
+        var polystring = ''
+
+        // Create SQL spatial valid POLYGON ((x y, x y, x y)) from user-defined geometry rings
+        vertices.map((i) => { 
+
+          polystring += i[0] + ' ';
+          polystring += i[1] + ', ';
+        })
+
+        var firstOccurenceOfComma = polystring.indexOf(',') // Obtain index of first x y coordinates
+        var polySliceFirstXY = polystring.slice(0,firstOccurenceOfComma) // Slice poly string to first coordinate set
+        var completeRings = polystring + polySliceFirstXY // Append first coordinates as last coordinates to complete polygon
+
+        var data = {rings: completeRings} // Pass complete polygon rings as object to API route
+
+        data = JSON.stringify(data) // Parse object as valid JSON
+
+        var url = 'http://localhost:8081/api/getParcelSums/'
+
+        $.ajax({
+          method: 'POST',
+          data: data,
+          contentType: 'application/json',
+          url: url
+        })
+        .done(function(data) {
+          
+          console.log(data.recordset[0])
+        })
+        .fail(function(msg){
+
+          alert('There was a problem saving the polygon. Please send this error message to mario.carloni@capecodcommission.org: <br />Response: ' + msg );
+        });
+
         // var buff = geometryEngine.buffer(polygon,[1],'miles',true) // Create 1mi buffer
 
-        var query = blockGroups.createQuery()
-        query.geometry = polygon
-        query.spatialRelationship = 'intersects' 
-        query.distance = 1
-        query.units = 'miles'
+        // var query = blockGroups.createQuery()
+        // query.geometry = polygon
+        // query.spatialRelationship = 'intersects' 
+        // query.distance = 1
+        // query.units = 'miles'
 
-        var query1 = parcelLayer.createQuery() // Initialize parcel query using unbuffered extent
-        query1.geometry = polygon
-        query1.spatialRelationship = 'intersects'
-        query1.distance = 1
-        query1.units = 'miles'
+        // var query1 = parcelLayer.createQuery() // Initialize parcel query using unbuffered extent
+        // query1.geometry = polygon
+        // query1.spatialRelationship = 'intersects'
+        // query1.distance = 1
+        // query1.units = 'miles'
 
-        var features = ''
-        var features1 = ''
-        var totalLand = 0
-        var totalWater = 0
-        var totalPop = 0
-        var totalPrcl = 0
+        // var features = ''
+        // var features1 = ''
+        // var totalLand = 0
+        // var totalWater = 0
+        // var totalPop = 0
+        // var totalPrcl = 0
 
-        parcelLayer.queryFeatures(query1).then((i) => { // Query parcels using extent of defined embayment layer
+        // parcelLayer.queryFeatures(query1).then((i) => { // Query parcels using extent of defined embayment layer
 
-          features1 = i.features.map((j) => {
+        //   features1 = i.features.map((j) => {
 
-            j.symbol = { // Set normal block group symbology
+        //     j.symbol = { // Set normal block group symbology
 
-              type: 'simple-fill',
-              outline: { 
-                color: [255, 255, 255],
-                width: 2
-              }
-            }
+        //       type: 'simple-fill',
+        //       outline: { 
+        //         color: [255, 255, 255],
+        //         width: 2
+        //       }
+        //     }
 
-            return j
-          })
+        //     return j
+        //   })
 
-          resultLayer1.addMany(features1) // Push queried parcels to new graphics layer
-        })
-        .then((j) => {
+        //   resultLayer1.addMany(features1) // Push queried parcels to new graphics layer
+        // })
+        // .then((j) => {
 
-          blockGroups.queryFeatures(query).then(function(i) { // Query using 1mi buffer
+        //   blockGroups.queryFeatures(query).then(function(i) { // Query using 1mi buffer
 
-            // Obtain totals from queried blockgroup attributes
-            // Create/fill new attribute using census data
-            // Create/fill block group polygon symbology
-            features = i.features.map(function(j) { 
+        //     // Obtain totals from queried blockgroup attributes
+        //     // Create/fill new attribute using census data
+        //     // Create/fill block group polygon symbology
+        //     features = i.features.map(function(j) { 
 
-              if (j.attributes.TRACT != "990000") { // If any block group isn't the water tract
+        //       if (j.attributes.TRACT != "990000") { // If any block group isn't the water tract
 
-                j.attributes.popPrcl = 0 // Initialize population by parcel field
+        //         j.attributes.popPrcl = 0 // Initialize population by parcel field
 
-                resultLayer1.graphics.items.map((k) => { // Look through parcels from queried results
+        //         resultLayer1.graphics.items.map((k) => { // Look through parcels from queried results
 
-                  if (geometryEngine.intersects(k.geometry, j.geometry)) { // If block group geometry intersects parcels
+        //           if (geometryEngine.intersects(k.geometry, j.geometry)) { // If block group geometry intersects parcels
 
-                    k.attributes.BLKGRP = j.attributes.BLKGRP // Assign block group to individual parcel
+        //             k.attributes.BLKGRP = j.attributes.BLKGRP // Assign block group to individual parcel
 
-                    j.attributes.popPrcl += parseInt(k.attributes.POP_10) // Sum population field in block group layer using POP_10 from individual parcels
-                  }
-                })
+        //             j.attributes.popPrcl += parseInt(k.attributes.POP_10) // Sum population field in block group layer using POP_10 from individual parcels
+        //           }
+        //         })
 
-                totalLand += j.attributes.AREALAND // Obtain totals
-                totalWater += j.attributes.AREAWATER
+        //         totalLand += j.attributes.AREALAND // Obtain totals
+        //         totalWater += j.attributes.AREAWATER
 
-                censusData.map((k) => { // Search ACS rows by block group
+        //         censusData.map((k) => { // Search ACS rows by block group
 
-                  if (k.indexOf(j.attributes.TRACT) >= 0 && k.indexOf(j.attributes.BLKGRP)  >= 0) { // If key-match
+        //           if (k.indexOf(j.attributes.TRACT) >= 0 && k.indexOf(j.attributes.BLKGRP)  >= 0) { // If key-match
 
-                    j.attributes.population = parseInt(k[1]) // Append/fill population (index 1) from store, convert to integer
-                  }
-                })
+        //             j.attributes.population = parseInt(k[1]) // Append/fill population (index 1) from store, convert to integer
+        //           }
+        //         })
 
-                totalPop += j.attributes.population
+        //         totalPop += j.attributes.population
 
-                if ((j.attributes.popPrcl / j.attributes.population) >= .5) {
+        //         if ((j.attributes.popPrcl / j.attributes.population) >= .5) {
 
-                  j.symbol = { // Set normal block group symbology
+        //           j.symbol = { // Set normal block group symbology
 
-                    type: 'simple-fill',
-                    outline: { 
-                      color: [66, 134, 244],
-                      width: 2
-                    }
-                  }
-                } else {
+        //             type: 'simple-fill',
+        //             outline: { 
+        //               color: [66, 134, 244],
+        //               width: 2
+        //             }
+        //           }
+        //         } else {
 
-                  j.symbol = { // Set empty block group symbology
+        //           j.symbol = { // Set empty block group symbology
 
-                    type: 'simple-fill',
-                    outline: { 
-                      color: [0, 0, 0, 0],
-                      width: 0
-                    },
-                    style: 'none'
-                  }
-                }
-              } else {
+        //             type: 'simple-fill',
+        //             outline: { 
+        //               color: [0, 0, 0, 0],
+        //               width: 0
+        //             },
+        //             style: 'none'
+        //           }
+        //         }
+        //       } else {
 
-                j.symbol = { // Set empty block group symbology
+        //         j.symbol = { // Set empty block group symbology
 
-                  type: 'simple-fill',
-                  outline: { 
-                    color: [0, 0, 0, 0],
-                    width: 0
-                  },
-                  style: 'none'
-                }
-              }
+        //           type: 'simple-fill',
+        //           outline: { 
+        //             color: [0, 0, 0, 0],
+        //             width: 0
+        //           },
+        //           style: 'none'
+        //         }
+        //       }
 
-              return j   
-            })
+        //       return j   
+        //     })
 
-            resultLayer.addMany(features)
+        //     resultLayer.addMany(features)
 
-            totals.Land = (totalLand / 43560).toFixed(2)
-            totals.Water = (totalWater / 43560).toFixed(2)
-            totals.Population = totalPop.toFixed(0)
-            totals.Toggle = true
-          })
-        })
+        //     totals.Land = (totalLand / 43560).toFixed(2)
+        //     totals.Water = (totalWater / 43560).toFixed(2)
+        //     totals.Population = totalPop.toFixed(0)
+        //     totals.Toggle = true
+        //   })
+        // })
       }
 
 
@@ -427,33 +461,34 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
 
           var buff = h.features[0].geometry // use boundary geometry for query
 
-          // var polystring = ''
+          var polystring = ''
 
-          // buff.rings[0].map((i) => {
+          buff.rings[0].map((i) => {
 
-          //   polystring += i[0] + ' ';
-          //   polystring += i[1] + ', ';
-          // })
+            polystring += i[0] + ' ';
+            polystring += i[1] + ', ';
+          })
 
-          // var finished = "POLYGON((" + polystring + "))"
+          var lastOccurenceOfComma = polystring.lastIndexOf(',')
 
-          // console.log(finished)
+          var polyStringLastCommaRemoved = polystring.slice(0,lastOccurenceOfComma)
 
-          // var url = ''
+          // var data = {rings: '-7825103.056629799 5108269.629483548, -7824682.652974231 5106998.863888308, -7825389.6954858685 5106425.586176171, -7825962.973198006 5107572.141600447, -7825103.056629799 5108269.629483548'}
+
+          // var url = 'http://localhost:8081/api/getParcelSums/'
 
           // $.ajax({
           //   method: 'POST',
-          //   data: data,
+          //   data: JSON.stringify(data),
+          //   contentType: 'application/json',
           //   url: url
           // })
-          // .done(function(msg) {
-          //   // console.log(msg);
-          //   $('#total_nitrogen_polygon').text(msg);
-          //   $('#popdown-opacity').show();
-          //             $('div.fa.fa-spinner.fa-spin').remove()
+          // .done(function(data) {
             
-          // }).fail(function(msg){
-          //   // console.log(msg);
+          //   console.log(data)
+          // })
+          // .fail(function(msg){
+
           //   alert('There was a problem saving the polygon. Please send this error message to mario.carloni@capecodcommission.org: <br />Response: ' + msg.status + ' ' + msg.statusText );
           // });
 
@@ -2540,24 +2575,25 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                               totals.Toggle = true // Show results pane
                               document.getElementById('loading').style.display = false ? 'block' : 'none';
 
-                              // var query8 = parcelLayer.createQuery()
-                              // query8.geometry = twnBound
-                              // query8.spatialRelationship = 'contains'
-                              // query8.returnGeometry = true
+                              // '-7825103.056629799 5108269.629483548, -7824682.652974231 5106998.863888308, -7825389.6954858685 5106425.586176171, -7825962.973198006 5107572.141600447, -7825103.056629799 5108269.629483548'
+                              var data = {rings: polyStringLastCommaRemoved}
 
-                              // var totalResidentialROT = 0
+                              var url = 'http://localhost:8081/api/getParcelSums/'
 
-                              // parcelLayer.queryFeatures(query8).then((i) => {
+                              $.ajax({
+                                method: 'POST',
+                                data: JSON.stringify(data),
+                                contentType: 'application/json',
+                                url: url
+                              })
+                              .done(function(data) {
+                                
+                                console.log(data)
+                              })
+                              .fail(function(msg){
 
-                              //   i.features.map((j) => {
-
-                              //     totalResidentialROT++
-                              //   })
-
-                              //   console.log(totalResidentialROT)
-
-                              // //   totals.totalResidentialROT = totalResidentialROT
-                              // })
+                                alert('There was a problem saving the polygon. Please send this error message to mario.carloni@capecodcommission.org: <br />Response: ' + msg );
+                              });
                             })
                           })
                         })
