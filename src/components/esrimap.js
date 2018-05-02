@@ -234,6 +234,8 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
       // Add queried block groups to results layer on map
       function queryBlockGroup(evt) {
 
+        document.getElementById('loading').style.display = true ? 'block' : 'none';
+
         parcelLayer.definitionExpression = ""
 
         var vertices = evt.vertices
@@ -266,6 +268,8 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
           var firstOccurenceOfComma = polystringSelected.indexOf(',') // Obtain index of first x y coordinates
           var polySliceFirstXY = polystringSelected.slice(0,firstOccurenceOfComma) // Slice poly string to first coordinate set
           var completeRings = polystringSelected + polySliceFirstXY // Append first coordinates as last coordinates to complete polygon
+
+          console.log(completeRings)
 
           var dataSelected = {town: townName, rings: completeRings} // Pass complete polygon rings as object to API route
 
@@ -361,7 +365,8 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                     method: 'POST',
                     data: dataSelected,
                     contentType: 'application/json',
-                    url: url
+                    url: url,
+                    timeout: 0
                   })
                   .done(function(data) {
                     
@@ -400,7 +405,83 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                     .fail(function(msg){
 
                       alert('There was a problem saving the polygon. Please send this error message to mario.carloni@capecodcommission.org: <br />Response: ' + msg );
-                    });
+                    })
+                    .then((i) => {
+
+                      var url = 'http://localhost:8081/api/selectTracts/'
+
+                      $.ajax({
+                        method: 'POST',
+                        data: dataSelected,
+                        contentType: 'application/json',
+                        url: url
+                      })
+                      .done(function(data) {
+                        
+                        if (data) {
+
+                          console.log(data)
+                        } else  {
+
+                          console.log('no block groups found')
+                        }
+                      })
+                      .fail(function(msg){
+
+                        alert('There was a problem saving the polygon. Please send this error message to mario.carloni@capecodcommission.org: <br />Response: ' + msg );
+                      })
+                      .then((i) => {
+
+                        var url = 'http://localhost:8081/api/selectTracts1MI/'
+
+                        $.ajax({
+                          method: 'POST',
+                          data: dataSelected,
+                          contentType: 'application/json',
+                          url: url
+                        })
+                        .done(function(data) {
+                          
+                          if (data) {
+
+                            console.log(data)
+                          } else  {
+
+                            console.log('no block groups found')
+                          }
+                        })
+                        .fail(function(msg){
+
+                          alert('There was a problem saving the polygon. Please send this error message to mario.carloni@capecodcommission.org: <br />Response: ' + msg );
+                        })
+                        .then((i) => {
+
+                          var url = 'http://localhost:8081/api/selectTractsROT/'
+
+                          $.ajax({
+                            method: 'POST',
+                            data: dataSelected,
+                            contentType: 'application/json',
+                            url: url
+                          })
+                          .done(function(data) {
+                            
+                            if (data) {
+
+                              console.log(data)
+                              document.getElementById('loading').style.display = false ? 'block' : 'none';
+                            } else  {
+
+                              console.log('no block groups found')
+                            }
+                          })
+                          .fail(function(msg){
+
+                            alert('There was a problem saving the polygon. Please send this error message to mario.carloni@capecodcommission.org: <br />Response: ' + msg );
+                          })
+                        })
+                      })
+                    })
                   })
                 })
               })
@@ -464,8 +545,6 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
           totals.avgUnitsPA1MI = 3.3
           selection = acBoundaries
         }
-
-        document.getElementById('loading').style.display = true ? 'block' : 'none';
 
         selection.queryFeatures().then((h) => { // Query selection geometry
 

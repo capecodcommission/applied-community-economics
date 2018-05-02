@@ -318,6 +318,7 @@ const mutations = {
     state.blockGroups = blks
 
     console.log('Census BlockGroups Loaded')
+    // console.log(state.blockGroups)
   },
 
   TOGGLE_ATTRIB (state, land, water) {
