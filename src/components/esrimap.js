@@ -479,6 +479,32 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
 
                             alert('There was a problem saving the polygon. Please send this error message to mario.carloni@capecodcommission.org: <br />Response: ' + msg );
                           })
+                          .then((i) => {
+
+                            var url = 'http://localhost:8081/api/getCensusHomePriceMedian/'
+
+                            $.ajax({
+                              method: 'POST',
+                              data: {idArray: ["0133001","0125001"]},
+                              contentType: 'application/json',
+                              url: url
+                            })
+                            .done(function(data) {
+                              
+                              if (data) {
+
+                                console.log(data)
+                                document.getElementById('loading').style.display = false ? 'block' : 'none';
+                              } else  {
+
+                                console.log('no block groups found')
+                              }
+                            })
+                            .fail(function(msg){
+
+                              alert('There was a problem saving the polygon. Please send this error message to mario.carloni@capecodcommission.org: <br />Response: ' + msg );
+                            })
+                          })
                         })
                       })
                     })
@@ -1125,7 +1151,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                 // Use tractblock key to subset API by block group
                 var censusBlocksFiltered = censusBlocks.filter(el => {
 
-                  return blockIDArr1MI.includes(el[52] + el[53]) && tractIDUnique.includes(el[52])
+                  return blockIDArr1MI.includes(el[52] + el[53]) 
                 });
 
                 // Use tractblock key to subset API by block group
@@ -1160,6 +1186,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                 })
 
                 $('#progress').append('<br/>mapping through filtered census blocks')
+
 
                 censusBlocksFiltered.map((k) => { // Sum columns from filtered api data
 
@@ -1214,52 +1241,52 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
                 })
 
                 $('#progress').append('<br/>mapping through filtered census tracts')
-                censusTractsFiltered.map((k) => { // Search ACS by tract
+                // censusTractsFiltered.map((k) => { // Search ACS by tract
 
-                  // Income by education
-                  totalIncLength++
+                //   // Income by education
+                //   totalIncLength++
 
-                  // Replace negative values with 1
-                  if (parseInt(k[18]) < 0) {
+                //   // Replace negative values with 1
+                //   if (parseInt(k[18]) < 0) {
 
-                    totalIncLessHS += 1
-                  } else {
+                //     totalIncLessHS += 1
+                //   } else {
 
-                    totalIncLessHS += parseInt(k[18])
-                  }
+                //     totalIncLessHS += parseInt(k[18])
+                //   }
 
-                  if (parseInt(k[19]) < 0) {
+                //   if (parseInt(k[19]) < 0) {
 
-                    totalIncHSG += 1
-                  } else {
+                //     totalIncHSG += 1
+                //   } else {
 
-                    totalIncHSG += parseInt(k[19])
-                  }
+                //     totalIncHSG += parseInt(k[19])
+                //   }
 
-                  if (parseInt(k[20]) < 0) {
+                //   if (parseInt(k[20]) < 0) {
 
-                    totalIncSCA += 1
-                  } else {
+                //     totalIncSCA += 1
+                //   } else {
 
-                    totalIncSCA += parseInt(k[20])
-                  }
+                //     totalIncSCA += parseInt(k[20])
+                //   }
 
-                  if (parseInt(k[21]) < 0) {
+                //   if (parseInt(k[21]) < 0) {
 
-                    totalIncBac += 1
-                  } else {
+                //     totalIncBac += 1
+                //   } else {
 
-                    totalIncBac += parseInt(k[21])
-                  }
+                //     totalIncBac += parseInt(k[21])
+                //   }
 
-                  if (parseInt(k[22]) < 0) {
+                //   if (parseInt(k[22]) < 0) {
 
-                    totalIncGrad += 1
-                  } else {
+                //     totalIncGrad += 1
+                //   } else {
 
-                    totalIncGrad += parseInt(k[22])
-                  }
-                })
+                //     totalIncGrad += parseInt(k[22])
+                //   }
+                // })
 
                 resultLayer.addMany(features) // Add queried features to results layer
 
