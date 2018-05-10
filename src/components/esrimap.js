@@ -268,241 +268,134 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
           var firstOccurenceOfComma = polystringSelected.indexOf(',') // Obtain index of first x y coordinates
           var polySliceFirstXY = polystringSelected.slice(0,firstOccurenceOfComma) // Slice poly string to first coordinate set
           var completeRings = polystringSelected + polySliceFirstXY // Append first coordinates as last coordinates to complete polygon
+          var dataSelected =  JSON.stringify({town: townName, rings: completeRings}) // Pass complete polygon rings as object to API route
 
-          console.log(completeRings)
+   
+          getParcelSums(dataSelected, 'within').done((i) => {
 
-          var dataSelected = {town: townName, rings: completeRings} // Pass complete polygon rings as object to API route
+            var data = i.recordset[0]
 
-          dataSelected = JSON.stringify(dataSelected) // Parse object as valid JSON
+            totals.avgUnitsPPSelected = data.avgUnitsPP
+            totals.avgUnitsPASelected = data.avgUnitsPA
+            totals.totalAptSelectedHSG = data.totalApartmentUnits
+            totals.totalAptSelectedAcres = data.totalApartmentAcres
+            totals.totalMixedSelectedHSG = data.totalMixsedUseUnits
+            totals.totalMixedSelectedAcres = data.totalMixsedUseAcres
+            totals.totalMultiOneSelectedHSG = data.totalMultiOneUnits
+            totals.totalMultiOneSelectedAcres = data.totalMultiOneAcres
+            totals.totalOtherSelectedHSG = data.totalOtherUnits
+            totals.totalOtherSelectedAcres = data.totalOtherAcres
+            totals.totalResCondoSelectedHSG = data.totalResCondoUnits
+            totals.totalResCondoSelectedAcres = data.totalResCondoAcres
+            totals.totalSingleFamSelectedHSG = data.totalSFUnits
+            totals.totalSingleFamSelectedAcres = data.totalSFAcres
+            totals.totalShrdTmpSelectedHSG = data.totalTempUnits
+            totals.totalShrdTmpSelectedAcres = data.totalTempAcres
+            totals.totalResidentialSelected = data.totalParcels
 
-          var url = 'http://localhost:8081/api/getParcelSums/'
+            getParcelSums(dataSelected, '1MI').done((i) => {
 
-          $.ajax({
-            method: 'POST',
-            data: dataSelected,
-            contentType: 'application/json',
-            url: url
-          })
-          .done(function(data) {
-            
-            console.log(data.recordset[0])
-          })
-          .fail(function(msg){
+              data = i.recordset[0]
 
-            alert('There was a problem saving the polygon. Please send this error message to mario.carloni@capecodcommission.org: <br />Response: ' + msg );
-          })
-          .then((i) => {
+              totals.avgUnitsPP1MI = data.avgUnitsPP
+              totals.avgUnitsPA1MI = data.avgUnitsPA
+              totals.totalApt1MIHSG = data.totalApartmentUnits
+              totals.totalApt1MIAcres = data.totalApartmentAcres
+              totals.totalMixed1MIHSG = data.totalMixsedUseUnits
+              totals.totalMixed1MIAcres = data.totalMixsedUseAcres
+              totals.totalMultiOne1MIHSG = data.totalMultiOneUnits
+              totals.totalMultiOne1MIAcres = data.totalMultiOneAcres
+              totals.totalOther1MIHSG = data.totalOtherUnits
+              totals.totalOther1MIAcres = data.totalOtherAcres
+              totals.totalResCondo1MIHSG = data.totalResCondoUnits
+              totals.totalResCondo1MIAcres = data.totalResCondoAcres
+              totals.totalSingleFam1MIHSG = data.totalSFUnits
+              totals.totalSingleFam1MIAcres = data.totalSFAcres
+              totals.totalShrdTmp1MIHSG = data.totalTempUnits
+              totals.totalShrdTmp1MIAcres = data.totalTempAcres
+              totals.totalResidential1MI = data.totalParcels
 
-            var url = 'http://localhost:8081/api/getParcelSums1MI/'
+              getParcelSums(dataSelected, 'ROT').done((i) => {
 
-            $.ajax({
-              method: 'POST',
-              data: dataSelected,
-              contentType: 'application/json',
-              url: url
-            })
-            .done(function(data) {
-            
-              if (data) {
+                data = i.recordset[0]
 
-                console.log(data.recordset[0])
-              } else {
+                totals.avgUnitsPPROT = data.avgUnitsPP
+                totals.avgUnitsPAROT = data.avgUnitsPA
+                totals.totalAptROTHSG = data.totalApartmentUnits
+                totals.totalAptROTAcres = data.totalApartmentAcres
+                totals.totalMixedROTHSG = data.totalMixsedUseUnits
+                totals.totalMixedROTAcres = data.totalMixsedUseAcres
+                totals.totalMultiOneROTHSG = data.totalMultiOneUnits
+                totals.totalMultiOneROTAcres = data.totalMultiOneAcres
+                totals.totalOtherROTHSG = data.totalOtherUnits
+                totals.totalOtherROTAcres = data.totalOtherAcres
+                totals.totalResCondoROTHSG = data.totalResCondoUnits
+                totals.totalResCondoROTAcres = data.totalResCondoAcres
+                totals.totalSingleFamROTHSG = data.totalSFUnits
+                totals.totalSingleFamROTAcres = data.totalSFAcres
+                totals.totalShrdTmpROTHSG = data.totalTempUnits
+                totals.totalShrdTmpROTAcres = data.totalTempAcres
+                totals.totalResidentialROT = data.totalParcels
 
-                console.log('nothing found for 1mi selection')
-              }
-            })
-            .fail(function(msg){
+                getBlocks(dataSelected, 'within').done((i) => {
 
-              alert('There was a problem saving the polygon. Please send this error message to mario.carloni@capecodcommission.org: <br />Response: ' + msg );
-            })
-            .then((i) => {
+                  var blockIDArray = parseBlockData(i)
 
-              var url = 'http://localhost:8081/api/getParcelSumsROT/'
+                  getCensusIncomeEmploymentEducationTotals(blockIDArray).done((j) => {
 
-              $.ajax({
-                method: 'POST',
-                data: dataSelected,
-                contentType: 'application/json',
-                url: url
-              })
-              .done(function(data) {
-                
-                console.log(data.recordset[0])
-              })
-              .fail(function(msg){
+                    console.log(j)
+                    getCensusHousingOccTotals(blockIDArray).done((j) => {
 
-                alert('There was a problem saving the polygon. Please send this error message to mario.carloni@capecodcommission.org: <br />Response: ' + msg );
-              })
-              .then((i) => {
+                      console.log(j)
+                      getBlocks(dataSelected, '1MI').done((i) => {
 
-                var url = 'http://localhost:8081/api/selectBlockGroups/'
+                        var blockIDArray = parseBlockData(i)
 
-                $.ajax({
-                  method: 'POST',
-                  data: dataSelected,
-                  contentType: 'application/json',
-                  url: url
-                })
-                .done(function(data) {
-                  
-                  if (data) {
+                        getCensusIncomeEmploymentEducationTotals(blockIDArray).done((j) => {
 
-                    console.log(data)
-                  } else {
-
-                    console.log('nothing found within selection')
-                  }
-                })
-                .fail(function(msg){
-
-                  alert('There was a problem saving the polygon. Please send this error message to mario.carloni@capecodcommission.org: <br />Response: ' + msg );
-                })
-                .then((i) => {
-
-                  var url = 'http://localhost:8081/api/selectBlockGroups1MI/'
-
-                  $.ajax({
-                    method: 'POST',
-                    data: dataSelected,
-                    contentType: 'application/json',
-                    url: url,
-                    timeout: 0
-                  })
-                  .done(function(data) {
-                    
-                    if (data) {
-
-                      console.log(data)
-                    } else {
-
-                      console.log('nothing found')
-                    }
-                  })
-                  .fail(function(msg){
-
-                    alert('There was a problem saving the polygon. Please send this error message to mario.carloni@capecodcommission.org: <br />Response: ' + msg );
-                  })
-                  .then((i) => {
-
-                    var url = 'http://localhost:8081/api/selectBlockGroupsROT/'
-
-                    $.ajax({
-                      method: 'POST',
-                      data: dataSelected,
-                      contentType: 'application/json',
-                      url: url
-                    })
-                    .done(function(data) {
-                      
-                      if (data) {
-
-                        console.log(data)
-                      } else  {
-
-                        console.log('no block groups found')
-                      }
-                    })
-                    .fail(function(msg){
-
-                      alert('There was a problem saving the polygon. Please send this error message to mario.carloni@capecodcommission.org: <br />Response: ' + msg );
-                    })
-                    .then((i) => {
-
-                      var url = 'http://localhost:8081/api/selectTracts/'
-
-                      $.ajax({
-                        method: 'POST',
-                        data: dataSelected,
-                        contentType: 'application/json',
-                        url: url
-                      })
-                      .done(function(data) {
-                        
-                        if (data) {
-
-                          console.log(data)
-                        } else  {
-
-                          console.log('no block groups found')
-                        }
-                      })
-                      .fail(function(msg){
-
-                        alert('There was a problem saving the polygon. Please send this error message to mario.carloni@capecodcommission.org: <br />Response: ' + msg );
-                      })
-                      .then((i) => {
-
-                        var url = 'http://localhost:8081/api/selectTracts1MI/'
-
-                        $.ajax({
-                          method: 'POST',
-                          data: dataSelected,
-                          contentType: 'application/json',
-                          url: url
+                          console.log(j)
                         })
-                        .done(function(data) {
-                          
-                          if (data) {
+                        getCensusHousingOccTotals(blockIDArray).done((j) => {
 
-                            console.log(data)
-                          } else  {
+                          console.log(j)
+                          getBlocks(dataSelected, 'ROT').done((i) => {
 
-                            console.log('no block groups found')
-                          }
-                        })
-                        .fail(function(msg){
+                            var blockIDArray = parseBlockData(i)
 
-                          alert('There was a problem saving the polygon. Please send this error message to mario.carloni@capecodcommission.org: <br />Response: ' + msg );
-                        })
-                        .then((i) => {
+                            getCensusIncomeEmploymentEducationTotals(blockIDArray).done((j) => {
 
-                          var url = 'http://localhost:8081/api/selectTractsROT/'
-
-                          $.ajax({
-                            method: 'POST',
-                            data: dataSelected,
-                            contentType: 'application/json',
-                            url: url
-                          })
-                          .done(function(data) {
-                            
-                            if (data) {
-
-                              console.log(data)
-                              document.getElementById('loading').style.display = false ? 'block' : 'none';
-                            } else  {
-
-                              console.log('no block groups found')
-                            }
-                          })
-                          .fail(function(msg){
-
-                            alert('There was a problem saving the polygon. Please send this error message to mario.carloni@capecodcommission.org: <br />Response: ' + msg );
-                          })
-                          .then((i) => {
-
-                            var url = 'http://localhost:8081/api/getCensusHomePriceMedian/'
-
-                            $.ajax({
-                              method: 'POST',
-                              data: {idArray: ["0133001","0125001"]},
-                              contentType: 'application/json',
-                              url: url
+                              console.log(j)
                             })
-                            .done(function(data) {
-                              
-                              if (data) {
+                            getCensusHousingOccTotals(blockIDArray).done((j) => {
 
-                                console.log(data)
-                                document.getElementById('loading').style.display = false ? 'block' : 'none';
-                              } else  {
+                              console.log(j)
+                              getTracts(dataSelected, 'within').done((i) => {
 
-                                console.log('no block groups found')
-                              }
-                            })
-                            .fail(function(msg){
+                                var tractIDArray = parseTractData(i)
 
-                              alert('There was a problem saving the polygon. Please send this error message to mario.carloni@capecodcommission.org: <br />Response: ' + msg );
+                                getCensusEduTractTotals(tractIDArray).done((j) => {
+
+                                  console.log(j)
+                                  getTracts(dataSelected, '1MI').done((i) => {
+
+                                    var tractIDArray = parseTractData(i)
+
+                                    getCensusEduTractTotals(tractIDArray).done((j) => {
+
+                                      console.log(j)
+                                      getTracts(dataSelected, 'ROT').done((i) => {
+
+                                        var tractIDArray = parseTractData(i)
+
+                                        getCensusEduTractTotals(tractIDArray).done((j) => {
+
+                                          console.log(j)
+                                        })
+                                      })
+                                    })
+                                  })
+                                })
+                              })
                             })
                           })
                         })
@@ -514,6 +407,151 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
             })
           })
         })
+      }
+
+      function getParcelSums(data, type = null) {
+
+        var parcelSumsRoute = ''
+
+        switch (type) {
+
+          case 'within':
+            parcelSumsRoute = 'http://localhost:8081/api/getParcelSums/' 
+            break;
+
+          case '1MI':
+            parcelSumsRoute = 'http://localhost:8081/api/getParcelSums1MI/' 
+            break;
+
+          case 'ROT':
+            parcelSumsRoute = 'http://localhost:8081/api/getParcelSumsROT/'
+            break; 
+        }
+
+        return $.ajax({
+          method: 'POST',
+          data: data,
+          contentType: 'application/json',
+          url: parcelSumsRoute
+        })
+      }
+
+      function getBlocks(data, type = null) {
+
+        var blockGroupRoute = ''
+
+        switch (type) {
+
+          case 'within':
+            blockGroupRoute = 'http://localhost:8081/api/selectBlockGroups/' 
+            break;
+
+          case '1MI':
+            blockGroupRoute = 'http://localhost:8081/api/selectBlockGroups1MI/' 
+            break;
+
+          case 'ROT':
+            blockGroupRoute = 'http://localhost:8081/api/selectBlockGroupsROT/'
+            break; 
+        }
+
+        return $.ajax({
+          method: 'POST',
+          data: data,
+          contentType: 'application/json',
+          url: blockGroupRoute
+        })
+      }
+
+      function getTracts(data, type = null) {
+
+        var tractRoute = '' 
+
+        switch (type) {
+
+          case 'within':
+            tractRoute = 'http://localhost:8081/api/selectTracts/' 
+            break;
+
+          case '1MI':
+            tractRoute = 'http://localhost:8081/api/selectTracts1MI/' 
+            break;
+
+          case 'ROT':
+            tractRoute = 'http://localhost:8081/api/selectTractsROT/'
+            break; 
+        }
+
+        return $.ajax({
+          method: 'POST',
+          data: data,
+          contentType: 'application/json',
+          url: tractRoute
+        })
+      }
+
+      function getCensusIncomeEmploymentEducationTotals (idArray) {
+
+        var censusIncomeEmploymentEducationRoute = 'http://localhost:8081/api/getCensusIncomeEmploymentEducationTotals/' 
+
+        return $.ajax({
+          method: 'POST',
+          data: idArray,
+          contentType: 'application/json',
+          url: censusIncomeEmploymentEducationRoute
+        })
+      }
+
+      function getCensusHousingOccTotals (idArray) {
+
+        var censusHousingOccTotalsRoute = 'http://localhost:8081/api/getCensusHousingOccTotals/' 
+
+        return $.ajax({
+          method: 'POST',
+          data: idArray,
+          contentType: 'application/json',
+          url: censusHousingOccTotalsRoute
+        })
+      }
+
+      function getCensusEduTractTotals (idArray) {
+
+        var censusEduTractTotalsRoute = 'http://localhost:8081/api/getCensusEduTractTotals/' 
+
+        return $.ajax({
+          method: 'POST',
+          data: idArray,
+          contentType: 'application/json',
+          url: censusEduTractTotalsRoute
+        })
+      }
+
+      function parseTractData(data) {
+
+        var idArray = []
+
+        data.recordset.map((i) => {
+
+          idArray.push(i.TRACT)
+        })
+
+        idArray = JSON.stringify(idArray)
+
+        return idArray
+      }
+
+      function parseBlockData(data) {
+
+        var idArray = []
+
+        data.recordset.map((i) => {
+
+          idArray.push(i.tractBlockID)
+        })
+
+        idArray = JSON.stringify(idArray)
+
+        return idArray
       }
 
 
