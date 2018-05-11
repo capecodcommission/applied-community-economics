@@ -255,6 +255,8 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
         })
         .then((i) => {
 
+          townBoundaries.definitionExpression = "TOWN = " + "'" + townName + "'"
+
           var polystringSelected = ''
           
 
@@ -270,10 +272,14 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
           var completeRings = polystringSelected + polySliceFirstXY // Append first coordinates as last coordinates to complete polygon
           var dataSelected =  JSON.stringify({town: townName, rings: completeRings}) // Pass complete polygon rings as object to API route
 
+          console.log(dataSelected)
+
    
           getParcelSums(dataSelected, 'within').done((i) => {
 
             var data = i.recordset[0]
+
+            console.log(data)
 
             totals.avgUnitsPPSelected = data.avgUnitsPP
             totals.avgUnitsPASelected = data.avgUnitsPA
@@ -297,6 +303,8 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
 
               data = i.recordset[0]
 
+              console.log(data)
+
               totals.avgUnitsPP1MI = data.avgUnitsPP
               totals.avgUnitsPA1MI = data.avgUnitsPA
               totals.totalApt1MIHSG = data.totalApartmentUnits
@@ -318,6 +326,8 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
               getParcelSums(dataSelected, 'ROT').done((i) => {
 
                 data = i.recordset[0]
+
+                console.log(data)
 
                 totals.avgUnitsPPROT = data.avgUnitsPP
                 totals.avgUnitsPAROT = data.avgUnitsPA
@@ -341,55 +351,139 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
 
                   var blockIDArray = parseBlockData(i)
 
+                  console.log(blockIDArray)
+
                   getCensusIncomeEmploymentEducationTotals(blockIDArray).done((j) => {
 
                     console.log(j)
+
+                    totals.percUnempCont = j.percUnemp
+                    totals.paretoMedianCont = j.paretoMedian
+                    totals.lessHSCont = j.lessHS
+                    totals.hsgCont = j.hsg
+                    totals.scaCont = j.sca
+                    totals.bacCont = j.bac
+                    totals.gradProCont = j.gradPro
+                    totals.totalEduCont = j.totalEdu
+
                     getCensusHousingOccTotals(blockIDArray).done((j) => {
 
                       console.log(j)
+
+                      totals.totalHousingSelected = j.totalHousing
+                      totals.totalOwnedSelected = j.totalOwned
+                      totals.totalRentalSelected = j.totalRental
+                      totals.totalSeasonalSelected = j.totalSeasonal
+                      totals.totalYearRoundSelected = j.totalYearRound
+
                       getBlocks(dataSelected, '1MI').done((i) => {
 
                         var blockIDArray = parseBlockData(i)
 
+                        console.log(blockIDArray)
+
                         getCensusIncomeEmploymentEducationTotals(blockIDArray).done((j) => {
 
                           console.log(j)
+
+                          totals.percUnemp = j.percUnemp
+                          totals.paretoMedian = j.paretoMedian
+                          totals.lessHS = j.lessHS
+                          totals.hsg = j.hsg
+                          totals.sca = j.sca
+                          totals.bac = j.bac
+                          totals.gradPro = j.gradPro
+                          totals.totalEdu = j.totalEdu
                         })
                         getCensusHousingOccTotals(blockIDArray).done((j) => {
 
                           console.log(j)
+
+                          totals.totalHousingSelected = j.totalHousing
+                          totals.totalOwnedSelected = j.totalOwned
+                          totals.totalRentalSelected = j.totalRental
+                          totals.totalSeasonalSelected = j.totalSeasonal
+                          totals.totalYearRoundSelected = j.totalYearRound
+
                           getBlocks(dataSelected, 'ROT').done((i) => {
 
                             var blockIDArray = parseBlockData(i)
 
+                            console.log(blockIDArray)
+
                             getCensusIncomeEmploymentEducationTotals(blockIDArray).done((j) => {
 
                               console.log(j)
+
+                              totals.townPercUnemp = j.percUnemp
+                              totals.townParetoMedian = j.paretoMedian
+                              totals.townLessHS = j.lessHS
+                              totals.townHSG = j.hsg
+                              totals.townSCA = j.sca
+                              totals.townBac = j.bac
+                              totals.townGradPro = j.gradPro
+                              totals.townEdu = j.totalEdu
                             })
                             getCensusHousingOccTotals(blockIDArray).done((j) => {
 
                               console.log(j)
+
+                              totals.totalHousingROT = j.totalHousing
+                              totals.totalOwnedROT = j.totalOwned
+                              totals.totalRentalROT = j.totalRental
+                              totals.totalSeasonalROT = j.totalSeasonal
+                              totals.totalYearRoundROT = j.totalYearRound
+
                               getTracts(dataSelected, 'within').done((i) => {
 
                                 var tractIDArray = parseTractData(i)
 
+                                console.log(tractIDArray)
+
                                 getCensusEduTractTotals(tractIDArray).done((j) => {
 
                                   console.log(j)
+
+                                  totals.incLessHSCont = j.totalLessHSG
+                                  totals.incHSGCont = j.totalHSG
+                                  totals.incSCACont = j.totalSCA
+                                  totals.incBacCont = j.totalBac
+                                  totals.incGradCont = j.totalGrad
+
                                   getTracts(dataSelected, '1MI').done((i) => {
 
                                     var tractIDArray = parseTractData(i)
 
+                                    console.log(tractIDArray)
+
                                     getCensusEduTractTotals(tractIDArray).done((j) => {
 
                                       console.log(j)
+
+                                      totals.incLessHS = j.totalLessHSG
+                                      totals.incHSG = j.totalHSG
+                                      totals.incSCA = j.totalSCA
+                                      totals.incBac = j.totalBac
+                                      totals.incGrad = j.totalGrad
+
                                       getTracts(dataSelected, 'ROT').done((i) => {
 
                                         var tractIDArray = parseTractData(i)
 
+                                        console.log(tractIDArray)
+
                                         getCensusEduTractTotals(tractIDArray).done((j) => {
 
                                           console.log(j)
+
+                                          totals.townIncLessHSROT = j.totalLessHSG
+                                          totals.townIncHSGROT = j.totalHSG
+                                          totals.townIncSCAROT = j.totalSCA
+                                          totals.townIncBacROT = j.totalBac
+                                          totals.townIncGradROT = j.totalGrad
+
+                                          totals.Toggle = true
+                                          document.getElementById('loading').style.display = false ? 'block' : 'none';
                                         })
                                       })
                                     })
@@ -530,28 +624,40 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
 
         var idArray = []
 
-        data.recordset.map((i) => {
+        if (!data) {
 
-          idArray.push(i.TRACT)
-        })
+          return idArray
+        } else {
 
-        idArray = JSON.stringify(idArray)
+          data.recordset.map((i) => {
 
-        return idArray
+            idArray.push(i.TRACT)
+          })
+
+          idArray = JSON.stringify(idArray)
+
+          return idArray
+        }
       }
 
       function parseBlockData(data) {
 
         var idArray = []
 
-        data.recordset.map((i) => {
+        if (!data) {
 
-          idArray.push(i.tractBlockID)
-        })
+          return idArray
+        } else {
 
-        idArray = JSON.stringify(idArray)
+          data.recordset.map((i) => {
 
-        return idArray
+            idArray.push(i.tractBlockID)
+          })
+
+          idArray = JSON.stringify(idArray)
+
+          return idArray
+        }
       }
 
 
@@ -561,6 +667,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
 
         totals.Toggle = false
         resultLayer.removeAll();
+        townBoundaries.definitionExpression = ""
 
         // focus the view to activate keyboard shortcuts for drawing polygons
         view.focus();

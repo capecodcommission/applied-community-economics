@@ -31,7 +31,7 @@
           <p>1mi HSG: ${{totals.incHSG.toFixed(0)}}</p>
           <p>1mi SCA: ${{totals.incSCA.toFixed(0)}}</p>
           <p>1mi Bac: ${{totals.incBac.toFixed(0)}}</p>
-          <p>1mi Grad: ${{totals.townIncGrad.toFixed(0)}}</p>
+          <p>1mi Grad: ${{totals.incGrad.toFixed(0)}}</p>
           <p>Rest of Town Pareto Median: ${{totals.townParetoMedian}}</p>
           <p>Rest of Town Unemployment: {{(totals.townPercUnemp * 100).toFixed(0)}}%</p>
           <p>Rest of Town Income (Less than High School): ${{totals.townIncLessHSROT.toFixed(0)}}</p>
