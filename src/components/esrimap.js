@@ -510,15 +510,15 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
         switch (type) {
 
           case 'within':
-            parcelSumsRoute = 'http://localhost:8081/api/getParcelSums/' 
+            parcelSumsRoute = 'http://ccc-api-05.api.capecodcommission.org/api/getParcelSums/' 
             break;
 
           case '1MI':
-            parcelSumsRoute = 'http://localhost:8081/api/getParcelSums1MI/' 
+            parcelSumsRoute = 'http://ccc-api-05.api.capecodcommission.org/api/getParcelSums1MI/' 
             break;
 
           case 'ROT':
-            parcelSumsRoute = 'http://localhost:8081/api/getParcelSumsROT/'
+            parcelSumsRoute = 'http://ccc-api-05.api.capecodcommission.org/api/getParcelSumsROT/'
             break; 
         }
 
@@ -537,15 +537,15 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
         switch (type) {
 
           case 'within':
-            blockGroupRoute = 'http://localhost:8081/api/selectBlockGroups/' 
+            blockGroupRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectBlockGroups/' 
             break;
 
           case '1MI':
-            blockGroupRoute = 'http://localhost:8081/api/selectBlockGroups1MI/' 
+            blockGroupRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectBlockGroups1MI/' 
             break;
 
           case 'ROT':
-            blockGroupRoute = 'http://localhost:8081/api/selectBlockGroupsROT/'
+            blockGroupRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectBlockGroupsROT/'
             break; 
         }
 
@@ -564,15 +564,15 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
         switch (type) {
 
           case 'within':
-            tractRoute = 'http://localhost:8081/api/selectTracts/' 
+            tractRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectTracts/' 
             break;
 
           case '1MI':
-            tractRoute = 'http://localhost:8081/api/selectTracts1MI/' 
+            tractRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectTracts1MI/' 
             break;
 
           case 'ROT':
-            tractRoute = 'http://localhost:8081/api/selectTractsROT/'
+            tractRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectTractsROT/'
             break; 
         }
 
@@ -586,7 +586,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
 
       function getCensusIncomeEmploymentEducationTotals (idArray) {
 
-        var censusIncomeEmploymentEducationRoute = 'http://localhost:8081/api/getCensusIncomeEmploymentEducationTotals/' 
+        var censusIncomeEmploymentEducationRoute = 'http://ccc-api-05.api.capecodcommission.org/api/getCensusIncomeEmploymentEducationTotals/' 
 
         return $.ajax({
           method: 'POST',
@@ -598,7 +598,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
 
       function getCensusHousingOccTotals (idArray) {
 
-        var censusHousingOccTotalsRoute = 'http://localhost:8081/api/getCensusHousingOccTotals/' 
+        var censusHousingOccTotalsRoute = 'http://ccc-api-05.api.capecodcommission.org/api/getCensusHousingOccTotals/' 
 
         return $.ajax({
           method: 'POST',
@@ -610,7 +610,7 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
 
       function getCensusEduTractTotals (idArray) {
 
-        var censusEduTractTotalsRoute = 'http://localhost:8081/api/getCensusEduTractTotals/' 
+        var censusEduTractTotalsRoute = 'http://ccc-api-05.api.capecodcommission.org/api/getCensusEduTractTotals/' 
 
         return $.ajax({
           method: 'POST',
