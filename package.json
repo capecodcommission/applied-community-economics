@@ -10,6 +10,7 @@
     "test": ""
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "babel-runtime": "^6.0.0",
     "bootstrap": "^3.3.6",
     "bootstrap-slider": "^7.1.0",

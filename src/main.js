@@ -11,6 +11,7 @@ import VueTables from 'vue-tables'
 import moment from 'moment'
 import Chart from 'chart.js'
 import VueCharts from 'vue-charts'
+import axios from 'axios'
 
 
 // Load technology icon path

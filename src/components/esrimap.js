@@ -1,4 +1,4 @@
-export const createMap = function (loader, totals, censusBlocks, censusTracts, censusTowns, censusBlocks2, censusTracts2) {
+export const createMap = function (loader, totals) {
 
   loader.dojoRequire(
     [
@@ -274,6 +274,137 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
 
           console.log(dataSelected)
 
+
+          // Concurrently request summed parcel data, intersecting block groups and tracts at all selection levels
+          // axios.all([
+          //   getParcelSums(dataSelected, 'within'), 
+          //   getParcelSums(dataSelected, '1MI'), 
+          //   getParcelSums(dataSelected, 'ROT'), 
+          //   getBlocks(dataSelected, 'within'), 
+          //   getBlocks(dataSelected, '1MI'), 
+          //   getBlocks(dataSelected, 'ROT'), 
+          //   getTracts(dataSelected, 'within'), 
+          //   getTracts(dataSelected, '1MI'), 
+          //   getTracts(dataSelected, 'ROT')
+          //   ])
+          //   .then(axios.spread((parcelSumsWithin, parcelSums1MI, parcelSumsROT, blocksWithin, blocks1MI, blocksROT, tractsWithin, tracts1MI, tractsROT) => {
+
+          //     // Log responses for evaluation before storing to state
+          //     console.log(parcelSumsWithin)
+          //     console.log(parcelSums1MI)
+          //     console.log(parcelSumsROT)
+          //     console.log(blocksWithin)
+          //     console.log(blocks1MI)
+          //     console.log(blocksROT)
+          //     console.log(tractsWithin)
+          //     console.log(tracts1MI)
+          //     console.log(tractsROT)
+
+          //     totals.avgUnitsPPSelected = parcelSumsWithin.avgUnitsPP
+          //     totals.avgUnitsPASelected = parcelSumsWithin.avgUnitsPA
+          //     totals.totalAptSelectedHSG = parcelSumsWithin.totalApartmentUnits
+          //     totals.totalAptSelectedAcres = parcelSumsWithin.totalApartmentAcres
+          //     totals.totalMixedSelectedHSG = parcelSumsWithin.totalMixsedUseUnits
+          //     totals.totalMixedSelectedAcres = parcelSumsWithin.totalMixsedUseAcres
+          //     totals.totalMultiOneSelectedHSG = parcelSumsWithinta.totalMultiOneUnits
+          //     totals.totalMultiOneSelectedAcres = parcelSumsWithin.totalMultiOneAcres
+          //     totals.totalOtherSelectedHSG = parcelSumsWithin.totalOtherUnits
+          //     totals.totalOtherSelectedAcres = parcelSumsWithin.totalOtherAcres
+          //     totals.totalResCondoSelectedHSG = parcelSumsWithin.totalResCondoUnits
+          //     totals.totalResCondoSelectedAcres = parcelSumsWithin.totalResCondoAcres
+          //     totals.totalSingleFamSelectedHSG = parcelSumsWithin.totalSFUnits
+          //     totals.totalSingleFamSelectedAcres = parcelSumsWithin.totalSFAcres
+          //     totals.totalShrdTmpSelectedHSG = parcelSumsWithin.totalTempUnits
+          //     totals.totalShrdTmpSelectedAcres = parcelSumsWithin.totalTempAcres
+          //     totals.totalResidentialSelected = parcelSumsWithin.totalParcels
+
+          //     totals.avgUnitsPP1MI = parcelSums1MI.avgUnitsPP
+          //     totals.avgUnitsPA1MI = parcelSums1MI.avgUnitsPA
+          //     totals.totalApt1MIHSG = parcelSums1MI.totalApartmentUnits
+          //     totals.totalApt1MIAcres = parcelSums1MI.totalApartmentAcres
+          //     totals.totalMixed1MIHSG = parcelSums1MI.totalMixsedUseUnits
+          //     totals.totalMixed1MIAcres = parcelSums1MI.totalMixsedUseAcres
+          //     totals.totalMultiOne1MIHSG = parcelSums1MI.totalMultiOneUnits
+          //     totals.totalMultiOne1MIAcres = parcelSums1MI.totalMultiOneAcres
+          //     totals.totalOther1MIHSG = parcelSums1MI.totalOtherUnits
+          //     totals.totalOther1MIAcres = parcelSums1MI.totalOtherAcres
+          //     totals.totalResCondo1MIHSG = parcelSums1MI.totalResCondoUnits
+          //     totals.totalResCondo1MIAcres = parcelSums1MI.totalResCondoAcres
+          //     totals.totalSingleFam1MIHSG = parcelSums1MI.totalSFUnits
+          //     totals.totalSingleFam1MIAcres = parcelSums1MI.totalSFAcres
+          //     totals.totalShrdTmp1MIHSG = parcelSums1MI.totalTempUnits
+          //     totals.totalShrdTmp1MIAcres = parcelSums1MI.totalTempAcres
+          //     totals.totalResidential1MI = parcelSums1MI.totalParcels
+
+          //     totals.avgUnitsPPROT = parcelSumsROT.avgUnitsPP
+          //     totals.avgUnitsPAROT = parcelSumsROT.avgUnitsPA
+          //     totals.totalAptROTHSG = parcelSumsROT.totalApartmentUnits
+          //     totals.totalAptROTAcres = parcelSumsROT.totalApartmentAcres
+          //     totals.totalMixedROTHSG = parcelSumsROT.totalMixsedUseUnits
+          //     totals.totalMixedROTAcres = parcelSumsROT.totalMixsedUseAcres
+          //     totals.totalMultiOneROTHSG = parcelSumsROT.totalMultiOneUnits
+          //     totals.totalMultiOneROTAcres = parcelSumsROT.totalMultiOneAcres
+          //     totals.totalOtherROTHSG = parcelSumsROT.totalOtherUnits
+          //     totals.totalOtherROTAcres = parcelSumsROT.totalOtherAcres
+          //     totals.totalResCondoROTHSG = parcelSumsROT.totalResCondoUnits
+          //     totals.totalResCondoROTAcres = parcelSumsROT.totalResCondoAcres
+          //     totals.totalSingleFamROTHSG = parcelSumsROT.totalSFUnits
+          //     totals.totalSingleFamROTAcres = parcelSumsROT.totalSFAcres
+          //     totals.totalShrdTmpROTHSG = parcelSumsROT.totalTempUnits
+          //     totals.totalShrdTmpROTAcres = parcelSumsROT.totalTempAcres
+          //     totals.totalResidentialROT = parcelSumsROT.totalParcels
+
+          //     // Stringify response objects to be used as requests
+          //     var blockIDArrayWithin = parseBlockData(blocksWithin)
+          //     var blockIDArray1MI = parseBlockData(blocks1MI)
+          //     var blockIDArrayROT = parseBlockData(blocksROT)
+
+          //     var tractIDArrayWithin = parseTractData(tractsWithin)
+          //     var tractIDArray1MI = parseTractData(tracts1MI)
+          //     var tractIDArrayROT = parseTractData(tractsROT)
+
+          //     // Concurrently request census income, housing, employment, and education data using blockgroup and tract id arrays returned from the first request spread
+          //     axios.all([
+          //       getCensusIncomeEmploymentEducationTotals(blockIDArrayWithin), 
+          //       getCensusIncomeEmploymentEducationTotals(blockIDArray1MI), 
+          //       getCensusIncomeEmploymentEducationTotals(blockIDArrayROT), 
+          //       getCensusHousingOccTotals(blockIDArrayWithin), 
+          //       getCensusHousingOccTotals(blockIDArray1MI), 
+          //       getCensusHousingOccTotals(blockIDArrayROT),
+          //       getCensusEduTractTotals(tractIDArrayWithin),
+          //       getCensusEduTractTotals(tractIDArray1MI),
+          //       getCensusEduTractTotals(tractIDArrayROT)
+          //       ])
+          //       .then(axios.spread((incomeWithin, income1MI, incomeROT, housingWithin, housing1MI, housingROT, eduWithin, edu1MI, eduROT) => {
+
+          //         // Log responses for evaluation before storing to state
+          //         console.log(incomeWithin)
+          //         console.log(income1MI)
+          //         console.log(incomeROT)
+          //         console.log(housingWithin)
+          //         console.log(housing1MI)
+          //         console.log(housingROT)
+          //         console.log(eduWithin)
+          //         console.log(edu1MI)
+          //         console.log(eduROT)
+
+          //         totals.percUnempCont = incomeWithin.percUnemp
+          //         totals.paretoMedianCont = incomeWithin.paretoMedian
+          //         totals.lessHSCont = incomeWithin.lessHS
+          //         totals.hsgCont = incomeWithin.hsg
+          //         totals.scaCont = incomeWithin.sca
+          //         totals.bacCont = incomeWithin.bac
+          //         totals.gradProCont = incomeWithin.gradPro
+          //         totals.totalEduCont = incomeWithin.totalEdu
+
+          //         totals.totalHousingSelected = housingWithin.totalHousing
+          //         totals.totalOwnedSelected = housingWithin.totalOwned
+          //         totals.totalRentalSelected = housingWithin.totalRental
+          //         totals.totalSeasonalSelected = housingWithin.totalSeasonal
+          //         totals.totalYearRoundSelected = housingWithin.totalYearRound
+          //       }))
+          //   }))
+
    
           getParcelSums(dataSelected, 'within').done((i) => {
 
@@ -528,6 +659,8 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
           contentType: 'application/json',
           url: parcelSumsRoute
         })
+
+        // return axios.post(parcelSumsRoute, data)
       }
 
       function getBlocks(data, type = null) {
@@ -555,6 +688,8 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
           contentType: 'application/json',
           url: blockGroupRoute
         })
+
+        // return axios.post(blockGroupRoute, data)
       }
 
       function getTracts(data, type = null) {
@@ -582,6 +717,8 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
           contentType: 'application/json',
           url: tractRoute
         })
+
+        // return axios.post(tractRoute, data)
       }
 
       function getCensusIncomeEmploymentEducationTotals (idArray) {
@@ -594,6 +731,8 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
           contentType: 'application/json',
           url: censusIncomeEmploymentEducationRoute
         })
+
+        // return axios.post(censusIncomeEmploymentEducationRoute, idArray)
       }
 
       function getCensusHousingOccTotals (idArray) {
@@ -606,6 +745,8 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
           contentType: 'application/json',
           url: censusHousingOccTotalsRoute
         })
+
+        // return axios.post(censusHousingOccTotalsRoute, idArray)
       }
 
       function getCensusEduTractTotals (idArray) {
@@ -618,6 +759,8 @@ export const createMap = function (loader, totals, censusBlocks, censusTracts, c
           contentType: 'application/json',
           url: censusEduTractTotalsRoute
         })
+
+        // return axios.post(censusEduTractTotalsRoute, idArray)
       }
 
       function parseTractData(data) {

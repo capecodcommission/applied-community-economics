@@ -129,7 +129,7 @@ export default {
     },
     'censusTowns': function(x) {
 
-      esriLoader.bootstrap((err) => { createMap(esriLoader, this.totals, this.blockGroups, this.tracts, this.censusTowns, this.blockGroups2, this.tracts2)}, { url: 'https://js.arcgis.com/4.5/'})
+      esriLoader.bootstrap((err) => { createMap(esriLoader, this.totals, this.townName)}, { url: 'https://js.arcgis.com/4.5/'})
     }
   }
 }
