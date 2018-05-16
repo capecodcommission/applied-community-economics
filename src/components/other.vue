@@ -41,7 +41,6 @@
 
 import * as esriLoader from 'esri-loader'
 import { getTownName } from '../vuex/getters'
-import { createMap } from './esrimap'
 
 export default {
 

@@ -80,7 +80,7 @@
       </div>
       <div class = 'col-md-12 vizCol text-center'>
         <h4>Employment</h4>
-        <vue-chart class = 'chart' :chart-type="chartType2" :columns="columns2" :rows="rows2" :options="options2"></vue-chart>
+        <vue-chart class = 'chart' :chart-type="chartType2" :columns="columns2" :rows="rows2" :options="options1"></vue-chart>
       </div>
       <div class = 'col-md-12 vizCol text-center'>
         <h1>${{totals.paretoMedian}}</h1>
@@ -173,7 +173,6 @@
 
 import * as esriLoader from 'esri-loader'
 import { getAttrib, getTownName } from '../vuex/getters'
-import { createMap } from './esrimap'
 
 export default {
 

@@ -21,7 +21,7 @@
 
   <div class = 'row'>
     <div class = 'col-md-5'>
-      <div style = 'padding-bottom: 5%' class = 'col-md-6 vizColDark'>
+      <div class = 'col-md-6 vizColDark'>
         <h4>Business</h4>
         <!-- <div style = 'padding-bottom: 0' class = 'row'>
           <ul class="legend">
@@ -34,8 +34,10 @@
           </ul>
         </div> -->
         <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows1" :options="options1"></vue-chart>
+        <p class = 'housing-stats'>Total Businesses: {{(1478).toLocaleString()}}</p>
+        <p class = 'housing-stats'>Diversity: {{(.77).toLocaleString()}}</p>
       </div>
-      <div style = 'padding-bottom: 5%' class = 'col-md-6 vizColDark'>
+      <div class = 'col-md-6 vizColDark'>
         <h4>Employment</h4>
         <div style = 'padding-bottom: 0' class = 'row'>
           <ul class="legend hidden">
@@ -48,9 +50,11 @@
           </ul>
         </div>
         <vue-chart class = 'chart' :chart-type="chartType2" :columns="columns2" :rows="rows2" :options="options2"></vue-chart>
+        <p class = 'housing-stats'>Total Jobs: {{(23508).toLocaleString()}}</p>
+        <p class = 'housing-stats'>Diversity: {{(.72).toLocaleString()}}</p>
       </div>
     </div>
-    <div style = 'background-color: #a5a9af' class = 'col-md-7'>
+    <div style = 'background-color: #a5a9af; padding-top: 2%' class = 'col-md-7'>
       <div class = 'col-md-4 housing-stats vizColDark'>
         <div class = 'row'>
           <h1>${{totals.paretoMedianCont}}</h1>
@@ -89,16 +93,20 @@
 
   <div class = 'row'>
     <div class = 'col-md-5'>
-      <div style = 'padding-bottom: 5%' class = 'col-md-6 vizColDark'>
+      <div class = 'col-md-6 vizColDark'>
         <h4>Business</h4>
-        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows1" :options="options2"></vue-chart>
+        <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows1" :options="options1"></vue-chart>
+        <p class = 'housing-stats'>Total Businesses: {{(23508).toLocaleString()}}</p>
+        <p class = 'housing-stats'>Diversity: {{(.72).toLocaleString()}}</p>
       </div>
-      <div style = 'padding-bottom: 5%' class = 'col-md-6 vizColDark'>
+      <div class = 'col-md-6 vizColDark'>
         <h4>Employment</h4>
         <vue-chart class = 'chart' :chart-type="chartType2" :columns="columns2" :rows="rows2" :options="options2"></vue-chart>
+        <p class = 'housing-stats'>Total Jobs: {{(23508).toLocaleString()}}</p>
+        <p class = 'housing-stats'>Diversity: {{(.72).toLocaleString()}}</p>
       </div>
     </div>
-    <div style = 'background-color: #a5a9af' class = 'col-md-7'>
+    <div style = 'background-color: #a5a9af; padding-top: 2%' class = 'col-md-7'>
       <div class = 'col-md-4 housing-stats vizColDark'>
         <div class = 'row'>
           <h1>${{totals.paretoMedian}}</h1>
@@ -111,7 +119,7 @@
       </div>
       <div class = 'col-md-4 vizColDark'>
         <h4>Educational Attainment</h4>
-        <vue-chart class = 'chart' :chart-type="chartType3" :columns="columns3" :rows="rows3" :options="options8"></vue-chart>
+        <vue-chart class = 'chart' :chart-type="chartType3" :columns="columns3" :rows="rows3" :options="options3"></vue-chart>
         <p class = 'housing-stats'>Population > 25 years: {{totals.totalEdu.toLocaleString()}}</p>
       </div>
       <div class = 'col-md-4 vizColDark'>
@@ -128,16 +136,20 @@
 
   <div class = 'row'>
     <div class = 'col-md-5'>
-      <div style = 'padding-bottom: 5%' class = 'col-md-6 vizCol'>
+      <div class = 'col-md-6 vizCol'>
         <h4>Business</h4>
         <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows5" :options="options5"></vue-chart>
+        <p class = 'housing-stats'>Total Businesses: {{(23508).toLocaleString()}}</p>
+        <p class = 'housing-stats'>Diversity: {{(.72).toLocaleString()}}</p>
       </div>
-      <div style = 'padding-bottom: 5%' class = 'col-md-6 vizCol'>
+      <div class = 'col-md-6 vizCol'>
         <h4>Employment</h4>
         <vue-chart class = 'chart' :chart-type="chartType2" :columns="columns2" :rows="rows6" :options="options9"></vue-chart>
+        <p class = 'housing-stats'>Total Jobs: {{(23508).toLocaleString()}}</p>
+        <p class = 'housing-stats'>Diversity: {{(.72).toLocaleString()}}</p>
       </div>
     </div>
-    <div style = 'background-color: #d0d5dd' class = 'col-md-7'>
+    <div style = 'background-color: #d0d5dd; padding-top: 2%' class = 'col-md-7'>
       <div class = 'col-md-4 housing-stats vizCol'>
         <div class = 'row'>
           <h1>${{totals.townParetoMedian}}</h1>
@@ -171,7 +183,6 @@
 
 import * as esriLoader from 'esri-loader'
 import { getAttrib, getTownName } from '../vuex/getters'
-import { createMap } from './esrimap'
 
 export default {
 
@@ -381,7 +392,12 @@ export default {
       options5: {
         pieHole: 0.5, // Define donut hole width
         backgroundColor: '#d0d5dd',
-        legend: 'none',
+        legend: {
+          position: 'left',
+          textStyle: {
+            fontSize: 9
+          }
+        },
         chartArea: {
           width: '100%',
           height: '100%',
@@ -397,7 +413,12 @@ export default {
       options6: {
         pieHole: 0.5,
         backgroundColor: '#d0d5dd',
-        legend: 'none',
+        legend: {
+          position: 'left',
+          textStyle: {
+            fontSize: 9
+          }
+        },
         chartArea: {
           width: '100%',
           height: '100%'

@@ -65,12 +65,39 @@
       </div>
     </div>
     <div style = 'background-color: #aeb3ba' class = 'col-md-6'>
-      <!-- <div class = 'col-md-4 housing-stats vizCol'>
+      <div class = 'col-md-8 housing-stats vizCol'>
         <div class = 'row'>
-          <h1>${{totals.paretoMedianCont}}</h1>
-          <p><b>Median Household Income</b></p>
+          <div class = 'col-md-4 housing-stats vizCol'>
+            <h1>${{totals.paretoMedianCont}}</h1>
+            <p><b>Median Household Income</b></p>
+          </div>
+          <div class = 'col-md-4 housing-stats vizCol'>
+            <h1>${{totals.totalPriceMedianWithin}}</h1>
+            <p><b>Median Home Price</b></p>
+          </div>
+          <div class = 'col-md-4 housing-stats vizCol'>
+            <h1>${{totals.totalRentMedianWithin}}</h1>
+            <p><b>Monthly Gross Rent (Median)</b></p>
+          </div>
         </div>
-      </div> -->
+        <div class = 'row'>
+          <vue-chart class = 'chart' :chart-type="chartType5" :columns="columns5" :rows="rows17" :options="options10"></vue-chart>
+        </div>
+      </div>
+      <div class = 'col-md-4 vizCol'>
+        <div class = 'row'>
+          <h4>Age Distribution</h4>
+          <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns6" :rows="rows18" :options="options11"></vue-chart>
+        </div>
+        <div class = 'row'>
+          <ul class="legend">
+            <li><span class="superawesome"></span> 0 - 19</li>
+            <li><span class="awesome"></span> 20 - 44</li>
+            <li><span class="kindaawesome"></span> 45 - 64</li>
+            <li><span class="notawesome"></span> 65 +</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -94,7 +121,7 @@
           <div class = 'col-md-6 vizCol text-center'>
             <p class = 'housing-stats'>Average Units Per Parcel: {{totals.avgUnitsPP1MI.toFixed(1)}}</p>
           </div>
-          <div class = 'col-md-6 vizCol text-center'>
+          <div style = 'padding-bottom: 1%' class = 'col-md-6 vizCol text-center'>
             <p class = 'housing-stats'>Average Units Per Acre: {{totals.avgUnitsPA1MI.toFixed(1)}}</p>
           </div>
         </div>
@@ -103,31 +130,58 @@
         </div>
       </div>
     </div>
-    <div style = 'background-color: #aeb3ba' class = 'col-md-6'>
-      <!-- <div class = 'col-md-4 housing-stats vizCol'>
+    <div style = 'background-color: #aeb3ba; padding-bottom: 1.5%' class = 'col-md-6'>
+      <div class = 'col-md-8 housing-stats vizCol'>
         <div class = 'row'>
-          <h1>${{totals.paretoMedian}}</h1>
-          <p><b>Median Household Income</b></p>
+          <div class = 'col-md-4 housing-stats vizCol'>
+            <h1>${{totals.paretoMedian}}</h1>
+            <p><b>Median Household Income</b></p>
+          </div>
+          <div class = 'col-md-4 housing-stats vizCol'>
+            <h1>${{totals.totalPriceMedian1MI}}</h1>
+            <p><b>Median Home Price</b></p>
+          </div>
+          <div class = 'col-md-4 housing-stats vizCol'>
+            <h1>${{totals.totalRentMedian1MI}}</h1>
+            <p><b>Monthly Gross Rent (Median)</b></p>
+          </div>
         </div>
-      </div> -->
+        <div class = 'row'>
+          <vue-chart class = 'chart' :chart-type="chartType5" :columns="columns5" :rows="rows19" :options="options10"></vue-chart>
+        </div>
+      </div>
+      <div class = 'col-md-4 vizCol'>
+        <div class = 'row'>
+          <h4>Age Distribution</h4>
+          <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns6" :rows="rows20" :options="options11"></vue-chart>
+        </div>
+        <div class = 'row'>
+          <ul class="legend">
+            <li><span class="superawesome"></span> 0 - 19</li>
+            <li><span class="awesome"></span> 20 - 44</li>
+            <li><span class="kindaawesome"></span> 45 - 64</li>
+            <li><span class="notawesome"></span> 65 +</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 
   <div class = 'row'>
     <div class = 'col-md-6'>
-      <div style = 'padding-bottom: 2%' class = 'col-md-4 vizCol2'>
+      <div style = 'padding-bottom: 4%' class = 'col-md-4 vizCol2'>
         <h4>Seasonality</h4>
         <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows12" :options="options5"></vue-chart>
         <p class = 'housing-stats'>Total Units: {{totals.totalHousingROT.toLocaleString()}}</p>
         <p class = 'housing-stats'>Built Residential Parcels: {{totals.totalResidentialROT.toLocaleString()}}</p>
       </div>
-      <div style = 'padding-bottom: 2%' class = 'col-md-4 vizCol2 text-center'>
+      <div style = 'padding-bottom: 4%' class = 'col-md-4 vizCol2 text-center'>
         <h4>Tenure</h4>
         <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns1" :rows="rows13" :options="options8"></vue-chart>
         <p class = 'housing-stats'>Subsidized Rentals: 197</p>
         <p class = 'housing-stats'>Subsidized Owned: 80</p>
       </div>
-      <div style="padding-bottom:6%" class = 'col-md-4 vizCol2 text-center'>
+      <div style="padding-bottom:8%" class = 'col-md-4 vizCol2 text-center'>
         <div class = 'row'>
           <div class = 'col-md-6 vizCol2 text-center'>
             <p class = 'housing-stats'>Average Units Per Parcel: {{totals.avgUnitsPPROT.toFixed(1)}}</p>
@@ -142,12 +196,39 @@
       </div>
     </div>
     <div style = 'background-color: #d0d5dd' class = 'col-md-6'>
-      <!-- <div class = 'col-md-4 housing-stats vizCol2'>
+      <div class = 'col-md-8 housing-stats vizCol2'>
         <div class = 'row'>
-          <h1>${{totals.townParetoMedian}}</h1>
-          <p><b>Median Household Income</b></p>
+          <div class = 'col-md-4 housing-stats vizCol2'>
+            <h1>${{totals.townParetoMedian}}</h1>
+            <p><b>Median Household Income</b></p>
+          </div>
+          <div class = 'col-md-4 housing-stats vizCol2'>
+            <h1>${{totals.totalPriceMedianROT}}</h1>
+            <p><b>Median Home Price</b></p>
+          </div>
+          <div class = 'col-md-4 housing-stats vizCol2'>
+            <h1>${{totals.totalRentMedianROT}}</h1>
+            <p><b>Monthly Gross Rent (Median)</b></p>
+          </div>
         </div>
-      </div> -->
+        <div class = 'row'>
+          <vue-chart class = 'chart' :chart-type="chartType5" :columns="columns5" :rows="rows21" :options="options12"></vue-chart>
+        </div>
+      </div>
+      <div class = 'col-md-4 vizCol2'>
+        <div class = 'row'>
+          <h4>Age Distribution</h4>
+          <vue-chart class = 'chart' :chart-type="chartType1" :columns="columns6" :rows="rows22" :options="options13"></vue-chart>
+        </div>
+        <div class = 'row'>
+          <ul class="legend">
+            <li><span class="superawesome"></span> 0 - 19</li>
+            <li><span class="awesome"></span> 20 - 44</li>
+            <li><span class="kindaawesome"></span> 45 - 64</li>
+            <li><span class="notawesome"></span> 65 +</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -157,7 +238,6 @@
 
 import * as esriLoader from 'esri-loader'
 import { getAttrib, getTownName } from '../vuex/getters'
-import { createMap } from './esrimap'
 
 export default {
 
@@ -174,6 +254,7 @@ export default {
       chartType2: 'PieChart',
       chartType3: 'PieChart',
       chartType4: 'BarChart',
+      chartType5: 'ColumnChart',
       columns1: [
         {
           'type': 'string',
@@ -220,6 +301,26 @@ export default {
         {
           'type': 'number',
           'label': 'Acres'
+        }
+      ],
+      columns5: [
+        {
+          'type': 'string',
+          'label': 'Spending Type'
+        },
+        {
+          'type': 'number',
+          'label': 'Percent'
+        }
+      ],
+      columns6: [
+        {
+          'type': 'string',
+          'label': 'Age Group'
+        },
+        {
+          'type': 'number',
+          'label': 'Number of People'
         }
       ],
       rows1: [
@@ -320,6 +421,39 @@ export default {
         ['Multifamily or Mixed Use', this.totals.totalMixedROTHSG, '#333f50', this.totals.totalMixedROTAcres],
         ['Multiple Houses/Parcel', this.totals.totalMultiOneROTHSG, '#333f50', this.totals.totalMultiOneROTAcres],
         ['Single Family', this.totals.totalSingleFamROTHSG, '#333f50', this.totals.totalSingleFamROTAcres]
+      ],
+      rows17: [
+        ['Below Poverty Line', this.totals.totalHHBelowPovertyWithin],
+        ['With Children', this.totals.totalHHWithChildrenWithin],
+        ['Spending >30% Income on Housing', this.totals.totalHHSpendingGreater30Within]
+      ],
+      rows18: [
+        ['0 - 19', this.totals.totalAgesZero19Within],
+        ['20 - 44', this.totals.totalAgesTwenty44Within],
+        ['45 - 64', this.totals.totalAgesFortyFive64Within],
+        ['65 +', this.totals.totalAgesSixtyFivePlusWithin]
+      ],
+      rows19: [
+        ['Below Poverty Line', this.totals.totalHHBelowPoverty1MI],
+        ['With Children', this.totals.totalHHWithChildren1MI],
+        ['Spending >30% Income on Housing', this.totals.totalHHSpendingGreater301MI]
+      ],
+      rows20: [
+        ['0 - 19', this.totals.totalAgesZero191MI],
+        ['20 - 44', this.totals.totalAgesTwenty441MI],
+        ['45 - 64', this.totals.totalAgesFortyFive641MI],
+        ['65 +', this.totals.totalAgesSixtyFivePlus1MI]
+      ],
+      rows21: [
+        ['Below Poverty Line', this.totals.totalHHBelowPovertyROT],
+        ['With Children', this.totals.totalHHWithChildrenROT],
+        ['Spending >30% Income on Housing', this.totals.totalHHSpendingGreater30ROT]
+      ],
+      rows22: [
+        ['0 - 19', this.totals.totalAgesZero19ROT],
+        ['20 - 44', this.totals.totalAgesTwenty44ROT],
+        ['45 - 64', this.totals.totalAgesFortyFive64ROT],
+        ['65 +', this.totals.totalAgesSixtyFivePlusROT]
       ],
       options1: {
         pieHole: 0.5, // Define donut hole width
@@ -461,6 +595,58 @@ export default {
           }
         }
       },
+      options10: {
+        backgroundColor: '#aeb3ba',
+        legend: 'none',
+        // chartArea: {
+        //   width: '100%',
+        //   height: '100%'
+        // },
+        vAxis: {
+          title: "Percent",
+          format: 'percent'
+        },
+        colors: ['white']
+      },
+      options11: {
+        pieHole: 0.5,
+        backgroundColor: '#aeb3ba',
+        legend: 'none',
+        chartArea: {
+          width: '100%',
+          height: '100%'
+        },
+        slices: {
+          0: {textStyle: {color: '#000000'}}
+        },
+        colors: ['#dae3f3','#adb9ca','#849bb0','#333f50']
+      },
+      options12: {
+        backgroundColor: '#d0d5dd',
+        legend: 'none',
+        // chartArea: {
+        //   width: '100%',
+        //   height: '100%'
+        // },
+        vAxis: {
+          title: "Percent",
+          format: 'percent'
+        },
+        colors: ['white']
+      },
+      options13: {
+        pieHole: 0.5,
+        backgroundColor: '#d0d5dd',
+        legend: 'none',
+        chartArea: {
+          width: '100%',
+          height: '100%'
+        },
+        slices: {
+          0: {textStyle: {color: '#000000'}}
+        },
+        colors: ['#dae3f3','#adb9ca','#849bb0','#333f50']
+      }
     }
   },
 
@@ -477,16 +663,17 @@ export default {
     }
   },
 
-  ready() {
-
-  },
-
   methods: {
 
   },
 
   watch: {
 
+  },
+
+  ready() {
+
+    $('.sidebar').css('height','calc(100% + 310px)')
   }
 }
 
