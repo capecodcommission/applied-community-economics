@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 export const createMap = function (loader, totals) {
 
   loader.dojoRequire(
@@ -271,8 +273,49 @@ export const createMap = function (loader, totals) {
           var polySliceFirstXY = polystringSelected.slice(0,firstOccurenceOfComma) // Slice poly string to first coordinate set
           var completeRings = polystringSelected + polySliceFirstXY // Append first coordinates as last coordinates to complete polygon
           var dataSelected =  JSON.stringify({town: townName, rings: completeRings}) // Pass complete polygon rings as object to API route
+          var realData =  {town: townName, rings: completeRings}
 
-          console.log(dataSelected)
+
+          // var getBlocksWithin = axios({
+          //   method: 'post',
+          //   url: 'http://ccc-api-05.api.capecodcommission.org/api/selectBlockGroups/' ,
+          //   data: realData
+          // })
+
+
+          // var getTractsWithin = axios({
+          //   method: 'post',
+          //   url: 'http://ccc-api-05.api.capecodcommission.org/api/selectTracts/' ,
+          //   data: realData
+          // })
+
+          // // var getBlocksWithin = axios.post('http://ccc-api-05.api.capecodcommission.org/api/selectBlockGroups/', realData)
+          // var getTractsWithin = axios.post('http://ccc-api-05.api.capecodcommission.org/api/selectTracts/', realData)
+
+          // var axiosArray = []
+
+          // // axiosArray.push(getBlocksWithin)
+          // axiosArray.push(getTractsWithin)
+
+          // axios.all(axiosArray)
+          //   .then(axios.spread(function (tractsWithin) {
+
+          // //   console.log(blocksWithin)
+          //   console.log(tractsWithin)
+          // }))
+          //   .catch(error => {
+
+          //   console.log(error)
+          // })
+
+
+
+
+
+
+
+
+
 
 
           // Concurrently request summed parcel data, intersecting block groups and tracts at all selection levels
@@ -286,10 +329,8 @@ export const createMap = function (loader, totals) {
           //   getTracts(dataSelected, 'within'), 
           //   getTracts(dataSelected, '1MI'), 
           //   getTracts(dataSelected, 'ROT')
-          //   ])
-          //   .then(axios.spread((parcelSumsWithin, parcelSums1MI, parcelSumsROT, blocksWithin, blocks1MI, blocksROT, tractsWithin, tracts1MI, tractsROT) => {
+          // ]).then(axios.spread(function (parcelSumsWithin, parcelSums1MI, parcelSumsROT, blocksWithin, blocks1MI, blocksROT, tractsWithin, tracts1MI, tractsROT) {
 
-          //     // Log responses for evaluation before storing to state
           //     console.log(parcelSumsWithin)
           //     console.log(parcelSums1MI)
           //     console.log(parcelSumsROT)
@@ -299,111 +340,127 @@ export const createMap = function (loader, totals) {
           //     console.log(tractsWithin)
           //     console.log(tracts1MI)
           //     console.log(tractsROT)
+          // }))
 
-          //     totals.avgUnitsPPSelected = parcelSumsWithin.avgUnitsPP
-          //     totals.avgUnitsPASelected = parcelSumsWithin.avgUnitsPA
-          //     totals.totalAptSelectedHSG = parcelSumsWithin.totalApartmentUnits
-          //     totals.totalAptSelectedAcres = parcelSumsWithin.totalApartmentAcres
-          //     totals.totalMixedSelectedHSG = parcelSumsWithin.totalMixsedUseUnits
-          //     totals.totalMixedSelectedAcres = parcelSumsWithin.totalMixsedUseAcres
-          //     totals.totalMultiOneSelectedHSG = parcelSumsWithinta.totalMultiOneUnits
-          //     totals.totalMultiOneSelectedAcres = parcelSumsWithin.totalMultiOneAcres
-          //     totals.totalOtherSelectedHSG = parcelSumsWithin.totalOtherUnits
-          //     totals.totalOtherSelectedAcres = parcelSumsWithin.totalOtherAcres
-          //     totals.totalResCondoSelectedHSG = parcelSumsWithin.totalResCondoUnits
-          //     totals.totalResCondoSelectedAcres = parcelSumsWithin.totalResCondoAcres
-          //     totals.totalSingleFamSelectedHSG = parcelSumsWithin.totalSFUnits
-          //     totals.totalSingleFamSelectedAcres = parcelSumsWithin.totalSFAcres
-          //     totals.totalShrdTmpSelectedHSG = parcelSumsWithin.totalTempUnits
-          //     totals.totalShrdTmpSelectedAcres = parcelSumsWithin.totalTempAcres
-          //     totals.totalResidentialSelected = parcelSumsWithin.totalParcels
 
-          //     totals.avgUnitsPP1MI = parcelSums1MI.avgUnitsPP
-          //     totals.avgUnitsPA1MI = parcelSums1MI.avgUnitsPA
-          //     totals.totalApt1MIHSG = parcelSums1MI.totalApartmentUnits
-          //     totals.totalApt1MIAcres = parcelSums1MI.totalApartmentAcres
-          //     totals.totalMixed1MIHSG = parcelSums1MI.totalMixsedUseUnits
-          //     totals.totalMixed1MIAcres = parcelSums1MI.totalMixsedUseAcres
-          //     totals.totalMultiOne1MIHSG = parcelSums1MI.totalMultiOneUnits
-          //     totals.totalMultiOne1MIAcres = parcelSums1MI.totalMultiOneAcres
-          //     totals.totalOther1MIHSG = parcelSums1MI.totalOtherUnits
-          //     totals.totalOther1MIAcres = parcelSums1MI.totalOtherAcres
-          //     totals.totalResCondo1MIHSG = parcelSums1MI.totalResCondoUnits
-          //     totals.totalResCondo1MIAcres = parcelSums1MI.totalResCondoAcres
-          //     totals.totalSingleFam1MIHSG = parcelSums1MI.totalSFUnits
-          //     totals.totalSingleFam1MIAcres = parcelSums1MI.totalSFAcres
-          //     totals.totalShrdTmp1MIHSG = parcelSums1MI.totalTempUnits
-          //     totals.totalShrdTmp1MIAcres = parcelSums1MI.totalTempAcres
-          //     totals.totalResidential1MI = parcelSums1MI.totalParcels
 
-          //     totals.avgUnitsPPROT = parcelSumsROT.avgUnitsPP
-          //     totals.avgUnitsPAROT = parcelSumsROT.avgUnitsPA
-          //     totals.totalAptROTHSG = parcelSumsROT.totalApartmentUnits
-          //     totals.totalAptROTAcres = parcelSumsROT.totalApartmentAcres
-          //     totals.totalMixedROTHSG = parcelSumsROT.totalMixsedUseUnits
-          //     totals.totalMixedROTAcres = parcelSumsROT.totalMixsedUseAcres
-          //     totals.totalMultiOneROTHSG = parcelSumsROT.totalMultiOneUnits
-          //     totals.totalMultiOneROTAcres = parcelSumsROT.totalMultiOneAcres
-          //     totals.totalOtherROTHSG = parcelSumsROT.totalOtherUnits
-          //     totals.totalOtherROTAcres = parcelSumsROT.totalOtherAcres
-          //     totals.totalResCondoROTHSG = parcelSumsROT.totalResCondoUnits
-          //     totals.totalResCondoROTAcres = parcelSumsROT.totalResCondoAcres
-          //     totals.totalSingleFamROTHSG = parcelSumsROT.totalSFUnits
-          //     totals.totalSingleFamROTAcres = parcelSumsROT.totalSFAcres
-          //     totals.totalShrdTmpROTHSG = parcelSumsROT.totalTempUnits
-          //     totals.totalShrdTmpROTAcres = parcelSumsROT.totalTempAcres
-          //     totals.totalResidentialROT = parcelSumsROT.totalParcels
+          // .then(axios.spread((parcelSumsWithin, parcelSums1MI, parcelSumsROT, blocksWithin, blocks1MI, blocksROT, tractsWithin, tracts1MI, tractsROT) => {
 
-          //     // Stringify response objects to be used as requests
-          //     var blockIDArrayWithin = parseBlockData(blocksWithin)
-          //     var blockIDArray1MI = parseBlockData(blocks1MI)
-          //     var blockIDArrayROT = parseBlockData(blocksROT)
+          //   // Log responses for evaluation before storing to state
+          //   console.log(parcelSumsWithin)
+          //   console.log(parcelSums1MI)
+          //   console.log(parcelSumsROT)
+          //   console.log(blocksWithin)
+          //   console.log(blocks1MI)
+          //   console.log(blocksROT)
+          //   console.log(tractsWithin)
+          //   console.log(tracts1MI)
+          //   console.log(tractsROT)
 
-          //     var tractIDArrayWithin = parseTractData(tractsWithin)
-          //     var tractIDArray1MI = parseTractData(tracts1MI)
-          //     var tractIDArrayROT = parseTractData(tractsROT)
+          //   totals.avgUnitsPPSelected = parcelSumsWithin.avgUnitsPP
+          //   totals.avgUnitsPASelected = parcelSumsWithin.avgUnitsPA
+          //   totals.totalAptSelectedHSG = parcelSumsWithin.totalApartmentUnits
+          //   totals.totalAptSelectedAcres = parcelSumsWithin.totalApartmentAcres
+          //   totals.totalMixedSelectedHSG = parcelSumsWithin.totalMixsedUseUnits
+          //   totals.totalMixedSelectedAcres = parcelSumsWithin.totalMixsedUseAcres
+          //   totals.totalMultiOneSelectedHSG = parcelSumsWithinta.totalMultiOneUnits
+          //   totals.totalMultiOneSelectedAcres = parcelSumsWithin.totalMultiOneAcres
+          //   totals.totalOtherSelectedHSG = parcelSumsWithin.totalOtherUnits
+          //   totals.totalOtherSelectedAcres = parcelSumsWithin.totalOtherAcres
+          //   totals.totalResCondoSelectedHSG = parcelSumsWithin.totalResCondoUnits
+          //   totals.totalResCondoSelectedAcres = parcelSumsWithin.totalResCondoAcres
+          //   totals.totalSingleFamSelectedHSG = parcelSumsWithin.totalSFUnits
+          //   totals.totalSingleFamSelectedAcres = parcelSumsWithin.totalSFAcres
+          //   totals.totalShrdTmpSelectedHSG = parcelSumsWithin.totalTempUnits
+          //   totals.totalShrdTmpSelectedAcres = parcelSumsWithin.totalTempAcres
+          //   totals.totalResidentialSelected = parcelSumsWithin.totalParcels
 
-          //     // Concurrently request census income, housing, employment, and education data using blockgroup and tract id arrays returned from the first request spread
-          //     axios.all([
-          //       getCensusIncomeEmploymentEducationTotals(blockIDArrayWithin), 
-          //       getCensusIncomeEmploymentEducationTotals(blockIDArray1MI), 
-          //       getCensusIncomeEmploymentEducationTotals(blockIDArrayROT), 
-          //       getCensusHousingOccTotals(blockIDArrayWithin), 
-          //       getCensusHousingOccTotals(blockIDArray1MI), 
-          //       getCensusHousingOccTotals(blockIDArrayROT),
-          //       getCensusEduTractTotals(tractIDArrayWithin),
-          //       getCensusEduTractTotals(tractIDArray1MI),
-          //       getCensusEduTractTotals(tractIDArrayROT)
-          //       ])
-          //       .then(axios.spread((incomeWithin, income1MI, incomeROT, housingWithin, housing1MI, housingROT, eduWithin, edu1MI, eduROT) => {
+          //   totals.avgUnitsPP1MI = parcelSums1MI.avgUnitsPP
+          //   totals.avgUnitsPA1MI = parcelSums1MI.avgUnitsPA
+          //   totals.totalApt1MIHSG = parcelSums1MI.totalApartmentUnits
+          //   totals.totalApt1MIAcres = parcelSums1MI.totalApartmentAcres
+          //   totals.totalMixed1MIHSG = parcelSums1MI.totalMixsedUseUnits
+          //   totals.totalMixed1MIAcres = parcelSums1MI.totalMixsedUseAcres
+          //   totals.totalMultiOne1MIHSG = parcelSums1MI.totalMultiOneUnits
+          //   totals.totalMultiOne1MIAcres = parcelSums1MI.totalMultiOneAcres
+          //   totals.totalOther1MIHSG = parcelSums1MI.totalOtherUnits
+          //   totals.totalOther1MIAcres = parcelSums1MI.totalOtherAcres
+          //   totals.totalResCondo1MIHSG = parcelSums1MI.totalResCondoUnits
+          //   totals.totalResCondo1MIAcres = parcelSums1MI.totalResCondoAcres
+          //   totals.totalSingleFam1MIHSG = parcelSums1MI.totalSFUnits
+          //   totals.totalSingleFam1MIAcres = parcelSums1MI.totalSFAcres
+          //   totals.totalShrdTmp1MIHSG = parcelSums1MI.totalTempUnits
+          //   totals.totalShrdTmp1MIAcres = parcelSums1MI.totalTempAcres
+          //   totals.totalResidential1MI = parcelSums1MI.totalParcels
 
-          //         // Log responses for evaluation before storing to state
-          //         console.log(incomeWithin)
-          //         console.log(income1MI)
-          //         console.log(incomeROT)
-          //         console.log(housingWithin)
-          //         console.log(housing1MI)
-          //         console.log(housingROT)
-          //         console.log(eduWithin)
-          //         console.log(edu1MI)
-          //         console.log(eduROT)
+          //   totals.avgUnitsPPROT = parcelSumsROT.avgUnitsPP
+          //   totals.avgUnitsPAROT = parcelSumsROT.avgUnitsPA
+          //   totals.totalAptROTHSG = parcelSumsROT.totalApartmentUnits
+          //   totals.totalAptROTAcres = parcelSumsROT.totalApartmentAcres
+          //   totals.totalMixedROTHSG = parcelSumsROT.totalMixsedUseUnits
+          //   totals.totalMixedROTAcres = parcelSumsROT.totalMixsedUseAcres
+          //   totals.totalMultiOneROTHSG = parcelSumsROT.totalMultiOneUnits
+          //   totals.totalMultiOneROTAcres = parcelSumsROT.totalMultiOneAcres
+          //   totals.totalOtherROTHSG = parcelSumsROT.totalOtherUnits
+          //   totals.totalOtherROTAcres = parcelSumsROT.totalOtherAcres
+          //   totals.totalResCondoROTHSG = parcelSumsROT.totalResCondoUnits
+          //   totals.totalResCondoROTAcres = parcelSumsROT.totalResCondoAcres
+          //   totals.totalSingleFamROTHSG = parcelSumsROT.totalSFUnits
+          //   totals.totalSingleFamROTAcres = parcelSumsROT.totalSFAcres
+          //   totals.totalShrdTmpROTHSG = parcelSumsROT.totalTempUnits
+          //   totals.totalShrdTmpROTAcres = parcelSumsROT.totalTempAcres
+          //   totals.totalResidentialROT = parcelSumsROT.totalParcels
 
-          //         totals.percUnempCont = incomeWithin.percUnemp
-          //         totals.paretoMedianCont = incomeWithin.paretoMedian
-          //         totals.lessHSCont = incomeWithin.lessHS
-          //         totals.hsgCont = incomeWithin.hsg
-          //         totals.scaCont = incomeWithin.sca
-          //         totals.bacCont = incomeWithin.bac
-          //         totals.gradProCont = incomeWithin.gradPro
-          //         totals.totalEduCont = incomeWithin.totalEdu
+          //   // Stringify response objects to be used as requests
+          //   var blockIDArrayWithin = parseBlockData(blocksWithin)
+          //   var blockIDArray1MI = parseBlockData(blocks1MI)
+          //   var blockIDArrayROT = parseBlockData(blocksROT)
 
-          //         totals.totalHousingSelected = housingWithin.totalHousing
-          //         totals.totalOwnedSelected = housingWithin.totalOwned
-          //         totals.totalRentalSelected = housingWithin.totalRental
-          //         totals.totalSeasonalSelected = housingWithin.totalSeasonal
-          //         totals.totalYearRoundSelected = housingWithin.totalYearRound
-          //       }))
+          //   var tractIDArrayWithin = parseTractData(tractsWithin)
+          //   var tractIDArray1MI = parseTractData(tracts1MI)
+          //   var tractIDArrayROT = parseTractData(tractsROT)
+
+          //   // Concurrently request census income, housing, employment, and education data using blockgroup and tract id arrays returned from the first request spread
+          //   axios.all([
+          //     getCensusIncomeEmploymentEducationTotals(blockIDArrayWithin), 
+          //     getCensusIncomeEmploymentEducationTotals(blockIDArray1MI), 
+          //     getCensusIncomeEmploymentEducationTotals(blockIDArrayROT), 
+          //     getCensusHousingOccTotals(blockIDArrayWithin), 
+          //     getCensusHousingOccTotals(blockIDArray1MI), 
+          //     getCensusHousingOccTotals(blockIDArrayROT),
+          //     getCensusEduTractTotals(tractIDArrayWithin),
+          //     getCensusEduTractTotals(tractIDArray1MI),
+          //     getCensusEduTractTotals(tractIDArrayROT)
+          //   ])
+          //   .then(axios.spread((incomeWithin, income1MI, incomeROT, housingWithin, housing1MI, housingROT, eduWithin, edu1MI, eduROT) => {
+
+          //     // Log responses for evaluation before storing to state
+          //     console.log(incomeWithin)
+          //     console.log(income1MI)
+          //     console.log(incomeROT)
+          //     console.log(housingWithin)
+          //     console.log(housing1MI)
+          //     console.log(housingROT)
+          //     console.log(eduWithin)
+          //     console.log(edu1MI)
+          //     console.log(eduROT)
+
+          //     totals.percUnempCont = incomeWithin.percUnemp
+          //     totals.paretoMedianCont = incomeWithin.paretoMedian
+          //     totals.lessHSCont = incomeWithin.lessHS
+          //     totals.hsgCont = incomeWithin.hsg
+          //     totals.scaCont = incomeWithin.sca
+          //     totals.bacCont = incomeWithin.bac
+          //     totals.gradProCont = incomeWithin.gradPro
+          //     totals.totalEduCont = incomeWithin.totalEdu
+
+          //     totals.totalHousingSelected = housingWithin.totalHousing
+          //     totals.totalOwnedSelected = housingWithin.totalOwned
+          //     totals.totalRentalSelected = housingWithin.totalRental
+          //     totals.totalSeasonalSelected = housingWithin.totalSeasonal
+          //     totals.totalYearRoundSelected = housingWithin.totalYearRound
           //   }))
+          // }))
 
    
           getParcelSums(dataSelected, 'within').done((i) => {
@@ -530,11 +587,11 @@ export const createMap = function (loader, totals) {
 
                           console.log(j)
 
-                          totals.totalHousingSelected = j.totalHousing
-                          totals.totalOwnedSelected = j.totalOwned
-                          totals.totalRentalSelected = j.totalRental
-                          totals.totalSeasonalSelected = j.totalSeasonal
-                          totals.totalYearRoundSelected = j.totalYearRound
+                          totals.totalHousing1MI = j.totalHousing
+                          totals.totalOwned1MI = j.totalOwned
+                          totals.totalRental1MI = j.totalRental
+                          totals.totalSeasonal1MI = j.totalSeasonal
+                          totals.totalYearRound1MI = j.totalYearRound
 
                           getBlocks(dataSelected, 'ROT').done((i) => {
 
@@ -616,6 +673,18 @@ export const createMap = function (loader, totals) {
                                           totals.Toggle = true
                                           document.getElementById('loading').style.display = false ? 'block' : 'none';
                                         })
+
+                                        var townRequest = JSON.stringify([townName])
+                                        getCensusEduTownTotals(townRequest).done((j) => {
+
+                                          console.log(j)
+
+                                          totals.townIncLessHS = j.totalLessHSG
+                                          totals.townIncHSG = j.totalHSG
+                                          totals.townIncSCA = j.totalSCA
+                                          totals.townIncBac = j.totalBac
+                                          totals.townIncGrad = j.totalGrad
+                                        })
                                       })
                                     })
                                   })
@@ -690,6 +759,12 @@ export const createMap = function (loader, totals) {
         })
 
         // return axios.post(blockGroupRoute, data)
+
+        // return axios({
+        //   method: 'post',
+        //   url: blockGroupRoute,
+        //   data: data
+        // })
       }
 
       function getTracts(data, type = null) {
@@ -719,6 +794,12 @@ export const createMap = function (loader, totals) {
         })
 
         // return axios.post(tractRoute, data)
+
+        // return axios({
+        //   method: 'post',
+        //   url: tractRoute,
+        //   data: data
+        // })
       }
 
       function getCensusIncomeEmploymentEducationTotals (idArray) {
@@ -758,6 +839,20 @@ export const createMap = function (loader, totals) {
           data: idArray,
           contentType: 'application/json',
           url: censusEduTractTotalsRoute
+        })
+
+        // return axios.post(censusEduTractTotalsRoute, idArray)
+      }
+
+      function getCensusEduTownTotals (townName) {
+
+        var censusEduTownTotalsRoute = 'http://ccc-api-05.api.capecodcommission.org/api/getCensusEduTownTotals/' 
+
+        return $.ajax({
+          method: 'POST',
+          data: townName,
+          contentType: 'application/json',
+          url: censusEduTownTotalsRoute
         })
 
         // return axios.post(censusEduTractTotalsRoute, idArray)
