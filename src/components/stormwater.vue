@@ -14,7 +14,6 @@
     </ul>
   </div>
   <div class = 'col-md-6'>
-    <!-- <img width = '100%' src = 'https://i.imgur.com/s1zoH9n.png'> -->
     <canvas id = 'myChart'></canvas>
   </div>
 

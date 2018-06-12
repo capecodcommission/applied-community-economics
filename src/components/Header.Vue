@@ -158,7 +158,7 @@ export default {
 
     $('#restartMap').on('click', function() {
 
-      window.open('http://10.10.1.148/ace/','_self')
+      window.open('https://10.10.1.148/ace/','_self')
     })
 
   },

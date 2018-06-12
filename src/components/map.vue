@@ -227,7 +227,7 @@ export default {
 
             // parcel layer
             var embayments = new FeatureLayer({
-              url: "http://gis-services.capecodcommission.org/arcgis/rest/services/ActivityCenters/CommunityCharacteristics/MapServer/0",
+              url: "https://gis-services.capecodcommission.org/arcgis/rest/services/ActivityCenters/CommunityCharacteristics/MapServer/0",
               outFields: ['*'],
               renderer: renderer,
               popupTemplate: {
@@ -239,7 +239,7 @@ export default {
 
             // parcel layer containing census api estimates
             var parcelLayer = new FeatureLayer({
-              url: "http://gis-services.capecodcommission.org/arcgis/rest/services/ActivityCenters/CommunityCharacteristics/MapServer/1",
+              url: "https://gis-services.capecodcommission.org/arcgis/rest/services/ActivityCenters/CommunityCharacteristics/MapServer/1",
               outFields: ['*'],
               visible: false,
               popupTemplate: {
@@ -296,7 +296,7 @@ export default {
 
             // Activity Center boundaries in proper spatial reference
             var acBoundaries = new FeatureLayer ({
-              url: "http://gis-services.capecodcommission.org/arcgis/rest/services/ActivityCenters/CommunityCharacteristics/MapServer/2",
+              url: "https://gis-services.capecodcommission.org/arcgis/rest/services/ActivityCenters/CommunityCharacteristics/MapServer/2",
               outFields: ['*'],
               visible: false,
               popupTemplate: {
@@ -306,7 +306,7 @@ export default {
 
             // Town boundary layer to query block groups
             var gizBoundaries = new FeatureLayer ({
-              url: "http://gis-services.capecodcommission.org/arcgis/rest/services/Data_People/Boundary/MapServer/20",
+              url: "https://gis-services.capecodcommission.org/arcgis/rest/services/Data_People/Boundary/MapServer/20",
               outFields: ['*'],
               definitionExpression: "OBJECTID = 1",
               popupTemplate: {
@@ -791,18 +791,18 @@ export default {
               switch (type) { // switch between selection types
 
                 case 'within':
-                  // parcelSumsRoute = 'http://ccc-api-05.api.capecodcommission.org/api/getParcelSums/' 
-                  parcelSumsRoute = 'http://localhost:8081/api/getParcelSums/' 
+                  // parcelSumsRoute = 'https://ccc-api-05.api.capecodcommission.org/api/getParcelSums/' 
+                  parcelSumsRoute = 'https://localhost:8081/api/getParcelSums/' 
                   break;
 
                 case '1MI':
-                  // parcelSumsRoute = 'http://ccc-api-05.api.capecodcommission.org/api/getParcelSums1MI/' 
-                  parcelSumsRoute = 'http://localhost:8081/api/getParcelSums1MI/' 
+                  // parcelSumsRoute = 'https://ccc-api-05.api.capecodcommission.org/api/getParcelSums1MI/' 
+                  parcelSumsRoute = 'https://localhost:8081/api/getParcelSums1MI/' 
                   break;
 
                 case 'ROT':
-                  // parcelSumsRoute = 'http://ccc-api-05.api.capecodcommission.org/api/getParcelSumsROT/'
-                  parcelSumsRoute = 'http://localhost:8081/api/getParcelSumsROT/'
+                  // parcelSumsRoute = 'https://ccc-api-05.api.capecodcommission.org/api/getParcelSumsROT/'
+                  parcelSumsRoute = 'https://localhost:8081/api/getParcelSumsROT/'
                   break; 
               }
 
@@ -825,18 +825,18 @@ export default {
               switch (type) {
 
                 case 'within':
-                  // blockGroupRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectBlockGroups/' 
-                  blockGroupRoute = 'http://localhost:8081/api/selectBlockGroups/' 
+                  // blockGroupRoute = 'https://ccc-api-05.api.capecodcommission.org/api/selectBlockGroups/' 
+                  blockGroupRoute = 'https://localhost:8081/api/selectBlockGroups/' 
                   break;
 
                 case '1MI':
-                  // blockGroupRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectBlockGroups1MI/' 
-                  blockGroupRoute = 'http://localhost:8081/api/selectBlockGroups1MI/' 
+                  // blockGroupRoute = 'https://ccc-api-05.api.capecodcommission.org/api/selectBlockGroups1MI/' 
+                  blockGroupRoute = 'https://localhost:8081/api/selectBlockGroups1MI/' 
                   break;
 
                 case 'ROT':
-                  // blockGroupRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectBlockGroupsROT/'
-                  blockGroupRoute = 'http://localhost:8081/api/selectBlockGroupsROT/'
+                  // blockGroupRoute = 'https://ccc-api-05.api.capecodcommission.org/api/selectBlockGroupsROT/'
+                  blockGroupRoute = 'https://localhost:8081/api/selectBlockGroupsROT/'
                   break; 
               }
 
@@ -859,18 +859,18 @@ export default {
               switch (type) {
 
                 case 'within':
-                  // tractRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectTracts/' 
-                  tractRoute = 'http://localhost:8081/api/selectTracts/' 
+                  // tractRoute = 'https://ccc-api-05.api.capecodcommission.org/api/selectTracts/' 
+                  tractRoute = 'https://localhost:8081/api/selectTracts/' 
                   break;
 
                 case '1MI':
-                  // tractRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectTracts1MI/' 
-                  tractRoute = 'http://localhost:8081/api/selectTracts1MI/' 
+                  // tractRoute = 'https://ccc-api-05.api.capecodcommission.org/api/selectTracts1MI/' 
+                  tractRoute = 'https://localhost:8081/api/selectTracts1MI/' 
                   break;
 
                 case 'ROT':
-                  // tractRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectTractsROT/'
-                  tractRoute = 'http://localhost:8081/api/selectTractsROT/'
+                  // tractRoute = 'https://ccc-api-05.api.capecodcommission.org/api/selectTractsROT/'
+                  tractRoute = 'https://localhost:8081/api/selectTractsROT/'
                   break; 
               }
 
@@ -890,7 +890,7 @@ export default {
 
               var ids = parseBlockData(idArray) // Format getBlocks response into request data for post
 
-              var censusIncomeEmploymentEducationRoute = 'http://localhost:8081/api/getCensusIncomeEmploymentEducationTotals/' 
+              var censusIncomeEmploymentEducationRoute = 'https://localhost:8081/api/getCensusIncomeEmploymentEducationTotals/' 
               
               try {
 
@@ -908,7 +908,7 @@ export default {
 
               var ids = parseBlockData(idArray)
 
-              var censusHousingOccTotalsRoute = 'http://localhost:8081/api/getCensusHousingOccTotals/' 
+              var censusHousingOccTotalsRoute = 'https://localhost:8081/api/getCensusHousingOccTotals/' 
 
               try {
 
@@ -926,7 +926,7 @@ export default {
 
               var ids = parseTractData(idArray)
 
-              var censusEduTractTotalsRoute = 'http://localhost:8081/api/getCensusEduTractTotals/' 
+              var censusEduTractTotalsRoute = 'https://localhost:8081/api/getCensusEduTractTotals/' 
 
               try {
 
@@ -942,7 +942,7 @@ export default {
             // Obtain education related totals by town name
             async function getCensusEduTownTotals (townName) {
 
-              var censusEduTownTotalsRoute = 'http://localhost:8081/api/getCensusEduTownTotals/' 
+              var censusEduTownTotalsRoute = 'https://localhost:8081/api/getCensusEduTownTotals/' 
 
               try {
 
@@ -960,7 +960,7 @@ export default {
 
               var ids = parseBlockData(idArray)
 
-              var censusAffordabilityRoute = 'http://localhost:8081/api/getCensusAffordabilityTotals/' 
+              var censusAffordabilityRoute = 'https://localhost:8081/api/getCensusAffordabilityTotals/' 
               
               try {
 
@@ -977,7 +977,7 @@ export default {
 
               var ids = parseBlockData(idArray)
 
-              var censusRentRoute = 'http://localhost:8081/api/getCensusRentMedian/' 
+              var censusRentRoute = 'https://localhost:8081/api/getCensusRentMedian/' 
               
               try {
 
@@ -994,7 +994,7 @@ export default {
 
               var ids = parseBlockData(idArray)
 
-              var censusHomePriceRoute = 'http://localhost:8081/api/getCensusHomePriceMedian/' 
+              var censusHomePriceRoute = 'https://localhost:8081/api/getCensusHomePriceMedian/' 
               
               try {
 
@@ -1011,7 +1011,7 @@ export default {
 
               var ids = parseBlockData(idArray)
 
-              var censusAgeRoute = 'http://localhost:8081/api/getCensusAgeTotals/' 
+              var censusAgeRoute = 'https://localhost:8081/api/getCensusAgeTotals/' 
               
               try {
 
@@ -1201,7 +1201,7 @@ export default {
     width: 100vw;
     height: 100vh;
     background-color: rgba(192, 192, 192, 0.5);
-    background-image: url("http://i.stack.imgur.com/MnyxU.gif");
+    background-image: url("https://i.stack.imgur.com/MnyxU.gif");
     background-repeat: no-repeat;
     background-position: center;
 }

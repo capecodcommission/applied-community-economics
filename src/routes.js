@@ -4,11 +4,11 @@ export default function (router) {
     '/': {
       name: 'Start',
       component: require('./components/Start.vue')
-    }, // TODO: Track current routes per treatment
-    '/TM': { // :id is a route parameter that can be passed into a function
+    }, 
+    '/TM': { 
       component: require('./components/ScenarioView.vue'),
       subRoutes: {
-        '/' : { // Routes hereafter are nested within /scenario/:id
+        '/' : { 
           name: 'TreatmentDetail',
           component: require('./components/TreatmentDetail.vue'),
         },
@@ -34,7 +34,7 @@ export default function (router) {
         }
       }
     },
-    '/WR': { // :id is a route parameter that can be passed into a function
+    '/WR': { 
       component: require('./components/ScenarioView.vue'),
       subRoutes: {
         '/drWater': {

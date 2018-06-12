@@ -38,7 +38,6 @@
         <li>4,475 acres of Parcel area (12.4% Open Space)</li>
       </ul>
     </ul>
-    <!-- <img width = '100%' src = 'https://i.imgur.com/ePoscEj.png'> -->
     <canvas id = 'myChart'></canvas>
   </div>
 
