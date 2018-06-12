@@ -33,15 +33,13 @@ import { loadTownName } from '../vuex/actions'
 import treatmentDetail from './TreatmentDetail'
 import Header from './Header'
 import sidething from './sideBar'
-import map from './map'
 
 export default {
 
   components: {
     'comparison': treatmentDetail,
     'headthing': Header,
-    'sidething': sidething,
-    'map': map
+    'sidething': sidething
   },
 
   data () {
