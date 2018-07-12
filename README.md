@@ -2,6 +2,10 @@
 
 > This tool will score the form of an area based on Building Form, Business Activity and Community Activity. It allows for the comparison of scores to other similar geographies in the Report Card.  In development is the ability to dig down into key metrics that will improve the score of an area.
 
+## Work Plan
+> Upgrade app to Vue2
+> Implement additional metrics and feature layers from GIS
+
 ## Modules
 
 > [Google Charts API](https://developers.google.com/chart/), [VueJS](https://vuejs.org/), [Vuex](https://github.com/vuejs/vuex), [Vue-Router](https://github.com/vuejs/vue-router), [ArcGIS API](https://developers.arcgis.com/javascript/3/)
