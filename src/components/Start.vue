@@ -32,6 +32,7 @@ import Header from './Header'
 import sidething from './sideBar'
 import debug from './debug'
 import map from './map'
+import { getComparison } from '../vuex/getters'
 
 export default {
 
@@ -58,7 +59,7 @@ export default {
     },
 
     getters: {
-
+      showComparison: getComparison
     }
   },
 

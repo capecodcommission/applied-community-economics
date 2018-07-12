@@ -35,7 +35,7 @@
 
   <button @click = "townName = 'Hyannis GIZ' " v-show = "townThing == 'APPLIED COMMUNITY ECONOMICS'" id = 'Draw' class = 'btn btn-primary'>Draw Poly</button>
   <button @click = "townName = 'Hyannis GIZ' " v-show = "townThing == 'APPLIED COMMUNITY ECONOMICS'" id = 'computeGIZ' class = 'btn btn-primary pull-right'>Compute GIZ</button>
-  <button style = 'float: left; margin-left: 3%' v-show = "townThing != 'APPLIED COMMUNITY ECONOMICS'" @click = "toggleComparison()" class = "btn btn-primary compareButton">Compare to Other {{selectType}}s</button>
+  <button style = 'float: left; margin-left: 3%' v-show = "townThing != 'APPLIED COMMUNITY ECONOMICS'" @click = "toggleComparison" class = "btn btn-primary compareButton">Compare to Other {{selectType}}s</button>
 
   <div style = 'padding-top: 5%' class = 'row'>
     <div style = 'padding-left: 0; padding-right: 0; word-wrap: break-word' class = 'col-md-12'>
