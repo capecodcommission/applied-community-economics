@@ -59,7 +59,8 @@ export default {
         "esri/symbols/SimpleFillSymbol",
         "esri/symbols/SimpleLineSymbol",
         "esri/renderers/SimpleRenderer",
-        //'fcl/FlareClusterLayer_v4',
+        "esri/views/SceneView",
+        "esri/WebScene",
         "dojo/domReady!"
         ]).then(([
           Map, 
@@ -79,8 +80,9 @@ export default {
           Home,
           SimpleFillSymbol,
           SimpleLineSymbol,
-          SimpleRenderer
-          //,FlareClusterLayer
+          SimpleRenderer,
+          SV,
+          WS
           ]) => {
             
             // Results in multiple errors: 
@@ -320,21 +322,40 @@ export default {
             var resultLayer2 = new GraphicsLayer()
             var resultLayer3 = new GraphicsLayer()
 
+            var scene = new WS({
+              portalItem: { // autocasts as new PortalItem()
+                id: "7e1ca033747442f5a8a607b37fa4de25"
+              }
+            });
+
+            /************************************************************
+             * Set the WebScene instance to the map property in a SceneView.
+             ************************************************************/
+            var view = new SV({
+              map: scene,
+              container: "viewDiv",
+              camera: {
+                position: [-70.302834, 41.6999, 50],
+                tilt: 70,
+                heading: 0
+              }
+            })
+
             // create basemap with layers prepared but hidden
-            var map = new Map({basemap: 'dark-gray', layers: [embayments, blockGroups, parcelLayer, resultLayer, resultLayer1, townBoundaries, acBoundaries, gizBoundaries, resultLayer2, resultLayer3]});
+            // var map = new Map({basemap: 'dark-gray', layers: [embayments, blockGroups, parcelLayer, resultLayer, resultLayer1, townBoundaries, acBoundaries, gizBoundaries, resultLayer2, resultLayer3]});
 
-            var view = new MapView({
-              container: "viewDiv",  // Reference to the DOM node that will contain the view
-              map: map,
-              zoom: 12,
-              center: [-70.303634, 41.701660] // Center map over Barnstable
-            });
+            // var view = new MapView({
+            //   container: "viewDiv",  // Reference to the DOM node that will contain the view
+            //   map: map,
+            //   zoom: 12,
+            //   center: [-70.303634, 41.701660] // Center map over Barnstable
+            // });
 
-            var homeBtn = new Home({ // Home button resets zoom/center
-              view: view
-            });
+            // var homeBtn = new Home({ // Home button resets zoom/center
+            //   view: view
+            // });
 
-            view.ui.add(homeBtn, "top-left");
+            // view.ui.add(homeBtn, "top-left");
 
             function createGraphic(polygon) { // Create graphic from user-defined polygon
               var graphic = new Graphic({
