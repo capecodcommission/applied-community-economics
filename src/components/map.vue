@@ -324,8 +324,9 @@ export default {
 
             var scene = new WS({
               portalItem: { // autocasts as new PortalItem()
-                id: "7e1ca033747442f5a8a607b37fa4de25"
-              }
+                id: "e54e7f20bc9f4d758649a26015c8cb2b"
+              },
+              layers: [embayments, blockGroups, parcelLayer, resultLayer, resultLayer1, townBoundaries, acBoundaries, gizBoundaries, resultLayer2, resultLayer3]
             });
 
             /************************************************************
@@ -341,21 +342,11 @@ export default {
               }
             })
 
-            // create basemap with layers prepared but hidden
-            // var map = new Map({basemap: 'dark-gray', layers: [embayments, blockGroups, parcelLayer, resultLayer, resultLayer1, townBoundaries, acBoundaries, gizBoundaries, resultLayer2, resultLayer3]});
+            var homeBtn = new Home({ // Home button resets zoom/center
+              view: view
+            });
 
-            // var view = new MapView({
-            //   container: "viewDiv",  // Reference to the DOM node that will contain the view
-            //   map: map,
-            //   zoom: 12,
-            //   center: [-70.303634, 41.701660] // Center map over Barnstable
-            // });
-
-            // var homeBtn = new Home({ // Home button resets zoom/center
-            //   view: view
-            // });
-
-            // view.ui.add(homeBtn, "top-left");
+            view.ui.add(homeBtn, "top-left");
 
             function createGraphic(polygon) { // Create graphic from user-defined polygon
               var graphic = new Graphic({
@@ -410,6 +401,15 @@ export default {
                 console.log('selection found')
 
                 selection.visible = true // Show layer
+
+                selection.when(function(){
+                  return selection.queryExtent();
+                })
+                .then(function(response){
+                  view.goTo({
+                    target: response.extent, 
+                    tilt: 70});
+                })
                 
                 selection.queryFeatures().then((h) => { // Query boundary geometry
 
@@ -426,6 +426,12 @@ export default {
 
                 var vertices = selection.vertices // Use vertices for API calls
                 var polygon = createPolygon(vertices); // Use polygon for parcel layer query
+
+                
+                view.goTo({
+                  target: polygon.extent,
+                  tilt: 70
+                })
 
                 continueBlock(polygon, vertices, false)
               }
