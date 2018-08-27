@@ -85,109 +85,6 @@ export default {
           WS
           ]) => {
             
-            // Results in multiple errors: 
-            // Refused to execute script from 'http://localhost:8080/node_modules/fcl/FlareClusterLayer_v4.js' because its MIME type ('text/html') is not executable, and strict MIME type checking is enabled.
-            // src: dojoLoader) ["/node_modules/fcl/FlareClusterLayer_v4.js", Event]
-
-            // Set up a class breaks renderer to render different symbols based on the cluster count. Use the required clusterCount property to break on.
-            // var defaultSym = new SimpleMarkerSymbol({
-            //     size: 6,
-            //     color: "#FF0000",
-            //     outline: null
-            // });
-
-            // var renderer = new ClassBreaksRenderer({
-            //     defaultSymbol: defaultSym
-            // });
-            // renderer.field = "clusterCount";
-
-            // var smSymbol = new SimpleMarkerSymbol({ size: 22, outline: new SimpleLineSymbol({ color: [221, 159, 34, 0.8] }), color: [255, 204, 102, 0.8] });
-            // var mdSymbol = new SimpleMarkerSymbol({ size: 24, outline: new SimpleLineSymbol({ color: [82, 163, 204, 0.8] }), color: [102, 204, 255, 0.8] });
-            // var lgSymbol = new SimpleMarkerSymbol({ size: 28, outline: new SimpleLineSymbol({ color: [41, 163, 41, 0.8] }), color: [51, 204, 51, 0.8] });
-            // var xlSymbol = new SimpleMarkerSymbol({ size: 32, outline: new SimpleLineSymbol({ color: [200, 52, 59, 0.8] }), color: [250, 65, 74, 0.8] });
-
-            // renderer.addClassBreakInfo(0, 19, smSymbol);
-            // renderer.addClassBreakInfo(20, 150, mdSymbol);
-            // renderer.addClassBreakInfo(151, 1000, lgSymbol);
-            // renderer.addClassBreakInfo(1001, Infinity, xlSymbol);
-
-            // var areaRenderer;
-
-            // // if area display mode is set. Create a renderer to display cluster areas. Use SimpleFillSymbols as the areas are polygons
-            // var defaultAreaSym = new SimpleFillSymbol({
-            //     style: "solid",
-            //     color: [0, 0, 0, 0.2],
-            //     outline: new SimpleLineSymbol({ color: [0, 0, 0, 0.3] })
-            // });
-
-            // areaRenderer = new ClassBreaksRenderer({
-            //     defaultSymbol: defaultAreaSym
-            // });
-            // areaRenderer.field = "clusterCount";
-
-            // var smAreaSymbol = new SimpleFillSymbol({ color: [255, 204, 102, 0.4], outline: new SimpleLineSymbol({ color: [221, 159, 34, 0.8], style: "dash" }) });
-            // var mdAreaSymbol = new SimpleFillSymbol({ color: [102, 204, 255, 0.4], outline: new SimpleLineSymbol({ color: [82, 163, 204, 0.8], style: "dash" }) });
-            // var lgAreaSymbol = new SimpleFillSymbol({ color: [51, 204, 51, 0.4], outline: new SimpleLineSymbol({ color: [41, 163, 41, 0.8], style: "dash" }) });
-            // var xlAreaSymbol = new SimpleFillSymbol({ color: [250, 65, 74, 0.4], outline: new SimpleLineSymbol({ color: [200, 52, 59, 0.8], style: "dash" }) });
-
-            // areaRenderer.addClassBreakInfo(0, 19, smAreaSymbol);
-            // areaRenderer.addClassBreakInfo(20, 150, mdAreaSymbol);
-            // areaRenderer.addClassBreakInfo(151, 1000, lgAreaSymbol);
-            // areaRenderer.addClassBreakInfo(1001, Infinity, xlAreaSymbol);
-
-            // // Set up another class breaks renderer to style the flares individually
-            // var flareRenderer = new ClassBreaksRenderer({
-            //     defaultSymbol: renderer.defaultSymbol
-            // });
-            // flareRenderer.field = "clusterCount";
-
-            // var smFlareSymbol = new SimpleMarkerSymbol({ size: 14, color: [255, 204, 102, 0.8], outline: new SimpleLineSymbol({ color: [221, 159, 34, 0.8] }) });
-            // var mdFlareSymbol = new SimpleMarkerSymbol({ size: 14, color: [102, 204, 255, 0.8], outline: new SimpleLineSymbol({ color: [82, 163, 204, 0.8] }) });
-            // var lgFlareSymbol = new SimpleMarkerSymbol({ size: 14, color: [51, 204, 51, 0.8], outline: new SimpleLineSymbol({ color: [41, 163, 41, 0.8] }) });
-            // var xlFlareSymbol = new SimpleMarkerSymbol({ size: 14, color: [250, 65, 74, 0.8], outline: new SimpleLineSymbol({ color: [200, 52, 59, 0.8] }) });
-
-            // flareRenderer.addClassBreakInfo(0, 19, smFlareSymbol);
-            // flareRenderer.addClassBreakInfo(20, 150, mdFlareSymbol);
-            // flareRenderer.addClassBreakInfo(151, 1000, lgFlareSymbol);
-            // flareRenderer.addClassBreakInfo(1001, Infinity, xlFlareSymbol);
-
-            // // set up a popup template
-            // var popupTemplate = new PopupTemplate({
-            //     title: "{name}",
-            //     content: [{
-            //         type: "fields",
-            //         fieldInfos: [
-            //             { fieldName: "facilityType", label: "Facility Type", visible: true },
-            //             { fieldName: "postcode", label: "Post Code", visible: true },
-            //             { fieldName: "isOpen", label: "Opening Hours", visible: true }
-            //         ]
-            //     }]
-            // });
-
-
-            // var options = {
-            //     id: "flare-cluster-layer",
-            //     clusterRenderer: renderer,
-            //     areaRenderer: areaRenderer,
-            //     flareRenderer: flareRenderer,
-            //     singlePopupTemplate: popupTemplate,
-            //     spatialReference: new SpatialReference({ "wkid": 4326 }),
-            //     subTypeFlareProperty: "facilityType",
-            //     singleFlareTooltipProperty: "name",
-            //     displaySubTypeFlares: true,
-            //     maxSingleFlareCount: maxSingleFlareCount,
-            //     clusterRatio: 75,
-            //     clusterAreaDisplay: areaDisplayMode,
-            //     data: data
-            // }
-
-            // clusterLayer = new fcl.FlareClusterLayer(options);
-            // map.add(clusterLayer);
-
-            // clusterLayer.on("draw-complete", function () {
-                
-            // });
-            
             var totals = this.totals
     
             // Color parcels based on housing type
@@ -249,6 +146,17 @@ export default {
                 content: '{*}'
               }
             })
+
+            // // parcel layer containing census api estimates
+            // var parcelLayer = new FeatureLayer({
+            //   url: "http://gis-services.capecodcommission.org/arcgis/rest/services/ActivityCenters/CommunityCharacteristics/MapServer/4",
+            //   outFields: ['*'],
+            //   visible: false,
+            //   popupTemplate: {
+            //     title: '{SITE_ADDRESS}',
+            //     content: '{*}'
+            //   }
+            // })
 
             // block group layer from tigerweb services
             var blockGroups = new FeatureLayer({
@@ -820,18 +728,18 @@ export default {
               switch (type) { // switch between selection types
 
                 case 'within':
-                  // parcelSumsRoute = 'http://ccc-api-05.api.capecodcommission.org/api/getParcelSums/' 
-                  parcelSumsRoute = 'http://localhost:8081/api/getParcelSums/' 
+                  parcelSumsRoute = 'http://ccc-api-05.api.capecodcommission.org/api/getParcelSums/' 
+                  // parcelSumsRoute = 'http://localhost:8081/api/getParcelSums/' 
                   break;
 
                 case '1MI':
-                  // parcelSumsRoute = 'http://ccc-api-05.api.capecodcommission.org/api/getParcelSums1MI/' 
-                  parcelSumsRoute = 'http://localhost:8081/api/getParcelSums1MI/' 
+                  parcelSumsRoute = 'http://ccc-api-05.api.capecodcommission.org/api/getParcelSums1MI/' 
+                  // parcelSumsRoute = 'http://localhost:8081/api/getParcelSums1MI/' 
                   break;
 
                 case 'ROT':
-                  // parcelSumsRoute = 'http://ccc-api-05.api.capecodcommission.org/api/getParcelSumsROT/'
-                  parcelSumsRoute = 'http://localhost:8081/api/getParcelSumsROT/'
+                  parcelSumsRoute = 'http://ccc-api-05.api.capecodcommission.org/api/getParcelSumsROT/'
+                  // parcelSumsRoute = 'http://localhost:8081/api/getParcelSumsROT/'
                   break; 
               }
 
@@ -854,18 +762,18 @@ export default {
               switch (type) {
 
                 case 'within':
-                  // blockGroupRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectBlockGroups/' 
-                  blockGroupRoute = 'http://localhost:8081/api/selectBlockGroups/' 
+                  blockGroupRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectBlockGroups/' 
+                  // blockGroupRoute = 'http://localhost:8081/api/selectBlockGroups/' 
                   break;
 
                 case '1MI':
-                  // blockGroupRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectBlockGroups1MI/' 
-                  blockGroupRoute = 'http://localhost:8081/api/selectBlockGroups1MI/' 
+                  blockGroupRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectBlockGroups1MI/' 
+                  // blockGroupRoute = 'http://localhost:8081/api/selectBlockGroups1MI/' 
                   break;
 
                 case 'ROT':
-                  // blockGroupRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectBlockGroupsROT/'
-                  blockGroupRoute = 'http://localhost:8081/api/selectBlockGroupsROT/'
+                  blockGroupRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectBlockGroupsROT/'
+                  // blockGroupRoute = 'http://localhost:8081/api/selectBlockGroupsROT/'
                   break; 
               }
 
@@ -888,18 +796,18 @@ export default {
               switch (type) {
 
                 case 'within':
-                  // tractRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectTracts/' 
-                  tractRoute = 'http://localhost:8081/api/selectTracts/' 
+                  tractRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectTracts/' 
+                  // tractRoute = 'http://localhost:8081/api/selectTracts/' 
                   break;
 
                 case '1MI':
-                  // tractRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectTracts1MI/' 
-                  tractRoute = 'http://localhost:8081/api/selectTracts1MI/' 
+                  tractRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectTracts1MI/' 
+                  // tractRoute = 'http://localhost:8081/api/selectTracts1MI/' 
                   break;
 
                 case 'ROT':
-                  // tractRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectTractsROT/'
-                  tractRoute = 'http://localhost:8081/api/selectTractsROT/'
+                  tractRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectTractsROT/'
+                  // tractRoute = 'http://localhost:8081/api/selectTractsROT/'
                   break; 
               }
 
@@ -919,7 +827,8 @@ export default {
 
               var ids = parseBlockData(idArray) // Format getBlocks response into request data for post
 
-              var censusIncomeEmploymentEducationRoute = 'http://localhost:8081/api/getCensusIncomeEmploymentEducationTotals/' 
+              // var censusIncomeEmploymentEducationRoute = 'http://localhost:8081/api/getCensusIncomeEmploymentEducationTotals/' 
+              var censusIncomeEmploymentEducationRoute = 'http://ccc-api-05.api.capecodcommission.org/api/getCensusIncomeEmploymentEducationTotals/' 
               
               try {
 
@@ -937,7 +846,8 @@ export default {
 
               var ids = parseBlockData(idArray)
 
-              var censusHousingOccTotalsRoute = 'http://localhost:8081/api/getCensusHousingOccTotals/' 
+              // var censusHousingOccTotalsRoute = 'http://localhost:8081/api/getCensusHousingOccTotals/' 
+              var censusHousingOccTotalsRoute = 'http://ccc-api-05.api.capecodcommission.org/api/getCensusHousingOccTotals/' 
 
               try {
 
@@ -955,7 +865,8 @@ export default {
 
               var ids = parseTractData(idArray)
 
-              var censusEduTractTotalsRoute = 'http://localhost:8081/api/getCensusEduTractTotals/' 
+              // var censusEduTractTotalsRoute = 'http://localhost:8081/api/getCensusEduTractTotals/' 
+              var censusEduTractTotalsRoute = 'http://ccc-api-05.api.capecodcommission.org/api/getCensusEduTractTotals/' 
 
               try {
 
@@ -971,7 +882,8 @@ export default {
             // Obtain education related totals by town name
             async function getCensusEduTownTotals (townName) {
 
-              var censusEduTownTotalsRoute = 'http://localhost:8081/api/getCensusEduTownTotals/' 
+              // var censusEduTownTotalsRoute = 'http://localhost:8081/api/getCensusEduTownTotals/' 
+              var censusEduTownTotalsRoute = 'http://ccc-api-05.api.capecodcommission.org/api/getCensusEduTownTotals/' 
 
               try {
 
@@ -989,7 +901,8 @@ export default {
 
               var ids = parseBlockData(idArray)
 
-              var censusAffordabilityRoute = 'http://localhost:8081/api/getCensusAffordabilityTotals/' 
+              // var censusAffordabilityRoute = 'http://localhost:8081/api/getCensusAffordabilityTotals/' 
+              var censusAffordabilityRoute = 'http://ccc-api-05.api.capecodcommission.org/api/getCensusAffordabilityTotals/' 
               
               try {
 
@@ -1006,7 +919,8 @@ export default {
 
               var ids = parseBlockData(idArray)
 
-              var censusRentRoute = 'http://localhost:8081/api/getCensusRentMedian/' 
+              // var censusRentRoute = 'http://localhost:8081/api/getCensusRentMedian/' 
+              var censusRentRoute = 'http://ccc-api-05.api.capecodcommission.org/api/getCensusRentMedian/' 
               
               try {
 
@@ -1023,7 +937,8 @@ export default {
 
               var ids = parseBlockData(idArray)
 
-              var censusHomePriceRoute = 'http://localhost:8081/api/getCensusHomePriceMedian/' 
+              // var censusHomePriceRoute = 'http://localhost:8081/api/getCensusHomePriceMedian/' 
+              var censusHomePriceRoute = 'http://ccc-api-05.api.capecodcommission.org/api/getCensusHomePriceMedian/' 
               
               try {
 
@@ -1040,7 +955,8 @@ export default {
 
               var ids = parseBlockData(idArray)
 
-              var censusAgeRoute = 'http://localhost:8081/api/getCensusAgeTotals/' 
+              // var censusAgeRoute = 'http://localhost:8081/api/getCensusAgeTotals/' 
+              var censusAgeRoute = 'http://ccc-api-05.api.capecodcommission.org/api/getCensusAgeTotals/' 
               
               try {
 
