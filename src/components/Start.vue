@@ -28,7 +28,7 @@
 
 <script>
 import treatmentDetail from './TreatmentDetail'
-import Header from './Header'
+import aceHeader from './ACEHeader'
 import sidething from './sideBar'
 import debug from './debug'
 import map from './map'
@@ -38,7 +38,7 @@ export default {
 
   components: {
     'comparison': treatmentDetail,
-    'headthing': Header,
+    'headthing': aceHeader,
     'sidething': sidething,
     'debug': debug,
     'map': map

@@ -78,7 +78,7 @@ import { loadACScores } from '../vuex/actions'
 import { getACScores, getTownName, getType } from '../vuex/getters'
 import {  } from 'vue-strap'
 import json2csv from 'nice-json2csv'
-import wqheader from './Header'
+import wqheader from './ACEHeader'
 import * as d3 from "d3";
 
 export default {
