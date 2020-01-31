@@ -1,0 +1,19 @@
+version: "3.1"
+
+services:
+
+  aceapidev:
+    container_name: aceapidev
+    build: "./api"
+    ports:
+      - 8081:8081
+
+  acefrontdev:
+    container_name: acefrontdev
+    build: "."
+    ports:
+      - 3002:8080
+    volumes:
+      - ./src:/app/src:rw
+    depends_on: 
+      - aceapidev

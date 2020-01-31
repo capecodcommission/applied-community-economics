@@ -31,14 +31,14 @@
 import { getComparison, getTownName } from '../vuex/getters'
 import { loadTownName } from '../vuex/actions'
 import treatmentDetail from './TreatmentDetail'
-import Header from './Header'
+import aceHeader from './ACEHeader'
 import sidething from './sideBar'
 
 export default {
 
   components: {
     'comparison': treatmentDetail,
-    'headthing': Header,
+    'headthing': aceHeader,
     'sidething': sidething
   },
 
