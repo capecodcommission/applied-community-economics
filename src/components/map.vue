@@ -728,18 +728,18 @@ export default {
               switch (type) { // switch between selection types
 
                 case 'within':
-                  parcelSumsRoute = 'http://ccc-api-05.api.capecodcommission.org/api/getParcelSums/' 
-                  //parcelSumsRoute = 'http://localhost:8081/api/getParcelSums/' 
+                  // parcelSumsRoute = 'http://ccc-api-05.api.capecodcommission.org/api/getParcelSums/' 
+                  parcelSumsRoute = 'http://localhost:8081/api/getParcelSums/' 
                   break;
 
                 case '1MI':
-                  parcelSumsRoute = 'http://ccc-api-05.api.capecodcommission.org/api/getParcelSums1MI/' 
-                  //parcelSumsRoute = 'http://localhost:8081/api/getParcelSums1MI/' 
+                  // parcelSumsRoute = 'http://ccc-api-05.api.capecodcommission.org/api/getParcelSums1MI/' 
+                  parcelSumsRoute = 'http://localhost:8081/api/getParcelSums1MI/' 
                   break;
 
                 case 'ROT':
-                  parcelSumsRoute = 'http://ccc-api-05.api.capecodcommission.org/api/getParcelSumsROT/'
-                  //parcelSumsRoute = 'http://localhost:8081/api/getParcelSumsROT/'
+                  // parcelSumsRoute = 'http://ccc-api-05.api.capecodcommission.org/api/getParcelSumsROT/'
+                  parcelSumsRoute = 'http://localhost:8081/api/getParcelSumsROT/'
                   break; 
               }
 
@@ -762,18 +762,18 @@ export default {
               switch (type) {
 
                 case 'within':
-                  blockGroupRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectBlockGroups/' 
-                  //blockGroupRoute = 'http://localhost:8081/api/selectBlockGroups/' 
+                  // blockGroupRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectBlockGroups/' 
+                  blockGroupRoute = 'http://localhost:8081/api/selectBlockGroups/' 
                   break;
 
                 case '1MI':
-                  blockGroupRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectBlockGroups1MI/' 
-                  //blockGroupRoute = 'http://localhost:8081/api/selectBlockGroups1MI/' 
+                  // blockGroupRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectBlockGroups1MI/' 
+                  blockGroupRoute = 'http://localhost:8081/api/selectBlockGroups1MI/' 
                   break;
 
                 case 'ROT':
-                  blockGroupRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectBlockGroupsROT/'
-                  //blockGroupRoute = 'http://localhost:8081/api/selectBlockGroupsROT/'
+                  // blockGroupRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectBlockGroupsROT/'
+                  blockGroupRoute = 'http://localhost:8081/api/selectBlockGroupsROT/'
                   break; 
               }
 
@@ -796,18 +796,18 @@ export default {
               switch (type) {
 
                 case 'within':
-                  tractRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectTracts/' 
-                  //tractRoute = 'http://localhost:8081/api/selectTracts/' 
+                  // tractRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectTracts/' 
+                  tractRoute = 'http://localhost:8081/api/selectTracts/' 
                   break;
 
                 case '1MI':
-                  tractRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectTracts1MI/' 
-                  //tractRoute = 'http://localhost:8081/api/selectTracts1MI/' 
+                  // tractRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectTracts1MI/' 
+                  tractRoute = 'http://localhost:8081/api/selectTracts1MI/' 
                   break;
 
                 case 'ROT':
-                  tractRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectTractsROT/'
-                  //tractRoute = 'http://localhost:8081/api/selectTractsROT/'
+                  // tractRoute = 'http://ccc-api-05.api.capecodcommission.org/api/selectTractsROT/'
+                  tractRoute = 'http://localhost:8081/api/selectTractsROT/'
                   break; 
               }
 
