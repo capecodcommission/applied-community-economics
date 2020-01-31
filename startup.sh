@@ -3,7 +3,7 @@
 # cache census age
 while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' aceapidev:8081)" != "200" ]]; do 
     printf '.'
-    sleep 5
+    sleep 1
 done
 result=$(curl -X GET --header "Accept: */*" "http://aceapidev:8081/api/cacheCensusAge")
 echo "Response from server"
